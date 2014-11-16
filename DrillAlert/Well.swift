@@ -10,11 +10,15 @@ import Foundation
 
 class Well {
     var name: String
+    var wellbores = Array<Wellbore>()
     
     init(name: String) {
         self.name = name
     }
     
+    /// This is an API call to get all of the wells 
+    /// as an array from the server. Used in the Admin 
+    /// view.
     class func getAllWells() -> Array<Well> {
         var wells = Array<Well>()
         
@@ -28,24 +32,16 @@ class Well {
         return wells
     }
     
-    class func getSubscribedWellsForUserID(userID: String) -> Array<Well> {
-        var wells = Array<Well>()
+    /// Gets all of the users that have access to 
+    /// this well.
+    func getUsers() -> Array<User> {
+        var users = Array<User>()
         
         // Using canned data
-        wells.append(Well(name: "Well 1"))
-        wells.append(Well(name: "Well 3"))
+        users.append(User(firstName: "Lucas", lastName: "David", id: "123"))
+        users.append(User(firstName: "Another", lastName: "User", id: "117"))
         
-        return wells
+        return users
     }
-    
-    class func getAllWellsForUserID(userID: String) -> Array<Well> {
-        var wells = Array<Well>()
-        
-        // Using canned data
-        wells.append(Well(name: "Well 1"))
-        wells.append(Well(name: "Well 3"))
-        wells.append(Well(name: "Well 4"))
-        
-        return wells
-    }
+
 }

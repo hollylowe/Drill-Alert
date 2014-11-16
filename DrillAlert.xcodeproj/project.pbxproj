@@ -17,7 +17,14 @@
 		A06FFD711A06AA08001B3FF8 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = A06FFD6F1A06AA08001B3FF8 /* LaunchScreen.xib */; };
 		A06FFD7D1A06AA08001B3FF8 /* DrillAlertTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06FFD7C1A06AA08001B3FF8 /* DrillAlertTests.swift */; };
 		A087EEDE1A06C09D0073FDD0 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A087EEDD1A06C09D0073FDD0 /* HomeViewController.swift */; };
+		A0C3C53F1A09D2750017BC9B /* WellboreDetailTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C3C53E1A09D2750017BC9B /* WellboreDetailTabBarController.swift */; };
+		A0CE03281A0ECEFB0076EE3E /* Wellbore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CE03271A0ECEFB0076EE3E /* Wellbore.swift */; };
+		A0CE032C1A0ED67C0076EE3E /* VisualsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CE032B1A0ED67C0076EE3E /* VisualsViewController.swift */; };
+		A0CE032E1A0ED69E0076EE3E /* AlertsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CE032D1A0ED69E0076EE3E /* AlertsViewController.swift */; };
+		A0CE03301A0ED6FD0076EE3E /* VisualContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CE032F1A0ED6FD0076EE3E /* VisualContentViewController.swift */; };
+		A0CEDBA21A0C3ADF0051BDB8 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CEDBA11A0C3ADF0051BDB8 /* User.swift */; };
 		A0EE29021A08AB7200B50700 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EE29011A08AB7200B50700 /* UIViewExtension.swift */; };
+		A0F0FBED1A103DC600ADBDF3 /* WellUsersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F0FBEC1A103DC600ADBDF3 /* WellUsersTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,7 +52,14 @@
 		A06FFD7B1A06AA08001B3FF8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A06FFD7C1A06AA08001B3FF8 /* DrillAlertTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrillAlertTests.swift; sourceTree = "<group>"; };
 		A087EEDD1A06C09D0073FDD0 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		A0C3C53E1A09D2750017BC9B /* WellboreDetailTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WellboreDetailTabBarController.swift; sourceTree = "<group>"; };
+		A0CE03271A0ECEFB0076EE3E /* Wellbore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Wellbore.swift; sourceTree = "<group>"; };
+		A0CE032B1A0ED67C0076EE3E /* VisualsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualsViewController.swift; sourceTree = "<group>"; };
+		A0CE032D1A0ED69E0076EE3E /* AlertsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertsViewController.swift; sourceTree = "<group>"; };
+		A0CE032F1A0ED6FD0076EE3E /* VisualContentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualContentViewController.swift; sourceTree = "<group>"; };
+		A0CEDBA11A0C3ADF0051BDB8 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		A0EE29011A08AB7200B50700 /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
+		A0F0FBEC1A103DC600ADBDF3 /* WellUsersTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WellUsersTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +84,7 @@
 			isa = PBXGroup;
 			children = (
 				A05A35CD1A083727008EA386 /* AdminTableViewController.swift */,
+				A0F0FBEC1A103DC600ADBDF3 /* WellUsersTableViewController.swift */,
 			);
 			name = Admin;
 			sourceTree = "<group>";
@@ -78,6 +93,7 @@
 			isa = PBXGroup;
 			children = (
 				A06FFD681A06AA08001B3FF8 /* LoginViewController.swift */,
+				A0C3C53D1A09D1900017BC9B /* WellboreDetail */,
 				A087EEDC1A06C0920073FDD0 /* Home */,
 				A05A35CC1A08370E008EA386 /* Admin */,
 			);
@@ -88,6 +104,8 @@
 			isa = PBXGroup;
 			children = (
 				A05A35D11A0837ED008EA386 /* Well.swift */,
+				A0CE03271A0ECEFB0076EE3E /* Wellbore.swift */,
+				A0CEDBA11A0C3ADF0051BDB8 /* User.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -157,6 +175,33 @@
 				A087EEDD1A06C09D0073FDD0 /* HomeViewController.swift */,
 			);
 			name = Home;
+			sourceTree = "<group>";
+		};
+		A0C3C53D1A09D1900017BC9B /* WellboreDetail */ = {
+			isa = PBXGroup;
+			children = (
+				A0C3C53E1A09D2750017BC9B /* WellboreDetailTabBarController.swift */,
+				A0CE032A1A0ED5FB0076EE3E /* Alerts */,
+				A0CE03291A0ED5F60076EE3E /* Visuals */,
+			);
+			name = WellboreDetail;
+			sourceTree = "<group>";
+		};
+		A0CE03291A0ED5F60076EE3E /* Visuals */ = {
+			isa = PBXGroup;
+			children = (
+				A0CE032B1A0ED67C0076EE3E /* VisualsViewController.swift */,
+				A0CE032F1A0ED6FD0076EE3E /* VisualContentViewController.swift */,
+			);
+			name = Visuals;
+			sourceTree = "<group>";
+		};
+		A0CE032A1A0ED5FB0076EE3E /* Alerts */ = {
+			isa = PBXGroup;
+			children = (
+				A0CE032D1A0ED69E0076EE3E /* AlertsViewController.swift */,
+			);
+			name = Alerts;
 			sourceTree = "<group>";
 		};
 		A0EE29001A08AB6600B50700 /* Views */ = {
@@ -269,11 +314,18 @@
 			files = (
 				A05A35CE1A083727008EA386 /* AdminTableViewController.swift in Sources */,
 				A0EE29021A08AB7200B50700 /* UIViewExtension.swift in Sources */,
+				A0F0FBED1A103DC600ADBDF3 /* WellUsersTableViewController.swift in Sources */,
+				A0CE032C1A0ED67C0076EE3E /* VisualsViewController.swift in Sources */,
 				A05A35D21A0837ED008EA386 /* Well.swift in Sources */,
 				A06FFD691A06AA08001B3FF8 /* LoginViewController.swift in Sources */,
+				A0C3C53F1A09D2750017BC9B /* WellboreDetailTabBarController.swift in Sources */,
+				A0CE03281A0ECEFB0076EE3E /* Wellbore.swift in Sources */,
+				A0CE032E1A0ED69E0076EE3E /* AlertsViewController.swift in Sources */,
+				A0CEDBA21A0C3ADF0051BDB8 /* User.swift in Sources */,
 				A06FFD671A06AA08001B3FF8 /* DrillAlert.xcdatamodeld in Sources */,
 				A06FFD641A06AA08001B3FF8 /* AppDelegate.swift in Sources */,
 				A087EEDE1A06C09D0073FDD0 /* HomeViewController.swift in Sources */,
+				A0CE03301A0ED6FD0076EE3E /* VisualContentViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

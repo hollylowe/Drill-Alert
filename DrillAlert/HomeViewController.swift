@@ -12,18 +12,25 @@ import UIKit
 class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet weak var tableView: UITableView!
     
+    let homeToAdminSegueIdentifier = "HomeToAdminSegue"
+    let homeToWellboreDetailSegueIdentifier = "WellboreDetailSegue"
+    
     // Segmented Control
     let segmentedControlItems = ["Subscribed", "All"]
     var selectedSegmentIndex = 0
-    let subscribedWellsIndex = 0
+    let subscribedWellboresIndex = 0
     let allWellsIndex = 1
 
-    var loggedIn = false
-    var subscribedWells = Array<Well>()
-    var allWells = Array<Well>()
+    // Implicit since the user must be logged in to see the HomeViewController.
+    var currentUser: User!
+    
+    // Data for the table view
+    var subscribedWellbores = Array<Wellbore>()
+    var allWellbores = Array<Wellbore>()
     
     override func viewDidLoad() {
         setupView()
+        reloadWells()
         super.viewDidLoad()
     }
     
@@ -31,9 +38,10 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let toolbarWidth = self.view.frame.size.width
         let toolbarHeight: CGFloat = 44.0
 
-        if let navBar = self.navigationController {
+        if let navigationController = self.navigationController {
+            navigationController.navigationBar.hidden = false
             // Add the tab bar at the (navigation bar height + status bar height) y coordinate
-            let yCoord = navBar.navigationBar.frame.size.height + UIApplication.sharedApplication().statusBarFrame.size.height
+            let yCoord = navigationController.navigationBar.frame.size.height + UIApplication.sharedApplication().statusBarFrame.size.height
             
             // Set up Toolbar
             let toolbarRect = CGRectMake(0, yCoord, toolbarWidth, toolbarHeight)
@@ -64,42 +72,64 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             toolbar.addBottomBorder()
             
             self.view.addSubview(toolbar)
-            
         }
+        self.navigationItem.hidesBackButton = true
         
         // Sets the tableview y coordinate to the toolbarheight
         let headerViewRect = CGRectMake(0, 0, self.tableView.frame.width, toolbarHeight)
         self.tableView.tableHeaderView = UIView(frame: headerViewRect)
+        
+        // Add an admin button if need be. 
+        if currentUser.isAdmin {
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(
+                title: "Admin",
+                style: UIBarButtonItemStyle.Plain,
+                target: self,
+                action: "adminBarButtonTapped:")
+        }
+    }
+    
+    func adminBarButtonTapped(sender: UIBarButtonItem) {
+        self.performSegueWithIdentifier(homeToAdminSegueIdentifier, sender: self)
     }
     
     func segmentedControlAction(sender: UISegmentedControl) {
         self.selectedSegmentIndex = sender.selectedSegmentIndex
         self.reloadWells()
     }
-    
-    override func viewDidAppear(animated: Bool) {
-        if !loggedIn {
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-
-            let identifier = LoginViewController.storyboardIdentifier()
-            let loginViewController = storyboard.instantiateViewControllerWithIdentifier(identifier) as LoginViewController
-            
-            loginViewController.delegate = self
-            self.presentViewController(loginViewController, animated: false, completion: nil)
-        }
-        super.viewDidAppear(animated)
-        
-    }
 
     func reloadWells() {
         // Only load the wells of the currently selected segment.
-        if selectedSegmentIndex == subscribedWellsIndex {
-            subscribedWells = Well.getSubscribedWellsForUserID("117")
+        if selectedSegmentIndex == subscribedWellboresIndex {
+            subscribedWellbores = Wellbore.getSubscribedWellboresForUserID(currentUser.id)
         } else {
-            allWells = Well.getAllWellsForUserID("117")
+            allWellbores = Wellbore.getAllWellboresForUserID(currentUser.id)
         }
         
         tableView.reloadData()
+    }
+    
+    func wellboreAtIndex(index: Int) -> Wellbore {
+        var wellbore: Wellbore!
+        
+        if selectedSegmentIndex == subscribedWellboresIndex {
+            wellbore = subscribedWellbores[index]
+        } else {
+            wellbore = allWellbores[index]
+        }
+        
+        return wellbore
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        if segue.identifier == homeToWellboreDetailSegueIdentifier {
+            let wellbore = sender as Wellbore
+            let destinationViewController = segue.destinationViewController as WellboreDetailTabBarController
+            destinationViewController.currentWellbore = wellbore
+            
+        }
+        super.prepareForSegue(segue, sender: self)
     }
 }
 
@@ -107,15 +137,9 @@ extension HomeViewController: UITableViewDataSource {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("WellCell") as UITableViewCell
-        var well: Well
+        let wellbore = wellboreAtIndex(indexPath.row)
         
-        if selectedSegmentIndex == subscribedWellsIndex {
-            well = subscribedWells[indexPath.row]
-        } else {
-            well = allWells[indexPath.row]
-        }
-        
-        cell.textLabel.text = well.name
+        cell.textLabel.text = wellbore.name
         cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
         
         return cell
@@ -123,17 +147,19 @@ extension HomeViewController: UITableViewDataSource {
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var count = 0
-        if selectedSegmentIndex == subscribedWellsIndex {
-            count = subscribedWells.count
+        if selectedSegmentIndex == subscribedWellboresIndex {
+            count = subscribedWellbores.count
         } else {
-            count = allWells.count
+            count = allWellbores.count
         }
         return count
     }
 }
 
 extension HomeViewController: UITableViewDelegate {
-    
-    
-    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let wellbore = wellboreAtIndex(indexPath.row)
+        
+        self.performSegueWithIdentifier(homeToWellboreDetailSegueIdentifier, sender: wellbore)
+    }
 }
