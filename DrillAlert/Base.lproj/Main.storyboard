@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14B17" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="fBI-Bv-p36">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Login View Controller-->
@@ -224,14 +225,6 @@
                     <view key="view" contentMode="scaleToFill" id="y6M-P2-CHW">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="w1v-jX-1aD">
-                                <rect key="frame" x="0.0" y="64" width="600" height="487"/>
-                                <connections>
-                                    <segue destination="m95-Av-MND" kind="embed" id="9oy-jb-AKG"/>
-                                </connections>
-                            </containerView>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Visuals" id="e45-A8-CD1"/>
@@ -239,6 +232,50 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="921-ke-2k6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4430" y="-60"/>
+        </scene>
+        <!--Page View Controller-->
+        <scene sceneID="tyY-aY-8aR">
+            <objects>
+                <pageViewController storyboardIdentifier="PageViewController" autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="d7Y-4r-G3Z" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Kgm-LN-QIK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5210" y="-434"/>
+        </scene>
+        <!--Visual View Controller-->
+        <scene sceneID="we4-94-4IZ">
+            <objects>
+                <viewController storyboardIdentifier="VisualViewController" id="LdQ-QI-dwH" customClass="VisualViewController" customModule="DrillAlert" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="LzG-ri-8vJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="emb-M1-t5I"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="gFv-a6-E2y">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c2p-4E-tqC">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="delegate" destination="LdQ-QI-dwH" id="CNu-nz-ITi"/>
+                                </connections>
+                            </webView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="c2p-4E-tqC" firstAttribute="leading" secondItem="gFv-a6-E2y" secondAttribute="leadingMargin" constant="-16" id="Tue-o7-YGe"/>
+                            <constraint firstItem="emb-M1-t5I" firstAttribute="top" secondItem="c2p-4E-tqC" secondAttribute="bottom" id="drB-Iz-6J8"/>
+                            <constraint firstItem="c2p-4E-tqC" firstAttribute="top" secondItem="gFv-a6-E2y" secondAttribute="topMargin" id="p7h-XL-pmH"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="c2p-4E-tqC" secondAttribute="trailing" constant="-16" id="zTO-aO-ECC"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="webView" destination="c2p-4E-tqC" id="Vfv-hO-rgs"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GRE-vW-RLN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5210" y="278"/>
         </scene>
         <!--Alerts-->
         <scene sceneID="L58-Uv-egL">
@@ -303,40 +340,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kQC-F1-RW6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="890" y="368"/>
-        </scene>
-        <!--Page View Controller-->
-        <scene sceneID="qAs-a8-Lyl">
-            <objects>
-                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="pageCurl" navigationOrientation="horizontal" spineLocation="min" id="m95-Av-MND" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="IHe-GA-EVV" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="5203" y="-60.5"/>
-        </scene>
-        <!--Visual Content View Controller-->
-        <scene sceneID="i7W-mU-vzO">
-            <objects>
-                <viewController storyboardIdentifier="VisualContentViewController" id="wTX-9C-7ax" customClass="VisualContentViewController" customModule="DrillAlert" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="bRf-zd-QoQ"/>
-                        <viewControllerLayoutGuide type="bottom" id="vSg-EX-A1U"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="YPI-GW-V1c">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Test" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="klX-mS-dwk">
-                                <rect key="frame" x="272" y="289" width="57" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="0CC-0c-QPc" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="5916" y="-52"/>
         </scene>
     </scenes>
     <resources>
