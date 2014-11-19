@@ -13,46 +13,61 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var usernameTextField: UITextField!
     
-    var delegate: HomeViewController!
-    
-    @IBAction func loginButtonTapped(sender: AnyObject) {
-        
-        let username = usernameTextField.text
-        let password = passwordTextField.text
-        
-        // Obviously replace this with a legit login system
-        if username == "admin" {
-            // Load admin view
-            self.delegate.loggedIn = true
-            self.dismissViewControllerAnimated(true, completion: nil)
-        } else if username == "user" {
-            // Load user view
-            self.delegate.loggedIn = true
-            self.delegate.reloadWells()
-            self.dismissViewControllerAnimated(true, completion: nil)
-        } else {
-            let alertController = UIAlertController(title: "Error", message: "Incorrect username or password.", preferredStyle: .Alert)
-            let defaultAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
-            alertController.addAction(defaultAction)
-            
-            presentViewController(alertController, animated: true, completion: nil)
-        }
-    }
+    let loginToHomeSegueIdentifier = "LoginToHomeSegue"
+    var currentUser: User?
     
     class func storyboardIdentifier() -> String! {
         return "LoginViewController"
     }
     
     override func viewDidLoad() {
+        // Check if user is already logged in, if they are, go 
+        // straight to the home view controller
+        if let navigationController = self.navigationController {
+            navigationController.navigationBar.hidden = true
+        }
+        
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
+    @IBAction func loginButtonTapped(sender: AnyObject) {
+        
+        let username = usernameTextField.text
+        let password = passwordTextField.text
+        
+        if let user = User.authenticateUsername(username, andPassword: password) {
+            self.currentUser = user
+            self.performSegueWithIdentifier(loginToHomeSegueIdentifier, sender: self)
+        } else {
+            let alertController = UIAlertController(
+                title: "Error",
+                message: "Incorrect username or password.",
+                preferredStyle: .Alert)
+            
+            let defaultAction = UIAlertAction(
+                title: "OK",
+                style: .Default,
+                handler: nil)
+            
+            alertController.addAction(defaultAction)
+            
+            presentViewController(alertController, animated: true, completion: nil)
+        }
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == loginToHomeSegueIdentifier {
+            let homeViewController = segue.destinationViewController as HomeViewController
+            homeViewController.currentUser = self.currentUser
+        }
+        
+        super.prepareForSegue(segue, sender: sender)
+    }
 
 }
 

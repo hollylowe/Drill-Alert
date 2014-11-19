@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A388a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="oaB-Cw-pje">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14B17" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="fBI-Bv-p36">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Login View Controller-->
@@ -66,14 +67,16 @@
                             <constraint firstAttribute="centerX" secondItem="Uf8-hT-C26" secondAttribute="centerX" id="kxI-zn-Ljp"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="PM9-dt-61L"/>
                     <connections>
                         <outlet property="passwordTextField" destination="mnf-Dc-ccz" id="bUD-Sb-d5a"/>
                         <outlet property="usernameTextField" destination="jBV-3p-PI0" id="377-ay-AhA"/>
+                        <segue destination="OKh-1Q-XSn" kind="show" identifier="LoginToHomeSegue" id="YRG-Nl-HdB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2570" y="-382"/>
+            <point key="canvasLocation" x="1672" y="368"/>
         </scene>
         <!--Home-->
         <scene sceneID="GTL-rn-Ltj">
@@ -110,11 +113,13 @@
                     <navigationItem key="navigationItem" title="Home" id="ZQL-6s-qYb"/>
                     <connections>
                         <outlet property="tableView" destination="8vf-PG-r83" id="sWk-es-pKW"/>
+                        <segue destination="12U-Lj-hXP" kind="show" identifier="WellboreDetailSegue" id="eVi-RR-qRm"/>
+                        <segue destination="8qX-br-K5P" kind="presentation" identifier="HomeToAdminSegue" id="jY6-zP-y8S"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qnh-LU-B9a" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3382" y="400"/>
+            <point key="canvasLocation" x="2482" y="368"/>
         </scene>
         <!--Admin-->
         <scene sceneID="qTf-aA-BIJ">
@@ -137,30 +142,58 @@
                             <outlet property="delegate" destination="bT6-Ev-Yyb" id="nUF-Sg-zPX"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Admin" id="Ktg-fa-oLa"/>
+                    <navigationItem key="navigationItem" title="Admin" id="Ktg-fa-oLa">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="lbU-1S-c6N">
+                            <connections>
+                                <action selector="cancelBarButtonTapped:" destination="bT6-Ev-Yyb" id="hIE-f4-X0h"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <segue destination="5qn-oB-i3Q" kind="show" identifier="AdminToWellUsersSegue" id="tVS-FG-mB3"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="B9m-yV-lNV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3382" y="1108"/>
+            <point key="canvasLocation" x="2482" y="1816"/>
         </scene>
-        <!--Tab Bar Controller-->
-        <scene sceneID="Loa-MJ-cUG">
+        <!--Users-->
+        <scene sceneID="G7N-Sg-Uga">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="oaB-Cw-pje" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <nil key="simulatedBottomBarMetrics"/>
-                    <tabBar key="tabBar" contentMode="scaleToFill" id="n9d-Ut-Zyk">
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    </tabBar>
+                <tableViewController id="5qn-oB-i3Q" customClass="WellUsersTableViewController" customModule="DrillAlert" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="dbo-UA-1va">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="UserCell" id="TOr-zx-E0a">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="TOr-zx-E0a" id="t69-dc-tJ2">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="5qn-oB-i3Q" id="1Hc-vN-EAS"/>
+                            <outlet property="delegate" destination="5qn-oB-i3Q" id="fuk-87-euT"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Users" id="0mg-P4-8bs"/>
                     <connections>
-                        <segue destination="IFS-KD-5JM" kind="relationship" relationship="viewControllers" id="lQF-zw-1gK"/>
-                        <segue destination="8qX-br-K5P" kind="relationship" relationship="viewControllers" id="DFZ-Je-XIk"/>
+                        <outlet property="searchDisplayController" destination="qP3-4m-wz1" id="9qg-O4-g57"/>
                     </connections>
-                </tabBarController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="JeX-gS-iIm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="V8L-Z0-0nX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="qP3-4m-wz1">
+                    <connections>
+                        <outlet property="delegate" destination="5qn-oB-i3Q" id="cAa-iA-ad1"/>
+                        <outlet property="searchContentsController" destination="5qn-oB-i3Q" id="jK8-XT-2UE"/>
+                        <outlet property="searchResultsDataSource" destination="5qn-oB-i3Q" id="oAB-tF-ma0"/>
+                        <outlet property="searchResultsDelegate" destination="5qn-oB-i3Q" id="J4Q-Ei-EFA"/>
+                    </connections>
+                </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="1710" y="400"/>
+            <point key="canvasLocation" x="3244" y="1816"/>
         </scene>
         <!--Admin-->
         <scene sceneID="AKv-Yp-q4T">
@@ -179,30 +212,137 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="USC-rl-TnK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2522" y="1108"/>
+            <point key="canvasLocation" x="2482" y="1094"/>
         </scene>
-        <!--Home-->
-        <scene sceneID="VuU-1j-9Pa">
+        <!--Visuals-->
+        <scene sceneID="xbf-gY-MU8">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="IFS-KD-5JM" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Home" image="home-50" id="0jZ-M4-LOD"/>
+                <viewController id="h0o-PB-yOo" customClass="VisualsViewController" customModule="DrillAlert" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="XHa-q4-Az4"/>
+                        <viewControllerLayoutGuide type="bottom" id="sGn-rZ-J8H"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="y6M-P2-CHW">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Visuals" id="e45-A8-CD1"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="921-ke-2k6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4430" y="-60"/>
+        </scene>
+        <!--Page View Controller-->
+        <scene sceneID="tyY-aY-8aR">
+            <objects>
+                <pageViewController storyboardIdentifier="PageViewController" autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="d7Y-4r-G3Z" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Kgm-LN-QIK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5210" y="-434"/>
+        </scene>
+        <!--Visual View Controller-->
+        <scene sceneID="we4-94-4IZ">
+            <objects>
+                <viewController storyboardIdentifier="VisualViewController" id="LdQ-QI-dwH" customClass="VisualViewController" customModule="DrillAlert" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="LzG-ri-8vJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="emb-M1-t5I"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="gFv-a6-E2y">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c2p-4E-tqC">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="delegate" destination="LdQ-QI-dwH" id="CNu-nz-ITi"/>
+                                </connections>
+                            </webView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="c2p-4E-tqC" firstAttribute="leading" secondItem="gFv-a6-E2y" secondAttribute="leadingMargin" constant="-16" id="Tue-o7-YGe"/>
+                            <constraint firstItem="emb-M1-t5I" firstAttribute="top" secondItem="c2p-4E-tqC" secondAttribute="bottom" id="drB-Iz-6J8"/>
+                            <constraint firstItem="c2p-4E-tqC" firstAttribute="top" secondItem="gFv-a6-E2y" secondAttribute="topMargin" id="p7h-XL-pmH"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="c2p-4E-tqC" secondAttribute="trailing" constant="-16" id="zTO-aO-ECC"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="webView" destination="c2p-4E-tqC" id="Vfv-hO-rgs"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GRE-vW-RLN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5210" y="278"/>
+        </scene>
+        <!--Alerts-->
+        <scene sceneID="L58-Uv-egL">
+            <objects>
+                <tableViewController id="2Jt-LN-L0A" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="GKg-53-JTX">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="quh-rP-tP6">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="quh-rP-tP6" id="4Nw-pv-iqI">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="2Jt-LN-L0A" id="Dj9-dO-y1V"/>
+                            <outlet property="delegate" destination="2Jt-LN-L0A" id="eFJ-Bv-Fdb"/>
+                        </connections>
+                    </tableView>
+                    <tabBarItem key="tabBarItem" title="Alerts" id="ILx-Px-Nwg"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GyO-la-RfP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4430" y="752"/>
+        </scene>
+        <!--Wellbore Detail Tab Bar Controller-->
+        <scene sceneID="owc-ki-Cch">
+            <objects>
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="12U-Lj-hXP" customClass="WellboreDetailTabBarController" customModule="DrillAlert" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="geT-q2-vMI">
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="AMi-kx-GKE">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="h0o-PB-yOo" kind="relationship" relationship="viewControllers" id="QIJ-gn-6d0"/>
+                        <segue destination="2Jt-LN-L0A" kind="relationship" relationship="viewControllers" id="6sK-vK-QF8"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="n5X-nE-kEx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3573" y="368"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="F5I-Oh-odk">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="fBI-Bv-p36" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ZL2-K6-qv8">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="OKh-1Q-XSn" kind="relationship" relationship="rootViewController" id="UUV-mP-zHH"/>
+                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="rootViewController" id="Xr5-NN-kEq"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="1rj-rb-QBM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kQC-F1-RW6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2522" y="400"/>
+            <point key="canvasLocation" x="890" y="368"/>
         </scene>
     </scenes>
     <resources>
-        <image name="home-50" width="25" height="25"/>
         <image name="key-50" width="25" height="25"/>
     </resources>
 </document>

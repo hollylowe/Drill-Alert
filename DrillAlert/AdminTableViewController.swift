@@ -11,10 +11,25 @@ import UIKit
 
 class AdminTableViewController: UITableViewController {
     var wells = Array<Well>()
+    let adminToWellUsersSegueIdentifier = "AdminToWellUsersSegue"
+    
+    @IBAction func cancelBarButtonTapped(sender: AnyObject) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
     
     override func viewDidLoad() {
         self.wells = Well.getAllWells()
         super.viewDidLoad()
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == adminToWellUsersSegueIdentifier {
+            let well = sender as Well
+            let destinationViewController = segue.destinationViewController as WellUsersTableViewController
+            destinationViewController.currentWell = well
+        }
+        
+        super.prepareForSegue(segue, sender: sender)
     }
 }
 
@@ -35,5 +50,13 @@ extension AdminTableViewController: UITableViewDataSource {
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
+    }
+}
+
+extension AdminTableViewController: UITableViewDelegate {
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let well = wells[indexPath.row]
+        println(well)
+        self.performSegueWithIdentifier(adminToWellUsersSegueIdentifier, sender: well)
     }
 }
