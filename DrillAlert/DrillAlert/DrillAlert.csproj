@@ -155,6 +155,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Hubs\AlertsHub.cs" />
     <Compile Include="Models\Alert.cs" />
     <Compile Include="Models\AlertDatabse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
