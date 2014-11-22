@@ -79,11 +79,13 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AlertController.cs" />
+    <Compile Include="Controllers\WellboreDataController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Alert.cs" />
     <Compile Include="Models\AlertDatabase.cs" />
+    <Compile Include="Models\TimePoint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
