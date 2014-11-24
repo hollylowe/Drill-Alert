@@ -10,9 +10,25 @@ import Foundation
 
 class Wellbore {
     var name: String!
+    var data: Array<Int>!
+    var titles: Array<String>!
+    var res: AnyObject!
     
     init(name: String) {
         self.name = name
+        self.data = [200, 350]
+        self.titles = ["\"blue\"", "\"more blue\""]
+        
+//        let url = NSURL(string: "http://drillalert.azurewebsites.net/api/WellboreData/5")
+//        
+//        let task = NSURLSession.sharedSession().dataTaskWithURL(url!) {(data, response, error) in
+//            self.data = NSString(data: data, encoding: NSUTF8StringEncoding)!
+//            let fullNameArr = self.data.componentsSeparatedByString("(")
+//            self.data = fullNameArr[0]
+//            println(self.data)
+//        }
+//        
+//        task.resume()
     }
     
     /// An API call to get all of the wellbores a user
@@ -38,5 +54,13 @@ class Wellbore {
         wellbores.append(Wellbore(name: "Wellbore 4"))
         
         return wellbores
+    }
+    
+    func getData() -> Array<Int>{
+        return self.data
+    }
+    
+    func getTitles() -> Array<String>{
+        return self.titles
     }
 }

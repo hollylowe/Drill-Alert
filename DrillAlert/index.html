@@ -4,7 +4,35 @@
     <head>
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
         <title>D3</title>
+        <style>
+            /* tell the SVG path to be a thin blue line without any area fill */
+            path {
+                stroke: steelblue;
+                stroke-width: 1;
+                fill: none;
+            }
         
+            .axis {
+                shape-rendering: crispEdges;
+            }
+        
+            .x.axis line {
+                stroke: lightgrey;
+            }
+        
+            .x.axis .minor {
+                stroke-opacity: .5;
+            }
+        
+            .x.axis path {
+                display: none;
+            }
+        
+            .y.axis line, .y.axis path {
+                fill: none;
+                stroke: #000;
+            }
+        </style>
         <script src="d3.min.js" charset="utf-8"></script>
         
         <script type="text/javascript">
@@ -54,6 +82,46 @@
                                                     .attr("font-family", "sans-serif")
                                                     .attr("text-anchor", "middle");
             }
+        
+<!--        function showData(lineData){-->
+<!--            var vis = d3.select('#visualisation'),-->
+<!--            WIDTH = 1000,-->
+<!--            HEIGHT = 500,-->
+<!--            MARGINS = {-->
+<!--                top: 20,-->
+<!--                right: 20,-->
+<!--                bottom: 20,-->
+<!--                left: 50-->
+<!--            },-->
+<!--            xRange = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([d3.min(lineData, function(d) {-->
+<!--                    return d["X"];-->
+<!--                }), d3.max(lineData, function(d) {-->
+<!--                    return d["X"];-->
+<!--                })]),-->
+<!--            yRange = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([d3.min(lineData, function(d) {-->
+<!--                    return d["Y"];-->
+<!--                  }), d3.max(lineData, function(d) {-->
+<!--                    return d["Y"];-->
+<!--                  })]),-->
+<!--            xAxis = d3.svg.axis()-->
+<!--                .scale(xRange)-->
+<!--                .tickSize(5)-->
+<!--                .tickSubdivide(true),-->
+<!--            yAxis = d3.svg.axis()-->
+<!--                .scale(yRange)-->
+<!--                .tickSize(5)-->
+<!--                .orient('left')-->
+<!--                .tickSubdivide(true);-->
+<!--                -->
+<!--            vis.append('svg:g')-->
+<!--                .attr('class', 'x axis')-->
+<!--                .attr('transform', 'translate(0,' + (HEIGHT - MARGINS.bottom) + ')')-->
+<!--                .call(xAxis);-->
+<!--            vis.append('svg:g')-->
+<!--                .attr('class', 'y axis')-->
+<!--                .attr('transform', 'translate(' + (MARGINS.left) + ',0)')-->
+<!--                .call(yAxis);-->
+<!--        }-->
         </script>
     </head>
     <body>
