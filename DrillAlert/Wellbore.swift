@@ -19,6 +19,8 @@ class Wellbore {
         self.data = [200, 350]
         self.titles = ["\"blue\"", "\"more blue\""]
         
+//        Uncomment for querying data
+//        Number at end of url specifies number of entries to receive
 //        let url = NSURL(string: "http://drillalert.azurewebsites.net/api/WellboreData/5")
 //        
 //        let task = NSURLSession.sharedSession().dataTaskWithURL(url!) {(data, response, error) in
