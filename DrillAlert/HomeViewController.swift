@@ -35,12 +35,13 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     private func setupView() {
+        self.title = "Home"
         let toolbarWidth = self.view.frame.size.width
         let toolbarHeight: CGFloat = 44.0
 
         if let navigationController = self.navigationController {
             navigationController.navigationBar.hidden = false
-            // Add the tab bar at the (navigation bar height + status bar height) y coordinate
+            // Add the segmented control at the (navigation bar height + status bar height) y coordinate
             let yCoord = navigationController.navigationBar.frame.size.height + UIApplication.sharedApplication().statusBarFrame.size.height
             
             // Set up Toolbar
@@ -72,21 +73,12 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             toolbar.addBottomBorder()
             
             self.view.addSubview(toolbar)
+            // Sets the tableview y coordinate to the toolbarheight
+            
+            let headerViewRect = CGRectMake(0, 0, self.tableView.frame.width, toolbarHeight + yCoord)
+            self.tableView.tableHeaderView = UIView(frame: headerViewRect)
         }
-        self.navigationItem.hidesBackButton = true
-        
-        // Sets the tableview y coordinate to the toolbarheight
-        let headerViewRect = CGRectMake(0, 0, self.tableView.frame.width, toolbarHeight)
-        self.tableView.tableHeaderView = UIView(frame: headerViewRect)
-        
-        // Add an admin button if need be. 
-        if currentUser.isAdmin {
-            self.navigationItem.rightBarButtonItem = UIBarButtonItem(
-                title: "Admin",
-                style: UIBarButtonItemStyle.Plain,
-                target: self,
-                action: "adminBarButtonTapped:")
-        }
+       
     }
     
     func adminBarButtonTapped(sender: UIBarButtonItem) {

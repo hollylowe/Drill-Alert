@@ -74,8 +74,10 @@ class LoginViewController: UIViewController, FBLoginViewDelegate {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == loginToHomeSegueIdentifier {
-            let homeViewController = segue.destinationViewController as HomeViewController
-            homeViewController.currentUser = self.currentUser
+            // let homeViewController = segue.destinationViewController as HomeViewController
+            // homeViewController.currentUser = self.currentUser
+            let tabBarController = segue.destinationViewController as MainTabBarController
+            tabBarController.currentUser = currentUser
         }
         
         super.prepareForSegue(segue, sender: sender)

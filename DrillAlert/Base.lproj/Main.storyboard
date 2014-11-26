@@ -82,12 +82,82 @@
                         <outlet property="fbLoginView" destination="bwf-xv-8mP" id="Afj-un-vaf"/>
                         <outlet property="passwordTextField" destination="mnf-Dc-ccz" id="bUD-Sb-d5a"/>
                         <outlet property="usernameTextField" destination="jBV-3p-PI0" id="377-ay-AhA"/>
-                        <segue destination="OKh-1Q-XSn" kind="show" identifier="LoginToHomeSegue" id="YRG-Nl-HdB"/>
+                        <segue destination="7IO-FK-5ji" kind="show" identifier="LoginToHomeSegue" id="YRG-Nl-HdB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1672" y="368"/>
+            <point key="canvasLocation" x="1466" y="368"/>
+        </scene>
+        <!--Settings-->
+        <scene sceneID="v4t-Bj-kd6">
+            <objects>
+                <tableViewController id="6cs-ft-ue3" customClass="SettingsTableViewController" customModule="DrillAlert" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="SIE-l7-Yus">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <sections>
+                            <tableViewSection id="Gcg-xD-Y03">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="7J6-zi-ZhY" detailTextLabel="B8i-o1-ZdQ" style="IBUITableViewCellStyleValue1" id="fHp-dw-Eyu">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fHp-dw-Eyu" id="qKU-vp-lOe">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Logged in as" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="7J6-zi-ZhY">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="User Name" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="B8i-o1-ZdQ">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="7JA-Yp-a21">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7JA-Yp-a21" id="Xbo-qR-RhV">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QUg-vu-BG0">
+                                                    <rect key="frame" x="272" y="7" width="56" height="30"/>
+                                                    <state key="normal" title="Log Out">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="logOutButtonTapped:" destination="6cs-ft-ue3" eventType="touchUpInside" id="6FT-NM-H4Q"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="centerX" secondItem="QUg-vu-BG0" secondAttribute="centerX" id="IE2-i0-2kp"/>
+                                                <constraint firstAttribute="centerY" secondItem="QUg-vu-BG0" secondAttribute="centerY" id="VYR-x8-Ihk"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="6cs-ft-ue3" id="H3G-ex-aTw"/>
+                            <outlet property="delegate" destination="6cs-ft-ue3" id="pbV-Mt-xaw"/>
+                        </connections>
+                    </tableView>
+                    <tabBarItem key="tabBarItem" title="Settings" id="VxQ-AQ-5Tz"/>
+                    <connections>
+                        <outlet property="loggedInAsCell" destination="fHp-dw-Eyu" id="JOe-5V-r59"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Xyw-yV-SAo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3294" y="-418"/>
         </scene>
         <!--Home-->
         <scene sceneID="GTL-rn-Ltj">
@@ -121,6 +191,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <tabBarItem key="tabBarItem" title="Home" id="nUU-T0-IXj"/>
                     <navigationItem key="navigationItem" title="Home" id="ZQL-6s-qYb"/>
                     <connections>
                         <outlet property="tableView" destination="8vf-PG-r83" id="sWk-es-pKW"/>
@@ -130,7 +201,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qnh-LU-B9a" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2482" y="368"/>
+            <point key="canvasLocation" x="3294" y="368"/>
         </scene>
         <!--Admin-->
         <scene sceneID="qTf-aA-BIJ">
@@ -166,7 +237,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="B9m-yV-lNV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2482" y="1816"/>
+            <point key="canvasLocation" x="3294" y="1842"/>
         </scene>
         <!--Users-->
         <scene sceneID="G7N-Sg-Uga">
@@ -204,7 +275,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="3244" y="1816"/>
+            <point key="canvasLocation" x="4056" y="1842"/>
         </scene>
         <!--Admin-->
         <scene sceneID="AKv-Yp-q4T">
@@ -223,7 +294,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="USC-rl-TnK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2482" y="1094"/>
+            <point key="canvasLocation" x="3294" y="1120"/>
         </scene>
         <!--Visuals-->
         <scene sceneID="xbf-gY-MU8">
@@ -242,7 +313,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="921-ke-2k6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4430" y="-60"/>
+            <point key="canvasLocation" x="5242" y="-60"/>
         </scene>
         <!--Page View Controller-->
         <scene sceneID="tyY-aY-8aR">
@@ -250,7 +321,7 @@
                 <pageViewController storyboardIdentifier="PageViewController" autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="d7Y-4r-G3Z" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Kgm-LN-QIK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5210" y="-434"/>
+            <point key="canvasLocation" x="6022" y="-450"/>
         </scene>
         <!--Visual View Controller-->
         <scene sceneID="we4-94-4IZ">
@@ -286,7 +357,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GRE-vW-RLN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5210" y="278"/>
+            <point key="canvasLocation" x="6022" y="278"/>
         </scene>
         <!--Alerts-->
         <scene sceneID="L58-Uv-egL">
@@ -313,7 +384,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GyO-la-RfP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4430" y="752"/>
+            <point key="canvasLocation" x="5242" y="752"/>
         </scene>
         <!--Wellbore Detail Tab Bar Controller-->
         <scene sceneID="owc-ki-Cch">
@@ -332,7 +403,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="n5X-nE-kEx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3573" y="368"/>
+            <point key="canvasLocation" x="4385" y="368"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="F5I-Oh-odk">
@@ -350,7 +421,26 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kQC-F1-RW6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="890" y="368"/>
+            <point key="canvasLocation" x="551" y="368"/>
+        </scene>
+        <!--Main Tab Bar Controller-->
+        <scene sceneID="zTo-T6-0fM">
+            <objects>
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="7IO-FK-5ji" customClass="MainTabBarController" customModule="DrillAlert" customModuleProvider="target" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="zUV-Up-eyq">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="OKh-1Q-XSn" kind="relationship" relationship="viewControllers" id="H3g-Jl-ONc"/>
+                        <segue destination="6cs-ft-ue3" kind="relationship" relationship="viewControllers" id="mJW-lv-BSu"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kei-Eq-BUX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2310" y="368"/>
         </scene>
     </scenes>
     <resources>
