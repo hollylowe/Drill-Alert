@@ -27,7 +27,7 @@ class WellboreDetailTabBarController: UITabBarController {
             let visualsTabBarItem = items[visualsIndex] as UITabBarItem
             let alertsTabBarItem = items[alertsIndex] as UITabBarItem
             let imageSize = CGSizeMake(30, 30)
-            
+            // comment
             if let visualsSelectedIcon = UIImage(named: "graph_full.png") {
                 visualsTabBarItem.selectedImage = imageWithImage(visualsSelectedIcon, scaledToSize: imageSize)
             }
