@@ -14,7 +14,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
+    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
+        // Call FBAppCall's handleOpenURL:sourceApplication to handle Facebook app responses
 
+        let wasHandled = FBAppCall.handleOpenURL(url, sourceApplication: sourceApplication)
+        
+        // You can add your app-specific url handling code here if needed
+
+        return wasHandled
+    }
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         let pageControl = UIPageControl.appearance()

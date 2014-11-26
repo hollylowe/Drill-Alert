@@ -21,6 +21,7 @@
 		A06FFD7D1A06AA08001B3FF8 /* DrillAlertTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06FFD7C1A06AA08001B3FF8 /* DrillAlertTests.swift */; };
 		A087EEDE1A06C09D0073FDD0 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A087EEDD1A06C09D0073FDD0 /* HomeViewController.swift */; };
 		A0C3C53F1A09D2750017BC9B /* WellboreDetailTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C3C53E1A09D2750017BC9B /* WellboreDetailTabBarController.swift */; };
+		A0CA2F5E1A2647FD00D12218 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0CA2F5D1A2647FD00D12218 /* FacebookSDK.framework */; };
 		A0CE03281A0ECEFB0076EE3E /* Wellbore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CE03271A0ECEFB0076EE3E /* Wellbore.swift */; };
 		A0CE032C1A0ED67C0076EE3E /* VisualsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CE032B1A0ED67C0076EE3E /* VisualsViewController.swift */; };
 		A0CE032E1A0ED69E0076EE3E /* AlertsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CE032D1A0ED69E0076EE3E /* AlertsViewController.swift */; };
@@ -40,6 +41,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A0343D261A26493800FA0464 /* DrillAlert-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DrillAlert-Bridging-Header.h"; sourceTree = "<group>"; };
 		A042B2DC1A195ED600660AB7 /* VisualViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualViewController.swift; sourceTree = "<group>"; };
 		A042B2DE1A19645F00660AB7 /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
 		A042B2E01A19669E00660AB7 /* d3.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = d3.min.js; sourceTree = "<group>"; };
@@ -58,6 +60,7 @@
 		A06FFD7C1A06AA08001B3FF8 /* DrillAlertTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrillAlertTests.swift; sourceTree = "<group>"; };
 		A087EEDD1A06C09D0073FDD0 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		A0C3C53E1A09D2750017BC9B /* WellboreDetailTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WellboreDetailTabBarController.swift; sourceTree = "<group>"; };
+		A0CA2F5D1A2647FD00D12218 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 		A0CE03271A0ECEFB0076EE3E /* Wellbore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Wellbore.swift; sourceTree = "<group>"; };
 		A0CE032B1A0ED67C0076EE3E /* VisualsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualsViewController.swift; sourceTree = "<group>"; };
 		A0CE032D1A0ED69E0076EE3E /* AlertsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertsViewController.swift; sourceTree = "<group>"; };
@@ -71,6 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0CA2F5E1A2647FD00D12218 /* FacebookSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -107,6 +111,7 @@
 		A05A35D01A0837DD008EA386 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				A06FFD651A06AA08001B3FF8 /* DrillAlert.xcdatamodeld */,
 				A05A35D11A0837ED008EA386 /* Well.swift */,
 				A0CE03271A0ECEFB0076EE3E /* Wellbore.swift */,
 				A0CEDBA11A0C3ADF0051BDB8 /* User.swift */,
@@ -136,13 +141,10 @@
 			isa = PBXGroup;
 			children = (
 				A06FFD631A06AA08001B3FF8 /* AppDelegate.swift */,
-				A06FFD6A1A06AA08001B3FF8 /* Main.storyboard */,
+				A0CA2F5F1A26480500D12218 /* Frameworks */,
 				A0EE29001A08AB6600B50700 /* Views */,
 				A05A35D01A0837DD008EA386 /* Models */,
 				A05A35CF1A0837CC008EA386 /* Controllers */,
-				A06FFD6D1A06AA08001B3FF8 /* Images.xcassets */,
-				A06FFD6F1A06AA08001B3FF8 /* LaunchScreen.xib */,
-				A06FFD651A06AA08001B3FF8 /* DrillAlert.xcdatamodeld */,
 				A06FFD611A06AA08001B3FF8 /* Supporting Files */,
 			);
 			path = DrillAlert;
@@ -151,6 +153,8 @@
 		A06FFD611A06AA08001B3FF8 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				A06FFD6D1A06AA08001B3FF8 /* Images.xcassets */,
+				A06FFD6F1A06AA08001B3FF8 /* LaunchScreen.xib */,
 				A06FFD621A06AA08001B3FF8 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -191,6 +195,15 @@
 			name = WellboreDetail;
 			sourceTree = "<group>";
 		};
+		A0CA2F5F1A26480500D12218 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A0343D261A26493800FA0464 /* DrillAlert-Bridging-Header.h */,
+				A0CA2F5D1A2647FD00D12218 /* FacebookSDK.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		A0CE03291A0ED5F60076EE3E /* Visuals */ = {
 			isa = PBXGroup;
 			children = (
@@ -213,6 +226,7 @@
 		A0EE29001A08AB6600B50700 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				A06FFD6A1A06AA08001B3FF8 /* Main.storyboard */,
 				A0EE29011A08AB7200B50700 /* UIViewExtension.swift */,
 			);
 			name = Views;
@@ -456,9 +470,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/DrillAlert",
+				);
 				INFOPLIST_FILE = DrillAlert/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "DrillAlert/DrillAlert-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -466,9 +488,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/DrillAlert",
+				);
 				INFOPLIST_FILE = DrillAlert/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "DrillAlert/DrillAlert-Bridging-Header.h";
 			};
 			name = Release;
 		};

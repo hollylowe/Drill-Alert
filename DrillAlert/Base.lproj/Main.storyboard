@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A329r" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="fBI-Bv-p36">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A329f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="fBI-Bv-p36">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -54,21 +54,32 @@
                                     <action selector="loginButtonTapped:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="0M5-yr-brb"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bwf-xv-8mP" customClass="FBLoginView">
+                                <rect key="frame" x="66" y="456" width="468" height="62"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="delegate" destination="vXZ-lx-hvc" id="FEj-ph-6pb"/>
+                                </connections>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="tLH-WR-8bY" secondAttribute="centerX" id="3Bg-Zd-keh"/>
+                            <constraint firstItem="bwf-xv-8mP" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="50" id="4xX-3R-ZUj"/>
                             <constraint firstAttribute="centerX" secondItem="mnf-Dc-ccz" secondAttribute="centerX" id="9Ll-hq-4ls"/>
                             <constraint firstAttribute="centerX" secondItem="jBV-3p-PI0" secondAttribute="centerX" id="Aqz-oM-Rvu"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="bwf-xv-8mP" secondAttribute="trailing" constant="50" id="L9b-oG-brd"/>
                             <constraint firstAttribute="centerY" secondItem="Uf8-hT-C26" secondAttribute="centerY" constant="43" id="R0T-IV-e8A"/>
                             <constraint firstAttribute="centerY" secondItem="jBV-3p-PI0" secondAttribute="centerY" constant="139" id="ZzU-iR-gNd"/>
                             <constraint firstAttribute="centerY" secondItem="mnf-Dc-ccz" secondAttribute="centerY" constant="95" id="eNL-nX-4rs"/>
                             <constraint firstAttribute="centerY" secondItem="tLH-WR-8bY" secondAttribute="centerY" constant="217" id="hGh-qd-0H6"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="bwf-xv-8mP" secondAttribute="bottom" constant="82" id="iSk-Xo-CYc"/>
                             <constraint firstAttribute="centerX" secondItem="Uf8-hT-C26" secondAttribute="centerX" id="kxI-zn-Ljp"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="PM9-dt-61L"/>
                     <connections>
+                        <outlet property="fbLoginView" destination="bwf-xv-8mP" id="Afj-un-vaf"/>
                         <outlet property="passwordTextField" destination="mnf-Dc-ccz" id="bUD-Sb-d5a"/>
                         <outlet property="usernameTextField" destination="jBV-3p-PI0" id="377-ay-AhA"/>
                         <segue destination="OKh-1Q-XSn" kind="show" identifier="LoginToHomeSegue" id="YRG-Nl-HdB"/>

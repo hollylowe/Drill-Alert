@@ -31,7 +31,7 @@ class User {
     /// :param: username The username to authenticate. 
     /// :param: password The password of the user.
     /// :returns: A User object if the username and password could be authenticated, nil if not.
-    class func authenticateUsername(username: String, andPassword password: String) -> User? {
+    class func authenticateSDIUsername(username: String, andPassword password: String) -> User? {
         var user: User?
         
         // Enter real authentication here
@@ -40,6 +40,18 @@ class User {
         } else if username == "user" {
             user = User(firstName: "Jameson", lastName: "Locke", id: "343")
         }
+        
+        return user
+    }
+    
+    class func authenticateFacebookUser(facebookUser: FBGraphUser!) -> User? {
+        var user: User?
+        let userID = facebookUser.objectID
+        
+        // Enter real authentication here
+        if userID == "10152531648166693" {
+            user = User(firstName: "Lucas", lastName: "David", id: userID, isAdmin: true)
+        } 
         
         return user
     }
