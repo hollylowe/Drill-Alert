@@ -43,9 +43,46 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
                 self.navigationItem.rightBarButtonItem = nil
             }
             
+            setupTabBarIcons()
         }
         
         super.viewDidLoad()
+    }
+    
+    func setupTabBarIcons() {
+        let tabBar = self.tabBar
+        if let items = tabBar.items {
+            let homeTabBarItem = items[homeIndex] as UITabBarItem
+            let settingsTabBarItem = items[settingsIndex] as UITabBarItem
+            let imageSize = CGSizeMake(30, 30)
+            
+            if let homeSelectedIcon = UIImage(named: "home_full.png") {
+                homeTabBarItem.selectedImage = imageWithImage(homeSelectedIcon, scaledToSize: imageSize)
+            }
+            
+            if let homeDefaultIcon = UIImage(named: "home_line.png") {
+                homeTabBarItem.image = imageWithImage(homeDefaultIcon, scaledToSize: imageSize)
+            }
+            
+            if let settingsSelectedIcon = UIImage(named: "settings_full.png") {
+                settingsTabBarItem.selectedImage = imageWithImage(settingsSelectedIcon, scaledToSize: imageSize)
+                
+            }
+            
+            if let settingsDefaultIcon = UIImage(named: "settings_line.png") {
+                settingsTabBarItem.image = imageWithImage(settingsDefaultIcon, scaledToSize: imageSize)
+                
+            }
+            
+        }
+    }
+    
+    func imageWithImage(image: UIImage, scaledToSize newSize: CGSize) -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0)
+        image.drawInRect(CGRectMake(0, 0, newSize.width, newSize.height))
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return newImage
     }
 }
 

@@ -24,12 +24,7 @@ class LoginViewController: UIViewController, FBLoginViewDelegate {
     override func viewDidLoad() {
         // Ask for public profile user permissions from facebook
         self.fbLoginView.readPermissions = ["public_profile"]
-        
-        // Hide the navigation bar
-        if let navigationController = self.navigationController {
-            navigationController.navigationBar.hidden = true
-        }
-        
+
         // Check if user is already logged in, if they are, go
         // straight to the home view controller
         
@@ -41,6 +36,14 @@ class LoginViewController: UIViewController, FBLoginViewDelegate {
         super.viewDidLoad()
     }
     
+    override func viewWillAppear(animated: Bool) {
+        // Hide the navigation bar
+        if let navigationController = self.navigationController {
+            navigationController.navigationBar.hidden = true
+        }
+        
+        super.viewWillAppear(animated)
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

@@ -16,7 +16,11 @@ class SettingsTableViewController: UITableViewController {
     @IBOutlet weak var loggedInAsCell: UITableViewCell!
     @IBAction func logOutButtonTapped(sender: AnyObject) {
         if currentUser.isFacebookAuthenticatedUser {
-            FBSession().closeAndClearTokenInformation()
+            FBSession.activeSession().closeAndClearTokenInformation()
+            if let navigationController = self.navigationController {
+                navigationController.popToRootViewControllerAnimated(true)
+                
+            }
         }
     }
     
