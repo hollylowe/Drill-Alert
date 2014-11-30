@@ -10,12 +10,18 @@ import Foundation
 import UIKit
 
 class VisualsViewController: UIViewController, UIPageViewControllerDataSource {
+    // Implicit, set by the previous view controller
+    var wellboreDetailViewController: WellboreDetailViewController!
     
+    // Implicit, set in viewDidLoad
     var pageViewController: UIPageViewController!
+    
+    // For testing
     var numVisuals = 4
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.view.frame = CGRectMake(0, 0, self.view.frame.size.width, wellboreDetailViewController.topBarHeight)
         if let storyboard = self.storyboard {
             self.pageViewController = storyboard.instantiateViewControllerWithIdentifier("PageViewController") as UIPageViewController
             self.pageViewController.dataSource = self
@@ -23,10 +29,8 @@ class VisualsViewController: UIViewController, UIPageViewControllerDataSource {
             let startViewController = self.viewControllerAtIndex(0)!
             let viewControllers = [startViewController]
             self.pageViewController.setViewControllers(viewControllers, direction: .Forward, animated: false, completion: nil)
-            
-            let yCoord = self.navigationController!.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.size.height
-            let height = self.view.frame.size.height - yCoord - self.tabBarController!.tabBar.frame.size.height
-            self.pageViewController.view.frame = CGRectMake(0, yCoord, self.view.frame.size.width, height)
+
+            self.pageViewController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)
             self.addChildViewController(self.pageViewController)
             self.view.addSubview(self.pageViewController.view)
             self.pageViewController.didMoveToParentViewController(self)

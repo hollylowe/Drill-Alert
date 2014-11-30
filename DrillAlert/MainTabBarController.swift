@@ -15,8 +15,10 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
     
     let homeIndex = 0
     let settingsIndex = 1
+    let adminIndex = 2
     
     override func viewDidLoad() {
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.Bordered, target: nil, action: nil)
         self.navigationItem.hidesBackButton = true
         self.delegate = self
         if let viewControllers = self.viewControllers {
@@ -29,18 +31,20 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
             
             if self.selectedIndex == homeIndex {
                 self.navigationItem.title = "Home"
-                
-                // Add an admin button if need be.
-                if currentUser.isAdmin {
-                    self.navigationItem.rightBarButtonItem = UIBarButtonItem(
-                        title: "Admin",
-                        style: UIBarButtonItemStyle.Plain,
-                        target: homeViewController,
-                        action: "adminBarButtonTapped:")
-                }
             } else if self.selectedIndex == settingsIndex {
                 self.navigationItem.title = "Settings"
-                self.navigationItem.rightBarButtonItem = nil
+            }
+            
+            if currentUser.isAdmin {
+                let adminViewController = viewControllers[adminIndex] as AdminTableViewController
+                adminViewController.currentUser = currentUser
+                if self.selectedIndex == adminIndex {
+                    self.navigationItem.title = "Admin"
+                }
+                
+                self.setViewControllers([homeViewController, settingsViewController, adminViewController], animated: false)
+            } else {
+                self.setViewControllers([homeViewController, settingsViewController], animated: false)
             }
             
             setupTabBarIcons()
@@ -51,11 +55,15 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
     
     func setupTabBarIcons() {
         let tabBar = self.tabBar
+        let lightBlueColor = UIColor(red: 0.412, green: 0.671, blue: 0.898, alpha: 1.0)
+        tabBar.tintColor = lightBlueColor
+        tabBar.selectedImageTintColor = lightBlueColor
         if let items = tabBar.items {
             let homeTabBarItem = items[homeIndex] as UITabBarItem
             let settingsTabBarItem = items[settingsIndex] as UITabBarItem
             let imageSize = CGSizeMake(30, 30)
             
+            // Home tab bar icon
             if let homeSelectedIcon = UIImage(named: "home_full.png") {
                 homeTabBarItem.selectedImage = imageWithImage(homeSelectedIcon, scaledToSize: imageSize)
             }
@@ -64,6 +72,7 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
                 homeTabBarItem.image = imageWithImage(homeDefaultIcon, scaledToSize: imageSize)
             }
             
+            // Settings tab bar icon
             if let settingsSelectedIcon = UIImage(named: "settings_full.png") {
                 settingsTabBarItem.selectedImage = imageWithImage(settingsSelectedIcon, scaledToSize: imageSize)
                 
@@ -71,7 +80,19 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
             
             if let settingsDefaultIcon = UIImage(named: "settings_line.png") {
                 settingsTabBarItem.image = imageWithImage(settingsDefaultIcon, scaledToSize: imageSize)
+            }
+            
+            if currentUser.isAdmin {
+                // Admin tab bar icon
+                let adminTabBarItem = items[adminIndex] as UITabBarItem
+                if let adminSelectedIcon = UIImage(named: "admin_full.png") {
+                    adminTabBarItem.selectedImage = imageWithImage(adminSelectedIcon, scaledToSize: imageSize)
+                    
+                }
                 
+                if let adminDefaultIcon = UIImage(named: "admin_line.png") {
+                    adminTabBarItem.image = imageWithImage(adminDefaultIcon, scaledToSize: imageSize)
+                }
             }
             
         }
@@ -91,18 +112,10 @@ extension MainTabBarController: UITabBarControllerDelegate {
 
         if self.selectedIndex == homeIndex {
             self.navigationItem.title = "Home"
-            
-            // Add an admin button if need be.
-            if currentUser.isAdmin {
-                self.navigationItem.rightBarButtonItem = UIBarButtonItem(
-                    title: "Admin",
-                    style: UIBarButtonItemStyle.Plain,
-                    target: viewController,
-                    action: "adminBarButtonTapped:")
-            }
         } else if self.selectedIndex == settingsIndex {
             self.navigationItem.title = "Settings"
-            self.navigationItem.rightBarButtonItem = nil
+        } else if self.selectedIndex == adminIndex {
+            self.navigationItem.title = "Admin"
         }
     }
 }

@@ -17,10 +17,14 @@ class SettingsTableViewController: UITableViewController {
     @IBAction func logOutButtonTapped(sender: AnyObject) {
         if currentUser.isFacebookAuthenticatedUser {
             FBSession.activeSession().closeAndClearTokenInformation()
-            if let navigationController = self.navigationController {
-                navigationController.popToRootViewControllerAnimated(true)
-                
-            }
+        } else if currentUser.isSDIAuthenticatedUser {
+            // TODO: Use SDI auth to log them out, delete the session
+        }
+        
+        // TODO: Add Google+ log out
+        
+        if let navigationController = self.navigationController {
+            navigationController.popToRootViewControllerAnimated(true)
         }
     }
     

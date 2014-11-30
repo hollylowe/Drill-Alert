@@ -13,12 +13,16 @@ class AdminTableViewController: UITableViewController {
     var wells = Array<Well>()
     let adminToWellUsersSegueIdentifier = "AdminToWellUsersSegue"
     
-    @IBAction func cancelBarButtonTapped(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
+    var currentUser: User!
     
     override func viewDidLoad() {
         self.wells = Well.getAllWells()
+        
+        if let navigationController = self.navigationController {
+            let yCoord = navigationController.navigationBar.frame.size.height + UIApplication.sharedApplication().statusBarFrame.size.height
+            self.tableView.tableHeaderView = UIView(frame: CGRectMake(0, 0, self.tableView.frame.width, yCoord))
+        }
+        
         super.viewDidLoad()
     }
     

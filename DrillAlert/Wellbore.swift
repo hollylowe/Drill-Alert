@@ -10,13 +10,15 @@ import Foundation
 
 class Wellbore {
     var name: String!
+    var well: Well!
     var data: Array<Int>!
     var titles: Array<String>!
     var res: AnyObject!
     
-    init(name: String) {
+    init(well: Well, name: String) {
         self.name = name
         self.data = [200, 350]
+        self.well = well
         self.titles = ["\"blue\"", "\"more blue\""]
         
 //        Uncomment for querying data
@@ -39,8 +41,8 @@ class Wellbore {
         var wellbores = Array<Wellbore>()
         
         // Using canned data
-        wellbores.append(Wellbore(name: "Wellbore 1"))
-        wellbores.append(Wellbore(name: "Wellbore 3"))
+        wellbores.append(Wellbore(well: Well(name: "Well One"), name: "Wellbore 1"))
+        wellbores.append(Wellbore(well: Well(name: "Well One"), name: "Wellbore 3"))
         
         return wellbores
     }
@@ -51,9 +53,9 @@ class Wellbore {
         var wellbores = Array<Wellbore>()
         
         // Using canned data
-        wellbores.append(Wellbore(name: "Wellbore 1"))
-        wellbores.append(Wellbore(name: "Wellbore 3"))
-        wellbores.append(Wellbore(name: "Wellbore 4"))
+        wellbores.append(Wellbore(well: Well(name: "Well One"), name: "Wellbore 1"))
+        wellbores.append(Wellbore(well: Well(name: "Well One"), name: "Wellbore 3"))
+        wellbores.append(Wellbore(well: Well(name: "Well One"), name: "Wellbore 4"))
         
         return wellbores
     }

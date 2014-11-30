@@ -13,7 +13,7 @@ class VisualViewController: UIViewController, UIWebViewDelegate {
     
     @IBOutlet weak var webView: UIWebView!
     var pageIndex: Int!
-    let wellbore = Wellbore(name: "cool bore")
+    let wellbore = Wellbore(well: Well(name: "Well One"), name: "cool bore")
     
     override func viewDidLoad() {
         super.viewDidLoad()

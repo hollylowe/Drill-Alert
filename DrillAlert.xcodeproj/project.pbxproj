@@ -7,8 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A018E4001A2B003D001EF20E /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = A018E3FF1A2B003D001EF20E /* Alert.swift */; };
+		A018E4041A2B005A001EF20E /* ParameterAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = A018E4031A2B005A001EF20E /* ParameterAlert.swift */; };
+		A018E4061A2B010A001EF20E /* Parameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A018E4051A2B010A001EF20E /* Parameter.swift */; };
+		A018E40A1A2B0733001EF20E /* ParameterAlertsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A018E4091A2B0733001EF20E /* ParameterAlertsTableViewController.swift */; };
+		A018E40C1A2BB4E8001EF20E /* AddParameterAlertTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A018E40B1A2BB4E8001EF20E /* AddParameterAlertTableViewController.swift */; };
 		A0343D2B1A265D2E00FA0464 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0343D2A1A265D2E00FA0464 /* SettingsTableViewController.swift */; };
 		A0343D2D1A265E6C00FA0464 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0343D2C1A265E6C00FA0464 /* MainTabBarController.swift */; };
+		A0343D311A2674C100FA0464 /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0343D301A2674C100FA0464 /* Entitlements.plist */; };
+		A0343D331A2AB66100FA0464 /* WellboreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0343D321A2AB66100FA0464 /* WellboreTableViewCell.swift */; };
+		A0343D391A2AC85400FA0464 /* WellboreDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0343D381A2AC85400FA0464 /* WellboreDetailViewController.swift */; };
+		A0343D411A2AFE9C00FA0464 /* ParameterAlertTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0343D401A2AFE9C00FA0464 /* ParameterAlertTableViewCell.swift */; };
 		A042B2DD1A195ED600660AB7 /* VisualViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A042B2DC1A195ED600660AB7 /* VisualViewController.swift */; };
 		A042B2DF1A19645F00660AB7 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = A042B2DE1A19645F00660AB7 /* index.html */; };
 		A042B2E11A19669E00660AB7 /* d3.min.js in Resources */ = {isa = PBXBuildFile; fileRef = A042B2E01A19669E00660AB7 /* d3.min.js */; };
@@ -22,11 +31,9 @@
 		A06FFD711A06AA08001B3FF8 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = A06FFD6F1A06AA08001B3FF8 /* LaunchScreen.xib */; };
 		A06FFD7D1A06AA08001B3FF8 /* DrillAlertTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06FFD7C1A06AA08001B3FF8 /* DrillAlertTests.swift */; };
 		A087EEDE1A06C09D0073FDD0 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A087EEDD1A06C09D0073FDD0 /* HomeViewController.swift */; };
-		A0C3C53F1A09D2750017BC9B /* WellboreDetailTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C3C53E1A09D2750017BC9B /* WellboreDetailTabBarController.swift */; };
 		A0CA2F5E1A2647FD00D12218 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0CA2F5D1A2647FD00D12218 /* FacebookSDK.framework */; };
 		A0CE03281A0ECEFB0076EE3E /* Wellbore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CE03271A0ECEFB0076EE3E /* Wellbore.swift */; };
 		A0CE032C1A0ED67C0076EE3E /* VisualsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CE032B1A0ED67C0076EE3E /* VisualsViewController.swift */; };
-		A0CE032E1A0ED69E0076EE3E /* AlertsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CE032D1A0ED69E0076EE3E /* AlertsViewController.swift */; };
 		A0CEDBA21A0C3ADF0051BDB8 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CEDBA11A0C3ADF0051BDB8 /* User.swift */; };
 		A0EE29021A08AB7200B50700 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EE29011A08AB7200B50700 /* UIViewExtension.swift */; };
 		A0F0FBED1A103DC600ADBDF3 /* WellUsersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F0FBEC1A103DC600ADBDF3 /* WellUsersTableViewController.swift */; };
@@ -43,9 +50,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A018E3FF1A2B003D001EF20E /* Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
+		A018E4031A2B005A001EF20E /* ParameterAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParameterAlert.swift; sourceTree = "<group>"; };
+		A018E4051A2B010A001EF20E /* Parameter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parameter.swift; sourceTree = "<group>"; };
+		A018E4091A2B0733001EF20E /* ParameterAlertsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParameterAlertsTableViewController.swift; sourceTree = "<group>"; };
+		A018E40B1A2BB4E8001EF20E /* AddParameterAlertTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddParameterAlertTableViewController.swift; sourceTree = "<group>"; };
 		A0343D261A26493800FA0464 /* DrillAlert-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DrillAlert-Bridging-Header.h"; sourceTree = "<group>"; };
 		A0343D2A1A265D2E00FA0464 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		A0343D2C1A265E6C00FA0464 /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		A0343D301A2674C100FA0464 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
+		A0343D321A2AB66100FA0464 /* WellboreTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WellboreTableViewCell.swift; sourceTree = "<group>"; };
+		A0343D381A2AC85400FA0464 /* WellboreDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WellboreDetailViewController.swift; sourceTree = "<group>"; };
+		A0343D401A2AFE9C00FA0464 /* ParameterAlertTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParameterAlertTableViewCell.swift; sourceTree = "<group>"; };
 		A042B2DC1A195ED600660AB7 /* VisualViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualViewController.swift; sourceTree = "<group>"; };
 		A042B2DE1A19645F00660AB7 /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
 		A042B2E01A19669E00660AB7 /* d3.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = d3.min.js; sourceTree = "<group>"; };
@@ -63,11 +79,9 @@
 		A06FFD7B1A06AA08001B3FF8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A06FFD7C1A06AA08001B3FF8 /* DrillAlertTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrillAlertTests.swift; sourceTree = "<group>"; };
 		A087EEDD1A06C09D0073FDD0 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		A0C3C53E1A09D2750017BC9B /* WellboreDetailTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WellboreDetailTabBarController.swift; sourceTree = "<group>"; };
 		A0CA2F5D1A2647FD00D12218 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 		A0CE03271A0ECEFB0076EE3E /* Wellbore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Wellbore.swift; sourceTree = "<group>"; };
 		A0CE032B1A0ED67C0076EE3E /* VisualsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualsViewController.swift; sourceTree = "<group>"; };
-		A0CE032D1A0ED69E0076EE3E /* AlertsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertsViewController.swift; sourceTree = "<group>"; };
 		A0CEDBA11A0C3ADF0051BDB8 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		A0EE29011A08AB7200B50700 /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		A0F0FBEC1A103DC600ADBDF3 /* WellUsersTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WellUsersTableViewController.swift; sourceTree = "<group>"; };
@@ -92,12 +106,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A018E4081A2B011D001EF20E /* Alerts */ = {
+			isa = PBXGroup;
+			children = (
+				A018E3FF1A2B003D001EF20E /* Alert.swift */,
+				A018E4031A2B005A001EF20E /* ParameterAlert.swift */,
+				A018E4051A2B010A001EF20E /* Parameter.swift */,
+			);
+			name = Alerts;
+			sourceTree = "<group>";
+		};
 		A0343D291A265D1900FA0464 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
 				A0343D2A1A265D2E00FA0464 /* SettingsTableViewController.swift */,
 			);
 			name = Settings;
+			sourceTree = "<group>";
+		};
+		A0343D351A2AB6ED00FA0464 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				A0EE29011A08AB7200B50700 /* UIViewExtension.swift */,
+			);
+			name = Extensions;
 			sourceTree = "<group>";
 		};
 		A05A35CC1A08370E008EA386 /* Admin */ = {
@@ -124,6 +156,7 @@
 		A05A35D01A0837DD008EA386 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				A018E4081A2B011D001EF20E /* Alerts */,
 				A06FFD651A06AA08001B3FF8 /* DrillAlert.xcdatamodeld */,
 				A05A35D11A0837ED008EA386 /* Well.swift */,
 				A0CE03271A0ECEFB0076EE3E /* Wellbore.swift */,
@@ -135,6 +168,7 @@
 		A06FFD551A06AA08001B3FF8 = {
 			isa = PBXGroup;
 			children = (
+				A0343D301A2674C100FA0464 /* Entitlements.plist */,
 				A06FFD601A06AA08001B3FF8 /* DrillAlert */,
 				A06FFD791A06AA08001B3FF8 /* DrillAlertTests */,
 				A06FFD5F1A06AA08001B3FF8 /* Products */,
@@ -153,11 +187,13 @@
 		A06FFD601A06AA08001B3FF8 /* DrillAlert */ = {
 			isa = PBXGroup;
 			children = (
+				A06FFD6A1A06AA08001B3FF8 /* Main.storyboard */,
 				A06FFD631A06AA08001B3FF8 /* AppDelegate.swift */,
-				A0CA2F5F1A26480500D12218 /* Frameworks */,
 				A0EE29001A08AB6600B50700 /* Views */,
 				A05A35D01A0837DD008EA386 /* Models */,
 				A05A35CF1A0837CC008EA386 /* Controllers */,
+				A0343D351A2AB6ED00FA0464 /* Extensions */,
+				A0CA2F5F1A26480500D12218 /* Frameworks */,
 				A06FFD611A06AA08001B3FF8 /* Supporting Files */,
 			);
 			path = DrillAlert;
@@ -202,7 +238,7 @@
 		A0C3C53D1A09D1900017BC9B /* WellboreDetail */ = {
 			isa = PBXGroup;
 			children = (
-				A0C3C53E1A09D2750017BC9B /* WellboreDetailTabBarController.swift */,
+				A0343D381A2AC85400FA0464 /* WellboreDetailViewController.swift */,
 				A0CE032A1A0ED5FB0076EE3E /* Alerts */,
 				A0CE03291A0ED5F60076EE3E /* Visuals */,
 			);
@@ -232,7 +268,8 @@
 		A0CE032A1A0ED5FB0076EE3E /* Alerts */ = {
 			isa = PBXGroup;
 			children = (
-				A0CE032D1A0ED69E0076EE3E /* AlertsViewController.swift */,
+				A018E4091A2B0733001EF20E /* ParameterAlertsTableViewController.swift */,
+				A018E40B1A2BB4E8001EF20E /* AddParameterAlertTableViewController.swift */,
 			);
 			name = Alerts;
 			sourceTree = "<group>";
@@ -240,8 +277,8 @@
 		A0EE29001A08AB6600B50700 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				A06FFD6A1A06AA08001B3FF8 /* Main.storyboard */,
-				A0EE29011A08AB7200B50700 /* UIViewExtension.swift */,
+				A0343D321A2AB66100FA0464 /* WellboreTableViewCell.swift */,
+				A0343D401A2AFE9C00FA0464 /* ParameterAlertTableViewCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -326,6 +363,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0343D311A2674C100FA0464 /* Entitlements.plist in Resources */,
 				A042B2E11A19669E00660AB7 /* d3.min.js in Resources */,
 				A06FFD6C1A06AA08001B3FF8 /* Main.storyboard in Resources */,
 				A042B2DF1A19645F00660AB7 /* index.html in Resources */,
@@ -348,18 +386,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A018E4041A2B005A001EF20E /* ParameterAlert.swift in Sources */,
+				A0343D411A2AFE9C00FA0464 /* ParameterAlertTableViewCell.swift in Sources */,
 				A05A35CE1A083727008EA386 /* AdminTableViewController.swift in Sources */,
+				A0343D331A2AB66100FA0464 /* WellboreTableViewCell.swift in Sources */,
 				A0EE29021A08AB7200B50700 /* UIViewExtension.swift in Sources */,
 				A0F0FBED1A103DC600ADBDF3 /* WellUsersTableViewController.swift in Sources */,
+				A018E4001A2B003D001EF20E /* Alert.swift in Sources */,
 				A0CE032C1A0ED67C0076EE3E /* VisualsViewController.swift in Sources */,
 				A05A35D21A0837ED008EA386 /* Well.swift in Sources */,
 				A06FFD691A06AA08001B3FF8 /* LoginViewController.swift in Sources */,
-				A0C3C53F1A09D2750017BC9B /* WellboreDetailTabBarController.swift in Sources */,
 				A0CE03281A0ECEFB0076EE3E /* Wellbore.swift in Sources */,
-				A0CE032E1A0ED69E0076EE3E /* AlertsViewController.swift in Sources */,
+				A018E40A1A2B0733001EF20E /* ParameterAlertsTableViewController.swift in Sources */,
+				A018E4061A2B010A001EF20E /* Parameter.swift in Sources */,
 				A0CEDBA21A0C3ADF0051BDB8 /* User.swift in Sources */,
 				A0343D2D1A265E6C00FA0464 /* MainTabBarController.swift in Sources */,
 				A042B2DD1A195ED600660AB7 /* VisualViewController.swift in Sources */,
+				A018E40C1A2BB4E8001EF20E /* AddParameterAlertTableViewController.swift in Sources */,
+				A0343D391A2AC85400FA0464 /* WellboreDetailViewController.swift in Sources */,
 				A0343D2B1A265D2E00FA0464 /* SettingsTableViewController.swift in Sources */,
 				A06FFD671A06AA08001B3FF8 /* DrillAlert.xcdatamodeld in Sources */,
 				A06FFD641A06AA08001B3FF8 /* AppDelegate.swift in Sources */,
@@ -487,6 +531,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
+				CODE_SIGN_IDENTITY = "-";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/DrillAlert",
@@ -505,6 +551,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
+				CODE_SIGN_IDENTITY = "-";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/DrillAlert",
@@ -521,6 +569,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
+				CODE_SIGN_IDENTITY = "-";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -540,6 +590,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
+				CODE_SIGN_IDENTITY = "-";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",

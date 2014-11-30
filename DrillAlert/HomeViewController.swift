@@ -12,8 +12,7 @@ import UIKit
 class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet weak var tableView: UITableView!
     
-    let homeToAdminSegueIdentifier = "HomeToAdminSegue"
-    let homeToWellboreDetailSegueIdentifier = "WellboreDetailSegue"
+    let homeToWellboreDetailSegueIdentifier = "HomeToWellboreDetailSegue"
     
     // Segmented Control
     let segmentedControlItems = ["Subscribed", "All"]
@@ -21,6 +20,9 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     let subscribedWellboresIndex = 0
     let allWellsIndex = 1
 
+    // Hiding the navigation bar line 
+    var navBarHairlineImageView: UIImageView!
+    
     // Implicit since the user must be logged in to see the HomeViewController.
     var currentUser: User!
     
@@ -34,12 +36,29 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         super.viewDidLoad()
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        // Hiding the navigation bar line
+        if let navigationController = self.navigationController {
+            navBarHairlineImageView = self.findHairlineImageViewUnder(navigationController.navigationBar)
+            navBarHairlineImageView.hidden = true
+        }
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        navBarHairlineImageView.hidden = false
+    }
+    
     private func setupView() {
         self.title = "Home"
         let toolbarWidth = self.view.frame.size.width
-        let toolbarHeight: CGFloat = 44.0
+        let toolbarHeight: CGFloat = 39.0
+
 
         if let navigationController = self.navigationController {
+            
+            
             navigationController.navigationBar.hidden = false
             // Add the segmented control at the (navigation bar height + status bar height) y coordinate
             let yCoord = navigationController.navigationBar.frame.size.height + UIApplication.sharedApplication().statusBarFrame.size.height
@@ -49,7 +68,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             let toolbar = UIToolbar(frame: toolbarRect)
             
             // Set up Segmented Control
-            let segmentedControlHeight: CGFloat = 29.0
+            let segmentedControlHeight: CGFloat = 24.0
             let segmentedControlWidth: CGFloat = toolbarWidth / 2
             let segmentedControlXCoord: CGFloat = toolbarWidth / 4
             let segmentedControlYCoord: CGFloat = (toolbarHeight - segmentedControlHeight) / 2
@@ -73,16 +92,26 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             toolbar.addBottomBorder()
             
             self.view.addSubview(toolbar)
-            // Sets the tableview y coordinate to the toolbarheight
             
+            // Sets the tableview y coordinate to the toolbarheight
             let headerViewRect = CGRectMake(0, 0, self.tableView.frame.width, toolbarHeight + yCoord)
             self.tableView.tableHeaderView = UIView(frame: headerViewRect)
         }
        
     }
     
-    func adminBarButtonTapped(sender: UIBarButtonItem) {
-        self.performSegueWithIdentifier(homeToAdminSegueIdentifier, sender: self)
+    func findHairlineImageViewUnder(view: UIView) -> UIImageView? {
+        if view.isKindOfClass(UIImageView) && view.bounds.size.height <= 1.0 {
+            return view as? UIImageView
+        } else {
+            for subview in view.subviews {
+                var imageView = self.findHairlineImageViewUnder(subview as UIView)
+                if imageView != nil {
+                    return imageView
+                }
+            }
+            return nil
+        }
     }
     
     func segmentedControlAction(sender: UISegmentedControl) {
@@ -117,9 +146,9 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         if segue.identifier == homeToWellboreDetailSegueIdentifier {
             let wellbore = sender as Wellbore
-            let destinationViewController = segue.destinationViewController as WellboreDetailTabBarController
+            let destinationViewController = segue.destinationViewController as WellboreDetailViewController
             destinationViewController.currentWellbore = wellbore
-            
+            destinationViewController.currentUser = currentUser
         }
         super.prepareForSegue(segue, sender: self)
     }
@@ -128,11 +157,10 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
 extension HomeViewController: UITableViewDataSource {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("WellCell") as UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(WellboreTableViewCell.getCellIdentifier()) as WellboreTableViewCell
         let wellbore = wellboreAtIndex(indexPath.row)
         
-        cell.textLabel.text = wellbore.name
-        cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+        cell.setupWithWellbore(wellbore)
         
         return cell
     }
