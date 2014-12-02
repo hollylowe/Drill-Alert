@@ -8,31 +8,99 @@
 
 import Foundation
 
+class APIHelper {
+    class func getJSONArray(urlToRequest: String) -> Array<Dictionary<String, AnyObject>> {
+        var result: AnyObject?
+        var resultArray = Array<Dictionary<String, AnyObject>>()
+        
+        if let url = NSURL(string: urlToRequest) {
+            if let data = NSData(contentsOfURL: url) {
+                result = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(0), error: nil)
+            }
+        }
+        
+        if let json = result as? Array<AnyObject> {
+            for index in 0...json.count - 1 {
+                let object: AnyObject = json[index]
+                let objectDictionary = object as Dictionary<String, AnyObject>
+                resultArray.append(objectDictionary)
+            }
+            
+        }
+        
+        return resultArray
+    }
+
+    
+    
+}
+
+class Point {
+    var x: Double
+    var y: Double
+    
+    init(x: Double, y: Double) {
+        self.x = x
+        self.y = y
+    }
+}
+
 class Wellbore {
     var name: String!
     var well: Well!
-    var data: Array<Int>!
+    var data = Array<Point>()
     var titles: Array<String>!
     var res: AnyObject!
     
+    
     init(well: Well, name: String) {
         self.name = name
-        self.data = [200, 350]
         self.well = well
         self.titles = ["\"blue\"", "\"more blue\""]
+        self.updateData()
+    }
+    
+    // Data is in the form of
+    // [{x: 1, y: 5}, {x: 20, y: 20}]
+    func getDataString() -> String! {
+        var resultString = "["
+        var index = 0
         
-//        Uncomment for querying data
-//        Number at end of url specifies number of entries to receive
-//        let url = NSURL(string: "http://drillalert.azurewebsites.net/api/WellboreData/5")
-//        
-//        let task = NSURLSession.sharedSession().dataTaskWithURL(url!) {(data, response, error) in
-//            self.data = NSString(data: data, encoding: NSUTF8StringEncoding)!
-//            let fullNameArr = self.data.componentsSeparatedByString("(")
-//            self.data = fullNameArr[0]
-//            println(self.data)
-//        }
-//        
-//        task.resume()
+        for point in data {
+            var newPointString = "{"
+            newPointString = newPointString + "x: " + NSNumber(double: point.x).stringValue
+            newPointString = newPointString + ", "
+            newPointString = newPointString + "y: " + NSNumber(double: point.y).stringValue
+            newPointString = newPointString + "}"
+            
+            resultString = resultString + newPointString
+            // If we're not the last point
+            if index + 1 < data.count {
+                // Add a comma
+                index = index + 1
+                resultString = resultString + ", "
+            } else {
+                resultString = resultString + "]"
+            }
+        }
+        
+        return resultString
+    }
+    
+    func updateData() {
+        let url = "http://drillalert.azurewebsites.net/api/WellboreData/5"
+        for dictionary in APIHelper.getJSONArray(url) {
+            var x: Double = 0
+            var y: Double = 0
+            if let xValue: AnyObject = dictionary["X"] {
+                x = (xValue as NSNumber).doubleValue
+            }
+            if let yValue: AnyObject = dictionary["Y"] {
+                y = (yValue as NSNumber).doubleValue
+            }
+            
+            self.data.append(Point(x: x, y: y))
+        }
     }
     
     /// An API call to get all of the wellbores a user
@@ -60,7 +128,7 @@ class Wellbore {
         return wellbores
     }
     
-    func getData() -> Array<Int>{
+    func getData() -> Array<Point> {
         return self.data
     }
     

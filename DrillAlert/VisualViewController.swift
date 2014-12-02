@@ -32,28 +32,7 @@ class VisualViewController: UIViewController, UIWebViewDelegate {
 
 extension VisualViewController: UIWebViewDelegate {
     func webViewDidFinishLoad(webView: UIWebView) {
-        let data = wellbore.getData()
-        let title = wellbore.getTitles()
-        var dataStr: String! = String("showData([")
-//        Iterate through wellbore data and add to string
-        for (idx, val) in enumerate(data) {
-            if idx < data.count - 1 {
-                dataStr = dataStr + String(val) + ", "
-            }
-            else {
-                dataStr = dataStr + String(val) + "], ["
-            }
-        }
-//        Iterate through wellbore titles and add to string
-        for (idx, val) in enumerate(title) {
-            if idx < title.count - 1 {
-                dataStr = dataStr + String(val) + ", "
-            }
-            else {
-                dataStr = dataStr + String(val) + "])"
-            }
-        }
-        println(dataStr)
+        var dataStr = String("showData(\(wellbore.getDataString()))")
         self.webView.stringByEvaluatingJavaScriptFromString(dataStr)
     }
 }

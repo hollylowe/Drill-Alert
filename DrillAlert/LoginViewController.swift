@@ -23,7 +23,7 @@ class LoginViewController: UIViewController, FBLoginViewDelegate {
     
     override func viewDidLoad() {
         // Ask for public profile user permissions from facebook
-        self.fbLoginView.readPermissions = ["public_profile"]
+        self.fbLoginView.readPermissions = ["public_profile", "email"]
         println(self.fbLoginView.frame.size.height)
         // Check if user is already logged in, if they are, go
         // straight to the home view controller

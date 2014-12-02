@@ -56,7 +56,7 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
     func setupTabBarIcons() {
         let tabBar = self.tabBar
         let lightBlueColor = UIColor(red: 0.412, green: 0.671, blue: 0.898, alpha: 1.0)
-        tabBar.tintColor = lightBlueColor
+        tabBar.tintColor = UIColor.whiteColor()
         tabBar.selectedImageTintColor = lightBlueColor
         if let items = tabBar.items {
             let homeTabBarItem = items[homeIndex] as UITabBarItem
@@ -102,6 +102,7 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
         UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0)
         image.drawInRect(CGRectMake(0, 0, newSize.width, newSize.height))
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        
         UIGraphicsEndImageContext()
         return newImage
     }
