@@ -57,7 +57,7 @@ class Wellbore {
         self.name = name
         self.well = well
         self.titles = ["\"blue\"", "\"more blue\""]
-        self.updateData()
+        // self.updateData()
     }
     
     // Data is in the form of
@@ -85,6 +85,22 @@ class Wellbore {
         }
         
         return resultString
+    }
+    
+    func getOnePoint() -> Point {
+        let url = "http://drillalert.azurewebsites.net/api/WellboreData/1"
+        var x: Double = 0
+        var y: Double = 0
+        for dictionary in APIHelper.getJSONArray(url) {
+            if let xValue: AnyObject = dictionary["X"] {
+                x = (xValue as NSNumber).doubleValue
+            }
+            if let yValue: AnyObject = dictionary["Y"] {
+                y = (yValue as NSNumber).doubleValue
+            }
+        }
+        
+        return Point(x: x, y: y)
     }
     
     func updateData() {

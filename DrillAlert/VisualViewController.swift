@@ -28,11 +28,20 @@ class VisualViewController: UIViewController, UIWebViewDelegate {
             }
         }
     }
+    
+    // This is purely for the demo
+    func updateGraphData() {
+        let xVal = wellbore.getOnePoint().x
+        
+        var dataStr = String("tick(\(xVal))")
+        self.webView.stringByEvaluatingJavaScriptFromString(dataStr)
+    }
 }
 
 extension VisualViewController: UIWebViewDelegate {
     func webViewDidFinishLoad(webView: UIWebView) {
-        var dataStr = String("showData(\(wellbore.getDataString()))")
-        self.webView.stringByEvaluatingJavaScriptFromString(dataStr)
+        // This is purely for the demo
+        var timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateGraphData", userInfo: nil, repeats: true)
+
     }
 }
