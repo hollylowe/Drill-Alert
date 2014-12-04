@@ -23,6 +23,20 @@
 		A042B2E11A19669E00660AB7 /* d3.min.js in Resources */ = {isa = PBXBuildFile; fileRef = A042B2E01A19669E00660AB7 /* d3.min.js */; };
 		A05A35CE1A083727008EA386 /* AdminTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05A35CD1A083727008EA386 /* AdminTableViewController.swift */; };
 		A05A35D21A0837ED008EA386 /* Well.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05A35D11A0837ED008EA386 /* Well.swift */; };
+		A066D5B51A2EA9B500E16E58 /* GoogleOpenSource.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A066D5B31A2EA9B500E16E58 /* GoogleOpenSource.framework */; };
+		A066D5B61A2EA9B500E16E58 /* GooglePlus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A066D5B41A2EA9B500E16E58 /* GooglePlus.framework */; };
+		A066D5B81A2EA9C700E16E58 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A066D5B71A2EA9C700E16E58 /* AddressBook.framework */; };
+		A066D5BA1A2EA9D100E16E58 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A066D5B91A2EA9D100E16E58 /* AssetsLibrary.framework */; };
+		A066D5BC1A2EA9DB00E16E58 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A066D5BB1A2EA9DB00E16E58 /* Foundation.framework */; };
+		A066D5BE1A2EA9E400E16E58 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A066D5BD1A2EA9E400E16E58 /* CoreLocation.framework */; };
+		A066D5C01A2EA9EF00E16E58 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A066D5BF1A2EA9EF00E16E58 /* CoreMotion.framework */; };
+		A066D5C21A2EA9FC00E16E58 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A066D5C11A2EA9FC00E16E58 /* CoreGraphics.framework */; };
+		A066D5C41A2EAA0600E16E58 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A066D5C31A2EAA0600E16E58 /* CoreText.framework */; };
+		A066D5C61A2EAA0E00E16E58 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A066D5C51A2EAA0E00E16E58 /* MediaPlayer.framework */; };
+		A066D5C81A2EAA1700E16E58 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A066D5C71A2EAA1700E16E58 /* Security.framework */; };
+		A066D5CA1A2EAA2100E16E58 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A066D5C91A2EAA2100E16E58 /* SystemConfiguration.framework */; };
+		A066D5CC1A2EAA2900E16E58 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A066D5CB1A2EAA2900E16E58 /* UIKit.framework */; };
+		A066D5D21A2EBD4B00E16E58 /* PaddedUITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = A066D5D11A2EBD4B00E16E58 /* PaddedUITextField.swift */; };
 		A06FFD641A06AA08001B3FF8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06FFD631A06AA08001B3FF8 /* AppDelegate.swift */; };
 		A06FFD671A06AA08001B3FF8 /* DrillAlert.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A06FFD651A06AA08001B3FF8 /* DrillAlert.xcdatamodeld */; };
 		A06FFD691A06AA08001B3FF8 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06FFD681A06AA08001B3FF8 /* LoginViewController.swift */; };
@@ -31,10 +45,16 @@
 		A06FFD711A06AA08001B3FF8 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = A06FFD6F1A06AA08001B3FF8 /* LaunchScreen.xib */; };
 		A06FFD7D1A06AA08001B3FF8 /* DrillAlertTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06FFD7C1A06AA08001B3FF8 /* DrillAlertTests.swift */; };
 		A087EEDE1A06C09D0073FDD0 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A087EEDD1A06C09D0073FDD0 /* HomeViewController.swift */; };
+		A095FB8C1A2FC37200B15D39 /* AlertValueCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A095FB8B1A2FC37200B15D39 /* AlertValueCell.swift */; };
+		A095FB8F1A2FC38C00B15D39 /* AlertWhenCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A095FB8E1A2FC38C00B15D39 /* AlertWhenCell.swift */; };
+		A095FB911A2FC39800B15D39 /* AlertPriorityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A095FB901A2FC39800B15D39 /* AlertPriorityCell.swift */; };
+		A095FB931A2FF20D00B15D39 /* gauge.html in Resources */ = {isa = PBXBuildFile; fileRef = A095FB921A2FF20D00B15D39 /* gauge.html */; };
 		A0CA2F5E1A2647FD00D12218 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0CA2F5D1A2647FD00D12218 /* FacebookSDK.framework */; };
 		A0CE03281A0ECEFB0076EE3E /* Wellbore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CE03271A0ECEFB0076EE3E /* Wellbore.swift */; };
 		A0CE032C1A0ED67C0076EE3E /* VisualsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CE032B1A0ED67C0076EE3E /* VisualsViewController.swift */; };
 		A0CEDBA21A0C3ADF0051BDB8 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CEDBA11A0C3ADF0051BDB8 /* User.swift */; };
+		A0DB7DBD1A2FB96000C8C9A2 /* AddOrEditAlertTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0DB7DBC1A2FB96000C8C9A2 /* AddOrEditAlertTableViewController.swift */; };
+		A0DB7DBF1A2FB96E00C8C9A2 /* SelectParameterTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0DB7DBE1A2FB96E00C8C9A2 /* SelectParameterTableViewController.swift */; };
 		A0EE29021A08AB7200B50700 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EE29011A08AB7200B50700 /* UIViewExtension.swift */; };
 		A0F0FBED1A103DC600ADBDF3 /* WellUsersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F0FBEC1A103DC600ADBDF3 /* WellUsersTableViewController.swift */; };
 /* End PBXBuildFile section */
@@ -67,6 +87,21 @@
 		A042B2E01A19669E00660AB7 /* d3.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = d3.min.js; sourceTree = "<group>"; };
 		A05A35CD1A083727008EA386 /* AdminTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdminTableViewController.swift; sourceTree = "<group>"; };
 		A05A35D11A0837ED008EA386 /* Well.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Well.swift; sourceTree = "<group>"; };
+		A066D5B31A2EA9B500E16E58 /* GoogleOpenSource.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleOpenSource.framework; path = "../../Resources/google-plus-ios-sdk-1.7.1/GoogleOpenSource.framework"; sourceTree = "<group>"; };
+		A066D5B41A2EA9B500E16E58 /* GooglePlus.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GooglePlus.framework; path = "../../Resources/google-plus-ios-sdk-1.7.1/GooglePlus.framework"; sourceTree = "<group>"; };
+		A066D5B71A2EA9C700E16E58 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		A066D5B91A2EA9D100E16E58 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		A066D5BB1A2EA9DB00E16E58 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		A066D5BD1A2EA9E400E16E58 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		A066D5BF1A2EA9EF00E16E58 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		A066D5C11A2EA9FC00E16E58 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		A066D5C31A2EAA0600E16E58 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		A066D5C51A2EAA0E00E16E58 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		A066D5C71A2EAA1700E16E58 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		A066D5C91A2EAA2100E16E58 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		A066D5CB1A2EAA2900E16E58 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		A066D5CD1A2EAA4400E16E58 /* GooglePlus.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GooglePlus.bundle; path = "../../Resources/google-plus-ios-sdk-1.7.1/GooglePlus.bundle"; sourceTree = "<group>"; };
+		A066D5D11A2EBD4B00E16E58 /* PaddedUITextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaddedUITextField.swift; sourceTree = "<group>"; };
 		A06FFD5E1A06AA08001B3FF8 /* DrillAlert.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DrillAlert.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A06FFD621A06AA08001B3FF8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A06FFD631A06AA08001B3FF8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -79,10 +114,16 @@
 		A06FFD7B1A06AA08001B3FF8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A06FFD7C1A06AA08001B3FF8 /* DrillAlertTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrillAlertTests.swift; sourceTree = "<group>"; };
 		A087EEDD1A06C09D0073FDD0 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		A095FB8B1A2FC37200B15D39 /* AlertValueCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertValueCell.swift; sourceTree = "<group>"; };
+		A095FB8E1A2FC38C00B15D39 /* AlertWhenCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertWhenCell.swift; sourceTree = "<group>"; };
+		A095FB901A2FC39800B15D39 /* AlertPriorityCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertPriorityCell.swift; sourceTree = "<group>"; };
+		A095FB921A2FF20D00B15D39 /* gauge.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = gauge.html; sourceTree = "<group>"; };
 		A0CA2F5D1A2647FD00D12218 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 		A0CE03271A0ECEFB0076EE3E /* Wellbore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Wellbore.swift; sourceTree = "<group>"; };
 		A0CE032B1A0ED67C0076EE3E /* VisualsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualsViewController.swift; sourceTree = "<group>"; };
 		A0CEDBA11A0C3ADF0051BDB8 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		A0DB7DBC1A2FB96000C8C9A2 /* AddOrEditAlertTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddOrEditAlertTableViewController.swift; sourceTree = "<group>"; };
+		A0DB7DBE1A2FB96E00C8C9A2 /* SelectParameterTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectParameterTableViewController.swift; sourceTree = "<group>"; };
 		A0EE29011A08AB7200B50700 /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		A0F0FBEC1A103DC600ADBDF3 /* WellUsersTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WellUsersTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -92,6 +133,19 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A066D5CC1A2EAA2900E16E58 /* UIKit.framework in Frameworks */,
+				A066D5CA1A2EAA2100E16E58 /* SystemConfiguration.framework in Frameworks */,
+				A066D5C81A2EAA1700E16E58 /* Security.framework in Frameworks */,
+				A066D5C61A2EAA0E00E16E58 /* MediaPlayer.framework in Frameworks */,
+				A066D5C41A2EAA0600E16E58 /* CoreText.framework in Frameworks */,
+				A066D5C21A2EA9FC00E16E58 /* CoreGraphics.framework in Frameworks */,
+				A066D5C01A2EA9EF00E16E58 /* CoreMotion.framework in Frameworks */,
+				A066D5BE1A2EA9E400E16E58 /* CoreLocation.framework in Frameworks */,
+				A066D5BC1A2EA9DB00E16E58 /* Foundation.framework in Frameworks */,
+				A066D5BA1A2EA9D100E16E58 /* AssetsLibrary.framework in Frameworks */,
+				A066D5B81A2EA9C700E16E58 /* AddressBook.framework in Frameworks */,
+				A066D5B51A2EA9B500E16E58 /* GoogleOpenSource.framework in Frameworks */,
+				A066D5B61A2EA9B500E16E58 /* GooglePlus.framework in Frameworks */,
 				A0CA2F5E1A2647FD00D12218 /* FacebookSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -165,6 +219,24 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
+		A066D5CF1A2EAADB00E16E58 /* GooglePlus */ = {
+			isa = PBXGroup;
+			children = (
+				A066D5CD1A2EAA4400E16E58 /* GooglePlus.bundle */,
+				A066D5B31A2EA9B500E16E58 /* GoogleOpenSource.framework */,
+				A066D5B41A2EA9B500E16E58 /* GooglePlus.framework */,
+			);
+			name = GooglePlus;
+			sourceTree = "<group>";
+		};
+		A066D5D01A2EAAF500E16E58 /* Facebook */ = {
+			isa = PBXGroup;
+			children = (
+				A0CA2F5D1A2647FD00D12218 /* FacebookSDK.framework */,
+			);
+			name = Facebook;
+			sourceTree = "<group>";
+		};
 		A06FFD551A06AA08001B3FF8 = {
 			isa = PBXGroup;
 			children = (
@@ -189,9 +261,9 @@
 			children = (
 				A06FFD6A1A06AA08001B3FF8 /* Main.storyboard */,
 				A06FFD631A06AA08001B3FF8 /* AppDelegate.swift */,
+				A05A35CF1A0837CC008EA386 /* Controllers */,
 				A0EE29001A08AB6600B50700 /* Views */,
 				A05A35D01A0837DD008EA386 /* Models */,
-				A05A35CF1A0837CC008EA386 /* Controllers */,
 				A0343D351A2AB6ED00FA0464 /* Extensions */,
 				A0CA2F5F1A26480500D12218 /* Frameworks */,
 				A06FFD611A06AA08001B3FF8 /* Supporting Files */,
@@ -235,6 +307,16 @@
 			name = Home;
 			sourceTree = "<group>";
 		};
+		A095FB8D1A2FC37600B15D39 /* Alerts */ = {
+			isa = PBXGroup;
+			children = (
+				A095FB8B1A2FC37200B15D39 /* AlertValueCell.swift */,
+				A095FB8E1A2FC38C00B15D39 /* AlertWhenCell.swift */,
+				A095FB901A2FC39800B15D39 /* AlertPriorityCell.swift */,
+			);
+			name = Alerts;
+			sourceTree = "<group>";
+		};
 		A0C3C53D1A09D1900017BC9B /* WellboreDetail */ = {
 			isa = PBXGroup;
 			children = (
@@ -249,7 +331,19 @@
 			isa = PBXGroup;
 			children = (
 				A0343D261A26493800FA0464 /* DrillAlert-Bridging-Header.h */,
-				A0CA2F5D1A2647FD00D12218 /* FacebookSDK.framework */,
+				A066D5D01A2EAAF500E16E58 /* Facebook */,
+				A066D5CF1A2EAADB00E16E58 /* GooglePlus */,
+				A066D5CB1A2EAA2900E16E58 /* UIKit.framework */,
+				A066D5C91A2EAA2100E16E58 /* SystemConfiguration.framework */,
+				A066D5C71A2EAA1700E16E58 /* Security.framework */,
+				A066D5C51A2EAA0E00E16E58 /* MediaPlayer.framework */,
+				A066D5C31A2EAA0600E16E58 /* CoreText.framework */,
+				A066D5C11A2EA9FC00E16E58 /* CoreGraphics.framework */,
+				A066D5BF1A2EA9EF00E16E58 /* CoreMotion.framework */,
+				A066D5BD1A2EA9E400E16E58 /* CoreLocation.framework */,
+				A066D5BB1A2EA9DB00E16E58 /* Foundation.framework */,
+				A066D5B91A2EA9D100E16E58 /* AssetsLibrary.framework */,
+				A066D5B71A2EA9C700E16E58 /* AddressBook.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -261,6 +355,7 @@
 				A0CE032B1A0ED67C0076EE3E /* VisualsViewController.swift */,
 				A042B2DC1A195ED600660AB7 /* VisualViewController.swift */,
 				A042B2DE1A19645F00660AB7 /* index.html */,
+				A095FB921A2FF20D00B15D39 /* gauge.html */,
 			);
 			name = Visuals;
 			sourceTree = "<group>";
@@ -270,6 +365,8 @@
 			children = (
 				A018E4091A2B0733001EF20E /* ParameterAlertsTableViewController.swift */,
 				A018E40B1A2BB4E8001EF20E /* AddParameterAlertTableViewController.swift */,
+				A0DB7DBC1A2FB96000C8C9A2 /* AddOrEditAlertTableViewController.swift */,
+				A0DB7DBE1A2FB96E00C8C9A2 /* SelectParameterTableViewController.swift */,
 			);
 			name = Alerts;
 			sourceTree = "<group>";
@@ -277,8 +374,10 @@
 		A0EE29001A08AB6600B50700 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				A095FB8D1A2FC37600B15D39 /* Alerts */,
 				A0343D321A2AB66100FA0464 /* WellboreTableViewCell.swift */,
 				A0343D401A2AFE9C00FA0464 /* ParameterAlertTableViewCell.swift */,
+				A066D5D11A2EBD4B00E16E58 /* PaddedUITextField.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -364,6 +463,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A0343D311A2674C100FA0464 /* Entitlements.plist in Resources */,
+				A095FB931A2FF20D00B15D39 /* gauge.html in Resources */,
 				A042B2E11A19669E00660AB7 /* d3.min.js in Resources */,
 				A06FFD6C1A06AA08001B3FF8 /* Main.storyboard in Resources */,
 				A042B2DF1A19645F00660AB7 /* index.html in Resources */,
@@ -390,7 +490,9 @@
 				A0343D411A2AFE9C00FA0464 /* ParameterAlertTableViewCell.swift in Sources */,
 				A05A35CE1A083727008EA386 /* AdminTableViewController.swift in Sources */,
 				A0343D331A2AB66100FA0464 /* WellboreTableViewCell.swift in Sources */,
+				A095FB911A2FC39800B15D39 /* AlertPriorityCell.swift in Sources */,
 				A0EE29021A08AB7200B50700 /* UIViewExtension.swift in Sources */,
+				A0DB7DBF1A2FB96E00C8C9A2 /* SelectParameterTableViewController.swift in Sources */,
 				A0F0FBED1A103DC600ADBDF3 /* WellUsersTableViewController.swift in Sources */,
 				A018E4001A2B003D001EF20E /* Alert.swift in Sources */,
 				A0CE032C1A0ED67C0076EE3E /* VisualsViewController.swift in Sources */,
@@ -401,12 +503,16 @@
 				A018E4061A2B010A001EF20E /* Parameter.swift in Sources */,
 				A0CEDBA21A0C3ADF0051BDB8 /* User.swift in Sources */,
 				A0343D2D1A265E6C00FA0464 /* MainTabBarController.swift in Sources */,
+				A095FB8C1A2FC37200B15D39 /* AlertValueCell.swift in Sources */,
 				A042B2DD1A195ED600660AB7 /* VisualViewController.swift in Sources */,
 				A018E40C1A2BB4E8001EF20E /* AddParameterAlertTableViewController.swift in Sources */,
 				A0343D391A2AC85400FA0464 /* WellboreDetailViewController.swift in Sources */,
+				A0DB7DBD1A2FB96000C8C9A2 /* AddOrEditAlertTableViewController.swift in Sources */,
 				A0343D2B1A265D2E00FA0464 /* SettingsTableViewController.swift in Sources */,
 				A06FFD671A06AA08001B3FF8 /* DrillAlert.xcdatamodeld in Sources */,
+				A066D5D21A2EBD4B00E16E58 /* PaddedUITextField.swift in Sources */,
 				A06FFD641A06AA08001B3FF8 /* AppDelegate.swift in Sources */,
+				A095FB8F1A2FC38C00B15D39 /* AlertWhenCell.swift in Sources */,
 				A087EEDE1A06C09D0073FDD0 /* HomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -536,6 +642,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/DrillAlert",
+					"/Users/lucas/Developer/CPE402/Resources/google-plus-ios-sdk-1.7.1",
 				);
 				INFOPLIST_FILE = DrillAlert/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -543,6 +650,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "DrillAlert/DrillAlert-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -556,12 +664,14 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/DrillAlert",
+					"/Users/lucas/Developer/CPE402/Resources/google-plus-ios-sdk-1.7.1",
 				);
 				INFOPLIST_FILE = DrillAlert/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "DrillAlert/DrillAlert-Bridging-Header.h";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

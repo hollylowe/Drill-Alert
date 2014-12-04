@@ -3,4 +3,5 @@
 //
 
 #import <FacebookSDK/FacebookSDK.h>
-
+#import <GooglePlus/GooglePlus.h>
+#import <GoogleOpenSource/GoogleOpenSource.h>

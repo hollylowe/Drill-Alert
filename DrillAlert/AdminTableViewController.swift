@@ -42,7 +42,10 @@ extension AdminTableViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCellWithIdentifier("WellCell") as UITableViewCell
         let well = wells[indexPath.row]
         
-        cell.textLabel.text = well.name
+        if let textLabel = cell.textLabel {
+            textLabel.text = well.name
+        }
+        
         cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
         
         return cell

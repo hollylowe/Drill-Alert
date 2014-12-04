@@ -154,6 +154,8 @@ class WellboreDetailViewController: UIViewController {
     func addAlertBarButtonTapped(sender: AnyObject) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let addAlertNavigationController = storyboard.instantiateViewControllerWithIdentifier(AddParameterAlertNavigationController.getStoryboardIdentifier()) as AddParameterAlertNavigationController
+        let addParameterAlertViewController = addAlertNavigationController.viewControllers[0] as AddParameterAlertTableViewController
+        addParameterAlertViewController.delegate = self
         self.presentViewController(addAlertNavigationController, animated: true, completion: nil)
     }
     
@@ -161,6 +163,12 @@ class WellboreDetailViewController: UIViewController {
         
     }
     
+    // TODO: Remove this, Purely for the demo
+    func addAlertToTableView(parameterAlert: ParameterAlert) {
+        let incomingViewController = self.segmentViewControllers[self.selectedSegmentIndex] as ParameterAlertsTableViewController
+        incomingViewController.parameterAlerts.append(parameterAlert)
+        incomingViewController.tableView.reloadData()
+    }
     
     func segmentedControlAction(sender: UISegmentedControl) {
         let index = sender.selectedSegmentIndex

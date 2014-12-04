@@ -9,19 +9,107 @@
 import UIKit
 import CoreData
 
+let kClientId = "487243497673-6m1v87vb9jpql3rh7tam059ld093g313.apps.googleusercontent.com"
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
-    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
-        // Call FBAppCall's handleOpenURL:sourceApplication to handle Facebook app responses
-
-        let wasHandled = FBAppCall.handleOpenURL(url, sourceApplication: sourceApplication)
+    
+    func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
+        var state = application.applicationState
         
-        // You can add your app-specific url handling code here if needed
+        if state == UIApplicationState.Active {
+            let alertController = UIAlertController(
+                title: "Alert",
+                message: notification.alertBody,
+                preferredStyle: .Alert)
+            
+            let defaultAction = UIAlertAction(
+                title: "OK",
+                style: .Default,
+                handler: nil)
+            
+            alertController.addAction(defaultAction)
+            
+            if let window = UIApplication.sharedApplication().keyWindow {
+                if let rootViewController = window.rootViewController {
+                    rootViewController.presentViewController(alertController, animated: true, completion: nil)
+                }
+            }
+        }
+    }
+    // This method will handle ALL the session state changes in the app
+    func sessionStateChanged(session: FBSession!, state: FBSessionState!, error: NSError!) {
+        if error == nil && state == FBSessionState.Open {
+            // Show the user the logged in UI (skip login view)
+            println("here")
+            if let window = UIApplication.sharedApplication().keyWindow {
+                println("here2")
+                if let rootViewController = window.rootViewController {
+                    if let navigationController = rootViewController as? UINavigationController {
+                        let loginViewController = navigationController.viewControllers[0] as LoginViewController
+                        loginViewController.logInWithFacebookSuccess()
+                    }
+                }
+            }
+            
+        } else if state == FBSessionState.Closed || state == FBSessionState.ClosedLoginFailed {
+            // Show the logged out UI
+            if error != nil {
+                var alertMessage: String?
+                var alertTitle: String?
+                
+                if FBErrorUtility.shouldNotifyUserForError(error) {
+                    alertTitle = "Facebook error"
+                    alertMessage = FBErrorUtility.userMessageForError(error)
+                } else if FBErrorUtility.errorCategoryForError(error) == FBErrorCategory.AuthenticationReopenSession {
+                    alertTitle = "Session Error"
+                    alertMessage = "Your current session is no loner valid. Please log in again."
+                } else {
+                    alertTitle = "Something went wrong"
+                    alertMessage = "Please try again later."
+                    println("Unexpected error: \(error)")
+                }
+                
+                if let message = alertMessage {
+                    if let title = alertTitle {
+                        let alertController = UIAlertController(
+                            title: title,
+                            message: message,
+                            preferredStyle: .Alert)
+                        
+                        let defaultAction = UIAlertAction(
+                            title: "OK",
+                            style: .Default,
+                            handler: nil)
+                        
+                        alertController.addAction(defaultAction)
+                        
+                        if let window = UIApplication.sharedApplication().keyWindow {
+                            if let rootViewController = window.rootViewController as? LoginViewController {
+                                rootViewController.presentViewController(alertController, animated: true, completion: nil)
+                            }
+                        }
+                    }
+                }
+                
+            }
+            
+            FBSession.activeSession().closeAndClearTokenInformation()
+        }
+    }
+    
+    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
+        // Handle Facebook and Google Plus app responses
+        // FBSession.activeSession().setStateChangeHandler(stateHandler)
+        
+        let fbWasHandled = FBAppCall.handleOpenURL(url, sourceApplication: sourceApplication)
+        let gpWasHandled = GPPURLHandler.handleURL(url, sourceApplication: sourceApplication, annotation: annotation)
 
-        return wasHandled
+        // You can add your app-specific url handling code here if needed
+    
+        return fbWasHandled || gpWasHandled
     }
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -30,7 +118,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         pageControl.pageIndicatorTintColor = UIColor.lightGrayColor()
         pageControl.currentPageIndicatorTintColor = UIColor.blackColor()
         pageControl.backgroundColor = UIColor.whiteColor()
+        
+        // Override point for customization after application launch.
+        if UIApplication.instancesRespondToSelector(Selector("registerUserNotificationSettings:")) {
+            application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: UIUserNotificationType.Sound | UIUserNotificationType.Alert | UIUserNotificationType.Badge, categories: nil))
+        } else {
+            //do iOS 7 stuff, which is pretty much nothing for local notifications.
+        }
+        
         return true
+        /*
+        if FBSession.activeSession().state == FBSessionState.CreatedTokenLoaded {
+            FBSession.openActiveSessionWithReadPermissions(["public_profile", "email"], allowLoginUI: false, completionHandler: { (session: FBSession!, state: FBSessionState!, error: NSError!) -> Void in
+                self.sessionStateChanged(session, state: state, error: error)
+            })
+        }
+        */
     }
 
     func applicationWillResignActive(application: UIApplication) {
@@ -48,6 +151,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationDidBecomeActive(application: UIApplication) {
+        FBAppCall.handleDidBecomeActive()
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     }
 

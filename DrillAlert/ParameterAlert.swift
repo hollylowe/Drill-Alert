@@ -31,7 +31,7 @@ class ParameterAlert {
         var result = Array<ParameterAlert>()
         
         // TODO: Use real data from Core Data and Server for alerts
-        result.append(ParameterAlert(parameter: Parameter(name: "Temperature"), alerts: [Alert(value: 100, alertWhenRisesToValue: true, priority: .High)]))
+        // result.append(ParameterAlert(parameter: Parameter(name: "Temperature"), alerts: [Alert(value: 100, alertWhenRisesToValue: true, priority: .High)]))
         
         return result
     }

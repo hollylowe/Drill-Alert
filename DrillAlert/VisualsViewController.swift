@@ -46,6 +46,11 @@ class VisualsViewController: UIViewController, UIPageViewControllerDataSource {
             let pageContentViewController = storyboard.instantiateViewControllerWithIdentifier("VisualViewController") as VisualViewController
             pageContentViewController.pageIndex = index
             
+            // For the demo 
+            if index == 1 {
+                pageContentViewController.htmlFileName = "gauge"
+            }
+            
             result = pageContentViewController
         }
         

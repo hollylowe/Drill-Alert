@@ -14,12 +14,40 @@ class APIHelper {
         var resultArray = Array<Dictionary<String, AnyObject>>()
         
         if let url = NSURL(string: urlToRequest) {
-            if let data = NSData(contentsOfURL: url) {
-                result = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(0), error: nil)
+            let request: NSURLRequest = NSURLRequest(URL:url)
+            var response: NSURLResponse?
+            var err: NSError?
+            
+            if let data = NSURLConnection.sendSynchronousRequest(request, returningResponse: &response, error: &err) {
+                var error: NSError?
+                result = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(0), error: &error)
+                if error != nil {
+                    println("Error: \(error)")
+                }
             }
+            
+            if err != nil {
+                println("Error: \(err)")
+            }
+            /*
+            var err: NSError?
+            let optionalData = NSData(contentsOfURL: url, options: nil, error: &err)
+            if err != nil {
+                println("Error: \(err)")
+            }
+            
+            if let data = optionalData {
+                var error: NSError?
+                result = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(0), error: &error)
+                if error != nil {
+                    println("Error: \(error)")
+                }
+            }
+            */
         }
         
         if let json = result as? Array<AnyObject> {
+
             for index in 0...json.count - 1 {
                 let object: AnyObject = json[index]
                 let objectDictionary = object as Dictionary<String, AnyObject>

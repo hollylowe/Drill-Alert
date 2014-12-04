@@ -49,14 +49,26 @@ class User {
         return user
     }
     
-    class func authenticateFacebookUser(facebookUser: FBGraphUser!) -> User? {
+    class func authenticateFacebookUser(facebookUser: AnyObject!) -> User? {
         var user: User?
-        let userID = facebookUser.objectID
+        if let userID = facebookUser.valueForKey("id") as? String {
+            // Enter real authentication here
+            if userID == "10152531648166693" {
+                user = User(firstName: "Lucas", lastName: "David", id: userID, isAdmin: true)
+                user!.isFacebookAuthenticatedUser = true
+            }
+        }
         
+        return user
+    }
+    
+    class func authenticateGooglePlusUser(auth: GTMOAuth2Authentication) -> User? {
+        var user: User?
+        let email = auth.userEmail
         // Enter real authentication here
-        if userID == "10152531648166693" {
-            user = User(firstName: "Lucas", lastName: "David", id: userID, isAdmin: true)
-            user!.isFacebookAuthenticatedUser = true
+        if email == "lhdavid14@gmail.com" {
+            user = User(firstName: "Lucas", lastName: "David", id: "N/A", isAdmin: true)
+            user!.isGoogleAuthenticatedUser = true
         }
         
         return user

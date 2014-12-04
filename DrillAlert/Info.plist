@@ -26,6 +26,16 @@
 				<string>fb558772537557651</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>Drillionaires.DrillAlert</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>Drillionaires.DrillAlert</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>

@@ -13,6 +13,9 @@ class VisualViewController: UIViewController, UIWebViewDelegate {
     
     @IBOutlet weak var webView: UIWebView!
     var pageIndex: Int!
+    var htmlFileName = "index"
+    var timer: NSTimer?
+    
     let wellbore = Wellbore(well: Well(name: "Well One"), name: "cool bore")
     
     override func viewDidLoad() {
@@ -20,7 +23,7 @@ class VisualViewController: UIViewController, UIWebViewDelegate {
     }
     
     override func viewDidAppear(animated: Bool) {
-        if let htmlPath = NSBundle.mainBundle().pathForResource("index", ofType: "html") {
+        if let htmlPath = NSBundle.mainBundle().pathForResource(htmlFileName, ofType: "html") {
             var possibleContent = String(contentsOfFile:htmlPath, usedEncoding: nil, error: nil)
             
             if let content = possibleContent {
@@ -36,12 +39,21 @@ class VisualViewController: UIViewController, UIWebViewDelegate {
         var dataStr = String("tick(\(xVal))")
         self.webView.stringByEvaluatingJavaScriptFromString(dataStr)
     }
+    
+    override func viewWillDisappear(animated: Bool) {
+        if let dataTimer = timer {
+            dataTimer.invalidate()
+            timer = nil
+        }
+        
+        super.viewWillDisappear(animated)
+    }
 }
 
 extension VisualViewController: UIWebViewDelegate {
     func webViewDidFinishLoad(webView: UIWebView) {
         // This is purely for the demo
-        var timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateGraphData", userInfo: nil, repeats: true)
+        timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateGraphData", userInfo: nil, repeats: true)
 
     }
 }

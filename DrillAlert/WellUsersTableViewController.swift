@@ -28,7 +28,9 @@ extension WellUsersTableViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCellWithIdentifier(userCellIdentifier) as UITableViewCell
         let user = users[indexPath.row]
         
-        cell.textLabel.text = user.fullName
+        if let textLabel = cell.textLabel {
+            textLabel.text = user.fullName
+        }
         cell.accessoryType = .DisclosureIndicator
         
         return cell
