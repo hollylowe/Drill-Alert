@@ -66,11 +66,28 @@ class WellboreDetailViewController: UIViewController {
         }
     }
     
+    private func imageWithImage(image: UIImage, scaledToSize newSize: CGSize) -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0)
+        image.drawInRect(CGRectMake(0, 0, newSize.width, newSize.height))
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        
+        UIGraphicsEndImageContext()
+        return newImage
+    }
+    
+    private func setupRightBarButtonItem() {
+        let imageSize = CGSizeMake(30, 30)
+        self.rightBarButtonItem.title = "Manage"
+
+        if let manageDefaultIcon = UIImage(named: "settings_line.png") {
+            rightBarButtonItem.image = imageWithImage(manageDefaultIcon, scaledToSize: imageSize)
+        }
+    }
     
     private func setupView() {
         self.title = currentWellbore.name
-        self.rightBarButtonItem.title = "Manage"
-
+        setupRightBarButtonItem()
+        
         if let mainNavigationController = self.navigationController {
             mainNavigationController.navigationBar.hidden = false
             // Add the segmented control at the (navigation bar height + status bar height) y coordinate
