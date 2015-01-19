@@ -12,6 +12,7 @@
 		A018E4061A2B010A001EF20E /* Parameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A018E4051A2B010A001EF20E /* Parameter.swift */; };
 		A018E40A1A2B0733001EF20E /* ParameterAlertsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A018E4091A2B0733001EF20E /* ParameterAlertsTableViewController.swift */; };
 		A018E40C1A2BB4E8001EF20E /* AddParameterAlertTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A018E40B1A2BB4E8001EF20E /* AddParameterAlertTableViewController.swift */; };
+		A02D86431A6D953A00D22A38 /* AlertsInboxTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02D86421A6D953A00D22A38 /* AlertsInboxTableViewController.swift */; };
 		A0343D311A2674C100FA0464 /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0343D301A2674C100FA0464 /* Entitlements.plist */; };
 		A0343D331A2AB66100FA0464 /* WellboreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0343D321A2AB66100FA0464 /* WellboreTableViewCell.swift */; };
 		A0343D391A2AC85400FA0464 /* WellboreDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0343D381A2AC85400FA0464 /* WellboreDetailViewController.swift */; };
@@ -70,6 +71,7 @@
 		A018E4051A2B010A001EF20E /* Parameter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parameter.swift; sourceTree = "<group>"; };
 		A018E4091A2B0733001EF20E /* ParameterAlertsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParameterAlertsTableViewController.swift; sourceTree = "<group>"; };
 		A018E40B1A2BB4E8001EF20E /* AddParameterAlertTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddParameterAlertTableViewController.swift; sourceTree = "<group>"; };
+		A02D86421A6D953A00D22A38 /* AlertsInboxTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertsInboxTableViewController.swift; sourceTree = "<group>"; };
 		A0343D261A26493800FA0464 /* DrillAlert-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DrillAlert-Bridging-Header.h"; sourceTree = "<group>"; };
 		A0343D301A2674C100FA0464 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
 		A0343D321A2AB66100FA0464 /* WellboreTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WellboreTableViewCell.swift; sourceTree = "<group>"; };
@@ -323,6 +325,7 @@
 				A018E40B1A2BB4E8001EF20E /* AddParameterAlertTableViewController.swift */,
 				A0DB7DBC1A2FB96000C8C9A2 /* AddOrEditAlertTableViewController.swift */,
 				A0DB7DBE1A2FB96E00C8C9A2 /* SelectParameterTableViewController.swift */,
+				A02D86421A6D953A00D22A38 /* AlertsInboxTableViewController.swift */,
 			);
 			name = Alerts;
 			sourceTree = "<group>";
@@ -448,6 +451,7 @@
 				A0343D331A2AB66100FA0464 /* WellboreTableViewCell.swift in Sources */,
 				A095FB911A2FC39800B15D39 /* AlertPriorityCell.swift in Sources */,
 				A0EE29021A08AB7200B50700 /* UIViewExtension.swift in Sources */,
+				A02D86431A6D953A00D22A38 /* AlertsInboxTableViewController.swift in Sources */,
 				A0DB7DBF1A2FB96E00C8C9A2 /* SelectParameterTableViewController.swift in Sources */,
 				A0F0FBED1A103DC600ADBDF3 /* WellUsersTableViewController.swift in Sources */,
 				A018E4001A2B003D001EF20E /* Alert.swift in Sources */,

@@ -346,6 +346,32 @@
             </objects>
             <point key="canvasLocation" x="6022" y="-90"/>
         </scene>
+        <!--Alerts Inbox Table View Controller-->
+        <scene sceneID="ssx-0M-Esh">
+            <objects>
+                <tableViewController id="8j5-Al-yKW" customClass="AlertsInboxTableViewController" customModule="DrillAlert" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="5K1-zh-dEL">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="HAO-H7-VrC">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HAO-H7-VrC" id="Oo8-Fn-gWv">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="8j5-Al-yKW" id="XvP-z0-6cQ"/>
+                            <outlet property="delegate" destination="8j5-Al-yKW" id="fjF-Pb-bIP"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jLb-Rr-GWa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4386" y="368"/>
+        </scene>
         <!--Alerts-->
         <scene sceneID="L58-Uv-egL">
             <objects>
@@ -527,7 +553,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="619-NA-HxU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7568" y="110"/>
+            <point key="canvasLocation" x="7568" y="436"/>
         </scene>
         <!--Add Alert-->
         <scene sceneID="kfl-oO-lZ5">
@@ -702,7 +728,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ARj-HK-A3v" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="8380" y="1163"/>
+            <point key="canvasLocation" x="8318" y="1163"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="F5I-Oh-odk">
