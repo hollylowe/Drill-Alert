@@ -71,6 +71,8 @@ class WellboreDetailViewController: UIViewController {
         self.title = currentWellbore.name
         
         if let mainNavigationController = self.navigationController {
+//            self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.Bordered, target: nil, action: nil)
+//            self.navigationItem.hidesBackButton = true
             
             mainNavigationController.navigationBar.hidden = false
             // Add the segmented control at the (navigation bar height + status bar height) y coordinate

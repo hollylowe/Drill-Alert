@@ -8,14 +8,6 @@
 
 import UIKit
 
-// Google Plus
-import AddressBook
-import MediaPlayer
-import AssetsLibrary
-import CoreLocation
-import CoreMotion
-
-
 class LoginViewController: UIViewController {
     
     @IBOutlet weak var passwordTextField: PaddedUITextField!
@@ -56,6 +48,8 @@ class LoginViewController: UIViewController {
     }
     
     func setupView() {
+
+        
         // SDI Text fields
         let borderColor = UIColor(red: 0.780, green: 0.780, blue: 0.804, alpha: 1.0).CGColor
         
@@ -123,10 +117,10 @@ class LoginViewController: UIViewController {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == loginToHomeSegueIdentifier {
-            // let homeViewController = segue.destinationViewController as HomeViewController
-            // homeViewController.currentUser = self.currentUser
-            let tabBarController = segue.destinationViewController as MainTabBarController
-            tabBarController.currentUser = currentUser
+             let homeViewController = segue.destinationViewController as HomeViewController
+             homeViewController.currentUser = self.currentUser
+            // let tabBarController = segue.destinationViewController as MainTabBarController
+            // tabBarController.currentUser = currentUser
         }
         
         super.prepareForSegue(segue, sender: sender)

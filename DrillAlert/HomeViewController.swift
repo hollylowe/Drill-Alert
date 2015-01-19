@@ -57,9 +57,12 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
 
         if let navigationController = self.navigationController {
-            
-            
             navigationController.navigationBar.hidden = false
+            
+            // Disable the back button
+            self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.Bordered, target: nil, action: nil)
+            self.navigationItem.hidesBackButton = true
+            
             // Add the segmented control at the (navigation bar height + status bar height) y coordinate
             let yCoord = navigationController.navigationBar.frame.size.height + UIApplication.sharedApplication().statusBarFrame.size.height
             
@@ -94,7 +97,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             self.view.addSubview(toolbar)
             
             // Sets the tableview y coordinate to the toolbarheight
-            let headerViewRect = CGRectMake(0, 0, self.tableView.frame.width, toolbarHeight + yCoord)
+            let headerViewRect = CGRectMake(0, 0, self.tableView.frame.width, toolbarHeight)
             self.tableView.tableHeaderView = UIView(frame: headerViewRect)
         }
        

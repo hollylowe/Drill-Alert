@@ -273,8 +273,8 @@
 		A087EEDC1A06C0920073FDD0 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				A0C3C53D1A09D1900017BC9B /* WellboreDetail */,
 				A087EEDD1A06C09D0073FDD0 /* HomeViewController.swift */,
+				A0C3C53D1A09D1900017BC9B /* WellboreDetail */,
 			);
 			name = Home;
 			sourceTree = "<group>";

@@ -135,7 +135,7 @@
                         <outlet property="passwordTextField" destination="mnf-Dc-ccz" id="bUD-Sb-d5a"/>
                         <outlet property="sdiSignInButton" destination="Uf8-hT-C26" id="WdC-wZ-xa1"/>
                         <outlet property="usernameTextField" destination="jBV-3p-PI0" id="377-ay-AhA"/>
-                        <segue destination="7IO-FK-5ji" kind="show" identifier="LoginToHomeSegue" id="YRG-Nl-HdB"/>
+                        <segue destination="OKh-1Q-XSn" kind="show" identifier="LoginToHomeSegue" id="RLj-ko-hOL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
@@ -860,25 +860,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kQC-F1-RW6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="551" y="368"/>
-        </scene>
-        <!--Main Tab Bar Controller-->
-        <scene sceneID="zTo-T6-0fM">
-            <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="7IO-FK-5ji" customClass="MainTabBarController" customModule="DrillAlert" customModuleProvider="target" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <nil key="simulatedBottomBarMetrics"/>
-                    <tabBar key="tabBar" contentMode="scaleToFill" id="zUV-Up-eyq">
-                        <autoresizingMask key="autoresizingMask"/>
-                    </tabBar>
-                    <connections>
-                        <segue destination="OKh-1Q-XSn" kind="relationship" relationship="viewControllers" id="hf8-o6-P9G"/>
-                        <segue destination="6cs-ft-ue3" kind="relationship" relationship="viewControllers" id="mJW-lv-BSu"/>
-                        <segue destination="bT6-Ev-Yyb" kind="relationship" relationship="viewControllers" id="WDc-aE-fdP"/>
-                    </connections>
-                </tabBarController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="kei-Eq-BUX" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2310" y="368"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="ZhS-CE-0Yd">
