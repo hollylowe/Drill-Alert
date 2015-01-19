@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14A343f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="fBI-Bv-p36">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="fBI-Bv-p36">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -61,18 +61,6 @@
                                     <action selector="loginButtonTapped:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="0M5-yr-brb"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yrq-ms-TR0" customClass="GPPSignInButton">
-                                <rect key="frame" x="37" y="442" width="526" height="46"/>
-                                <color key="backgroundColor" red="0.88235294117647056" green="0.29411764705882354" blue="0.22352941176470587" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="46" id="1HU-BV-E7a"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
-                                <state key="normal" title="Log in with Google+">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                            </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Username" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="jBV-3p-PI0" customClass="PaddedUITextField" customModule="DrillAlert" customModuleProvider="target">
                                 <rect key="frame" x="37" y="222" width="526" height="46"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -90,24 +78,6 @@
                                     </mask>
                                 </variation>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TJD-Ty-aGX">
-                                <rect key="frame" x="37" y="388" width="526" height="46"/>
-                                <color key="backgroundColor" red="0.22352941179999999" green="0.3411764706" blue="0.60392156860000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="46" id="8M7-1e-IKf"/>
-                                    <constraint firstAttribute="height" constant="46" id="ZyT-6T-Oce"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
-                                <state key="normal" title="Log in with Facebook"/>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="8M7-1e-IKf"/>
-                                    </mask>
-                                </variation>
-                                <connections>
-                                    <action selector="fbSignInButtonTapped:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="1WT-jO-mA7"/>
-                                </connections>
-                            </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DrillAlertLogo" translatesAutoresizingMaskIntoConstraints="NO" id="PQL-ac-Uv7">
                                 <rect key="frame" x="170" y="71" width="240" height="128"/>
                                 <constraints>
@@ -126,12 +96,10 @@
                         <constraints>
                             <constraint firstItem="jBV-3p-PI0" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="21" id="4Ng-UN-urq"/>
                             <constraint firstAttribute="trailingMargin" secondItem="ARm-4F-VO1" secondAttribute="trailing" constant="-16" id="5E0-6d-6Yz"/>
-                            <constraint firstItem="TJD-Ty-aGX" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="21" id="5PA-wo-7oX"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Uf8-hT-C26" secondAttribute="trailing" constant="21" id="6IM-ff-0LA"/>
                             <constraint firstAttribute="centerX" secondItem="mnf-Dc-ccz" secondAttribute="centerX" id="9Ll-hq-4ls"/>
                             <constraint firstAttribute="centerX" secondItem="jBV-3p-PI0" secondAttribute="centerX" id="Aqz-oM-Rvu"/>
                             <constraint firstItem="PQL-ac-Uv7" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="100" id="BGN-D7-1tb"/>
-                            <constraint firstItem="TJD-Ty-aGX" firstAttribute="top" secondItem="Uf8-hT-C26" secondAttribute="bottom" constant="30" id="Bjw-jG-t11"/>
                             <constraint firstAttribute="trailingMargin" secondItem="mnf-Dc-ccz" secondAttribute="trailing" constant="21" id="DMG-la-kbn"/>
                             <constraint firstItem="ARm-4F-VO1" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="topMargin" id="Dfy-l2-T58"/>
                             <constraint firstAttribute="centerY" secondItem="Uf8-hT-C26" secondAttribute="centerY" constant="-35" id="F5T-h4-Yrd"/>
@@ -140,18 +108,14 @@
                             <constraint firstItem="Uf8-hT-C26" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="21" id="LIq-0n-YXy"/>
                             <constraint firstItem="jBV-3p-PI0" firstAttribute="top" secondItem="PQL-ac-Uv7" secondAttribute="bottom" constant="23" id="NKj-QY-gLb"/>
                             <constraint firstAttribute="centerY" secondItem="Uf8-hT-C26" secondAttribute="centerY" constant="28" id="R0T-IV-e8A"/>
-                            <constraint firstItem="Yrq-ms-TR0" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="21" id="Vqh-SL-eOp"/>
                             <constraint firstAttribute="centerX" secondItem="PQL-ac-Uv7" secondAttribute="centerX" constant="10" id="Wp5-Gu-0oB"/>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="ARm-4F-VO1" secondAttribute="bottom" id="XXL-oR-1dG"/>
                             <constraint firstAttribute="centerY" secondItem="jBV-3p-PI0" secondAttribute="centerY" constant="139" id="ZzU-iR-gNd"/>
-                            <constraint firstItem="Yrq-ms-TR0" firstAttribute="top" secondItem="TJD-Ty-aGX" secondAttribute="bottom" constant="8" id="afh-Yf-3wd"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Yrq-ms-TR0" secondAttribute="trailing" constant="21" id="cSC-ht-fcT"/>
                             <constraint firstAttribute="centerY" secondItem="mnf-Dc-ccz" secondAttribute="centerY" constant="95" id="eNL-nX-4rs"/>
                             <constraint firstItem="Uf8-hT-C26" firstAttribute="top" secondItem="mnf-Dc-ccz" secondAttribute="bottom" constant="-1" id="iLT-HN-Nkc"/>
                             <constraint firstAttribute="centerX" secondItem="Uf8-hT-C26" secondAttribute="centerX" id="kxI-zn-Ljp"/>
                             <constraint firstAttribute="trailingMargin" secondItem="jBV-3p-PI0" secondAttribute="trailing" constant="21" id="ngQ-tR-xyj"/>
                             <constraint firstItem="mnf-Dc-ccz" firstAttribute="top" secondItem="jBV-3p-PI0" secondAttribute="bottom" constant="-1" id="tJi-GZ-ynN"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="TJD-Ty-aGX" secondAttribute="trailing" constant="21" id="vZk-hi-ueX"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
@@ -168,8 +132,6 @@
                     <navigationItem key="navigationItem" id="PM9-dt-61L"/>
                     <connections>
                         <outlet property="backgroundImageView" destination="ARm-4F-VO1" id="rJm-gz-d9p"/>
-                        <outlet property="fbSignInButton" destination="TJD-Ty-aGX" id="dnC-lv-OrE"/>
-                        <outlet property="gpSignInButton" destination="Yrq-ms-TR0" id="szY-Bv-uSm"/>
                         <outlet property="passwordTextField" destination="mnf-Dc-ccz" id="bUD-Sb-d5a"/>
                         <outlet property="sdiSignInButton" destination="Uf8-hT-C26" id="WdC-wZ-xa1"/>
                         <outlet property="usernameTextField" destination="jBV-3p-PI0" id="377-ay-AhA"/>

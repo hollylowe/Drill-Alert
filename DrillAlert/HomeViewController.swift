@@ -154,6 +154,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
 }
 
+
 extension HomeViewController: UITableViewDataSource {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {

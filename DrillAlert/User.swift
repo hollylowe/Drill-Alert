@@ -61,16 +61,5 @@ class User {
         
         return user
     }
-    
-    class func authenticateGooglePlusUser(auth: GTMOAuth2Authentication) -> User? {
-        var user: User?
-        let email = auth.userEmail
-        // Enter real authentication here
-        if email == "lhdavid14@gmail.com" {
-            user = User(firstName: "Lucas", lastName: "David", id: "N/A", isAdmin: true)
-            user!.isGoogleAuthenticatedUser = true
-        }
-        
-        return user
-    }
+
 }

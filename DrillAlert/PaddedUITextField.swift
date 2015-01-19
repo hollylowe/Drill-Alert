@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class PaddedUITextField: UITextField {
     override func textRectForBounds(bounds: CGRect) -> CGRect {

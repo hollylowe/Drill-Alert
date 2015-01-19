@@ -23,8 +23,6 @@
 		A042B2E11A19669E00660AB7 /* d3.min.js in Resources */ = {isa = PBXBuildFile; fileRef = A042B2E01A19669E00660AB7 /* d3.min.js */; };
 		A05A35CE1A083727008EA386 /* AdminTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05A35CD1A083727008EA386 /* AdminTableViewController.swift */; };
 		A05A35D21A0837ED008EA386 /* Well.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05A35D11A0837ED008EA386 /* Well.swift */; };
-		A066D5B51A2EA9B500E16E58 /* GoogleOpenSource.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A066D5B31A2EA9B500E16E58 /* GoogleOpenSource.framework */; };
-		A066D5B61A2EA9B500E16E58 /* GooglePlus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A066D5B41A2EA9B500E16E58 /* GooglePlus.framework */; };
 		A066D5B81A2EA9C700E16E58 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A066D5B71A2EA9C700E16E58 /* AddressBook.framework */; };
 		A066D5BA1A2EA9D100E16E58 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A066D5B91A2EA9D100E16E58 /* AssetsLibrary.framework */; };
 		A066D5BC1A2EA9DB00E16E58 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A066D5BB1A2EA9DB00E16E58 /* Foundation.framework */; };
@@ -49,7 +47,6 @@
 		A095FB8F1A2FC38C00B15D39 /* AlertWhenCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A095FB8E1A2FC38C00B15D39 /* AlertWhenCell.swift */; };
 		A095FB911A2FC39800B15D39 /* AlertPriorityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A095FB901A2FC39800B15D39 /* AlertPriorityCell.swift */; };
 		A095FB931A2FF20D00B15D39 /* gauge.html in Resources */ = {isa = PBXBuildFile; fileRef = A095FB921A2FF20D00B15D39 /* gauge.html */; };
-		A0CA2F5E1A2647FD00D12218 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0CA2F5D1A2647FD00D12218 /* FacebookSDK.framework */; };
 		A0CE03281A0ECEFB0076EE3E /* Wellbore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CE03271A0ECEFB0076EE3E /* Wellbore.swift */; };
 		A0CE032C1A0ED67C0076EE3E /* VisualsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CE032B1A0ED67C0076EE3E /* VisualsViewController.swift */; };
 		A0CEDBA21A0C3ADF0051BDB8 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CEDBA11A0C3ADF0051BDB8 /* User.swift */; };
@@ -87,8 +84,6 @@
 		A042B2E01A19669E00660AB7 /* d3.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = d3.min.js; sourceTree = "<group>"; };
 		A05A35CD1A083727008EA386 /* AdminTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdminTableViewController.swift; sourceTree = "<group>"; };
 		A05A35D11A0837ED008EA386 /* Well.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Well.swift; sourceTree = "<group>"; };
-		A066D5B31A2EA9B500E16E58 /* GoogleOpenSource.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleOpenSource.framework; path = "../../Resources/google-plus-ios-sdk-1.7.1/GoogleOpenSource.framework"; sourceTree = "<group>"; };
-		A066D5B41A2EA9B500E16E58 /* GooglePlus.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GooglePlus.framework; path = "../../Resources/google-plus-ios-sdk-1.7.1/GooglePlus.framework"; sourceTree = "<group>"; };
 		A066D5B71A2EA9C700E16E58 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		A066D5B91A2EA9D100E16E58 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		A066D5BB1A2EA9DB00E16E58 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -100,7 +95,6 @@
 		A066D5C71A2EAA1700E16E58 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		A066D5C91A2EAA2100E16E58 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		A066D5CB1A2EAA2900E16E58 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		A066D5CD1A2EAA4400E16E58 /* GooglePlus.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GooglePlus.bundle; path = "../../Resources/google-plus-ios-sdk-1.7.1/GooglePlus.bundle"; sourceTree = "<group>"; };
 		A066D5D11A2EBD4B00E16E58 /* PaddedUITextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaddedUITextField.swift; sourceTree = "<group>"; };
 		A06FFD5E1A06AA08001B3FF8 /* DrillAlert.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DrillAlert.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A06FFD621A06AA08001B3FF8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -118,7 +112,6 @@
 		A095FB8E1A2FC38C00B15D39 /* AlertWhenCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertWhenCell.swift; sourceTree = "<group>"; };
 		A095FB901A2FC39800B15D39 /* AlertPriorityCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertPriorityCell.swift; sourceTree = "<group>"; };
 		A095FB921A2FF20D00B15D39 /* gauge.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = gauge.html; sourceTree = "<group>"; };
-		A0CA2F5D1A2647FD00D12218 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 		A0CE03271A0ECEFB0076EE3E /* Wellbore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Wellbore.swift; sourceTree = "<group>"; };
 		A0CE032B1A0ED67C0076EE3E /* VisualsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualsViewController.swift; sourceTree = "<group>"; };
 		A0CEDBA11A0C3ADF0051BDB8 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -144,9 +137,6 @@
 				A066D5BC1A2EA9DB00E16E58 /* Foundation.framework in Frameworks */,
 				A066D5BA1A2EA9D100E16E58 /* AssetsLibrary.framework in Frameworks */,
 				A066D5B81A2EA9C700E16E58 /* AddressBook.framework in Frameworks */,
-				A066D5B51A2EA9B500E16E58 /* GoogleOpenSource.framework in Frameworks */,
-				A066D5B61A2EA9B500E16E58 /* GooglePlus.framework in Frameworks */,
-				A0CA2F5E1A2647FD00D12218 /* FacebookSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -217,24 +207,6 @@
 				A0CEDBA11A0C3ADF0051BDB8 /* User.swift */,
 			);
 			name = Models;
-			sourceTree = "<group>";
-		};
-		A066D5CF1A2EAADB00E16E58 /* GooglePlus */ = {
-			isa = PBXGroup;
-			children = (
-				A066D5CD1A2EAA4400E16E58 /* GooglePlus.bundle */,
-				A066D5B31A2EA9B500E16E58 /* GoogleOpenSource.framework */,
-				A066D5B41A2EA9B500E16E58 /* GooglePlus.framework */,
-			);
-			name = GooglePlus;
-			sourceTree = "<group>";
-		};
-		A066D5D01A2EAAF500E16E58 /* Facebook */ = {
-			isa = PBXGroup;
-			children = (
-				A0CA2F5D1A2647FD00D12218 /* FacebookSDK.framework */,
-			);
-			name = Facebook;
 			sourceTree = "<group>";
 		};
 		A06FFD551A06AA08001B3FF8 = {
@@ -331,8 +303,6 @@
 			isa = PBXGroup;
 			children = (
 				A0343D261A26493800FA0464 /* DrillAlert-Bridging-Header.h */,
-				A066D5D01A2EAAF500E16E58 /* Facebook */,
-				A066D5CF1A2EAADB00E16E58 /* GooglePlus */,
 				A066D5CB1A2EAA2900E16E58 /* UIKit.framework */,
 				A066D5C91A2EAA2100E16E58 /* SystemConfiguration.framework */,
 				A066D5C71A2EAA1700E16E58 /* Security.framework */,
