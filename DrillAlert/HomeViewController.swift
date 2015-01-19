@@ -50,11 +50,18 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         navBarHairlineImageView.hidden = false
     }
     
+    func logoutButtonTapped(sender: UIBarButtonItem) {
+        currentUser.logout()
+        
+        if let navigationController = self.navigationController {
+            navigationController.popToRootViewControllerAnimated(true)
+        }
+    }
+    
     private func setupView() {
         self.title = "Home"
         let toolbarWidth = self.view.frame.size.width
         let toolbarHeight: CGFloat = 39.0
-
 
         if let navigationController = self.navigationController {
             navigationController.navigationBar.hidden = false
@@ -62,6 +69,8 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             // Disable the back button
             self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.Bordered, target: nil, action: nil)
             self.navigationItem.hidesBackButton = true
+            
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .Bordered, target: self, action: "logoutButtonTapped:")
             
             // Add the segmented control at the (navigation bar height + status bar height) y coordinate
             let yCoord = navigationController.navigationBar.frame.size.height + UIApplication.sharedApplication().statusBarFrame.size.height

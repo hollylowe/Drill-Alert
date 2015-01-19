@@ -12,8 +12,6 @@
 		A018E4061A2B010A001EF20E /* Parameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A018E4051A2B010A001EF20E /* Parameter.swift */; };
 		A018E40A1A2B0733001EF20E /* ParameterAlertsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A018E4091A2B0733001EF20E /* ParameterAlertsTableViewController.swift */; };
 		A018E40C1A2BB4E8001EF20E /* AddParameterAlertTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A018E40B1A2BB4E8001EF20E /* AddParameterAlertTableViewController.swift */; };
-		A0343D2B1A265D2E00FA0464 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0343D2A1A265D2E00FA0464 /* SettingsTableViewController.swift */; };
-		A0343D2D1A265E6C00FA0464 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0343D2C1A265E6C00FA0464 /* MainTabBarController.swift */; };
 		A0343D311A2674C100FA0464 /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0343D301A2674C100FA0464 /* Entitlements.plist */; };
 		A0343D331A2AB66100FA0464 /* WellboreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0343D321A2AB66100FA0464 /* WellboreTableViewCell.swift */; };
 		A0343D391A2AC85400FA0464 /* WellboreDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0343D381A2AC85400FA0464 /* WellboreDetailViewController.swift */; };
@@ -73,8 +71,6 @@
 		A018E4091A2B0733001EF20E /* ParameterAlertsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParameterAlertsTableViewController.swift; sourceTree = "<group>"; };
 		A018E40B1A2BB4E8001EF20E /* AddParameterAlertTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddParameterAlertTableViewController.swift; sourceTree = "<group>"; };
 		A0343D261A26493800FA0464 /* DrillAlert-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DrillAlert-Bridging-Header.h"; sourceTree = "<group>"; };
-		A0343D2A1A265D2E00FA0464 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
-		A0343D2C1A265E6C00FA0464 /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		A0343D301A2674C100FA0464 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
 		A0343D321A2AB66100FA0464 /* WellboreTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WellboreTableViewCell.swift; sourceTree = "<group>"; };
 		A0343D381A2AC85400FA0464 /* WellboreDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WellboreDetailViewController.swift; sourceTree = "<group>"; };
@@ -160,14 +156,6 @@
 			name = Alerts;
 			sourceTree = "<group>";
 		};
-		A0343D291A265D1900FA0464 /* Settings */ = {
-			isa = PBXGroup;
-			children = (
-				A0343D2A1A265D2E00FA0464 /* SettingsTableViewController.swift */,
-			);
-			name = Settings;
-			sourceTree = "<group>";
-		};
 		A0343D351A2AB6ED00FA0464 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -189,9 +177,7 @@
 			isa = PBXGroup;
 			children = (
 				A06FFD681A06AA08001B3FF8 /* LoginViewController.swift */,
-				A0343D2C1A265E6C00FA0464 /* MainTabBarController.swift */,
 				A087EEDC1A06C0920073FDD0 /* Home */,
-				A0343D291A265D1900FA0464 /* Settings */,
 				A05A35CC1A08370E008EA386 /* Admin */,
 			);
 			name = Controllers;
@@ -472,13 +458,11 @@
 				A018E40A1A2B0733001EF20E /* ParameterAlertsTableViewController.swift in Sources */,
 				A018E4061A2B010A001EF20E /* Parameter.swift in Sources */,
 				A0CEDBA21A0C3ADF0051BDB8 /* User.swift in Sources */,
-				A0343D2D1A265E6C00FA0464 /* MainTabBarController.swift in Sources */,
 				A095FB8C1A2FC37200B15D39 /* AlertValueCell.swift in Sources */,
 				A042B2DD1A195ED600660AB7 /* VisualViewController.swift in Sources */,
 				A018E40C1A2BB4E8001EF20E /* AddParameterAlertTableViewController.swift in Sources */,
 				A0343D391A2AC85400FA0464 /* WellboreDetailViewController.swift in Sources */,
 				A0DB7DBD1A2FB96000C8C9A2 /* AddOrEditAlertTableViewController.swift in Sources */,
-				A0343D2B1A265D2E00FA0464 /* SettingsTableViewController.swift in Sources */,
 				A06FFD671A06AA08001B3FF8 /* DrillAlert.xcdatamodeld in Sources */,
 				A066D5D21A2EBD4B00E16E58 /* PaddedUITextField.swift in Sources */,
 				A06FFD641A06AA08001B3FF8 /* AppDelegate.swift in Sources */,

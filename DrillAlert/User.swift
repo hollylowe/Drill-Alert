@@ -16,9 +16,6 @@ class User {
     }
     var id: String
     var isAdmin: Bool
-    var isFacebookAuthenticatedUser = false
-    var isGoogleAuthenticatedUser = false
-    var isSDIAuthenticatedUser = false
     
     init(firstName: String, lastName: String, id: String, isAdmin: Bool = false) {
         self.firstName = firstName
@@ -40,26 +37,16 @@ class User {
         // Enter real authentication here
         if username == "admin" {
             user = User(firstName: "John", lastName: "Smith", id: "117", isAdmin: true)
-            user!.isSDIAuthenticatedUser = true
         } else if username == "user" {
             user = User(firstName: "Jameson", lastName: "Locke", id: "343")
-            user!.isSDIAuthenticatedUser = true
         }
         
         return user
     }
     
-    class func authenticateFacebookUser(facebookUser: AnyObject!) -> User? {
-        var user: User?
-        if let userID = facebookUser.valueForKey("id") as? String {
-            // Enter real authentication here
-            if userID == "10152531648166693" {
-                user = User(firstName: "Lucas", lastName: "David", id: userID, isAdmin: true)
-                user!.isFacebookAuthenticatedUser = true
-            }
-        }
-        
-        return user
+    func logout() {
+        // TODO: Log out user of ADFS here
     }
+
 
 }

@@ -40,10 +40,8 @@ class LoginViewController: UIViewController {
         // straight to the home view controller
         
         // Need to do some kind of session stuff here,
-        // for example, we could check if there is a facebook session
-        // open, if not, check if there is a google session open, 
-        // if not, check if there is an SDI sesison open. If any of them
-        // are open then skip the login view, otherwise show it
+        // i.e. check if there is an SDI session open. If so
+        // then skip the login view, otherwise show it
         super.viewDidLoad()
     }
     
