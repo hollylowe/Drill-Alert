@@ -69,11 +69,9 @@ class WellboreDetailViewController: UIViewController {
     
     private func setupView() {
         self.title = currentWellbore.name
-        
+        self.rightBarButtonItem.title = "Manage"
+
         if let mainNavigationController = self.navigationController {
-//            self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.Bordered, target: nil, action: nil)
-//            self.navigationItem.hidesBackButton = true
-            
             mainNavigationController.navigationBar.hidden = false
             // Add the segmented control at the (navigation bar height + status bar height) y coordinate
             let navigationBarBottomCoord = mainNavigationController.navigationBar.frame.size.height + UIApplication.sharedApplication().statusBarFrame.size.height
@@ -178,15 +176,6 @@ class WellboreDetailViewController: UIViewController {
         let incomingViewController = self.segmentViewControllers[index] as UIViewController
         self.segmentNavigationController.setViewControllers([incomingViewController], animated: false)
         
-        if let navigationController = self.navigationController {
-            switch index {
-            case visualsIndex:
-                rightBarButtonItem.title = "Edit"
-            case alertsIndex:
-                rightBarButtonItem.title = "Add"
-            default: println("Unknown segment index.")
-            }
-        }
     }
     
 }

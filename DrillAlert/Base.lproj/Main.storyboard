@@ -253,7 +253,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qnh-LU-B9a" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3294" y="368"/>
+            <point key="canvasLocation" x="2486" y="368"/>
         </scene>
         <!--Title-->
         <scene sceneID="a0j-Nv-CeQ">
@@ -281,76 +281,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a75-yb-hUb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4087" y="368"/>
-        </scene>
-        <!--Admin-->
-        <scene sceneID="qTf-aA-BIJ">
-            <objects>
-                <tableViewController id="bT6-Ev-Yyb" customClass="AdminTableViewController" customModule="DrillAlert" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="ihK-4d-6Xh">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="WellCell" id="oGS-7M-hr1">
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="oGS-7M-hr1" id="vGl-Ms-t6n">
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="bT6-Ev-Yyb" id="0Ke-hK-cg7"/>
-                            <outlet property="delegate" destination="bT6-Ev-Yyb" id="nUF-Sg-zPX"/>
-                        </connections>
-                    </tableView>
-                    <tabBarItem key="tabBarItem" title="Admin" id="Zfd-zs-Yzm"/>
-                    <navigationItem key="navigationItem" title="Admin" id="Ktg-fa-oLa"/>
-                    <connections>
-                        <segue destination="5qn-oB-i3Q" kind="show" identifier="AdminToWellUsersSegue" id="tVS-FG-mB3"/>
-                    </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="B9m-yV-lNV" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3294" y="1203"/>
-        </scene>
-        <!--Users-->
-        <scene sceneID="G7N-Sg-Uga">
-            <objects>
-                <tableViewController id="5qn-oB-i3Q" customClass="WellUsersTableViewController" customModule="DrillAlert" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="dbo-UA-1va">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="UserCell" id="TOr-zx-E0a">
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="TOr-zx-E0a" id="t69-dc-tJ2">
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="5qn-oB-i3Q" id="1Hc-vN-EAS"/>
-                            <outlet property="delegate" destination="5qn-oB-i3Q" id="fuk-87-euT"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Users" id="0mg-P4-8bs"/>
-                    <connections>
-                        <outlet property="searchDisplayController" destination="qP3-4m-wz1" id="9qg-O4-g57"/>
-                    </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="V8L-Z0-0nX" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <searchDisplayController id="qP3-4m-wz1">
-                    <connections>
-                        <outlet property="delegate" destination="5qn-oB-i3Q" id="cAa-iA-ad1"/>
-                        <outlet property="searchContentsController" destination="5qn-oB-i3Q" id="jK8-XT-2UE"/>
-                        <outlet property="searchResultsDataSource" destination="5qn-oB-i3Q" id="oAB-tF-ma0"/>
-                        <outlet property="searchResultsDelegate" destination="5qn-oB-i3Q" id="J4Q-Ei-EFA"/>
-                    </connections>
-                </searchDisplayController>
-            </objects>
-            <point key="canvasLocation" x="4056" y="1842"/>
+            <point key="canvasLocation" x="3279" y="368"/>
         </scene>
         <!--Visuals-->
         <scene sceneID="xbf-gY-MU8">
