@@ -23,7 +23,7 @@ class AddParameterAlertTableViewController: UITableViewController {
     
     var alerts = Array<Alert>()
     var selectedParameter: Parameter?
-    var delegate: WellboreDetailViewController!
+    var delegate: ParameterAlertsTableViewController!
     
     let numberOfSections = 2
     let parameterSection = 0
@@ -41,7 +41,7 @@ class AddParameterAlertTableViewController: UITableViewController {
         // TODO: remove this stuff and fake notification, purely for the demo
         if let parameter = selectedParameter {
             let parameterAlert = ParameterAlert(parameter: parameter, alerts: alerts)
-            delegate.addAlertToTableView(parameterAlert)
+            // delegate.addAlertToTableView(parameterAlert)
             
             let alert = alerts[0]
             var noti = UILocalNotification()
