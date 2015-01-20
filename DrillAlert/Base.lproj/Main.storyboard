@@ -346,20 +346,46 @@
             </objects>
             <point key="canvasLocation" x="6022" y="-90"/>
         </scene>
-        <!--Alerts Inbox Table View Controller-->
+        <!--Alert Inbox Table View Controller-->
         <scene sceneID="ssx-0M-Esh">
             <objects>
-                <tableViewController id="8j5-Al-yKW" customClass="AlertsInboxTableViewController" customModule="DrillAlert" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="5K1-zh-dEL">
+                <tableViewController storyboardIdentifier="AlertInboxTableViewController" id="8j5-Al-yKW" customClass="AlertInboxTableViewController" customModule="DrillAlert" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="95" sectionHeaderHeight="22" sectionFooterHeight="22" id="5K1-zh-dEL">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="HAO-H7-VrC">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="AlertInboxCell" rowHeight="95" id="HAO-H7-VrC" customClass="AlertInboxCell" customModule="DrillAlert" customModuleProvider="target">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HAO-H7-VrC" id="Oo8-Fn-gWv">
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Alert Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y7G-fw-OAT">
+                                            <rect key="frame" x="33" y="21" width="501" height="20.5"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Alert Information" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Jo-7u-v1F">
+                                            <rect key="frame" x="33" y="50" width="501" height="19"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="9Jo-7u-v1F" firstAttribute="leading" secondItem="Oo8-Fn-gWv" secondAttribute="leadingMargin" constant="25" id="CwT-gO-Zc5"/>
+                                        <constraint firstItem="y7G-fw-OAT" firstAttribute="top" secondItem="Oo8-Fn-gWv" secondAttribute="topMargin" constant="13" id="Hje-xK-8xI"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="9Jo-7u-v1F" secondAttribute="trailing" constant="25" id="Oow-rM-3x3"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="y7G-fw-OAT" secondAttribute="trailing" constant="25" id="aX4-gt-c9g"/>
+                                        <constraint firstItem="y7G-fw-OAT" firstAttribute="leading" secondItem="Oo8-Fn-gWv" secondAttribute="leadingMargin" constant="25" id="bgL-QU-raJ"/>
+                                        <constraint firstItem="9Jo-7u-v1F" firstAttribute="top" secondItem="y7G-fw-OAT" secondAttribute="bottom" constant="8.5" id="cmQ-LB-nqv"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="alertInformationLabel" destination="9Jo-7u-v1F" id="l5H-cG-jLV"/>
+                                    <outlet property="alertTitleLabel" destination="y7G-fw-OAT" id="Rrz-je-Nnf"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -372,7 +398,7 @@
             </objects>
             <point key="canvasLocation" x="4386" y="368"/>
         </scene>
-        <!--Alerts-->
+        <!--Parameter Alerts Table View Controller-->
         <scene sceneID="L58-Uv-egL">
             <objects>
                 <tableViewController storyboardIdentifier="ParameterAlertsTableViewController" id="2Jt-LN-L0A" customClass="ParameterAlertsTableViewController" customModule="DrillAlert" customModuleProvider="target" sceneMemberID="viewController">
@@ -427,11 +453,11 @@
                             <outlet property="delegate" destination="2Jt-LN-L0A" id="eFJ-Bv-Fdb"/>
                         </connections>
                     </tableView>
-                    <tabBarItem key="tabBarItem" title="Alerts" id="ILx-Px-Nwg"/>
+                    <navigationItem key="navigationItem" id="GbM-Iy-zt7"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GyO-la-RfP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5242" y="824"/>
+            <point key="canvasLocation" x="6054" y="824"/>
         </scene>
         <!--Add Parameter Alert-->
         <scene sceneID="PJN-UW-Om9">
@@ -519,7 +545,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PX2-jB-DmF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6870" y="824"/>
+            <point key="canvasLocation" x="7682" y="824"/>
         </scene>
         <!--Select Parameter Table View Controller-->
         <scene sceneID="3jn-sW-Zah">
@@ -553,7 +579,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="619-NA-HxU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7568" y="436"/>
+            <point key="canvasLocation" x="8380" y="436"/>
         </scene>
         <!--Add Alert-->
         <scene sceneID="kfl-oO-lZ5">
@@ -728,7 +754,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ARj-HK-A3v" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="8318" y="1163"/>
+            <point key="canvasLocation" x="9130" y="1163"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="F5I-Oh-odk">
@@ -782,7 +808,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sMv-GR-1Ze" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6022" y="824"/>
+            <point key="canvasLocation" x="6834" y="824"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ERK-L5-A9b">
@@ -800,7 +826,26 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e9f-lu-Xv5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7568" y="1163"/>
+            <point key="canvasLocation" x="8380" y="1163"/>
+        </scene>
+        <!--Alerts-->
+        <scene sceneID="WJU-9n-POp">
+            <objects>
+                <navigationController storyboardIdentifier="ParameterAlertsNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="Eat-mA-szL" customClass="ParameterAlertsNavigationController" customModule="DrillAlert" customModuleProvider="target" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Alerts" id="ILx-Px-Nwg"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="T3b-fQ-r8l">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="2Jt-LN-L0A" kind="relationship" relationship="rootViewController" id="hsn-3I-mfb"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nE9-l9-5GA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5242" y="824"/>
         </scene>
     </scenes>
     <resources>
