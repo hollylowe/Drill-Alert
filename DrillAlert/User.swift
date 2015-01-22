@@ -36,9 +36,11 @@ class User {
         
         // Enter real authentication here
         if username == "admin" {
-            user = User(firstName: "John", lastName: "Smith", id: "117", isAdmin: true)
-        } else if username == "user" {
-            user = User(firstName: "Jameson", lastName: "Locke", id: "343")
+            user = User(firstName: "John", lastName: "Smith", id: "00000000-0000-0000-0000-000000000000", isAdmin: true)
+        } else if username == "user0" {
+            user = User(firstName: "Jameson", lastName: "Locke", id: "00000000-0000-0000-0000-000000000000")
+        } else if username == "user1" {
+            user = User(firstName: "Jameson", lastName: "Locke", id: "00000000-0000-0000-0000-000000000001")
         }
         
         return user

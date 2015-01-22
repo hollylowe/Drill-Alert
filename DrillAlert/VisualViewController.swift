@@ -16,7 +16,7 @@ class VisualViewController: UIViewController, UIWebViewDelegate {
     var htmlFileName = "index"
     var timer: NSTimer?
     
-    let wellbore = Wellbore(well: Well(name: "Well One"), name: "cool bore")
+    let wellbore = Wellbore(well: Well(id: 0, name: "Well One", location: "Houston"), name: "cool bore")
     
     override func viewDidLoad() {
         super.viewDidLoad()

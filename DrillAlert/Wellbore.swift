@@ -74,18 +74,26 @@ class Point {
 }
 
 class Wellbore {
+    var id: Int
     var name: String!
     var well: Well!
     var data = Array<Point>()
     var titles: Array<String>!
     var res: AnyObject!
     
+    init(id: Int, name: String, well: Well) {
+        self.id = id
+        self.name = name
+        self.well = well
+    }
     
+    // TODO: reomve, deprecated
     init(well: Well, name: String) {
         self.name = name
         self.well = well
         self.titles = ["\"blue\"", "\"more blue\""]
         // self.updateData()
+        self.id = 0
     }
     
     // Data is in the form of
@@ -152,9 +160,11 @@ class Wellbore {
     class func getSubscribedWellboresForUserID(userID: String) -> Array<Wellbore> {
         var wellbores = Array<Wellbore>()
         
+        
+        
         // Using canned data
-        wellbores.append(Wellbore(well: Well(name: "Well One"), name: "Wellbore 1"))
-        wellbores.append(Wellbore(well: Well(name: "Well One"), name: "Wellbore 3"))
+        wellbores.append(Wellbore(well: Well(id: 0, name: "Well One", location: "Houston"), name: "Wellbore 1"))
+        wellbores.append(Wellbore(well: Well(id: 0, name: "Well One", location: "Houston"), name: "Wellbore 3"))
         
         return wellbores
     }
@@ -165,9 +175,9 @@ class Wellbore {
         var wellbores = Array<Wellbore>()
         
         // Using canned data
-        wellbores.append(Wellbore(well: Well(name: "Well One"), name: "Wellbore 1"))
-        wellbores.append(Wellbore(well: Well(name: "Well One"), name: "Wellbore 3"))
-        wellbores.append(Wellbore(well: Well(name: "Well One"), name: "Wellbore 4"))
+        wellbores.append(Wellbore(well: Well(id: 0, name: "Well One", location: "Houston"), name: "Wellbore 1"))
+        wellbores.append(Wellbore(well: Well(id: 0, name: "Well One", location: "Houston"), name: "Wellbore 3"))
+        wellbores.append(Wellbore(well: Well(id: 0, name: "Well One", location: "Houston"), name: "Wellbore 4"))
         
         return wellbores
     }

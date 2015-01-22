@@ -21,6 +21,7 @@ class ParameterAlertsTableViewController: UITableViewController {
     var parameterAlerts: [ParameterAlert]!
     
     override func viewDidLoad() {
+        self.title = "Manage Alerts"
         parameterAlerts = ParameterAlert.getParameterAlertsForUser(wellboreDetailViewController.currentUser, andWellbore: wellboreDetailViewController.currentWellbore)
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "rightBarButtonItemTapped:")

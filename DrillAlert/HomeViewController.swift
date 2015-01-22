@@ -133,11 +133,26 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
     func reloadWells() {
         // Only load the wells of the currently selected segment.
+        // TODO: Not sure if API is supporting this, we may remove it. For right now, just set both
+        allWellbores.removeAll(keepCapacity: false)
+        subscribedWellbores.removeAll(keepCapacity: false)
+
+        let wells = Well.getSubscribedWellsForUserID(currentUser.id)
+        
+        for well in wells {
+            for wellbore in well.wellbores {
+                subscribedWellbores.append(wellbore)
+                allWellbores.append(wellbore)
+            }
+        }
+        
+        /*
         if selectedSegmentIndex == subscribedWellboresIndex {
             subscribedWellbores = Wellbore.getSubscribedWellboresForUserID(currentUser.id)
         } else {
             allWellbores = Wellbore.getAllWellboresForUserID(currentUser.id)
         }
+        */
         
         tableView.reloadData()
     }
