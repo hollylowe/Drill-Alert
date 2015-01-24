@@ -8,6 +8,7 @@
 
 import Foundation
 
+
 class Well {
     var id: Int
     var name: String
@@ -38,7 +39,7 @@ class Well {
         var result = Array<Well>()
         
         let url = "http://drillalert.azurewebsites.net/api/permissions/\(userID)"
-        println(url)
+        
         for dictionary in APIHelper.getJSONArray(url) {
             var newWellID: Int?
             var newWellName: String?
@@ -90,6 +91,14 @@ class Well {
                 }
             }
         }
+        
+        // TODO: delete this, only for when the connection doesn't work
+        if result.count == 0 {
+            let well = Well(id: 0, name: "Test", location: "Here")
+            well.addWellbore(Wellbore(well: well, name: "test"))
+            result.append(well)
+        }
+        
         return result
         
     }
@@ -112,6 +121,7 @@ class Well {
         return wells
     }
     */
+    
     /// Gets all of the users that have access to 
     /// this well.
     func getUsers() -> Array<User> {
