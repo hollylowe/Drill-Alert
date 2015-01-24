@@ -7,61 +7,8 @@
 //
 
 import Foundation
+import UIKit
 
-class APIHelper {
-    class func getJSONArray(urlToRequest: String) -> Array<Dictionary<String, AnyObject>> {
-        var result: AnyObject?
-        var resultArray = Array<Dictionary<String, AnyObject>>()
-        
-        if let url = NSURL(string: urlToRequest) {
-            let request: NSURLRequest = NSURLRequest(URL:url)
-            var response: NSURLResponse?
-            var err: NSError?
-            
-            if let data = NSURLConnection.sendSynchronousRequest(request, returningResponse: &response, error: &err) {
-                var error: NSError?
-                result = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(0), error: &error)
-                if error != nil {
-                    println("Error: \(error)")
-                }
-            }
-            
-            if err != nil {
-                println("Error: \(err)")
-            }
-            /*
-            var err: NSError?
-            let optionalData = NSData(contentsOfURL: url, options: nil, error: &err)
-            if err != nil {
-                println("Error: \(err)")
-            }
-            
-            if let data = optionalData {
-                var error: NSError?
-                result = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(0), error: &error)
-                if error != nil {
-                    println("Error: \(error)")
-                }
-            }
-            */
-        }
-        
-        if let json = result as? Array<AnyObject> {
-
-            for index in 0...json.count - 1 {
-                let object: AnyObject = json[index]
-                let objectDictionary = object as Dictionary<String, AnyObject>
-                resultArray.append(objectDictionary)
-            }
-            
-        }
-        
-        return resultArray
-    }
-
-    
-    
-}
 
 class Point {
     var x: Double
@@ -127,7 +74,8 @@ class Wellbore {
         let url = "http://drillalert.azurewebsites.net/api/WellboreData/1"
         var x: Double = 0
         var y: Double = 0
-        for dictionary in APIHelper.getJSONArray(url) {
+        var (urlResult, urlError) = APIHelper.getSynchronousJSONArray(url)
+        for dictionary in urlResult {
             if let xValue: AnyObject = dictionary["X"] {
                 x = (xValue as NSNumber).doubleValue
             }
@@ -141,7 +89,8 @@ class Wellbore {
     
     func updateData() {
         let url = "http://drillalert.azurewebsites.net/api/WellboreData/5"
-        for dictionary in APIHelper.getJSONArray(url) {
+        var (urlResult, urlError) = APIHelper.getSynchronousJSONArray(url)
+        for dictionary in urlResult {
             var x: Double = 0
             var y: Double = 0
             if let xValue: AnyObject = dictionary["X"] {

@@ -41,6 +41,8 @@ class User {
             user = User(firstName: "Jameson", lastName: "Locke", id: "00000000-0000-0000-0000-000000000000")
         } else if username == "user1" {
             user = User(firstName: "Jameson", lastName: "Locke", id: "00000000-0000-0000-0000-000000000001")
+        } else if username == "" {
+            user = User(firstName: "Jameson", lastName: "Locke", id: "00000000-0000-0000-0000-000000000000")
         }
         
         return user

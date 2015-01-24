@@ -30,10 +30,33 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var subscribedWellbores = Array<Wellbore>()
     var allWellbores = Array<Wellbore>()
     
+    // Variables for loading
+    var loadingData = true
+    var loadError = false
+    
     override func viewDidLoad() {
         setupView()
-        reloadWells()
+        loadData()
         super.viewDidLoad()
+    }
+    
+    func loadData() {
+        loadError = false
+        loadingData = true
+        self.tableView.reloadData()
+        
+        // TODO: This will need to change if we add a way to refresh this page, which we probably will.
+        // Instead, we could use the NSURLConnection asynchrounous call. This is because users could
+        // refresh the page faster than this call could load it, resulting in multiple threads doing
+        // the same operation and messing up the table view.
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
+            self.reloadWells()
+            
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                self.loadingData = false
+                self.tableView.reloadData()
+            })
+        })
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -59,10 +82,13 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     private func setupView() {
-        self.title = "Home"
+        self.title = "Wellbores"
         let toolbarWidth = self.view.frame.size.width
         let toolbarHeight: CGFloat = 39.0
 
+        // Setup refresh control
+        self.tableView.addSubview(UIRefreshControl())
+        
         if let navigationController = self.navigationController {
             navigationController.navigationBar.hidden = false
             
@@ -128,7 +154,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func segmentedControlAction(sender: UISegmentedControl) {
         self.selectedSegmentIndex = sender.selectedSegmentIndex
-        self.reloadWells()
+        self.tableView.reloadData()
     }
 
     func reloadWells() {
@@ -137,13 +163,21 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         allWellbores.removeAll(keepCapacity: false)
         subscribedWellbores.removeAll(keepCapacity: false)
 
-        let wells = Well.getSubscribedWellsForUserID(currentUser.id)
+        let (wells, error) = Well.getWellsForUserID(currentUser.id)
         
-        for well in wells {
-            for wellbore in well.wellbores {
-                subscribedWellbores.append(wellbore)
-                allWellbores.append(wellbore)
+        if error == nil {
+            for well in wells {
+                for wellbore in well.wellbores {
+                    subscribedWellbores.append(wellbore)
+                    // allWellbores.append(wellbore)
+                }
             }
+        } else {
+            self.loadError = true
+            
+            var alert = UIAlertController(title: "Error", message: error, preferredStyle: UIAlertControllerStyle.Alert)
+            alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil))
+            self.presentViewController(alert, animated: true, completion: nil)
         }
         
         /*
@@ -154,7 +188,6 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
         */
         
-        tableView.reloadData()
     }
     
     func wellboreAtIndex(index: Int) -> Wellbore {
@@ -177,6 +210,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             destinationViewController.currentWellbore = wellbore
             destinationViewController.currentUser = currentUser
         }
+        
         super.prepareForSegue(segue, sender: self)
     }
 }
@@ -201,6 +235,55 @@ extension HomeViewController: UITableViewDataSource {
             count = allWellbores.count
         }
         return count
+    }
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        var sections = 1
+        
+        if loadingData {
+            sections = 0
+            let indicatorWidth: CGFloat = 20
+            let indicatorHeight: CGFloat = 20
+            // Display loading indicator
+            var backgroundView = UIView(frame: CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height))
+            var loadingIndicator = UIActivityIndicatorView(frame: CGRectMake((self.view.bounds.size.width - indicatorWidth) / 2, (self.view.bounds.size.height - indicatorHeight) / 2, indicatorWidth, indicatorHeight))
+            
+            loadingIndicator.color = UIColor.grayColor()
+            loadingIndicator.startAnimating()
+            backgroundView.addSubview(loadingIndicator)
+            self.tableView.backgroundView = backgroundView
+            self.tableView.separatorStyle = .None
+
+        } else {
+            if (selectedSegmentIndex == subscribedWellboresIndex && subscribedWellbores.count == 0) || (selectedSegmentIndex == allWellsIndex && allWellbores.count == 0) {
+                sections = 0
+                
+                // Display "No Wells" message
+                let textColor = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1.0)
+                var noWellsLabel = UILabel(frame: CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height))
+                if loadError {
+                    noWellsLabel.text = "Network Error"
+                } else {
+                    noWellsLabel.text = "No Wellbores"
+                }
+                
+                noWellsLabel.textColor = textColor
+                noWellsLabel.numberOfLines = 0
+                noWellsLabel.textAlignment = .Center
+                noWellsLabel.font = UIFont(name: "HelveticaNeue", size: 26.0)
+                noWellsLabel.sizeToFit()
+                
+                self.tableView.backgroundView = noWellsLabel
+                self.tableView.separatorStyle = .None
+            } else {
+                self.tableView.backgroundView = nil
+                self.tableView.separatorStyle = .SingleLine
+            }
+            
+
+        }
+        
+        return sections
     }
 }
 

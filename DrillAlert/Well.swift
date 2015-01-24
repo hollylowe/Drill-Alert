@@ -25,7 +25,10 @@ class Well {
         self.wellbores.append(newWellbore)
     }
     
-    class func getSubscribedWellsForUserID(userID: String) -> Array<Well> {
+    class func getWellsForUserID(userID: String) -> (Array<Well>, String?) {
+        // Variables for errors
+        let APIErrorKey = "Message"
+
         // Keys for the Well
         let APINameKey = "name"
         let APIWellIDKey = "wellId"
@@ -39,67 +42,71 @@ class Well {
         var result = Array<Well>()
         
         let url = "http://drillalert.azurewebsites.net/api/permissions/\(userID)"
+        let (urlResult, errorMessage) = APIHelper.getSynchronousJSONArray(url)
         
-        for dictionary in APIHelper.getJSONArray(url) {
-            var newWellID: Int?
-            var newWellName: String?
-            var newWellLocation: String?
-            
-            if let anyObjectWellID: AnyObject = dictionary[APIWellIDKey] {
-                newWellID = anyObjectWellID as? Int
-            }
-            
-            if let anyObjectWellName: AnyObject = dictionary[APINameKey] {
-                newWellName = anyObjectWellName as? String
-            }
-            
-            if let anyObjectWellLocation: AnyObject = dictionary[APILocationKey] {
-                newWellLocation = anyObjectWellLocation as? String
-            }
-            
-            if let id = newWellID {
-                if let name = newWellName {
-                    if let location = newWellLocation {
-                        let well = Well(id: id, name: name, location: location)
-                        let wellboreAnyObjectArray = dictionary[APIWellboresKey] as Array<AnyObject>
-                        
-                        // Now add the wellbores to the well
-                        for wellboreAnyObject in wellboreAnyObjectArray {
-                            let wellboreDictionary = wellboreAnyObject as Dictionary<String, AnyObject>
-                            var newWellboreID: Int?
-                            var newWellboreName: String?
-
-                            if let anyObjectWellboreID: AnyObject = wellboreDictionary[APIWellboreIDKey] {
+        if errorMessage == nil {
+            for dictionary in urlResult {
+                var newWellID: Int?
+                var newWellName: String?
+                var newWellLocation: String?
+                
+                if let anyObjectWellID: AnyObject = dictionary[APIWellIDKey] {
+                    newWellID = anyObjectWellID as? Int
+                }
+                
+                if let anyObjectWellName: AnyObject = dictionary[APINameKey] {
+                    newWellName = anyObjectWellName as? String
+                }
+                
+                if let anyObjectWellLocation: AnyObject = dictionary[APILocationKey] {
+                    newWellLocation = anyObjectWellLocation as? String
+                }
+                
+                if let id = newWellID {
+                    if let name = newWellName {
+                        if let location = newWellLocation {
+                            let well = Well(id: id, name: name, location: location)
+                            let wellboreAnyObjectArray = dictionary[APIWellboresKey] as Array<AnyObject>
+                            
+                            // Now add the wellbores to the well
+                            for wellboreAnyObject in wellboreAnyObjectArray {
+                                let wellboreDictionary = wellboreAnyObject as Dictionary<String, AnyObject>
+                                var newWellboreID: Int?
+                                var newWellboreName: String?
                                 
-                                newWellboreID = anyObjectWellboreID as? Int
-                            }
-                            
-                            if let anyObjectWellboreName: AnyObject = wellboreDictionary[APIWellboreNameKey] {
-                                newWellboreName = anyObjectWellboreName as? String
-                            }
-                            
-                            if let wellboreID = newWellboreID {
-                                if let wellboreName = newWellboreName {
-                                    let wellbore = Wellbore(id: wellboreID, name: wellboreName, well: well)
-                                    well.addWellbore(wellbore)
+                                if let anyObjectWellboreID: AnyObject = wellboreDictionary[APIWellboreIDKey] {
+                                    
+                                    newWellboreID = anyObjectWellboreID as? Int
+                                }
+                                
+                                if let anyObjectWellboreName: AnyObject = wellboreDictionary[APIWellboreNameKey] {
+                                    newWellboreName = anyObjectWellboreName as? String
+                                }
+                                
+                                if let wellboreID = newWellboreID {
+                                    if let wellboreName = newWellboreName {
+                                        let wellbore = Wellbore(id: wellboreID, name: wellboreName, well: well)
+                                        well.addWellbore(wellbore)
+                                    }
                                 }
                             }
+                            
+                            result.append(well)
                         }
-                        
-                        result.append(well)
                     }
                 }
             }
+        } else {
+            // TODO: delete this, only for when the connection doesn't work
+            if result.count == 0 {
+                let well = Well(id: 0, name: "Test", location: "Here")
+                well.addWellbore(Wellbore(well: well, name: "test"))
+                result.append(well)
+            }
         }
+
         
-        // TODO: delete this, only for when the connection doesn't work
-        if result.count == 0 {
-            let well = Well(id: 0, name: "Test", location: "Here")
-            well.addWellbore(Wellbore(well: well, name: "test"))
-            result.append(well)
-        }
-        
-        return result
+        return (result, errorMessage)
         
     }
 

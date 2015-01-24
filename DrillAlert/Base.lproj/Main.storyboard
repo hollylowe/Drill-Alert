@@ -91,6 +91,9 @@
                                     </mask>
                                 </variation>
                             </imageView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="1PG-fI-ei2">
+                                <rect key="frame" x="290" y="460" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -103,6 +106,7 @@
                             <constraint firstAttribute="trailingMargin" secondItem="mnf-Dc-ccz" secondAttribute="trailing" constant="21" id="DMG-la-kbn"/>
                             <constraint firstItem="ARm-4F-VO1" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="topMargin" id="Dfy-l2-T58"/>
                             <constraint firstAttribute="centerY" secondItem="Uf8-hT-C26" secondAttribute="centerY" constant="-35" id="F5T-h4-Yrd"/>
+                            <constraint firstAttribute="centerX" secondItem="1PG-fI-ei2" secondAttribute="centerX" id="FrD-mI-qRa"/>
                             <constraint firstItem="mnf-Dc-ccz" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="21" id="Hyy-Bm-xND"/>
                             <constraint firstItem="ARm-4F-VO1" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="-16" id="KwT-lo-d42"/>
                             <constraint firstItem="Uf8-hT-C26" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="21" id="LIq-0n-YXy"/>
@@ -112,6 +116,7 @@
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="ARm-4F-VO1" secondAttribute="bottom" id="XXL-oR-1dG"/>
                             <constraint firstAttribute="centerY" secondItem="jBV-3p-PI0" secondAttribute="centerY" constant="139" id="ZzU-iR-gNd"/>
                             <constraint firstAttribute="centerY" secondItem="mnf-Dc-ccz" secondAttribute="centerY" constant="95" id="eNL-nX-4rs"/>
+                            <constraint firstItem="1PG-fI-ei2" firstAttribute="top" secondItem="Uf8-hT-C26" secondAttribute="bottom" constant="102" id="h0Y-pL-qYl"/>
                             <constraint firstItem="Uf8-hT-C26" firstAttribute="top" secondItem="mnf-Dc-ccz" secondAttribute="bottom" constant="-1" id="iLT-HN-Nkc"/>
                             <constraint firstAttribute="centerX" secondItem="Uf8-hT-C26" secondAttribute="centerX" id="kxI-zn-Ljp"/>
                             <constraint firstAttribute="trailingMargin" secondItem="jBV-3p-PI0" secondAttribute="trailing" constant="21" id="ngQ-tR-xyj"/>
@@ -131,6 +136,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="PM9-dt-61L"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="1PG-fI-ei2" id="awY-GO-ALU"/>
                         <outlet property="backgroundImageView" destination="ARm-4F-VO1" id="rJm-gz-d9p"/>
                         <outlet property="passwordTextField" destination="mnf-Dc-ccz" id="bUD-Sb-d5a"/>
                         <outlet property="sdiSignInButton" destination="Uf8-hT-C26" id="WdC-wZ-xa1"/>

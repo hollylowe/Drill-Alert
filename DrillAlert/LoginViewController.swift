@@ -13,7 +13,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var passwordTextField: PaddedUITextField!
     @IBOutlet weak var usernameTextField: PaddedUITextField!
     @IBOutlet weak var sdiSignInButton: UIButton!
-    
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var backgroundImageView: UIImageView!
     let loginToHomeSegueIdentifier = "LoginToHomeSegue"
     var currentUser: User?
@@ -51,6 +51,7 @@ class LoginViewController: UIViewController {
         // SDI Text fields
         let borderColor = UIColor(red: 0.780, green: 0.780, blue: 0.804, alpha: 1.0).CGColor
         
+        activityIndicator.hidden = true
         usernameTextField.layer.borderColor = borderColor
         usernameTextField.layer.borderWidth = 1.0
         passwordTextField.layer.borderColor = borderColor
@@ -91,9 +92,14 @@ class LoginViewController: UIViewController {
 
         let username = usernameTextField.text
         let password = passwordTextField.text
-
+        
+        activityIndicator.startAnimating()
+        activityIndicator.hidden = false
+        
         if let user = User.authenticateSDIUsername(username, andPassword: password) {
             self.currentUser = user
+            activityIndicator.hidden = true
+            activityIndicator.stopAnimating()
             self.performSegueWithIdentifier(loginToHomeSegueIdentifier, sender: self)
         
         } else {
