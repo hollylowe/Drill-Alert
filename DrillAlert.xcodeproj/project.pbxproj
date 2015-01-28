@@ -55,6 +55,7 @@
 		A0DB7DBF1A2FB96E00C8C9A2 /* SelectParameterTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0DB7DBE1A2FB96E00C8C9A2 /* SelectParameterTableViewController.swift */; };
 		A0EE29021A08AB7200B50700 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EE29011A08AB7200B50700 /* UIViewExtension.swift */; };
 		A0F0FBED1A103DC600ADBDF3 /* WellUsersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F0FBEC1A103DC600ADBDF3 /* WellUsersTableViewController.swift */; };
+		CF4007651A78BDF4008E9C1F /* ManageVisualsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4007641A78BDF4008E9C1F /* ManageVisualsTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -121,6 +122,7 @@
 		A0DB7DBE1A2FB96E00C8C9A2 /* SelectParameterTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectParameterTableViewController.swift; sourceTree = "<group>"; };
 		A0EE29011A08AB7200B50700 /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		A0F0FBEC1A103DC600ADBDF3 /* WellUsersTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WellUsersTableViewController.swift; sourceTree = "<group>"; };
+		CF4007641A78BDF4008E9C1F /* ManageVisualsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageVisualsTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -320,6 +322,7 @@
 				A042B2DC1A195ED600660AB7 /* VisualViewController.swift */,
 				A042B2DE1A19645F00660AB7 /* index.html */,
 				A095FB921A2FF20D00B15D39 /* gauge.html */,
+				CF4007641A78BDF4008E9C1F /* ManageVisualsTableViewController.swift */,
 			);
 			name = Visuals;
 			sourceTree = "<group>";
@@ -451,6 +454,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CF4007651A78BDF4008E9C1F /* ManageVisualsTableViewController.swift in Sources */,
 				A018E4041A2B005A001EF20E /* ParameterAlert.swift in Sources */,
 				A0343D411A2AFE9C00FA0464 /* ParameterAlertTableViewCell.swift in Sources */,
 				A05A35CE1A083727008EA386 /* AdminTableViewController.swift in Sources */,

@@ -289,6 +289,49 @@
             </objects>
             <point key="canvasLocation" x="3279" y="368"/>
         </scene>
+        <!--Root View Controller-->
+        <scene sceneID="WFu-EY-KFp">
+            <objects>
+                <tableViewController storyboardIdentifier="ManageVisualsTableViewController" id="SVK-fv-WVl" customClass="ManageVisualsTableViewController" customModule="DrillAlert" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="d5q-f3-9jR">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="F6s-in-shU">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="F6s-in-shU" id="2uD-kD-cVe">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="SVK-fv-WVl" id="WKQ-Gi-AVj"/>
+                            <outlet property="delegate" destination="SVK-fv-WVl" id="hUY-rZ-mbx"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Root View Controller" id="RSj-QU-ivo"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="61f-1x-S5D" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6001" y="-1660"/>
+        </scene>
+        <!--Manage Visuals Navigation Controller-->
+        <scene sceneID="1oH-C2-9Zq">
+            <objects>
+                <navigationController storyboardIdentifier="ManageVisualsNavigationController" id="gwU-Cf-i4z" customClass="ManageVisualsNavigationController" customModule="DrillAlert" customModuleProvider="target" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="hXw-QA-c2J">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="SVK-fv-WVl" kind="relationship" relationship="rootViewController" id="Xc7-z7-c8Q"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0AV-nd-Bqe" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5208" y="-1684"/>
+        </scene>
         <!--Visuals-->
         <scene sceneID="xbf-gY-MU8">
             <objects>

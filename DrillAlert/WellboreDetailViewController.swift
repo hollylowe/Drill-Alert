@@ -143,7 +143,12 @@ class WellboreDetailViewController: UIViewController {
     }
     
     func editVisualsBarButtonTapped(sender: AnyObject) {
-        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let manageVisualsNavigationController = storyboard.instantiateViewControllerWithIdentifier(ManageVisualsNavigationController.storyboardIdentifier()) as ManageVisualsNavigationController
+        let manageVisualsTableViewController = manageVisualsNavigationController.viewControllers[0] as ManageVisualsTableViewController
+
+        manageVisualsTableViewController.wellboreDetailViewController = self
+        self.presentViewController(manageVisualsNavigationController, animated: true, completion: nil)
     }
 
     
