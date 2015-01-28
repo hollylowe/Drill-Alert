@@ -44,6 +44,8 @@
 		A06FFD711A06AA08001B3FF8 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = A06FFD6F1A06AA08001B3FF8 /* LaunchScreen.xib */; };
 		A06FFD7D1A06AA08001B3FF8 /* DrillAlertTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06FFD7C1A06AA08001B3FF8 /* DrillAlertTests.swift */; };
 		A087EEDE1A06C09D0073FDD0 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A087EEDD1A06C09D0073FDD0 /* HomeViewController.swift */; };
+		A095D57F1A78A3FA000889CB /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = A095D57E1A78A3FA000889CB /* JSON.swift */; };
+		A095D5811A78A403000889CB /* JSONArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = A095D5801A78A403000889CB /* JSONArray.swift */; };
 		A095FB8C1A2FC37200B15D39 /* AlertValueCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A095FB8B1A2FC37200B15D39 /* AlertValueCell.swift */; };
 		A095FB8F1A2FC38C00B15D39 /* AlertWhenCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A095FB8E1A2FC38C00B15D39 /* AlertWhenCell.swift */; };
 		A095FB911A2FC39800B15D39 /* AlertPriorityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A095FB901A2FC39800B15D39 /* AlertPriorityCell.swift */; };
@@ -110,6 +112,8 @@
 		A06FFD7B1A06AA08001B3FF8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A06FFD7C1A06AA08001B3FF8 /* DrillAlertTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrillAlertTests.swift; sourceTree = "<group>"; };
 		A087EEDD1A06C09D0073FDD0 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		A095D57E1A78A3FA000889CB /* JSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSON.swift; sourceTree = "<group>"; };
+		A095D5801A78A403000889CB /* JSONArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONArray.swift; sourceTree = "<group>"; };
 		A095FB8B1A2FC37200B15D39 /* AlertValueCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertValueCell.swift; sourceTree = "<group>"; };
 		A095FB8E1A2FC38C00B15D39 /* AlertWhenCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertWhenCell.swift; sourceTree = "<group>"; };
 		A095FB901A2FC39800B15D39 /* AlertPriorityCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertPriorityCell.swift; sourceTree = "<group>"; };
@@ -198,6 +202,8 @@
 				A0CE03271A0ECEFB0076EE3E /* Wellbore.swift */,
 				A0CEDBA11A0C3ADF0051BDB8 /* User.swift */,
 				A02679FA1A742A4900ED8FFB /* APIHelper.swift */,
+				A095D57E1A78A3FA000889CB /* JSON.swift */,
+				A095D5801A78A403000889CB /* JSONArray.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -472,12 +478,14 @@
 				A095FB8C1A2FC37200B15D39 /* AlertValueCell.swift in Sources */,
 				A042B2DD1A195ED600660AB7 /* VisualViewController.swift in Sources */,
 				A018E40C1A2BB4E8001EF20E /* AddParameterAlertTableViewController.swift in Sources */,
+				A095D57F1A78A3FA000889CB /* JSON.swift in Sources */,
 				A0343D391A2AC85400FA0464 /* WellboreDetailViewController.swift in Sources */,
 				A0DB7DBD1A2FB96000C8C9A2 /* AddOrEditAlertTableViewController.swift in Sources */,
 				A06FFD671A06AA08001B3FF8 /* DrillAlert.xcdatamodeld in Sources */,
 				A066D5D21A2EBD4B00E16E58 /* PaddedUITextField.swift in Sources */,
 				A06FFD641A06AA08001B3FF8 /* AppDelegate.swift in Sources */,
 				A095FB8F1A2FC38C00B15D39 /* AlertWhenCell.swift in Sources */,
+				A095D5811A78A403000889CB /* JSONArray.swift in Sources */,
 				A087EEDE1A06C09D0073FDD0 /* HomeViewController.swift in Sources */,
 				A02D86451A6D97BF00D22A38 /* AlertInboxCell.swift in Sources */,
 			);

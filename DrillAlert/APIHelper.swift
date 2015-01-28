@@ -7,6 +7,8 @@
 //
 
 import Foundation
+
+
 class APIHelper {
 
     class func getSynchronousJSONArray(urlToRequest: String) -> (Array<Dictionary<String, AnyObject>>, String?) {
