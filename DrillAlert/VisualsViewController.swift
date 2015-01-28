@@ -35,7 +35,20 @@ class VisualsViewController: UIViewController, UIPageViewControllerDataSource {
             self.view.addSubview(self.pageViewController.view)
             self.pageViewController.didMoveToParentViewController(self)
         }
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "rightBarButtonItemTapped:")
     }
+    
+    
+    func rightBarButtonItemTapped(sender: UIBarButtonItem) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        let addAlertNavigationController = storyboard.instantiateViewControllerWithIdentifier(AddParameterAlertNavigationController.getStoryboardIdentifier()) as AddParameterAlertNavigationController
+        let addParameterAlertViewController = addAlertNavigationController.viewControllers[0] as AddParameterAlertTableViewController
+        //addParameterAlertViewController.delegate = self
+        self.presentViewController(addAlertNavigationController, animated: true, completion: nil)
+    }
+
     
     func viewControllerAtIndex(index: Int) -> UIViewController? {
         var result: UIViewController?
