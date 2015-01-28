@@ -20,7 +20,7 @@ class WellboreTableViewCell: UITableViewCell {
     
     func setupWithWellbore(wellbore: Wellbore!) {
         self.wellboreNameLabel.text = wellbore.name
-        self.wellNameLabel.text = wellbore.well.name
+        self.wellNameLabel.text = wellbore.well.name + ", " + wellbore.well.location
         self.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
         self.selectionStyle = .None
     }

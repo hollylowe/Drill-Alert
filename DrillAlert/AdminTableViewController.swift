@@ -16,7 +16,7 @@ class AdminTableViewController: UITableViewController {
     var currentUser: User!
     
     override func viewDidLoad() {
-        self.wells = Well.getAllWells()
+        //self.wells = Well.getAllWells()
         
         if let navigationController = self.navigationController {
             let yCoord = navigationController.navigationBar.frame.size.height + UIApplication.sharedApplication().statusBarFrame.size.height

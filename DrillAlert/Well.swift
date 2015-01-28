@@ -8,17 +8,113 @@
 
 import Foundation
 
+
 class Well {
+    var id: Int
     var name: String
+    var location: String
     var wellbores = Array<Wellbore>()
     
-    init(name: String) {
+    init(id: Int, name: String, location: String) {
+        self.id = id
         self.name = name
+        self.location = location
     }
     
-    /// This is an API call to get all of the wells 
+    func addWellbore(newWellbore: Wellbore) {
+        self.wellbores.append(newWellbore)
+    }
+    
+    class func getWellsForUserID(userID: String) -> (Array<Well>, String?) {
+        // Variables for errors
+        let APIErrorKey = "Message"
+
+        // Keys for the Well
+        let APINameKey = "name"
+        let APIWellIDKey = "wellId"
+        let APILocationKey = "location"
+        let APIWellboresKey = "wellBores"
+        
+        // Keys for the Wellbore
+        let APIWellboreIDKey = "wellboreId"
+        let APIWellboreNameKey = "name"
+        
+        var result = Array<Well>()
+        
+        let url = "http://drillalert.azurewebsites.net/api/permissions/\(userID)"
+        let (urlResult, errorMessage) = APIHelper.getSynchronousJSONArray(url)
+        
+        if errorMessage == nil {
+            for dictionary in urlResult {
+                var newWellID: Int?
+                var newWellName: String?
+                var newWellLocation: String?
+                
+                if let anyObjectWellID: AnyObject = dictionary[APIWellIDKey] {
+                    newWellID = anyObjectWellID as? Int
+                }
+                
+                if let anyObjectWellName: AnyObject = dictionary[APINameKey] {
+                    newWellName = anyObjectWellName as? String
+                }
+                
+                if let anyObjectWellLocation: AnyObject = dictionary[APILocationKey] {
+                    newWellLocation = anyObjectWellLocation as? String
+                }
+                
+                if let id = newWellID {
+                    if let name = newWellName {
+                        if let location = newWellLocation {
+                            let well = Well(id: id, name: name, location: location)
+                            let wellboreAnyObjectArray = dictionary[APIWellboresKey] as Array<AnyObject>
+                            
+                            // Now add the wellbores to the well
+                            for wellboreAnyObject in wellboreAnyObjectArray {
+                                let wellboreDictionary = wellboreAnyObject as Dictionary<String, AnyObject>
+                                var newWellboreID: Int?
+                                var newWellboreName: String?
+                                
+                                if let anyObjectWellboreID: AnyObject = wellboreDictionary[APIWellboreIDKey] {
+                                    
+                                    newWellboreID = anyObjectWellboreID as? Int
+                                }
+                                
+                                if let anyObjectWellboreName: AnyObject = wellboreDictionary[APIWellboreNameKey] {
+                                    newWellboreName = anyObjectWellboreName as? String
+                                }
+                                
+                                if let wellboreID = newWellboreID {
+                                    if let wellboreName = newWellboreName {
+                                        let wellbore = Wellbore(id: wellboreID, name: wellboreName, well: well)
+                                        well.addWellbore(wellbore)
+                                    }
+                                }
+                            }
+                            
+                            result.append(well)
+                        }
+                    }
+                }
+            }
+        } else {
+            // TODO: delete this, only for when the connection doesn't work
+            if result.count == 0 {
+                let well = Well(id: 0, name: "Test", location: "Here")
+                well.addWellbore(Wellbore(well: well, name: "test"))
+                result.append(well)
+            }
+        }
+
+        
+        return (result, errorMessage)
+        
+    }
+
+    
+    /// This is an API call to get all of the wells
     /// as an array from the server. Used in the Admin 
     /// view.
+    /*
     class func getAllWells() -> Array<Well> {
         var wells = Array<Well>()
         
@@ -31,6 +127,7 @@ class Well {
 
         return wells
     }
+    */
     
     /// Gets all of the users that have access to 
     /// this well.

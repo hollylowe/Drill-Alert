@@ -11,67 +11,44 @@ import UIKit
 
 
 class WellboreDetailViewController: UIViewController {
-    var segmentedControl: UISegmentedControl!
-    var segmentViewControllers: [UIViewController]!
-    var segmentNavigationController: UINavigationController!
-    
+    @IBOutlet weak var rightBarButtonItem: UIBarButtonItem!
+
+    var currentUser: User!
     var currentWellbore: Wellbore!
     var toolbarHeight: CGFloat = 0
     var topBarHeight: CGFloat = 0
-    // Switch views
-    var containerView: UIView!
-    
-    // Hiding the navigation bar line
     var navBarHairlineImageView: UIImageView!
     
     // Segmented Control
+    var segmentedControl: UISegmentedControl!
     let segmentedControlItems = ["Visuals", "Alerts"]
+    var segmentViewControllers: [UIViewController]!
+    var segmentNavigationController: UINavigationController!
+    var containerView: UIView!
+
     var selectedSegmentIndex = 0
     let visualsIndex = 0
     let alertsIndex = 1
-    
-    @IBOutlet weak var rightBarButtonItem: UIBarButtonItem!
-    var currentUser: User!
     
     override func viewDidLoad() {
         setupView()
         super.viewDidLoad()
     }
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        // Hiding the navigation bar line
-        if let navigationController = self.navigationController {
-            navBarHairlineImageView = self.findHairlineImageViewUnder(navigationController.navigationBar)
-            navBarHairlineImageView.hidden = true
+    private func setupRightBarButtonItem() {
+        let imageSize = CGSizeMake(30, 30)
+        self.rightBarButtonItem.title = "Manage"
+
+        if let manageDefaultIcon = UIImage(named: "settings_line.png") {
+            rightBarButtonItem.image = imageWithImage(manageDefaultIcon, scaledToSize: imageSize)
         }
     }
-    
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-        navBarHairlineImageView.hidden = false
-    }
-    
-    func findHairlineImageViewUnder(view: UIView) -> UIImageView? {
-        if view.isKindOfClass(UIImageView) && view.bounds.size.height <= 1.0 {
-            return view as? UIImageView
-        } else {
-            for subview in view.subviews {
-                var imageView = self.findHairlineImageViewUnder(subview as UIView)
-                if imageView != nil {
-                    return imageView
-                }
-            }
-            return nil
-        }
-    }
-    
     
     private func setupView() {
         self.title = currentWellbore.name
+        setupRightBarButtonItem()
         
         if let mainNavigationController = self.navigationController {
-            
             mainNavigationController.navigationBar.hidden = false
             // Add the segmented control at the (navigation bar height + status bar height) y coordinate
             let navigationBarBottomCoord = mainNavigationController.navigationBar.frame.size.height + UIApplication.sharedApplication().statusBarFrame.size.height
@@ -101,12 +78,15 @@ class WellboreDetailViewController: UIViewController {
             
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let visualsViewController = storyboard.instantiateViewControllerWithIdentifier("VisualsViewController") as VisualsViewController
-            let parameterAlertsTableViewController = storyboard.instantiateViewControllerWithIdentifier("ParameterAlertsTableViewController") as ParameterAlertsTableViewController
-            let viewControllers = [visualsViewController, parameterAlertsTableViewController]
-            visualsViewController.wellboreDetailViewController = self
-            parameterAlertsTableViewController.wellboreDetailViewController = self
             
-            self.segmentViewControllers = [visualsViewController, parameterAlertsTableViewController]
+            let alertInboxTableViewController = storyboard.instantiateViewControllerWithIdentifier(AlertInboxTableViewController.storyboardIdentifier()) as AlertInboxTableViewController
+            
+            // let parameterAlertsTableViewController = storyboard.instantiateViewControllerWithIdentifier("ParameterAlertsTableViewController") as ParameterAlertsTableViewController
+            let viewControllers = [visualsViewController, alertInboxTableViewController]
+            visualsViewController.wellboreDetailViewController = self
+            alertInboxTableViewController.wellboreDetailViewController = self
+            
+            self.segmentViewControllers = [visualsViewController, alertInboxTableViewController]
             self.segmentNavigationController = segmentedControlNavigationController
             
             segmentedControl = UISegmentedControl(items: segmentedControlItems)
@@ -146,29 +126,26 @@ class WellboreDetailViewController: UIViewController {
         case visualsIndex:
             editVisualsBarButtonTapped(sender)
         case alertsIndex:
-            addAlertBarButtonTapped(sender)
+            manageAlertsBarButtonTapped(sender)
+            // addAlertBarButtonTapped(sender)
         default: println("Unknown segment index.")
         }
     }
     
-    func addAlertBarButtonTapped(sender: AnyObject) {
+    func manageAlertsBarButtonTapped(sender: AnyObject) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let addAlertNavigationController = storyboard.instantiateViewControllerWithIdentifier(AddParameterAlertNavigationController.getStoryboardIdentifier()) as AddParameterAlertNavigationController
-        let addParameterAlertViewController = addAlertNavigationController.viewControllers[0] as AddParameterAlertTableViewController
-        addParameterAlertViewController.delegate = self
-        self.presentViewController(addAlertNavigationController, animated: true, completion: nil)
+        let parameterAlertsNavigationController = storyboard.instantiateViewControllerWithIdentifier(ParameterAlertsNavigationController.storyboardIdentifier()) as ParameterAlertsNavigationController
+        let parameterAlertsTableViewController = parameterAlertsNavigationController.viewControllers[0] as ParameterAlertsTableViewController
+
+        parameterAlertsTableViewController.wellboreDetailViewController = self
+        self.presentViewController(parameterAlertsNavigationController, animated: true, completion: nil)
+        
     }
     
     func editVisualsBarButtonTapped(sender: AnyObject) {
         
     }
-    
-    // TODO: Remove this, Purely for the demo
-    func addAlertToTableView(parameterAlert: ParameterAlert) {
-        let incomingViewController = self.segmentViewControllers[self.selectedSegmentIndex] as ParameterAlertsTableViewController
-        incomingViewController.parameterAlerts.append(parameterAlert)
-        incomingViewController.tableView.reloadData()
-    }
+
     
     func segmentedControlAction(sender: UISegmentedControl) {
         let index = sender.selectedSegmentIndex
@@ -176,15 +153,42 @@ class WellboreDetailViewController: UIViewController {
         let incomingViewController = self.segmentViewControllers[index] as UIViewController
         self.segmentNavigationController.setViewControllers([incomingViewController], animated: false)
         
-        if let navigationController = self.navigationController {
-            switch index {
-            case visualsIndex:
-                rightBarButtonItem.title = "Edit"
-            case alertsIndex:
-                rightBarButtonItem.title = "Add"
-            default: println("Unknown segment index.")
+    }
+    
+    private func imageWithImage(image: UIImage, scaledToSize newSize: CGSize) -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0)
+        image.drawInRect(CGRectMake(0, 0, newSize.width, newSize.height))
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        
+        UIGraphicsEndImageContext()
+        return newImage
+    }
+    
+    func findHairlineImageViewUnder(view: UIView) -> UIImageView? {
+        if view.isKindOfClass(UIImageView) && view.bounds.size.height <= 1.0 {
+            return view as? UIImageView
+        } else {
+            for subview in view.subviews {
+                var imageView = self.findHairlineImageViewUnder(subview as UIView)
+                if imageView != nil {
+                    return imageView
+                }
             }
+            return nil
         }
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        // Hiding the navigation bar line
+        if let navigationController = self.navigationController {
+            navBarHairlineImageView = self.findHairlineImageViewUnder(navigationController.navigationBar)
+            navBarHairlineImageView.hidden = true
+        }
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        navBarHairlineImageView.hidden = false
+    }
 }

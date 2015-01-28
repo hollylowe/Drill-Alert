@@ -8,20 +8,12 @@
 
 import UIKit
 
-// Google Plus
-import AddressBook
-import MediaPlayer
-import AssetsLibrary
-import CoreLocation
-import CoreMotion
-
-
 class LoginViewController: UIViewController {
     
     @IBOutlet weak var passwordTextField: PaddedUITextField!
     @IBOutlet weak var usernameTextField: PaddedUITextField!
     @IBOutlet weak var sdiSignInButton: UIButton!
-    
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var backgroundImageView: UIImageView!
     let loginToHomeSegueIdentifier = "LoginToHomeSegue"
     var currentUser: User?
@@ -48,17 +40,18 @@ class LoginViewController: UIViewController {
         // straight to the home view controller
         
         // Need to do some kind of session stuff here,
-        // for example, we could check if there is a facebook session
-        // open, if not, check if there is a google session open, 
-        // if not, check if there is an SDI sesison open. If any of them
-        // are open then skip the login view, otherwise show it
+        // i.e. check if there is an SDI session open. If so
+        // then skip the login view, otherwise show it
         super.viewDidLoad()
     }
     
     func setupView() {
+
+        
         // SDI Text fields
         let borderColor = UIColor(red: 0.780, green: 0.780, blue: 0.804, alpha: 1.0).CGColor
         
+        activityIndicator.hidden = true
         usernameTextField.layer.borderColor = borderColor
         usernameTextField.layer.borderWidth = 1.0
         passwordTextField.layer.borderColor = borderColor
@@ -99,9 +92,14 @@ class LoginViewController: UIViewController {
 
         let username = usernameTextField.text
         let password = passwordTextField.text
-
+        
+        activityIndicator.startAnimating()
+        activityIndicator.hidden = false
+        
         if let user = User.authenticateSDIUsername(username, andPassword: password) {
             self.currentUser = user
+            activityIndicator.hidden = true
+            activityIndicator.stopAnimating()
             self.performSegueWithIdentifier(loginToHomeSegueIdentifier, sender: self)
         
         } else {
@@ -123,10 +121,10 @@ class LoginViewController: UIViewController {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == loginToHomeSegueIdentifier {
-            // let homeViewController = segue.destinationViewController as HomeViewController
-            // homeViewController.currentUser = self.currentUser
-            let tabBarController = segue.destinationViewController as MainTabBarController
-            tabBarController.currentUser = currentUser
+             let homeViewController = segue.destinationViewController as HomeViewController
+             homeViewController.currentUser = self.currentUser
+            // let tabBarController = segue.destinationViewController as MainTabBarController
+            // tabBarController.currentUser = currentUser
         }
         
         super.prepareForSegue(segue, sender: sender)
