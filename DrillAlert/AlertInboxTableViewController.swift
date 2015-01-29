@@ -23,6 +23,8 @@ class AlertInboxTableViewController: UITableViewController {
         return "AlertInboxTableViewController"
     }
     
+    /*
+    
     func getCriticalAlertAtIndex(index: Int) -> Alert! {
         return Alert(title: "Critical", information: "Critical Alert")
     }
@@ -41,7 +43,7 @@ class AlertInboxTableViewController: UITableViewController {
         return Alert(title: "Read", information: "Read Alert")
 
     }
-    
+    */
 }
 
 extension AlertInboxTableViewController: UITableViewDataSource {
@@ -50,7 +52,7 @@ extension AlertInboxTableViewController: UITableViewDataSource {
             let cell = tableView.dequeueReusableCellWithIdentifier(
                 AlertInboxCell.cellIdentifier()) as AlertInboxCell
             var alert: Alert!
-            
+            /*
             switch indexPath.section {
             case criticalSection:
                 alert = getCriticalAlertAtIndex(indexPath.row)
@@ -65,7 +67,7 @@ extension AlertInboxTableViewController: UITableViewDataSource {
             }
             
             cell.setupWithAlert(alert)
-            
+            */
             return cell
     }
     
@@ -90,7 +92,7 @@ extension AlertInboxTableViewController: UITableViewDataSource {
                 numberOfRows = 0
             }
             
-            return numberOfRows
+            return 0
     }
     
     override func tableView(tableView: UITableView,

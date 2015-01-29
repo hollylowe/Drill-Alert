@@ -8,29 +8,44 @@
 
 import Foundation
 
-enum Priority : String {
-    case High = "High", Low = "Low"
-}
-
 class Alert {
+    var type: AlertType
     var value: Int
-    var alertWhenRisesToValue: Bool
-    var priority: Priority
-    var title: String = "None"
-    var information: String = "None"
+    var priority: AlertPriority
+    var alertOnRise: Bool
+    var isActive: Bool
     
-    init(value: Int, alertWhenRisesToValue: Bool, priority: Priority) {
+    init(type: AlertType, value: Int, alertOnRise: Bool, priority: AlertPriority) {
+        self.type = type
         self.value = value
-        self.alertWhenRisesToValue = alertWhenRisesToValue
         self.priority = priority
+        self.alertOnRise = alertOnRise
+        self.isActive = true
     }
     
-    // test init
-    init(title: String, information: String) {
-        self.title = title
-        self.information = information
-        self.value = 0
-        self.alertWhenRisesToValue = false
-        self.priority = Priority.High
+    // TODO: Use real API call
+    class func getAlertsForUser(user: User, andWellbore wellbore: Wellbore) -> Array<Alert> {
+        var result = Array<Alert>()
+        
+        result.append(Alert(type: .Temperature, value: 20, alertOnRise: true, priority: .Warning))
+        result.append(Alert(type: .Pressure, value: 30, alertOnRise: true, priority: .Critical))
+        result.append(Alert(type: .Azimuth, value: 56, alertOnRise: false, priority: .Information))
+        result.append(Alert(type: .Inclination, value: 11, alertOnRise: true, priority: .Information))
+
+        return result
+    }
+    
+    func getInformationText() -> String! {
+        var result = "\(self.type.name)"
+        
+        if alertOnRise {
+            result = result + " has risen to "
+        } else {
+            result = result + " has fallen to "
+        }
+        
+        result = result + "\(self.value) \(self.type.units)"
+        
+        return result
     }
 }

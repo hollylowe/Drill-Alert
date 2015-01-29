@@ -24,11 +24,13 @@ class VisualViewController: UIViewController, UIWebViewDelegate {
     
     override func viewDidAppear(animated: Bool) {
         if let htmlPath = NSBundle.mainBundle().pathForResource(htmlFileName, ofType: "html") {
+            
             var possibleContent = String(contentsOfFile:htmlPath, usedEncoding: nil, error: nil)
             
             if let content = possibleContent {
                 self.webView.loadHTMLString(content, baseURL: NSURL.fileURLWithPath(htmlPath.stringByDeletingLastPathComponent))
             }
+            
         }
     }
     

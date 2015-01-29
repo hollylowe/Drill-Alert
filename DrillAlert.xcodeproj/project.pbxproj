@@ -10,8 +10,8 @@
 		A018E4001A2B003D001EF20E /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = A018E3FF1A2B003D001EF20E /* Alert.swift */; };
 		A018E4041A2B005A001EF20E /* ParameterAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = A018E4031A2B005A001EF20E /* ParameterAlert.swift */; };
 		A018E4061A2B010A001EF20E /* Parameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A018E4051A2B010A001EF20E /* Parameter.swift */; };
-		A018E40A1A2B0733001EF20E /* ParameterAlertsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A018E4091A2B0733001EF20E /* ParameterAlertsTableViewController.swift */; };
-		A018E40C1A2BB4E8001EF20E /* AddParameterAlertTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A018E40B1A2BB4E8001EF20E /* AddParameterAlertTableViewController.swift */; };
+		A018E40A1A2B0733001EF20E /* ManageAlertsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A018E4091A2B0733001EF20E /* ManageAlertsTableViewController.swift */; };
+		A018E40C1A2BB4E8001EF20E /* AddEditAlertTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A018E40B1A2BB4E8001EF20E /* AddEditAlertTableViewController.swift */; };
 		A02679FB1A742A4900ED8FFB /* APIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02679FA1A742A4900ED8FFB /* APIHelper.swift */; };
 		A02D86431A6D953A00D22A38 /* AlertInboxTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02D86421A6D953A00D22A38 /* AlertInboxTableViewController.swift */; };
 		A02D86451A6D97BF00D22A38 /* AlertInboxCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02D86441A6D97BF00D22A38 /* AlertInboxCell.swift */; };
@@ -46,15 +46,18 @@
 		A087EEDE1A06C09D0073FDD0 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A087EEDD1A06C09D0073FDD0 /* HomeViewController.swift */; };
 		A095D57F1A78A3FA000889CB /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = A095D57E1A78A3FA000889CB /* JSON.swift */; };
 		A095D5811A78A403000889CB /* JSONArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = A095D5801A78A403000889CB /* JSONArray.swift */; };
+		A095D5831A78B74D000889CB /* AlertTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A095D5821A78B74D000889CB /* AlertTableViewCell.swift */; };
 		A095FB8C1A2FC37200B15D39 /* AlertValueCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A095FB8B1A2FC37200B15D39 /* AlertValueCell.swift */; };
 		A095FB8F1A2FC38C00B15D39 /* AlertWhenCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A095FB8E1A2FC38C00B15D39 /* AlertWhenCell.swift */; };
 		A095FB911A2FC39800B15D39 /* AlertPriorityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A095FB901A2FC39800B15D39 /* AlertPriorityCell.swift */; };
 		A095FB931A2FF20D00B15D39 /* gauge.html in Resources */ = {isa = PBXBuildFile; fileRef = A095FB921A2FF20D00B15D39 /* gauge.html */; };
+		A0A783DA1A78BCFB00C3B20A /* AlertPriority.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A783D91A78BCFB00C3B20A /* AlertPriority.swift */; };
+		A0A783DC1A78BD1000C3B20A /* AlertType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A783DB1A78BD1000C3B20A /* AlertType.swift */; };
 		A0CE03281A0ECEFB0076EE3E /* Wellbore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CE03271A0ECEFB0076EE3E /* Wellbore.swift */; };
 		A0CE032C1A0ED67C0076EE3E /* VisualsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CE032B1A0ED67C0076EE3E /* VisualsViewController.swift */; };
 		A0CEDBA21A0C3ADF0051BDB8 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CEDBA11A0C3ADF0051BDB8 /* User.swift */; };
 		A0DB7DBD1A2FB96000C8C9A2 /* AddOrEditAlertTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0DB7DBC1A2FB96000C8C9A2 /* AddOrEditAlertTableViewController.swift */; };
-		A0DB7DBF1A2FB96E00C8C9A2 /* SelectParameterTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0DB7DBE1A2FB96E00C8C9A2 /* SelectParameterTableViewController.swift */; };
+		A0DB7DBF1A2FB96E00C8C9A2 /* SelectAlertTypeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0DB7DBE1A2FB96E00C8C9A2 /* SelectAlertTypeTableViewController.swift */; };
 		A0EE29021A08AB7200B50700 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EE29011A08AB7200B50700 /* UIViewExtension.swift */; };
 		A0F0FBED1A103DC600ADBDF3 /* WellUsersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F0FBEC1A103DC600ADBDF3 /* WellUsersTableViewController.swift */; };
 /* End PBXBuildFile section */
@@ -73,8 +76,8 @@
 		A018E3FF1A2B003D001EF20E /* Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		A018E4031A2B005A001EF20E /* ParameterAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParameterAlert.swift; sourceTree = "<group>"; };
 		A018E4051A2B010A001EF20E /* Parameter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parameter.swift; sourceTree = "<group>"; };
-		A018E4091A2B0733001EF20E /* ParameterAlertsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParameterAlertsTableViewController.swift; sourceTree = "<group>"; };
-		A018E40B1A2BB4E8001EF20E /* AddParameterAlertTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddParameterAlertTableViewController.swift; sourceTree = "<group>"; };
+		A018E4091A2B0733001EF20E /* ManageAlertsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageAlertsTableViewController.swift; sourceTree = "<group>"; };
+		A018E40B1A2BB4E8001EF20E /* AddEditAlertTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEditAlertTableViewController.swift; sourceTree = "<group>"; };
 		A02679FA1A742A4900ED8FFB /* APIHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIHelper.swift; sourceTree = "<group>"; };
 		A02D86421A6D953A00D22A38 /* AlertInboxTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertInboxTableViewController.swift; sourceTree = "<group>"; };
 		A02D86441A6D97BF00D22A38 /* AlertInboxCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertInboxCell.swift; sourceTree = "<group>"; };
@@ -114,15 +117,18 @@
 		A087EEDD1A06C09D0073FDD0 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		A095D57E1A78A3FA000889CB /* JSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSON.swift; sourceTree = "<group>"; };
 		A095D5801A78A403000889CB /* JSONArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONArray.swift; sourceTree = "<group>"; };
+		A095D5821A78B74D000889CB /* AlertTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertTableViewCell.swift; sourceTree = "<group>"; };
 		A095FB8B1A2FC37200B15D39 /* AlertValueCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertValueCell.swift; sourceTree = "<group>"; };
 		A095FB8E1A2FC38C00B15D39 /* AlertWhenCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertWhenCell.swift; sourceTree = "<group>"; };
 		A095FB901A2FC39800B15D39 /* AlertPriorityCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertPriorityCell.swift; sourceTree = "<group>"; };
 		A095FB921A2FF20D00B15D39 /* gauge.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = gauge.html; sourceTree = "<group>"; };
+		A0A783D91A78BCFB00C3B20A /* AlertPriority.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertPriority.swift; sourceTree = "<group>"; };
+		A0A783DB1A78BD1000C3B20A /* AlertType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertType.swift; sourceTree = "<group>"; };
 		A0CE03271A0ECEFB0076EE3E /* Wellbore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Wellbore.swift; sourceTree = "<group>"; };
 		A0CE032B1A0ED67C0076EE3E /* VisualsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualsViewController.swift; sourceTree = "<group>"; };
 		A0CEDBA11A0C3ADF0051BDB8 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		A0DB7DBC1A2FB96000C8C9A2 /* AddOrEditAlertTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddOrEditAlertTableViewController.swift; sourceTree = "<group>"; };
-		A0DB7DBE1A2FB96E00C8C9A2 /* SelectParameterTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectParameterTableViewController.swift; sourceTree = "<group>"; };
+		A0DB7DBE1A2FB96E00C8C9A2 /* SelectAlertTypeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectAlertTypeTableViewController.swift; sourceTree = "<group>"; };
 		A0EE29011A08AB7200B50700 /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		A0F0FBEC1A103DC600ADBDF3 /* WellUsersTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WellUsersTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -162,6 +168,8 @@
 				A018E3FF1A2B003D001EF20E /* Alert.swift */,
 				A018E4031A2B005A001EF20E /* ParameterAlert.swift */,
 				A018E4051A2B010A001EF20E /* Parameter.swift */,
+				A0A783D91A78BCFB00C3B20A /* AlertPriority.swift */,
+				A0A783DB1A78BD1000C3B20A /* AlertType.swift */,
 			);
 			name = Alerts;
 			sourceTree = "<group>";
@@ -285,6 +293,7 @@
 				A095FB8E1A2FC38C00B15D39 /* AlertWhenCell.swift */,
 				A095FB901A2FC39800B15D39 /* AlertPriorityCell.swift */,
 				A02D86441A6D97BF00D22A38 /* AlertInboxCell.swift */,
+				A095D5821A78B74D000889CB /* AlertTableViewCell.swift */,
 			);
 			name = Alerts;
 			sourceTree = "<group>";
@@ -333,10 +342,10 @@
 		A0CE032A1A0ED5FB0076EE3E /* Alerts */ = {
 			isa = PBXGroup;
 			children = (
-				A018E4091A2B0733001EF20E /* ParameterAlertsTableViewController.swift */,
-				A018E40B1A2BB4E8001EF20E /* AddParameterAlertTableViewController.swift */,
+				A018E4091A2B0733001EF20E /* ManageAlertsTableViewController.swift */,
+				A018E40B1A2BB4E8001EF20E /* AddEditAlertTableViewController.swift */,
 				A0DB7DBC1A2FB96000C8C9A2 /* AddOrEditAlertTableViewController.swift */,
-				A0DB7DBE1A2FB96E00C8C9A2 /* SelectParameterTableViewController.swift */,
+				A0DB7DBE1A2FB96E00C8C9A2 /* SelectAlertTypeTableViewController.swift */,
 				A02D86421A6D953A00D22A38 /* AlertInboxTableViewController.swift */,
 			);
 			name = Alerts;
@@ -463,21 +472,23 @@
 				A0343D331A2AB66100FA0464 /* WellboreTableViewCell.swift in Sources */,
 				A02679FB1A742A4900ED8FFB /* APIHelper.swift in Sources */,
 				A095FB911A2FC39800B15D39 /* AlertPriorityCell.swift in Sources */,
+				A0A783DC1A78BD1000C3B20A /* AlertType.swift in Sources */,
 				A0EE29021A08AB7200B50700 /* UIViewExtension.swift in Sources */,
 				A02D86431A6D953A00D22A38 /* AlertInboxTableViewController.swift in Sources */,
-				A0DB7DBF1A2FB96E00C8C9A2 /* SelectParameterTableViewController.swift in Sources */,
+				A0DB7DBF1A2FB96E00C8C9A2 /* SelectAlertTypeTableViewController.swift in Sources */,
 				A0F0FBED1A103DC600ADBDF3 /* WellUsersTableViewController.swift in Sources */,
 				A018E4001A2B003D001EF20E /* Alert.swift in Sources */,
 				A0CE032C1A0ED67C0076EE3E /* VisualsViewController.swift in Sources */,
 				A05A35D21A0837ED008EA386 /* Well.swift in Sources */,
 				A06FFD691A06AA08001B3FF8 /* LoginViewController.swift in Sources */,
+				A095D5831A78B74D000889CB /* AlertTableViewCell.swift in Sources */,
 				A0CE03281A0ECEFB0076EE3E /* Wellbore.swift in Sources */,
-				A018E40A1A2B0733001EF20E /* ParameterAlertsTableViewController.swift in Sources */,
+				A018E40A1A2B0733001EF20E /* ManageAlertsTableViewController.swift in Sources */,
 				A018E4061A2B010A001EF20E /* Parameter.swift in Sources */,
 				A0CEDBA21A0C3ADF0051BDB8 /* User.swift in Sources */,
 				A095FB8C1A2FC37200B15D39 /* AlertValueCell.swift in Sources */,
 				A042B2DD1A195ED600660AB7 /* VisualViewController.swift in Sources */,
-				A018E40C1A2BB4E8001EF20E /* AddParameterAlertTableViewController.swift in Sources */,
+				A018E40C1A2BB4E8001EF20E /* AddEditAlertTableViewController.swift in Sources */,
 				A095D57F1A78A3FA000889CB /* JSON.swift in Sources */,
 				A0343D391A2AC85400FA0464 /* WellboreDetailViewController.swift in Sources */,
 				A0DB7DBD1A2FB96000C8C9A2 /* AddOrEditAlertTableViewController.swift in Sources */,
@@ -486,6 +497,7 @@
 				A06FFD641A06AA08001B3FF8 /* AppDelegate.swift in Sources */,
 				A095FB8F1A2FC38C00B15D39 /* AlertWhenCell.swift in Sources */,
 				A095D5811A78A403000889CB /* JSONArray.swift in Sources */,
+				A0A783DA1A78BCFB00C3B20A /* AlertPriority.swift in Sources */,
 				A087EEDE1A06C09D0073FDD0 /* HomeViewController.swift in Sources */,
 				A02D86451A6D97BF00D22A38 /* AlertInboxCell.swift in Sources */,
 			);
