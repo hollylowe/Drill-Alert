@@ -42,6 +42,19 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func loadData() {
         loadError = false
+        loadingData = false
+        
+        // FOR TESTING
+        allWellbores.append(Wellbore(id: 0, name: "Test Bore", well: Well(id: 0, name: "Test Well", location: "Here")))
+        subscribedWellbores.append(Wellbore(id: 0, name: "Test Bore", well: Well(id: 0, name: "Test Well", location: "Here")))
+
+        
+        self.tableView.reloadData()
+        
+        /*
+        FOR NETWORK LOAD, DELETE THE ABOVE, AND UNCOMMENT THIS
+        
+        loadError = false
         loadingData = true
         self.tableView.reloadData()
         
@@ -57,6 +70,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 self.tableView.reloadData()
             })
         })
+        */
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -158,6 +172,11 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
 
     func reloadWells() {
+        
+        /*
+        FOR NETWORK LOAD, UNCOMMENT THIS
+
+
         // Only load the wells of the currently selected segment.
         // TODO: Not sure if API is supporting this, we may remove it. For right now, just set both
         allWellbores.removeAll(keepCapacity: false)
@@ -180,14 +199,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             self.presentViewController(alert, animated: true, completion: nil)
         }
         
-        /*
-        if selectedSegmentIndex == subscribedWellboresIndex {
-            subscribedWellbores = Wellbore.getSubscribedWellboresForUserID(currentUser.id)
-        } else {
-            allWellbores = Wellbore.getAllWellboresForUserID(currentUser.id)
-        }
         */
-        
     }
     
     func wellboreAtIndex(index: Int) -> Wellbore {
@@ -255,6 +267,7 @@ extension HomeViewController: UITableViewDataSource {
             self.tableView.separatorStyle = .None
 
         } else {
+            
             if (selectedSegmentIndex == subscribedWellboresIndex && subscribedWellbores.count == 0) || (selectedSegmentIndex == allWellsIndex && allWellbores.count == 0) {
                 sections = 0
                 
@@ -279,7 +292,6 @@ extension HomeViewController: UITableViewDataSource {
                 self.tableView.backgroundView = nil
                 self.tableView.separatorStyle = .SingleLine
             }
-            
 
         }
         

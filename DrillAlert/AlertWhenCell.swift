@@ -8,11 +8,3 @@
 
 import Foundation
 import UIKit
-
-class AlertWhenCell: UITableViewCell {
-    @IBOutlet weak var alertWhenLabel: UILabel!
-    
-    class func getCellIdentifier() -> String! {
-        return "AlertWhenCell"
-    }
-}

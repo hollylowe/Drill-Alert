@@ -18,8 +18,10 @@ class AlertInboxCell: UITableViewCell {
     }
     
     func setupWithAlert(alert: Alert!) {
+        /*
         self.alertTitleLabel.text = alert.title
         self.alertInformationLabel.text = alert.information
+        */
     }
     
 }

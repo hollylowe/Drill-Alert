@@ -81,7 +81,6 @@ class WellboreDetailViewController: UIViewController {
             
             let alertInboxTableViewController = storyboard.instantiateViewControllerWithIdentifier(AlertInboxTableViewController.storyboardIdentifier()) as AlertInboxTableViewController
             
-            // let parameterAlertsTableViewController = storyboard.instantiateViewControllerWithIdentifier("ParameterAlertsTableViewController") as ParameterAlertsTableViewController
             let viewControllers = [visualsViewController, alertInboxTableViewController]
             visualsViewController.wellboreDetailViewController = self
             alertInboxTableViewController.wellboreDetailViewController = self
@@ -124,7 +123,7 @@ class WellboreDetailViewController: UIViewController {
     @IBAction func rightBarButtonItemTapped(sender: AnyObject) {
         switch self.selectedSegmentIndex {
         case visualsIndex:
-            editVisualsBarButtonTapped(sender)
+            manageVisualsBarButtonTapped(sender)
         case alertsIndex:
             manageAlertsBarButtonTapped(sender)
             // addAlertBarButtonTapped(sender)
@@ -132,18 +131,24 @@ class WellboreDetailViewController: UIViewController {
         }
     }
     
+    // Shows the user the Manage Alerts view.
     func manageAlertsBarButtonTapped(sender: AnyObject) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let parameterAlertsNavigationController = storyboard.instantiateViewControllerWithIdentifier(ParameterAlertsNavigationController.storyboardIdentifier()) as ParameterAlertsNavigationController
-        let parameterAlertsTableViewController = parameterAlertsNavigationController.viewControllers[0] as ParameterAlertsTableViewController
+        let manageAlertsNavigationController = storyboard.instantiateViewControllerWithIdentifier(
+            ManageAlertsNavigationController.storyboardIdentifier()) as ManageAlertsNavigationController
+        let manageAlertsTableViewController = manageAlertsNavigationController.viewControllers[0] as ManageAlertsTableViewController
 
-        parameterAlertsTableViewController.wellboreDetailViewController = self
-        self.presentViewController(parameterAlertsNavigationController, animated: true, completion: nil)
-        
+        manageAlertsTableViewController.wellboreDetailViewController = self
+        self.presentViewController(manageAlertsNavigationController, animated: true, completion: nil)
     }
     
-    func editVisualsBarButtonTapped(sender: AnyObject) {
-        
+    func manageVisualsBarButtonTapped(sender: AnyObject) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let manageVisualsNavigationController = storyboard.instantiateViewControllerWithIdentifier(ManageVisualsNavigationController.storyboardIdentifier()) as ManageVisualsNavigationController
+        let manageVisualsTableViewController = manageVisualsNavigationController.viewControllers[0] as ManageVisualsTableViewController
+
+        manageVisualsTableViewController.wellboreDetailViewController = self
+        self.presentViewController(manageVisualsNavigationController, animated: true, completion: nil)
     }
 
     
