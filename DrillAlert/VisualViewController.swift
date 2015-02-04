@@ -36,9 +36,9 @@ class VisualViewController: UIViewController, UIWebViewDelegate {
     
     // This is purely for the demo
     func updateGraphData() {
-        let xVal = wellbore.getOnePoint().x
+        let xVal = 2
         
-        var dataStr = String("tick(\(xVal))")
+        var dataStr = String("graph.tick(\(xVal))")
         self.webView.stringByEvaluatingJavaScriptFromString(dataStr)
     }
     
@@ -54,6 +54,8 @@ class VisualViewController: UIViewController, UIWebViewDelegate {
 
 extension VisualViewController: UIWebViewDelegate {
     func webViewDidFinishLoad(webView: UIWebView) {
+        self.webView.stringByEvaluatingJavaScriptFromString("graph.init({yMax : 1, xMax : 10, data : [1, 2, 3, 4, 5], width : 500, height : 300})")
+
         // This is purely for the demo
         timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateGraphData", userInfo: nil, repeats: true)
 

@@ -45,6 +45,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         pageControl.pageIndicatorTintColor = UIColor.lightGrayColor()
         pageControl.currentPageIndicatorTintColor = UIColor.blackColor()
         pageControl.backgroundColor = UIColor.whiteColor()
+        /*
+        let textColor = UIColor(red: 0.604, green: 0.792, blue: 1.0, alpha: 1.0)
+        // let textColor = UIColor.whiteColor()
+        UINavigationBar.appearance().barTintColor = UIColor(red: 0.122, green: 0.122, blue: 0.122, alpha: 1.0)
+        UINavigationBar.appearance().tintColor = textColor
+        UINavigationBar.appearance().translucent = false
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName : UIColor.whiteColor()]
+        UITabBar.appearance().tintColor = UIColor.whiteColor()
+        UITabBar.appearance().barTintColor = UIColor(red: 0.122, green: 0.122, blue: 0.122, alpha: 1.0)
+        */
         
         // Override point for customization after application launch.
         if UIApplication.instancesRespondToSelector(Selector("registerUserNotificationSettings:")) {

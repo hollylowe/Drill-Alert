@@ -22,6 +22,7 @@
 		A042B2DD1A195ED600660AB7 /* VisualViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A042B2DC1A195ED600660AB7 /* VisualViewController.swift */; };
 		A042B2DF1A19645F00660AB7 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = A042B2DE1A19645F00660AB7 /* index.html */; };
 		A042B2E11A19669E00660AB7 /* d3.min.js in Resources */ = {isa = PBXBuildFile; fileRef = A042B2E01A19669E00660AB7 /* d3.min.js */; };
+		A04AB1F31A81C9AD003704CC /* d3.js in Resources */ = {isa = PBXBuildFile; fileRef = A04AB1F21A81C9AD003704CC /* d3.js */; };
 		A05A35CE1A083727008EA386 /* AdminTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05A35CD1A083727008EA386 /* AdminTableViewController.swift */; };
 		A05A35D21A0837ED008EA386 /* Well.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05A35D11A0837ED008EA386 /* Well.swift */; };
 		A066D5B81A2EA9C700E16E58 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A066D5B71A2EA9C700E16E58 /* AddressBook.framework */; };
@@ -36,6 +37,9 @@
 		A066D5CA1A2EAA2100E16E58 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A066D5C91A2EAA2100E16E58 /* SystemConfiguration.framework */; };
 		A066D5CC1A2EAA2900E16E58 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A066D5CB1A2EAA2900E16E58 /* UIKit.framework */; };
 		A066D5D21A2EBD4B00E16E58 /* PaddedUITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = A066D5D11A2EBD4B00E16E58 /* PaddedUITextField.swift */; };
+		A0699A9C1A80231A004F9C97 /* Curve.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0699A9B1A80231A004F9C97 /* Curve.swift */; };
+		A0699A9E1A809102004F9C97 /* SegmentControlToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0699A9D1A809102004F9C97 /* SegmentControlToolbar.swift */; };
+		A0699AA01A809B78004F9C97 /* WellboreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0699A9F1A809B78004F9C97 /* WellboreView.swift */; };
 		A06FFD641A06AA08001B3FF8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06FFD631A06AA08001B3FF8 /* AppDelegate.swift */; };
 		A06FFD671A06AA08001B3FF8 /* DrillAlert.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A06FFD651A06AA08001B3FF8 /* DrillAlert.xcdatamodeld */; };
 		A06FFD691A06AA08001B3FF8 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06FFD681A06AA08001B3FF8 /* LoginViewController.swift */; };
@@ -53,6 +57,8 @@
 		A095FB931A2FF20D00B15D39 /* gauge.html in Resources */ = {isa = PBXBuildFile; fileRef = A095FB921A2FF20D00B15D39 /* gauge.html */; };
 		A0A783DA1A78BCFB00C3B20A /* AlertPriority.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A783D91A78BCFB00C3B20A /* AlertPriority.swift */; };
 		A0A783DC1A78BD1000C3B20A /* AlertType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A783DB1A78BD1000C3B20A /* AlertType.swift */; };
+		A0CCC5E51A81C69600F92B36 /* graph.html in Resources */ = {isa = PBXBuildFile; fileRef = A0CCC5E31A81C69600F92B36 /* graph.html */; };
+		A0CCC5E61A81C69600F92B36 /* graph.js in Resources */ = {isa = PBXBuildFile; fileRef = A0CCC5E41A81C69600F92B36 /* graph.js */; };
 		A0CE03281A0ECEFB0076EE3E /* Wellbore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CE03271A0ECEFB0076EE3E /* Wellbore.swift */; };
 		A0CE032C1A0ED67C0076EE3E /* VisualsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CE032B1A0ED67C0076EE3E /* VisualsViewController.swift */; };
 		A0CEDBA21A0C3ADF0051BDB8 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CEDBA11A0C3ADF0051BDB8 /* User.swift */; };
@@ -91,6 +97,7 @@
 		A042B2DC1A195ED600660AB7 /* VisualViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualViewController.swift; sourceTree = "<group>"; };
 		A042B2DE1A19645F00660AB7 /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
 		A042B2E01A19669E00660AB7 /* d3.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = d3.min.js; sourceTree = "<group>"; };
+		A04AB1F21A81C9AD003704CC /* d3.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = d3.js; sourceTree = "<group>"; };
 		A05A35CD1A083727008EA386 /* AdminTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdminTableViewController.swift; sourceTree = "<group>"; };
 		A05A35D11A0837ED008EA386 /* Well.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Well.swift; sourceTree = "<group>"; };
 		A066D5B71A2EA9C700E16E58 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
@@ -105,6 +112,9 @@
 		A066D5C91A2EAA2100E16E58 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		A066D5CB1A2EAA2900E16E58 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		A066D5D11A2EBD4B00E16E58 /* PaddedUITextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaddedUITextField.swift; sourceTree = "<group>"; };
+		A0699A9B1A80231A004F9C97 /* Curve.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Curve.swift; sourceTree = "<group>"; };
+		A0699A9D1A809102004F9C97 /* SegmentControlToolbar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentControlToolbar.swift; sourceTree = "<group>"; };
+		A0699A9F1A809B78004F9C97 /* WellboreView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WellboreView.swift; sourceTree = "<group>"; };
 		A06FFD5E1A06AA08001B3FF8 /* DrillAlert.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DrillAlert.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A06FFD621A06AA08001B3FF8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A06FFD631A06AA08001B3FF8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -126,6 +136,8 @@
 		A095FB921A2FF20D00B15D39 /* gauge.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = gauge.html; sourceTree = "<group>"; };
 		A0A783D91A78BCFB00C3B20A /* AlertPriority.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertPriority.swift; sourceTree = "<group>"; };
 		A0A783DB1A78BD1000C3B20A /* AlertType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertType.swift; sourceTree = "<group>"; };
+		A0CCC5E31A81C69600F92B36 /* graph.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = graph.html; sourceTree = "<group>"; };
+		A0CCC5E41A81C69600F92B36 /* graph.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = graph.js; sourceTree = "<group>"; };
 		A0CE03271A0ECEFB0076EE3E /* Wellbore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Wellbore.swift; sourceTree = "<group>"; };
 		A0CE032B1A0ED67C0076EE3E /* VisualsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualsViewController.swift; sourceTree = "<group>"; };
 		A0CEDBA11A0C3ADF0051BDB8 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -216,6 +228,8 @@
 				A02679FA1A742A4900ED8FFB /* APIHelper.swift */,
 				A095D57E1A78A3FA000889CB /* JSON.swift */,
 				A095D5801A78A403000889CB /* JSONArray.swift */,
+				A0699A9B1A80231A004F9C97 /* Curve.swift */,
+				A0699A9F1A809B78004F9C97 /* WellboreView.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -331,14 +345,41 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		A0CCC5E71A81C69D00F92B36 /* Graph */ = {
+			isa = PBXGroup;
+			children = (
+				A0CCC5E31A81C69600F92B36 /* graph.html */,
+				A0CCC5E41A81C69600F92B36 /* graph.js */,
+			);
+			name = Graph;
+			sourceTree = "<group>";
+		};
+		A0CCC5E81A81C6AB00F92B36 /* Examples */ = {
+			isa = PBXGroup;
+			children = (
+				A042B2DE1A19645F00660AB7 /* index.html */,
+				A095FB921A2FF20D00B15D39 /* gauge.html */,
+			);
+			name = Examples;
+			sourceTree = "<group>";
+		};
+		A0CCC5E91A81C6CA00F92B36 /* Visualizations */ = {
+			isa = PBXGroup;
+			children = (
+				A04AB1F21A81C9AD003704CC /* d3.js */,
+				A042B2E01A19669E00660AB7 /* d3.min.js */,
+				A0CCC5E81A81C6AB00F92B36 /* Examples */,
+				A0CCC5E71A81C69D00F92B36 /* Graph */,
+			);
+			name = Visualizations;
+			sourceTree = "<group>";
+		};
 		A0CE03291A0ED5F60076EE3E /* Visuals */ = {
 			isa = PBXGroup;
 			children = (
-				A042B2E01A19669E00660AB7 /* d3.min.js */,
+				A0CCC5E91A81C6CA00F92B36 /* Visualizations */,
 				A0CE032B1A0ED67C0076EE3E /* VisualsViewController.swift */,
 				A042B2DC1A195ED600660AB7 /* VisualViewController.swift */,
-				A042B2DE1A19645F00660AB7 /* index.html */,
-				A095FB921A2FF20D00B15D39 /* gauge.html */,
 				CF4007641A78BDF4008E9C1F /* ManageVisualsTableViewController.swift */,
 			);
 			name = Visuals;
@@ -364,6 +405,7 @@
 				A0343D321A2AB66100FA0464 /* WellboreTableViewCell.swift */,
 				A0343D401A2AFE9C00FA0464 /* ParameterAlertTableViewCell.swift */,
 				A066D5D11A2EBD4B00E16E58 /* PaddedUITextField.swift */,
+				A0699A9D1A809102004F9C97 /* SegmentControlToolbar.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -464,6 +506,9 @@
 				A042B2DF1A19645F00660AB7 /* index.html in Resources */,
 				A06FFD711A06AA08001B3FF8 /* LaunchScreen.xib in Resources */,
 				A06FFD6E1A06AA08001B3FF8 /* Images.xcassets in Resources */,
+				A04AB1F31A81C9AD003704CC /* d3.js in Resources */,
+				A0CCC5E51A81C69600F92B36 /* graph.html in Resources */,
+				A0CCC5E61A81C69600F92B36 /* graph.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -494,6 +539,7 @@
 				A0DB7DBF1A2FB96E00C8C9A2 /* SelectAlertTypeTableViewController.swift in Sources */,
 				A0F0FBED1A103DC600ADBDF3 /* WellUsersTableViewController.swift in Sources */,
 				A018E4001A2B003D001EF20E /* Alert.swift in Sources */,
+				A0699A9E1A809102004F9C97 /* SegmentControlToolbar.swift in Sources */,
 				A0CE032C1A0ED67C0076EE3E /* VisualsViewController.swift in Sources */,
 				CF4007681A78C789008E9C1F /* ManageVisualsTableViewCell.swift in Sources */,
 				A05A35D21A0837ED008EA386 /* Well.swift in Sources */,
@@ -504,8 +550,10 @@
 				A018E4061A2B010A001EF20E /* Parameter.swift in Sources */,
 				A0CEDBA21A0C3ADF0051BDB8 /* User.swift in Sources */,
 				A095FB8C1A2FC37200B15D39 /* AlertValueCell.swift in Sources */,
+				A0699AA01A809B78004F9C97 /* WellboreView.swift in Sources */,
 				A042B2DD1A195ED600660AB7 /* VisualViewController.swift in Sources */,
 				A018E40C1A2BB4E8001EF20E /* AddEditAlertTableViewController.swift in Sources */,
+				A0699A9C1A80231A004F9C97 /* Curve.swift in Sources */,
 				A095D57F1A78A3FA000889CB /* JSON.swift in Sources */,
 				A0343D391A2AC85400FA0464 /* WellboreDetailViewController.swift in Sources */,
 				A0DB7DBD1A2FB96000C8C9A2 /* AddOrEditAlertTableViewController.swift in Sources */,

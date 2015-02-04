@@ -11,7 +11,7 @@ import UIKit
 extension UIView {
     func addBottomBorder() {
         let border = CALayer()
-        border.backgroundColor = UIColor(red: 0.678, green: 0.678, blue: 0.678, alpha: 1.0).CGColor
+        border.backgroundColor = UIColor(red: 0.15, green: 0.15, blue: 0.15, alpha: 1.0).CGColor
         border.frame = CGRectMake(0, self.frame.size.height - 0.5, self.frame.size.width, 0.5)
         self.layer.addSublayer(border)
     }

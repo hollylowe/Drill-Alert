@@ -20,6 +20,13 @@ class VisualsViewController: UIViewController, UIPageViewControllerDataSource {
     var numVisuals = 4
     
     override func viewDidLoad() {
+        
+        // Get the visuals this user has saved 
+        
+        // for every visual...
+            // If this visual is a graph, get its curve points
+        
+        
         super.viewDidLoad()
         self.view.frame = CGRectMake(0, 0, self.view.frame.size.width, wellboreDetailViewController.topBarHeight)
         if let storyboard = self.storyboard {
@@ -63,6 +70,8 @@ class VisualsViewController: UIViewController, UIPageViewControllerDataSource {
             // For the demo 
             if index == 1 {
                 pageContentViewController.htmlFileName = "gauge"
+            } else if index == 0 {
+                pageContentViewController.htmlFileName = "graph"
             }
             
             result = pageContentViewController

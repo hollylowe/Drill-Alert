@@ -101,7 +101,9 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let toolbarHeight: CGFloat = 39.0
 
         // Setup refresh control
-        self.tableView.addSubview(UIRefreshControl())
+        // self.tableView.addSubview(UIRefreshControl())
+        // self.tableView.backgroundColor =  UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1.0)
+        // self.tableView.separatorColor = UIColor(red: 0.122, green: 0.122, blue: 0.122, alpha: 1.0)
         
         if let navigationController = self.navigationController {
             navigationController.navigationBar.hidden = false
@@ -110,14 +112,26 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.Bordered, target: nil, action: nil)
             self.navigationItem.hidesBackButton = true
             
-            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .Bordered, target: self, action: "logoutButtonTapped:")
+            let logoutButton = UIBarButtonItem(title: "Logout", style: .Bordered, target: self, action: "logoutButtonTapped:")
+            
+            if let image = UIImage(named: "logouticon.png") {
+                let logoutImage = imageWithImage(image, scaledToSize: CGSize(width: 40, height: 40))
+                logoutButton.image = logoutImage
+            }
+            
+            
+            self.navigationItem.leftBarButtonItem = logoutButton
             
             // Add the segmented control at the (navigation bar height + status bar height) y coordinate
             let yCoord = navigationController.navigationBar.frame.size.height + UIApplication.sharedApplication().statusBarFrame.size.height
-            
+            // let yCoord: CGFloat = 0
+            // let toolbarColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1.0)
             // Set up Toolbar
             let toolbarRect = CGRectMake(0, yCoord, toolbarWidth, toolbarHeight)
             let toolbar = UIToolbar(frame: toolbarRect)
+            //  toolbar.backgroundColor = toolbarColor
+            // toolbar.translucent = false
+            // toolbar.barTintColor =  UIColor(red: 0.122, green: 0.122, blue: 0.122, alpha: 1.0)
             
             // Set up Segmented Control
             let segmentedControlHeight: CGFloat = 24.0
@@ -139,7 +153,6 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 self,
                 action: Selector("segmentedControlAction:"),
                 forControlEvents: .ValueChanged)
-                
             toolbar.addSubview(segmentedControl)
             toolbar.addBottomBorder()
             
@@ -150,6 +163,15 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             self.tableView.tableHeaderView = UIView(frame: headerViewRect)
         }
        
+    }
+    
+    func imageWithImage(image: UIImage, scaledToSize newSize: CGSize) -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0)
+        image.drawInRect(CGRectMake(0, 0, newSize.width, newSize.height))
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        
+        UIGraphicsEndImageContext()
+        return newImage
     }
     
     func findHairlineImageViewUnder(view: UIView) -> UIImageView? {

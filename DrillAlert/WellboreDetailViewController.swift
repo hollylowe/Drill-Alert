@@ -50,32 +50,19 @@ class WellboreDetailViewController: UIViewController {
         
         if let mainNavigationController = self.navigationController {
             mainNavigationController.navigationBar.hidden = false
-            // Add the segmented control at the (navigation bar height + status bar height) y coordinate
-            let navigationBarBottomCoord = mainNavigationController.navigationBar.frame.size.height + UIApplication.sharedApplication().statusBarFrame.size.height
             
-            // Set up Toolbar
-            let toolbarWidth = self.view.frame.size.width
             self.toolbarHeight = 39.0
-            let toolbarRect = CGRectMake(0, navigationBarBottomCoord, toolbarWidth, toolbarHeight)
-            let toolbar = UIToolbar(frame: toolbarRect)
-            
-            
-            // Set up Segmented Control
-            let segmentedControlHeight: CGFloat = 24.0
-            let segmentedControlWidth: CGFloat = toolbarWidth / 2
-            let segmentedControlXCoord: CGFloat = toolbarWidth / 4
-            let segmentedControlYCoord: CGFloat = (toolbarHeight - segmentedControlHeight) / 2
-            
-            let segmentedControlRect = CGRectMake(
-                segmentedControlXCoord,
-                segmentedControlYCoord,
-                segmentedControlWidth,
-                segmentedControlHeight)
-            
+            let yCoord = mainNavigationController.navigationBar.frame.size.height + UIApplication.sharedApplication().statusBarFrame.size.height
+            let toolbarFrame = CGRectMake(0, yCoord, self.view.frame.size.width, toolbarHeight)
+            // Set up Toolbar
+            let toolbar = SegmentControlToolbar(
+                frame: toolbarFrame,
+                items: segmentedControlItems,
+                delegate: self,
+                action: Selector("segmentedControlAction:"))
             
             let segmentedControlNavigationController = UINavigationController()
             segmentedControlNavigationController.navigationBarHidden = true
-            
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let visualsViewController = storyboard.instantiateViewControllerWithIdentifier("VisualsViewController") as VisualsViewController
             
@@ -87,35 +74,24 @@ class WellboreDetailViewController: UIViewController {
             
             self.segmentViewControllers = [visualsViewController, alertInboxTableViewController]
             self.segmentNavigationController = segmentedControlNavigationController
+            self.segmentedControlAction(toolbar.segmentedControl)
             
-            segmentedControl = UISegmentedControl(items: segmentedControlItems)
-            segmentedControl.frame = segmentedControlRect
-            segmentedControl.selectedSegmentIndex = 0
-            segmentedControl.addTarget(
-                self,
-                action: Selector("segmentedControlAction:"),
-                forControlEvents: .ValueChanged)
-
-            toolbar.addSubview(segmentedControl)
-            toolbar.addBottomBorder()
             
-            self.view.addSubview(toolbar)
-            self.segmentedControlAction(self.segmentedControl)
-
             // Container view
-            let containerYCoord = navigationBarBottomCoord + toolbarHeight
             let containerViewFrame = CGRectMake(
                 0,
-                containerYCoord,
+                toolbarHeight,
                 self.view.frame.size.width,
-                self.view.frame.size.height - containerYCoord)
-            let navigationControllerFrame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - containerYCoord)
+                self.view.frame.size.height - toolbarHeight - yCoord)
+            let navigationControllerFrame = CGRectMake(0, yCoord, self.view.frame.size.width, self.view.frame.size.height - toolbarHeight - yCoord)
             segmentedControlNavigationController.view.frame = navigationControllerFrame
             
             self.containerView = UIView(frame: containerViewFrame)
             self.containerView.addSubview(segmentedControlNavigationController.view)
-            self.topBarHeight = containerYCoord
+            self.topBarHeight = toolbarHeight
             self.view.addSubview(self.containerView)
+            self.view.addSubview(toolbar)
+
         }
 
     }

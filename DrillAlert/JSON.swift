@@ -26,6 +26,18 @@ class JSON {
         return result
     }
     
+    func getFloatAtKey(key: String) -> Float? {
+        var result: Float?
+        
+        if let implicitDictionary = dictionary {
+            if let object: AnyObject = implicitDictionary[key] {
+                result = object as? Float
+            }
+        }
+        
+        return result
+    }
+    
     func getStringAtKey(key: String) -> String? {
         var result: String?
         
