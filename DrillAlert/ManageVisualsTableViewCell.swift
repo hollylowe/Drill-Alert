@@ -1,5 +1,5 @@
 //
-//  ManageVisualsTableViewCell.swift
+//  ManageViewsTableViewCell.swift
 //  DrillAlert
 //
 //  Created by Holly Lowe on 1/27/15.
@@ -10,12 +10,12 @@ import Foundation
 
 import UIKit
 
-class ManageVisualsTableViewCell: UITableViewCell {
+class ManageViewsTableViewCell: UITableViewCell {
     @IBOutlet weak var visualName: UILabel!
     @IBOutlet weak var visualActiveSwitch: UISwitch!
     
     class func getCellIdentifier() -> String! {
-        return "ManageVisualsTableViewCell"
+        return "ManageViewsTableViewCell"
     }
     
 //    func setupWithParameterAlert(parameterAlert: ParameterAlert) {

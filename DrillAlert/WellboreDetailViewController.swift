@@ -99,7 +99,7 @@ class WellboreDetailViewController: UIViewController {
     @IBAction func rightBarButtonItemTapped(sender: AnyObject) {
         switch self.selectedSegmentIndex {
         case visualsIndex:
-            manageVisualsBarButtonTapped(sender)
+            manageViewsBarButtonTapped(sender)
         case alertsIndex:
             manageAlertsBarButtonTapped(sender)
             // addAlertBarButtonTapped(sender)
@@ -118,13 +118,13 @@ class WellboreDetailViewController: UIViewController {
         self.presentViewController(manageAlertsNavigationController, animated: true, completion: nil)
     }
     
-    func manageVisualsBarButtonTapped(sender: AnyObject) {
+    func manageViewsBarButtonTapped(sender: AnyObject) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let manageVisualsNavigationController = storyboard.instantiateViewControllerWithIdentifier(ManageVisualsNavigationController.storyboardIdentifier()) as ManageVisualsNavigationController
-        let manageVisualsTableViewController = manageVisualsNavigationController.viewControllers[0] as ManageVisualsTableViewController
+        let manageViewsNavigationController = storyboard.instantiateViewControllerWithIdentifier(ManageViewsNavigationController.storyboardIdentifier()) as ManageViewsNavigationController
+        let manageViewsTableViewController = manageViewsNavigationController.viewControllers[0] as ManageViewsTableViewController
 
-        manageVisualsTableViewController.wellboreDetailViewController = self
-        self.presentViewController(manageVisualsNavigationController, animated: true, completion: nil)
+        manageViewsTableViewController.wellboreDetailViewController = self
+        self.presentViewController(manageViewsNavigationController, animated: true, completion: nil)
     }
 
     

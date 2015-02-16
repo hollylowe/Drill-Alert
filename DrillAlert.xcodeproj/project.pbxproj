@@ -66,8 +66,11 @@
 		A0DB7DBF1A2FB96E00C8C9A2 /* SelectAlertTypeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0DB7DBE1A2FB96E00C8C9A2 /* SelectAlertTypeTableViewController.swift */; };
 		A0EE29021A08AB7200B50700 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EE29011A08AB7200B50700 /* UIViewExtension.swift */; };
 		A0F0FBED1A103DC600ADBDF3 /* WellUsersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F0FBEC1A103DC600ADBDF3 /* WellUsersTableViewController.swift */; };
-		CF4007651A78BDF4008E9C1F /* ManageVisualsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4007641A78BDF4008E9C1F /* ManageVisualsTableViewController.swift */; };
+		CF4007651A78BDF4008E9C1F /* ManageViewsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4007641A78BDF4008E9C1F /* ManageViewsTableViewController.swift */; };
 		CF4007681A78C789008E9C1F /* ManageVisualsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4007671A78C789008E9C1F /* ManageVisualsTableViewCell.swift */; };
+		CF8E9A911A91A093008F8AF8 /* Visual.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8E9A901A91A093008F8AF8 /* Visual.swift */; };
+		CF8E9A941A91A17F008F8AF8 /* VisualType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8E9A931A91A17F008F8AF8 /* VisualType.swift */; };
+		CF8E9A9A1A91BBFB008F8AF8 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8E9A991A91BBFB008F8AF8 /* View.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -145,8 +148,11 @@
 		A0DB7DBE1A2FB96E00C8C9A2 /* SelectAlertTypeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectAlertTypeTableViewController.swift; sourceTree = "<group>"; };
 		A0EE29011A08AB7200B50700 /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		A0F0FBEC1A103DC600ADBDF3 /* WellUsersTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WellUsersTableViewController.swift; sourceTree = "<group>"; };
-		CF4007641A78BDF4008E9C1F /* ManageVisualsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageVisualsTableViewController.swift; sourceTree = "<group>"; };
+		CF4007641A78BDF4008E9C1F /* ManageViewsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageViewsTableViewController.swift; sourceTree = "<group>"; };
 		CF4007671A78C789008E9C1F /* ManageVisualsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageVisualsTableViewCell.swift; sourceTree = "<group>"; };
+		CF8E9A901A91A093008F8AF8 /* Visual.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Visual.swift; sourceTree = "<group>"; };
+		CF8E9A931A91A17F008F8AF8 /* VisualType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualType.swift; sourceTree = "<group>"; };
+		CF8E9A991A91BBFB008F8AF8 /* View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -220,6 +226,8 @@
 		A05A35D01A0837DD008EA386 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				CF8E9A981A91BBD9008F8AF8 /* View */,
+				CF8E9A921A91A0A8008F8AF8 /* Visual */,
 				A018E4081A2B011D001EF20E /* Alerts */,
 				A06FFD651A06AA08001B3FF8 /* DrillAlert.xcdatamodeld */,
 				A05A35D11A0837ED008EA386 /* Well.swift */,
@@ -321,7 +329,7 @@
 			children = (
 				A0343D381A2AC85400FA0464 /* WellboreDetailViewController.swift */,
 				A0CE032A1A0ED5FB0076EE3E /* Alerts */,
-				A0CE03291A0ED5F60076EE3E /* Visuals */,
+				CF8E9A951A91B0BC008F8AF8 /* Views */,
 			);
 			name = WellboreDetail;
 			sourceTree = "<group>";
@@ -378,9 +386,6 @@
 			isa = PBXGroup;
 			children = (
 				A0CCC5E91A81C6CA00F92B36 /* Visualizations */,
-				A0CE032B1A0ED67C0076EE3E /* VisualsViewController.swift */,
-				A042B2DC1A195ED600660AB7 /* VisualViewController.swift */,
-				CF4007641A78BDF4008E9C1F /* ManageVisualsTableViewController.swift */,
 			);
 			name = Visuals;
 			sourceTree = "<group>";
@@ -416,6 +421,34 @@
 				CF4007671A78C789008E9C1F /* ManageVisualsTableViewCell.swift */,
 			);
 			name = Visuals;
+			sourceTree = "<group>";
+		};
+		CF8E9A921A91A0A8008F8AF8 /* Visual */ = {
+			isa = PBXGroup;
+			children = (
+				CF8E9A901A91A093008F8AF8 /* Visual.swift */,
+				CF8E9A931A91A17F008F8AF8 /* VisualType.swift */,
+			);
+			name = Visual;
+			sourceTree = "<group>";
+		};
+		CF8E9A951A91B0BC008F8AF8 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				A0CE032B1A0ED67C0076EE3E /* VisualsViewController.swift */,
+				A042B2DC1A195ED600660AB7 /* VisualViewController.swift */,
+				CF4007641A78BDF4008E9C1F /* ManageViewsTableViewController.swift */,
+				A0CE03291A0ED5F60076EE3E /* Visuals */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		CF8E9A981A91BBD9008F8AF8 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				CF8E9A991A91BBFB008F8AF8 /* View.swift */,
+			);
+			name = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -526,7 +559,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CF4007651A78BDF4008E9C1F /* ManageVisualsTableViewController.swift in Sources */,
+				CF4007651A78BDF4008E9C1F /* ManageViewsTableViewController.swift in Sources */,
 				A018E4041A2B005A001EF20E /* ParameterAlert.swift in Sources */,
 				A0343D411A2AFE9C00FA0464 /* ParameterAlertTableViewCell.swift in Sources */,
 				A05A35CE1A083727008EA386 /* AdminTableViewController.swift in Sources */,
@@ -545,12 +578,14 @@
 				A05A35D21A0837ED008EA386 /* Well.swift in Sources */,
 				A06FFD691A06AA08001B3FF8 /* LoginViewController.swift in Sources */,
 				A095D5831A78B74D000889CB /* AlertTableViewCell.swift in Sources */,
+				CF8E9A911A91A093008F8AF8 /* Visual.swift in Sources */,
 				A0CE03281A0ECEFB0076EE3E /* Wellbore.swift in Sources */,
 				A018E40A1A2B0733001EF20E /* ManageAlertsTableViewController.swift in Sources */,
 				A018E4061A2B010A001EF20E /* Parameter.swift in Sources */,
 				A0CEDBA21A0C3ADF0051BDB8 /* User.swift in Sources */,
 				A095FB8C1A2FC37200B15D39 /* AlertValueCell.swift in Sources */,
 				A0699AA01A809B78004F9C97 /* WellboreView.swift in Sources */,
+				CF8E9A9A1A91BBFB008F8AF8 /* View.swift in Sources */,
 				A042B2DD1A195ED600660AB7 /* VisualViewController.swift in Sources */,
 				A018E40C1A2BB4E8001EF20E /* AddEditAlertTableViewController.swift in Sources */,
 				A0699A9C1A80231A004F9C97 /* Curve.swift in Sources */,
@@ -560,6 +595,7 @@
 				A06FFD671A06AA08001B3FF8 /* DrillAlert.xcdatamodeld in Sources */,
 				A066D5D21A2EBD4B00E16E58 /* PaddedUITextField.swift in Sources */,
 				A06FFD641A06AA08001B3FF8 /* AppDelegate.swift in Sources */,
+				CF8E9A941A91A17F008F8AF8 /* VisualType.swift in Sources */,
 				A095FB8F1A2FC38C00B15D39 /* AlertWhenCell.swift in Sources */,
 				A095D5811A78A403000889CB /* JSONArray.swift in Sources */,
 				A0A783DA1A78BCFB00C3B20A /* AlertPriority.swift in Sources */,
