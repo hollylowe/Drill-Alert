@@ -10,15 +10,21 @@ import Foundation
 import UIKit
 
 class VisualViewController: UIViewController, UIWebViewDelegate {
-    
+    @IBOutlet weak var panelInformationLabel: UILabel!
     @IBOutlet weak var webView: UIWebView!
     var pageIndex: Int!
     var htmlFileName = "index"
+    var panel: Panel!
     var timer: NSTimer?
     
     let wellbore = Wellbore(well: Well(id: 0, name: "Well One", location: "Houston"), name: "cool bore")
     
+    class func getStoryboardIdentifier() -> String {
+        return "VisualViewController"
+    }
+    
     override func viewDidLoad() {
+        self.panelInformationLabel.text = "Panel ID: \(panel.id)"
         super.viewDidLoad()
     }
     

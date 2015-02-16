@@ -112,7 +112,9 @@ class JSONArray {
                         }
                     } else {
                         errorMessage = "Unknown Error: \(error!.code)"
+                        println(error!)
                     }
+                    
                 }
             }
         }

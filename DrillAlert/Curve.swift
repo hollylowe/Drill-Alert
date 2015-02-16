@@ -109,7 +109,10 @@ class Curve {
                                     
                                     if let curvePointValue = curvePointJSON.getFloatAtKey("value") {
                                         if let curvePointTime = curvePointJSON.getStringAtKey("time") {
-                                            result.append(CurvePoint(value: curvePointValue, stringTime: curvePointTime))
+                                            let curvePoint = CurvePoint(value: curvePointValue, stringTime: curvePointTime)
+                                            result.append(curvePoint)
+                                            println(curvePoint.value)
+                                            println(curvePoint.time)
                                         }
                                     }
                                     

@@ -12,22 +12,43 @@ import UIKit
 class VisualsViewController: UIViewController, UIPageViewControllerDataSource {
     // Implicit, set by the previous view controller
     var wellboreDetailViewController: WellboreDetailViewController!
+    var user: User!
     
     // Implicit, set in viewDidLoad
     var pageViewController: UIPageViewController!
     
-    // For testing
-    var numVisuals = 4
+    // Panels 
+    var panels = Array<Panel>()
+    
+    // TODO: Remove this, for debuggin only
+    var shouldLoadFromNetwork = false
     
     override func viewDidLoad() {
         
+        
         // Get the visuals this user has saved 
+        if shouldLoadFromNetwork {
+            let (userWellboreViews, error) = WellboreView.getWellboreViewsForUserID(self.user.id)
+            if error == nil {
+                // There's probably only one wellbore view
+                for wellboreView in userWellboreViews {
+                    panels = wellboreView.panels
+                }
+            } else {
+                if let message = error {
+                    wellboreDetailViewController.showAlertWithMessage(message)
+                }
+            }
+            
+            super.viewDidLoad()
+        } else {
+            for wellboreView in WellboreView.getFakeWellboreViews() {
+                panels = wellboreView.panels
+            }
+        }
         
-        // for every visual...
-            // If this visual is a graph, get its curve points
         
         
-        super.viewDidLoad()
         self.view.frame = CGRectMake(0, 0, self.view.frame.size.width, wellboreDetailViewController.topBarHeight)
         if let storyboard = self.storyboard {
             self.pageViewController = storyboard.instantiateViewControllerWithIdentifier("PageViewController") as UIPageViewController
@@ -60,21 +81,26 @@ class VisualsViewController: UIViewController, UIPageViewControllerDataSource {
     
     func viewControllerAtIndex(index: Int) -> UIViewController? {
         var result: UIViewController?
+        let numberOfPanels = self.panels.count
         
-        if numVisuals == 0 || index >= numVisuals {
+        if numberOfPanels  == 0 || index >= numberOfPanels {
+            // TODO: Return something that says "no panels, add one"
             return nil
         } else if let storyboard = self.storyboard {
-            let pageContentViewController = storyboard.instantiateViewControllerWithIdentifier("VisualViewController") as VisualViewController
-            pageContentViewController.pageIndex = index
-            
+            let panelViewController = storyboard.instantiateViewControllerWithIdentifier(VisualViewController.getStoryboardIdentifier()) as VisualViewController
+            panelViewController.pageIndex = index
+            let panel = panels[index]
+            // Create the panel with each visualization
+            panelViewController.panel = panel
+            /*
             // For the demo 
             if index == 1 {
-                pageContentViewController.htmlFileName = "gauge"
+                panelViewController.htmlFileName = "gauge"
             } else if index == 0 {
-                pageContentViewController.htmlFileName = "graph"
+                panelViewController.htmlFileName = "graph"
             }
-            
-            result = pageContentViewController
+            */
+            result = panelViewController
         }
         
         return result
@@ -83,7 +109,7 @@ class VisualsViewController: UIViewController, UIPageViewControllerDataSource {
 
 extension VisualsViewController: UIPageViewControllerDataSource {
     func presentationCountForPageViewController(pageViewController: UIPageViewController) -> Int {
-        return self.numVisuals
+        return self.panels.count
     }
     
     func presentationIndexForPageViewController(pageViewController: UIPageViewController) -> Int {
@@ -108,7 +134,7 @@ extension VisualsViewController: UIPageViewControllerDataSource {
         }
         
         index = index + 1
-        if index == numVisuals {
+        if index == self.panels.count {
             return nil
         }
         

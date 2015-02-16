@@ -66,6 +66,10 @@
 		A0DB7DBF1A2FB96E00C8C9A2 /* SelectAlertTypeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0DB7DBE1A2FB96E00C8C9A2 /* SelectAlertTypeTableViewController.swift */; };
 		A0EE29021A08AB7200B50700 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EE29011A08AB7200B50700 /* UIViewExtension.swift */; };
 		A0F0FBED1A103DC600ADBDF3 /* WellUsersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F0FBEC1A103DC600ADBDF3 /* WellUsersTableViewController.swift */; };
+		A0F1B57D1A901B1200306DB7 /* HTMLNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F1B5791A901B1200306DB7 /* HTMLNode.swift */; };
+		A0F1B57E1A901B1200306DB7 /* HTMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F1B57A1A901B1200306DB7 /* HTMLParser.swift */; };
+		A0F1B57F1A901B1200306DB7 /* SwiftHTMLParserLicense in Resources */ = {isa = PBXBuildFile; fileRef = A0F1B57C1A901B1200306DB7 /* SwiftHTMLParserLicense */; };
+		A0F1B5811A901BE400306DB7 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A0F1B5801A901BE400306DB7 /* libxml2.dylib */; };
 		CF4007651A78BDF4008E9C1F /* ManageVisualsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4007641A78BDF4008E9C1F /* ManageVisualsTableViewController.swift */; };
 		CF4007681A78C789008E9C1F /* ManageVisualsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4007671A78C789008E9C1F /* ManageVisualsTableViewCell.swift */; };
 /* End PBXBuildFile section */
@@ -145,6 +149,10 @@
 		A0DB7DBE1A2FB96E00C8C9A2 /* SelectAlertTypeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectAlertTypeTableViewController.swift; sourceTree = "<group>"; };
 		A0EE29011A08AB7200B50700 /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		A0F0FBEC1A103DC600ADBDF3 /* WellUsersTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WellUsersTableViewController.swift; sourceTree = "<group>"; };
+		A0F1B5791A901B1200306DB7 /* HTMLNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTMLNode.swift; sourceTree = "<group>"; };
+		A0F1B57A1A901B1200306DB7 /* HTMLParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTMLParser.swift; sourceTree = "<group>"; };
+		A0F1B57C1A901B1200306DB7 /* SwiftHTMLParserLicense */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SwiftHTMLParserLicense; sourceTree = "<group>"; };
+		A0F1B5801A901BE400306DB7 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		CF4007641A78BDF4008E9C1F /* ManageVisualsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageVisualsTableViewController.swift; sourceTree = "<group>"; };
 		CF4007671A78C789008E9C1F /* ManageVisualsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageVisualsTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -154,6 +162,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0F1B5811A901BE400306DB7 /* libxml2.dylib in Frameworks */,
 				A066D5CC1A2EAA2900E16E58 /* UIKit.framework in Frameworks */,
 				A066D5CA1A2EAA2100E16E58 /* SystemConfiguration.framework in Frameworks */,
 				A066D5C81A2EAA1700E16E58 /* Security.framework in Frameworks */,
@@ -237,6 +246,7 @@
 		A06FFD551A06AA08001B3FF8 = {
 			isa = PBXGroup;
 			children = (
+				A0F1B5801A901BE400306DB7 /* libxml2.dylib */,
 				A0343D301A2674C100FA0464 /* Entitlements.plist */,
 				A06FFD601A06AA08001B3FF8 /* DrillAlert */,
 				A06FFD791A06AA08001B3FF8 /* DrillAlertTests */,
@@ -256,6 +266,7 @@
 		A06FFD601A06AA08001B3FF8 /* DrillAlert */ = {
 			isa = PBXGroup;
 			children = (
+				A0F1B5781A901B1200306DB7 /* SwiftHTMLParser */,
 				A06FFD6A1A06AA08001B3FF8 /* Main.storyboard */,
 				A06FFD631A06AA08001B3FF8 /* AppDelegate.swift */,
 				A05A35CF1A0837CC008EA386 /* Controllers */,
@@ -410,6 +421,16 @@
 			name = Views;
 			sourceTree = "<group>";
 		};
+		A0F1B5781A901B1200306DB7 /* SwiftHTMLParser */ = {
+			isa = PBXGroup;
+			children = (
+				A0F1B5791A901B1200306DB7 /* HTMLNode.swift */,
+				A0F1B57A1A901B1200306DB7 /* HTMLParser.swift */,
+				A0F1B57C1A901B1200306DB7 /* SwiftHTMLParserLicense */,
+			);
+			path = SwiftHTMLParser;
+			sourceTree = "<group>";
+		};
 		CF4007661A78C44C008E9C1F /* Visuals */ = {
 			isa = PBXGroup;
 			children = (
@@ -501,6 +522,7 @@
 			files = (
 				A0343D311A2674C100FA0464 /* Entitlements.plist in Resources */,
 				A095FB931A2FF20D00B15D39 /* gauge.html in Resources */,
+				A0F1B57F1A901B1200306DB7 /* SwiftHTMLParserLicense in Resources */,
 				A042B2E11A19669E00660AB7 /* d3.min.js in Resources */,
 				A06FFD6C1A06AA08001B3FF8 /* Main.storyboard in Resources */,
 				A042B2DF1A19645F00660AB7 /* index.html in Resources */,
@@ -554,12 +576,14 @@
 				A042B2DD1A195ED600660AB7 /* VisualViewController.swift in Sources */,
 				A018E40C1A2BB4E8001EF20E /* AddEditAlertTableViewController.swift in Sources */,
 				A0699A9C1A80231A004F9C97 /* Curve.swift in Sources */,
+				A0F1B57D1A901B1200306DB7 /* HTMLNode.swift in Sources */,
 				A095D57F1A78A3FA000889CB /* JSON.swift in Sources */,
 				A0343D391A2AC85400FA0464 /* WellboreDetailViewController.swift in Sources */,
 				A0DB7DBD1A2FB96000C8C9A2 /* AddOrEditAlertTableViewController.swift in Sources */,
 				A06FFD671A06AA08001B3FF8 /* DrillAlert.xcdatamodeld in Sources */,
 				A066D5D21A2EBD4B00E16E58 /* PaddedUITextField.swift in Sources */,
 				A06FFD641A06AA08001B3FF8 /* AppDelegate.swift in Sources */,
+				A0F1B57E1A901B1200306DB7 /* HTMLParser.swift in Sources */,
 				A095FB8F1A2FC38C00B15D39 /* AlertWhenCell.swift in Sources */,
 				A095D5811A78A403000889CB /* JSONArray.swift in Sources */,
 				A0A783DA1A78BCFB00C3B20A /* AlertPriority.swift in Sources */,
@@ -696,6 +720,16 @@
 					"$(PROJECT_DIR)/DrillAlert",
 					"/Users/lucas/Developer/CPE402/Resources/google-plus-ios-sdk-1.7.1",
 				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/usr/include/libxml2,
+				);
+				"HEADER_SEARCH_PATHS[arch=*]" = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/usr/include/libxml2,
+				);
 				INFOPLIST_FILE = DrillAlert/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
@@ -719,6 +753,11 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/DrillAlert",
 					"/Users/lucas/Developer/CPE402/Resources/google-plus-ios-sdk-1.7.1",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/usr/include/libxml2,
 				);
 				INFOPLIST_FILE = DrillAlert/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

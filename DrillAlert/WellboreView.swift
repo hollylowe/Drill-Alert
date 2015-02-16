@@ -127,7 +127,6 @@ class Panel {
                                         visualizations: visualizations
                                     )
                                     result.append(newPanel)
-
                                 }
                             }
                         }
@@ -144,19 +143,37 @@ class Panel {
 class WellboreView {
     var id: Int
     var panels: Array<Panel>
-    
+
     init(id: Int, panels: Array<Panel>) {
         self.id = id
         self.panels = panels
     }
     
-    class func getWellboreViewsForUserID(userID: String) -> Array<WellboreView> {
+    class func getFakeWellboreViews() -> Array<WellboreView> {
+        var visualizations = Array<Visualization>()
+        var panels = Array<Panel>()
+        
+        let newVisualization = Visualization(id: 1, xPosition: 0, yPosition: 0, jsFileName: "non", curveID: 1)
+        visualizations.append(newVisualization)
+        
+        let newPanel = Panel(id: 1, position: 0, xDimension: 0, yDimension: 0, visualizations: visualizations)
+        panels.append(newPanel)
+        
+        let newWellboreView = WellboreView(id: 1, panels: panels)
+        var wellboreViews = Array<WellboreView>()
+        wellboreViews.append(newWellboreView)
+        
+        return wellboreViews
+    }
+    
+    class func getWellboreViewsForUserID(userID: String) -> (Array<WellboreView>, String?) {
         var result = Array<WellboreView>()
+        var errorMessage: String?
+        
         let endpointURL = "http://drillalert.azurewebsites.net/api/views/\(userID)"
         let resultJSONArray = JSONArray(url: endpointURL)
         
         if let resultJSONs = resultJSONArray.array {
-            
             for resultJSON in resultJSONs {
                 if let id = resultJSON.getIntAtKey("Id") {
                     if let panelsJSONArray = resultJSON.getJSONArrayAtKey("Panels") {
@@ -166,12 +183,23 @@ class WellboreView {
                     }
                 }
             }
-        } else {
-            println(resultJSONArray.error)
+        } else if let error = resultJSONArray.error {
+            errorMessage = WellboreView.getErrorMessageForCode(error.code)
         }
         
-        return result
+        return (result, errorMessage)
     }
     
+    class func getErrorMessageForCode(code: Int) -> String? {
+        var errorMessage: String?
+        
+        if code == -1005 {
+            errorMessage = "The network connection was lost."
+        } else {
+            errorMessage = "Unknown Error: \(code)"
+        }
+        
+        return errorMessage
+    }
     
 }

@@ -101,14 +101,15 @@ class Well {
     }
 
     
+    
     /// Gets all of the users that have access to 
     /// this well.
     func getUsers() -> Array<User> {
         var users = Array<User>()
         
         // Using canned data
-        users.append(User(firstName: "Lucas", lastName: "David", id: "123"))
-        users.append(User(firstName: "Another", lastName: "User", id: "117"))
+        users.append(User(firstName: "Lucas", lastName: "David", id: "123", guid: "00000000-0000-0000-0000-000000000000"))
+        users.append(User(firstName: "Another", lastName: "User", id: "117", guid: "00000000-0000-0000-0000-000000000000"))
         
         return users
     }

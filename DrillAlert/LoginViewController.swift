@@ -36,7 +36,7 @@ class LoginViewController: UIViewController {
         /*
         let testCurve = Curve(id: 0, name: "test", tooltype: "test", units: "test", wellbore: Wellbore(id: 0, name: "test", well: Well(id: 0, name: "test", location: "test")))
         testCurve.getCurvePoints()
-
+        
         let testWellboreView = WellboreView.getWellboreViewsForUserID("1")
         let wellboreView = testWellboreView[0]
         

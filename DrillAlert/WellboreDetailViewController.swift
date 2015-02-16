@@ -63,13 +63,19 @@ class WellboreDetailViewController: UIViewController {
             
             let segmentedControlNavigationController = UINavigationController()
             segmentedControlNavigationController.navigationBarHidden = true
+            
+            // Set up the Visuals view controller,
+            // which is inside a container on this view controller
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let visualsViewController = storyboard.instantiateViewControllerWithIdentifier("VisualsViewController") as VisualsViewController
             
+            // Set up the Alert Inbox view controller,
+            // which is inside a container on this view controller
             let alertInboxTableViewController = storyboard.instantiateViewControllerWithIdentifier(AlertInboxTableViewController.storyboardIdentifier()) as AlertInboxTableViewController
             
             let viewControllers = [visualsViewController, alertInboxTableViewController]
             visualsViewController.wellboreDetailViewController = self
+            visualsViewController.user = self.currentUser
             alertInboxTableViewController.wellboreDetailViewController = self
             
             self.segmentViewControllers = [visualsViewController, alertInboxTableViewController]
@@ -105,6 +111,12 @@ class WellboreDetailViewController: UIViewController {
             // addAlertBarButtonTapped(sender)
         default: println("Unknown segment index.")
         }
+    }
+    
+    func showAlertWithMessage(message: String) {
+        var alert = UIAlertController(title: "Error", message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil))
+        self.presentViewController(alert, animated: true, completion: nil)
     }
     
     // Shows the user the Manage Alerts view.
