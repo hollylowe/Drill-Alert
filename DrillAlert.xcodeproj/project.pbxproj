@@ -71,6 +71,7 @@
 		CF8E9A911A91A093008F8AF8 /* Visual.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8E9A901A91A093008F8AF8 /* Visual.swift */; };
 		CF8E9A941A91A17F008F8AF8 /* VisualType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8E9A931A91A17F008F8AF8 /* VisualType.swift */; };
 		CF8E9A9A1A91BBFB008F8AF8 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8E9A991A91BBFB008F8AF8 /* View.swift */; };
+		CF8E9A9D1A91BF49008F8AF8 /* ViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8E9A9C1A91BF49008F8AF8 /* ViewTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -153,6 +154,7 @@
 		CF8E9A901A91A093008F8AF8 /* Visual.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Visual.swift; sourceTree = "<group>"; };
 		CF8E9A931A91A17F008F8AF8 /* VisualType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualType.swift; sourceTree = "<group>"; };
 		CF8E9A991A91BBFB008F8AF8 /* View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
+		CF8E9A9C1A91BF49008F8AF8 /* ViewTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -405,6 +407,7 @@
 		A0EE29001A08AB6600B50700 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				CF8E9A9B1A91BF11008F8AF8 /* Views (collection of visuals) */,
 				CF4007661A78C44C008E9C1F /* Visuals */,
 				A095FB8D1A2FC37600B15D39 /* Alerts */,
 				A0343D321A2AB66100FA0464 /* WellboreTableViewCell.swift */,
@@ -449,6 +452,14 @@
 				CF8E9A991A91BBFB008F8AF8 /* View.swift */,
 			);
 			name = View;
+			sourceTree = "<group>";
+		};
+		CF8E9A9B1A91BF11008F8AF8 /* Views (collection of visuals) */ = {
+			isa = PBXGroup;
+			children = (
+				CF8E9A9C1A91BF49008F8AF8 /* ViewTableViewCell.swift */,
+			);
+			name = "Views (collection of visuals)";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -601,6 +612,7 @@
 				A0A783DA1A78BCFB00C3B20A /* AlertPriority.swift in Sources */,
 				A087EEDE1A06C09D0073FDD0 /* HomeViewController.swift in Sources */,
 				A02D86451A6D97BF00D22A38 /* AlertInboxCell.swift in Sources */,
+				CF8E9A9D1A91BF49008F8AF8 /* ViewTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

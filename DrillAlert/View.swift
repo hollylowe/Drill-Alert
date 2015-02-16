@@ -12,9 +12,11 @@ class View {
     
     var name: String
     var visuals: Array<Visual>
+    var currentView: Bool
     
     
-    init(name: String, visuals: Array<Visual>) {
+    init(name: String, visuals: Array<Visual>, currentView: Bool) {
+        self.currentView = currentView
         self.visuals = visuals
         self.name = name
     }
@@ -24,10 +26,16 @@ class View {
         
         var emptyArray = Array<Visual>()
         
-        result.append(View(name: "Process X view", visuals: emptyArray))
-        result.append(View(name: "Process Y view", visuals: emptyArray))
+        result.append(View(name: "Process X view", visuals: emptyArray, currentView: true))
+        result.append(View(name: "Process Y view", visuals: emptyArray, currentView: false))
+        result.append(View(name: "My favorite view", visuals: emptyArray, currentView: false))
+
         
         return result
+    }
+    
+    func equals (other: View) -> Bool {
+        return (self.name == (other.name as String))
     }
     
 }
