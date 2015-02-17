@@ -213,8 +213,13 @@ class UserSession: NSObject, NSURLSessionDelegate, NSURLSessionTaskDelegate {
         var error: NSError?
         
         var parser = HTMLParser(html: content, encoding: NSASCIIStringEncoding, error: &error)
+
         if error != nil {
-            println(error)
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                if let loginViewController = self.loginViewController {
+                    loginViewController.showInvalidLogInAlert()
+                }
+            })
         } else {
             var bodyNode = parser.html
             if let inputNodes = bodyNode?.findChildTags("input") {
@@ -271,6 +276,12 @@ class UserSession: NSObject, NSURLSessionDelegate, NSURLSessionTaskDelegate {
                     self.setFedAuthCookiesWithWResult(wresult, andWCTX: wctx, andWA: wa)
                 }
             }
+        } else {
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                if let loginViewController = self.loginViewController {
+                    loginViewController.showInvalidLogInAlert()
+                }
+            })
         }
     }
     
@@ -297,11 +308,21 @@ class UserSession: NSObject, NSURLSessionDelegate, NSURLSessionTaskDelegate {
         self.loggedIn = hasFedAuth && hasFedAuth1
         self.username = nil
         self.password = nil
-        
         if self.loggedIn {
-            if let loginViewController = self.loginViewController {
-                loginViewController.userLoggedIn()
-            }
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                if let loginViewController = self.loginViewController {
+                    var user = User(firstName: "John", lastName: "Smith", id: "1", guid: "00000000-0000-0000-0000-000000000000", isAdmin: true)
+                    user.userSession = self
+                    
+                    loginViewController.userLoggedIn(user)
+                }
+            })
+        } else {
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                if let loginViewController = self.loginViewController {
+                    loginViewController.showInvalidLogInAlert()
+                }
+            })
         }
     }
     

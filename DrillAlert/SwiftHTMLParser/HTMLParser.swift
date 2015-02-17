@@ -105,7 +105,7 @@ public class HTMLParser {
             
             if var ucur = cur {
                 _doc = htmlReadDoc(UnsafePointer<CUnsignedChar>(ucur), url, enc, optionHtml)
-                rootNode  = HTMLNode(doc: _doc)
+                rootNode = HTMLNode(doc: _doc)
             } else {
                 error = NSError(domain: "HTMLParserdomain", code: 1, userInfo: nil)
             }

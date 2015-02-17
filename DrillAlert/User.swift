@@ -35,7 +35,8 @@ class User {
     /// :param: username The username to authenticate.
     /// :param: password The password of the user.
     /// :returns: A User object if the username and password could be authenticated, nil if not.
-    class func authenticateSDIUsername(username: String, andPassword password: String, andDelegate delegate: LoginViewController) -> User? {
+    /*
+    class func authenticateSDIUsername(username: String, andPassword password: String, andDelegate delegate: LoginViewController) {
         var user: User?
         var newUserSession = UserSession()
         newUserSession.loginWithUsername(username, andPassword: password, andDelegate: delegate)
@@ -45,6 +46,7 @@ class User {
         
         return user
     }
+    */
     
     func logout() {
         // TODO: Log out user of ADFS here
