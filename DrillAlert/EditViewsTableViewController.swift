@@ -1,0 +1,129 @@
+//
+//  EditViewsTableViewController.swift
+//  DrillAlert
+//
+//  Created by Holly Lowe on 2/16/15.
+//  Copyright (c) 2015 Drillionaires. All rights reserved.
+//
+
+import Foundation
+import UIKit
+
+class EditViewsTableViewController: UITableViewController {
+    
+    // Implicit, set by the previous view controller
+    var wellboreDetailViewController: WellboreDetailViewController!
+    var views: [View]!
+    
+    override func viewDidLoad() {
+        self.title = "Edit Views"
+        
+        
+        self.tableView.rowHeight = 65
+
+        views = View.getViewsForUser(wellboreDetailViewController.currentUser, andWellbore: wellboreDetailViewController.currentWellbore)
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Edit, target: self, action: "rightBarButtonItemTapped:")
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Cancel, target: self, action: "leftBarButtonItemTapped:")
+        
+        super.viewDidLoad()
+    }
+    
+    class func storyboardIdentifier() -> String! {
+        return "EditViewsTableViewController"
+    }
+    
+    func rightBarButtonItemTapped(sender: UIBarButtonItem) {
+//        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Done, target: self, action: "DoneButtonItemTapped:")
+//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//        
+//        var vc: UIViewController = storyboard.instantiateViewControllerWithIdentifier("EditViewsTableViewController") as UIViewController
+//        let navigationController = UINavigationController(rootViewController: vc as UIViewController)
+//        self.presentViewController(navigationController, animated: false, completion: nil)
+    }
+    
+    
+    func leftBarButtonItemTapped(sender: UIBarButtonItem) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func DoneButtonItemTapped(sender: UIBarButtonItem) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        
+        let wellbore = sender as Wellbore
+        let destinationViewController = segue.destinationViewController as WellboreDetailViewController
+        destinationViewController.currentWellbore = wellbore
+        
+        super.prepareForSegue(segue, sender: self)
+    }
+    
+}
+
+extension EditViewsTableViewController: UITableViewDataSource {
+    
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier(EditViewTableViewCell.cellIdentifier()) as EditViewTableViewCell
+        let view = views[indexPath.row]
+//        if (view.currentView)
+//        {
+//            cell.accessoryType = UITableViewCellAccessoryType.Checkmark
+//        }
+//        else
+//        {
+//            cell.accessoryType = UITableViewCellAccessoryType.None
+//        }
+        
+        cell.setupWithView(view)
+        
+        return cell
+        
+    }
+    
+
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return views.count
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let tappedItem = views[indexPath.row] as View
+        tappedItem.currentView = !tappedItem.currentView
+        views[indexPath.row] = tappedItem
+        
+        
+        tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.None)
+        self.dismissViewControllerAnimated(true, completion: nil)
+        
+        //        let view = views[indexPath.row]
+        //        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        //        view.
+        //self.performSegueWithIdentifier(AddEditAlertNavigationController.getEntrySegueIdentifier(), sender: view)
+    }
+    
+    //    override func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
+    //        let alert = alerts[indexPath.row]
+    //        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    //
+    //        self.performSegueWithIdentifier(AddEditAlertNavigationController.getEntrySegueIdentifier(), sender: alert)
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -72,6 +72,8 @@
 		CF8E9A941A91A17F008F8AF8 /* VisualType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8E9A931A91A17F008F8AF8 /* VisualType.swift */; };
 		CF8E9A9A1A91BBFB008F8AF8 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8E9A991A91BBFB008F8AF8 /* View.swift */; };
 		CF8E9A9D1A91BF49008F8AF8 /* ViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8E9A9C1A91BF49008F8AF8 /* ViewTableViewCell.swift */; };
+		CFC8DBE41A92AAA400727A97 /* EditViewsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFC8DBE31A92AAA400727A97 /* EditViewsTableViewController.swift */; };
+		CFC8DBE61A92B21100727A97 /* EditViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFC8DBE51A92B21100727A97 /* EditViewTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -155,6 +157,8 @@
 		CF8E9A931A91A17F008F8AF8 /* VisualType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualType.swift; sourceTree = "<group>"; };
 		CF8E9A991A91BBFB008F8AF8 /* View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		CF8E9A9C1A91BF49008F8AF8 /* ViewTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewTableViewCell.swift; sourceTree = "<group>"; };
+		CFC8DBE31A92AAA400727A97 /* EditViewsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditViewsTableViewController.swift; sourceTree = "<group>"; };
+		CFC8DBE51A92B21100727A97 /* EditViewTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditViewTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -441,6 +445,7 @@
 				A0CE032B1A0ED67C0076EE3E /* VisualsViewController.swift */,
 				A042B2DC1A195ED600660AB7 /* VisualViewController.swift */,
 				CF4007641A78BDF4008E9C1F /* ManageViewsTableViewController.swift */,
+				CFC8DBE31A92AAA400727A97 /* EditViewsTableViewController.swift */,
 				A0CE03291A0ED5F60076EE3E /* Visuals */,
 			);
 			name = Views;
@@ -458,6 +463,7 @@
 			isa = PBXGroup;
 			children = (
 				CF8E9A9C1A91BF49008F8AF8 /* ViewTableViewCell.swift */,
+				CFC8DBE51A92B21100727A97 /* EditViewTableViewCell.swift */,
 			);
 			name = "Views (collection of visuals)";
 			sourceTree = "<group>";
@@ -582,6 +588,7 @@
 				A02D86431A6D953A00D22A38 /* AlertInboxTableViewController.swift in Sources */,
 				A0DB7DBF1A2FB96E00C8C9A2 /* SelectAlertTypeTableViewController.swift in Sources */,
 				A0F0FBED1A103DC600ADBDF3 /* WellUsersTableViewController.swift in Sources */,
+				CFC8DBE41A92AAA400727A97 /* EditViewsTableViewController.swift in Sources */,
 				A018E4001A2B003D001EF20E /* Alert.swift in Sources */,
 				A0699A9E1A809102004F9C97 /* SegmentControlToolbar.swift in Sources */,
 				A0CE032C1A0ED67C0076EE3E /* VisualsViewController.swift in Sources */,
@@ -607,6 +614,7 @@
 				A066D5D21A2EBD4B00E16E58 /* PaddedUITextField.swift in Sources */,
 				A06FFD641A06AA08001B3FF8 /* AppDelegate.swift in Sources */,
 				CF8E9A941A91A17F008F8AF8 /* VisualType.swift in Sources */,
+				CFC8DBE61A92B21100727A97 /* EditViewTableViewCell.swift in Sources */,
 				A095FB8F1A2FC38C00B15D39 /* AlertWhenCell.swift in Sources */,
 				A095D5811A78A403000889CB /* JSONArray.swift in Sources */,
 				A0A783DA1A78BCFB00C3B20A /* AlertPriority.swift in Sources */,

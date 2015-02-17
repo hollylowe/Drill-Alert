@@ -22,6 +22,7 @@ class ManageViewsTableViewController: UITableViewController {
     // Implicit, set by the previous view controller
     var wellboreDetailViewController: WellboreDetailViewController!
     var views: [View]!
+    var selectedView: View!
     
     override func viewDidLoad() {
         self.title = "Manage Views"
@@ -33,7 +34,7 @@ class ManageViewsTableViewController: UITableViewController {
     
     
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Edit, target: self, action: "rightBarButtonItemTapped:")
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Done, target: self, action: "leftBarButtonItemTapped:")
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Cancel, target: self, action: "leftBarButtonItemTapped:")
         
         super.viewDidLoad()
     }
@@ -42,28 +43,37 @@ class ManageViewsTableViewController: UITableViewController {
         return "ManageViewsTableViewController"
     }
     
+    
     func rightBarButtonItemTapped(sender: UIBarButtonItem) {
-        //TODO: this should change the items from switches to three lines and delete icons
-//        //self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "AddButtonItemTapped:")
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Done, target: self, action: "DoneButtonItemTapped:")
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        
-//        let addEditAlertNavigationController = storyboard.instantiateViewControllerWithIdentifier(AddEditAlertNavigationController.getStoryboardIdentifier()) as AddEditAlertNavigationController
-//        let addEditAlertViewController = addEditAlertNavigationController.viewControllers[0] as AddEditAlertTableViewController
-//        addEditAlertViewController.delegate = self
-//        self.presentViewController(addEditAlertNavigationController, animated: true, completion: nil)
-        
+              
+        var vc = storyboard.instantiateViewControllerWithIdentifier("EditViewsTableViewController") as EditViewsTableViewController
+        vc.wellboreDetailViewController = self.wellboreDetailViewController
+        let navigationController = UINavigationController(rootViewController: vc as UIViewController)
+        self.presentViewController(navigationController, animated: false, completion: nil)
     }
     
+    
     func leftBarButtonItemTapped(sender: UIBarButtonItem) {
-        //TODO: save all currently set states? this might be controlled elsewhere
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    func AddButtonItemTapped(sender: UIBarButtonItem) {
-        print ("add a new visual")
-        //TODO: Add functionality
+    func DoneButtonItemTapped(sender: UIBarButtonItem) {
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+      
+            let wellbore = sender as Wellbore
+            let destinationViewController = segue.destinationViewController as WellboreDetailViewController
+            destinationViewController.currentWellbore = wellbore
+        
+        super.prepareForSegue(segue, sender: self)
+    }
+
 }
 
 extension ManageViewsTableViewController: UITableViewDataSource {
@@ -71,9 +81,18 @@ extension ManageViewsTableViewController: UITableViewDataSource {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(ViewTableViewCell.cellIdentifier()) as ViewTableViewCell
         let view = views[indexPath.row]
+        
+        if let s = self.selectedView {
+            if (s.equals(view)){
+                cell.accessoryType = UITableViewCellAccessoryType.Checkmark
+                self.selectedView = view
+            }
+        }
+        
         if (view.currentView)
         {
             cell.accessoryType = UITableViewCellAccessoryType.Checkmark
+            self.selectedView = view
         }
         else
         {
@@ -92,25 +111,25 @@ extension ManageViewsTableViewController: UITableViewDataSource {
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let tappedItem = views[indexPath.row] as View
-        tappedItem.currentView = !tappedItem.currentView
-        views[indexPath.row] = tappedItem
+        let view = views[indexPath.row] as View
+        let cell = tableView.dequeueReusableCellWithIdentifier(ViewTableViewCell.cellIdentifier()) as ViewTableViewCell
         
         
+        self.selectedView = view
+        view.currentView = true
+        
+        
+        cell.accessoryType = .Checkmark
+        
+        for otherView in views{
+            if (!otherView.equals(view)){
+                otherView.currentView = false
+            }
+        }
+        tableView.reloadData()
         tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.None)
-        
-//        let view = views[indexPath.row]
-//        tableView.deselectRowAtIndexPath(indexPath, animated: true)
-//        view.
-        //self.performSegueWithIdentifier(AddEditAlertNavigationController.getEntrySegueIdentifier(), sender: view)
     }
-    
-//    override func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
-//        let alert = alerts[indexPath.row]
-//        tableView.deselectRowAtIndexPath(indexPath, animated: true)
-//        
-//        self.performSegueWithIdentifier(AddEditAlertNavigationController.getEntrySegueIdentifier(), sender: alert)
-    }
+}
 
 
 
