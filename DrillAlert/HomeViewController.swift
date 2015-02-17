@@ -35,7 +35,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var loadError = false
     
     // TODO: Remove, for debugging only
-    var shouldLoadFromNetwork = false
+    var shouldLoadFromNetwork = true
     
     override func viewDidLoad() {
         setupView()
@@ -205,7 +205,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         allWellbores.removeAll(keepCapacity: false)
         subscribedWellbores.removeAll(keepCapacity: false)
 
-        let (wells, error) = Well.getWellsForUserID(currentUser.guid)
+        let (wells, error) = Well.getWellsForUser(currentUser)
         
         if error == nil {
             for well in wells {

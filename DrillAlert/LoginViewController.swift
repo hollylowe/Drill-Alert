@@ -22,6 +22,12 @@ class LoginViewController: UIViewController {
         return "LoginViewController"
     }
     
+    func userLoggedIn() {
+        activityIndicator.hidden = true
+        activityIndicator.stopAnimating()
+        self.performSegueWithIdentifier(loginToHomeSegueIdentifier, sender: self)
+    }
+    
     func dismissKeyboard() {
         self.passwordTextField.resignFirstResponder()
         self.usernameTextField.resignFirstResponder()
@@ -112,11 +118,8 @@ class LoginViewController: UIViewController {
         activityIndicator.startAnimating()
         activityIndicator.hidden = false
         
-        if let user = User.authenticateSDIUsername(username, andPassword: password) {
+        if let user = User.authenticateSDIUsername(username, andPassword: password, andDelegate: self) {
             self.currentUser = user
-            activityIndicator.hidden = true
-            activityIndicator.stopAnimating()
-            self.performSegueWithIdentifier(loginToHomeSegueIdentifier, sender: self)
         
         } else {
             let alertController = UIAlertController(

@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A018E4001A2B003D001EF20E /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = A018E3FF1A2B003D001EF20E /* Alert.swift */; };
+		A018E4001A2B003D001EF20E /* AlertStandard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A018E3FF1A2B003D001EF20E /* AlertStandard.swift */; };
 		A018E4041A2B005A001EF20E /* ParameterAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = A018E4031A2B005A001EF20E /* ParameterAlert.swift */; };
 		A018E4061A2B010A001EF20E /* Parameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A018E4051A2B010A001EF20E /* Parameter.swift */; };
 		A018E40A1A2B0733001EF20E /* ManageAlertsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A018E4091A2B0733001EF20E /* ManageAlertsTableViewController.swift */; };
@@ -15,6 +15,7 @@
 		A02679FB1A742A4900ED8FFB /* APIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02679FA1A742A4900ED8FFB /* APIHelper.swift */; };
 		A02D86431A6D953A00D22A38 /* AlertInboxTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02D86421A6D953A00D22A38 /* AlertInboxTableViewController.swift */; };
 		A02D86451A6D97BF00D22A38 /* AlertInboxCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02D86441A6D97BF00D22A38 /* AlertInboxCell.swift */; };
+		A033918C1A92DC120018F2B6 /* UserSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = A033918B1A92DC120018F2B6 /* UserSession.swift */; };
 		A0343D311A2674C100FA0464 /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0343D301A2674C100FA0464 /* Entitlements.plist */; };
 		A0343D331A2AB66100FA0464 /* WellboreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0343D321A2AB66100FA0464 /* WellboreTableViewCell.swift */; };
 		A0343D391A2AC85400FA0464 /* WellboreDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0343D381A2AC85400FA0464 /* WellboreDetailViewController.swift */; };
@@ -47,6 +48,9 @@
 		A06FFD6E1A06AA08001B3FF8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A06FFD6D1A06AA08001B3FF8 /* Images.xcassets */; };
 		A06FFD711A06AA08001B3FF8 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = A06FFD6F1A06AA08001B3FF8 /* LaunchScreen.xib */; };
 		A06FFD7D1A06AA08001B3FF8 /* DrillAlertTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06FFD7C1A06AA08001B3FF8 /* DrillAlertTests.swift */; };
+		A0772F201A928EBD00DE37B1 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0772F1F1A928EBD00DE37B1 /* Alert.swift */; };
+		A0772F221A92921300DE37B1 /* AlertType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0772F211A92921300DE37B1 /* AlertType.swift */; };
+		A0772F241A92921300DE37B1 /* AlertPriority.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0772F231A92921300DE37B1 /* AlertPriority.swift */; };
 		A087EEDE1A06C09D0073FDD0 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A087EEDD1A06C09D0073FDD0 /* HomeViewController.swift */; };
 		A095D57F1A78A3FA000889CB /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = A095D57E1A78A3FA000889CB /* JSON.swift */; };
 		A095D5811A78A403000889CB /* JSONArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = A095D5801A78A403000889CB /* JSONArray.swift */; };
@@ -55,8 +59,8 @@
 		A095FB8F1A2FC38C00B15D39 /* AlertWhenCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A095FB8E1A2FC38C00B15D39 /* AlertWhenCell.swift */; };
 		A095FB911A2FC39800B15D39 /* AlertPriorityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A095FB901A2FC39800B15D39 /* AlertPriorityCell.swift */; };
 		A095FB931A2FF20D00B15D39 /* gauge.html in Resources */ = {isa = PBXBuildFile; fileRef = A095FB921A2FF20D00B15D39 /* gauge.html */; };
-		A0A783DA1A78BCFB00C3B20A /* AlertPriority.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A783D91A78BCFB00C3B20A /* AlertPriority.swift */; };
-		A0A783DC1A78BD1000C3B20A /* AlertType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A783DB1A78BD1000C3B20A /* AlertType.swift */; };
+		A0A783DA1A78BCFB00C3B20A /* AlertPriorityStandard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A783D91A78BCFB00C3B20A /* AlertPriorityStandard.swift */; };
+		A0A783DC1A78BD1000C3B20A /* AlertTypeStandard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A783DB1A78BD1000C3B20A /* AlertTypeStandard.swift */; };
 		A0CCC5E51A81C69600F92B36 /* graph.html in Resources */ = {isa = PBXBuildFile; fileRef = A0CCC5E31A81C69600F92B36 /* graph.html */; };
 		A0CCC5E61A81C69600F92B36 /* graph.js in Resources */ = {isa = PBXBuildFile; fileRef = A0CCC5E41A81C69600F92B36 /* graph.js */; };
 		A0CE03281A0ECEFB0076EE3E /* Wellbore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CE03271A0ECEFB0076EE3E /* Wellbore.swift */; };
@@ -85,7 +89,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		A018E3FF1A2B003D001EF20E /* Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
+		A018E3FF1A2B003D001EF20E /* AlertStandard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertStandard.swift; sourceTree = "<group>"; };
 		A018E4031A2B005A001EF20E /* ParameterAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParameterAlert.swift; sourceTree = "<group>"; };
 		A018E4051A2B010A001EF20E /* Parameter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parameter.swift; sourceTree = "<group>"; };
 		A018E4091A2B0733001EF20E /* ManageAlertsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageAlertsTableViewController.swift; sourceTree = "<group>"; };
@@ -93,6 +97,7 @@
 		A02679FA1A742A4900ED8FFB /* APIHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIHelper.swift; sourceTree = "<group>"; };
 		A02D86421A6D953A00D22A38 /* AlertInboxTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertInboxTableViewController.swift; sourceTree = "<group>"; };
 		A02D86441A6D97BF00D22A38 /* AlertInboxCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertInboxCell.swift; sourceTree = "<group>"; };
+		A033918B1A92DC120018F2B6 /* UserSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSession.swift; sourceTree = "<group>"; };
 		A0343D261A26493800FA0464 /* DrillAlert-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DrillAlert-Bridging-Header.h"; sourceTree = "<group>"; };
 		A0343D301A2674C100FA0464 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
 		A0343D321A2AB66100FA0464 /* WellboreTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WellboreTableViewCell.swift; sourceTree = "<group>"; };
@@ -130,6 +135,9 @@
 		A06FFD761A06AA08001B3FF8 /* DrillAlertTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DrillAlertTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A06FFD7B1A06AA08001B3FF8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A06FFD7C1A06AA08001B3FF8 /* DrillAlertTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrillAlertTests.swift; sourceTree = "<group>"; };
+		A0772F1F1A928EBD00DE37B1 /* Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
+		A0772F211A92921300DE37B1 /* AlertType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertType.swift; sourceTree = "<group>"; };
+		A0772F231A92921300DE37B1 /* AlertPriority.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertPriority.swift; sourceTree = "<group>"; };
 		A087EEDD1A06C09D0073FDD0 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		A095D57E1A78A3FA000889CB /* JSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSON.swift; sourceTree = "<group>"; };
 		A095D5801A78A403000889CB /* JSONArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONArray.swift; sourceTree = "<group>"; };
@@ -138,8 +146,8 @@
 		A095FB8E1A2FC38C00B15D39 /* AlertWhenCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertWhenCell.swift; sourceTree = "<group>"; };
 		A095FB901A2FC39800B15D39 /* AlertPriorityCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertPriorityCell.swift; sourceTree = "<group>"; };
 		A095FB921A2FF20D00B15D39 /* gauge.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = gauge.html; sourceTree = "<group>"; };
-		A0A783D91A78BCFB00C3B20A /* AlertPriority.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertPriority.swift; sourceTree = "<group>"; };
-		A0A783DB1A78BD1000C3B20A /* AlertType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertType.swift; sourceTree = "<group>"; };
+		A0A783D91A78BCFB00C3B20A /* AlertPriorityStandard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertPriorityStandard.swift; sourceTree = "<group>"; };
+		A0A783DB1A78BD1000C3B20A /* AlertTypeStandard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertTypeStandard.swift; sourceTree = "<group>"; };
 		A0CCC5E31A81C69600F92B36 /* graph.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = graph.html; sourceTree = "<group>"; };
 		A0CCC5E41A81C69600F92B36 /* graph.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = graph.js; sourceTree = "<group>"; };
 		A0CE03271A0ECEFB0076EE3E /* Wellbore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Wellbore.swift; sourceTree = "<group>"; };
@@ -190,11 +198,11 @@
 		A018E4081A2B011D001EF20E /* Alerts */ = {
 			isa = PBXGroup;
 			children = (
-				A018E3FF1A2B003D001EF20E /* Alert.swift */,
+				A018E3FF1A2B003D001EF20E /* AlertStandard.swift */,
 				A018E4031A2B005A001EF20E /* ParameterAlert.swift */,
 				A018E4051A2B010A001EF20E /* Parameter.swift */,
-				A0A783D91A78BCFB00C3B20A /* AlertPriority.swift */,
-				A0A783DB1A78BD1000C3B20A /* AlertType.swift */,
+				A0A783D91A78BCFB00C3B20A /* AlertPriorityStandard.swift */,
+				A0A783DB1A78BD1000C3B20A /* AlertTypeStandard.swift */,
 			);
 			name = Alerts;
 			sourceTree = "<group>";
@@ -229,8 +237,8 @@
 		A05A35D01A0837DD008EA386 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				A0772F1E1A928E2700DE37B1 /* CoreData */,
 				A018E4081A2B011D001EF20E /* Alerts */,
-				A06FFD651A06AA08001B3FF8 /* DrillAlert.xcdatamodeld */,
 				A05A35D11A0837ED008EA386 /* Well.swift */,
 				A0CE03271A0ECEFB0076EE3E /* Wellbore.swift */,
 				A0CEDBA11A0C3ADF0051BDB8 /* User.swift */,
@@ -239,6 +247,7 @@
 				A095D5801A78A403000889CB /* JSONArray.swift */,
 				A0699A9B1A80231A004F9C97 /* Curve.swift */,
 				A0699A9F1A809B78004F9C97 /* WellboreView.swift */,
+				A033918B1A92DC120018F2B6 /* UserSession.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -266,8 +275,8 @@
 		A06FFD601A06AA08001B3FF8 /* DrillAlert */ = {
 			isa = PBXGroup;
 			children = (
-				A0F1B5781A901B1200306DB7 /* SwiftHTMLParser */,
 				A06FFD6A1A06AA08001B3FF8 /* Main.storyboard */,
+				A06FFD651A06AA08001B3FF8 /* DrillAlert.xcdatamodeld */,
 				A06FFD631A06AA08001B3FF8 /* AppDelegate.swift */,
 				A05A35CF1A0837CC008EA386 /* Controllers */,
 				A0EE29001A08AB6600B50700 /* Views */,
@@ -306,6 +315,16 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		A0772F1E1A928E2700DE37B1 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				A0772F231A92921300DE37B1 /* AlertPriority.swift */,
+				A0772F211A92921300DE37B1 /* AlertType.swift */,
+				A0772F1F1A928EBD00DE37B1 /* Alert.swift */,
+			);
+			name = CoreData;
+			sourceTree = "<group>";
+		};
 		A087EEDC1A06C0920073FDD0 /* Home */ = {
 			isa = PBXGroup;
 			children = (
@@ -340,6 +359,7 @@
 		A0CA2F5F1A26480500D12218 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A0F1B5781A901B1200306DB7 /* SwiftHTMLParser */,
 				A0343D261A26493800FA0464 /* DrillAlert-Bridging-Header.h */,
 				A066D5CB1A2EAA2900E16E58 /* UIKit.framework */,
 				A066D5C91A2EAA2100E16E58 /* SystemConfiguration.framework */,
@@ -554,13 +574,16 @@
 				A05A35CE1A083727008EA386 /* AdminTableViewController.swift in Sources */,
 				A0343D331A2AB66100FA0464 /* WellboreTableViewCell.swift in Sources */,
 				A02679FB1A742A4900ED8FFB /* APIHelper.swift in Sources */,
+				A033918C1A92DC120018F2B6 /* UserSession.swift in Sources */,
+				A0772F201A928EBD00DE37B1 /* Alert.swift in Sources */,
 				A095FB911A2FC39800B15D39 /* AlertPriorityCell.swift in Sources */,
-				A0A783DC1A78BD1000C3B20A /* AlertType.swift in Sources */,
+				A0772F241A92921300DE37B1 /* AlertPriority.swift in Sources */,
+				A0A783DC1A78BD1000C3B20A /* AlertTypeStandard.swift in Sources */,
 				A0EE29021A08AB7200B50700 /* UIViewExtension.swift in Sources */,
 				A02D86431A6D953A00D22A38 /* AlertInboxTableViewController.swift in Sources */,
 				A0DB7DBF1A2FB96E00C8C9A2 /* SelectAlertTypeTableViewController.swift in Sources */,
 				A0F0FBED1A103DC600ADBDF3 /* WellUsersTableViewController.swift in Sources */,
-				A018E4001A2B003D001EF20E /* Alert.swift in Sources */,
+				A018E4001A2B003D001EF20E /* AlertStandard.swift in Sources */,
 				A0699A9E1A809102004F9C97 /* SegmentControlToolbar.swift in Sources */,
 				A0CE032C1A0ED67C0076EE3E /* VisualsViewController.swift in Sources */,
 				CF4007681A78C789008E9C1F /* ManageVisualsTableViewCell.swift in Sources */,
@@ -579,6 +602,7 @@
 				A0F1B57D1A901B1200306DB7 /* HTMLNode.swift in Sources */,
 				A095D57F1A78A3FA000889CB /* JSON.swift in Sources */,
 				A0343D391A2AC85400FA0464 /* WellboreDetailViewController.swift in Sources */,
+				A0772F221A92921300DE37B1 /* AlertType.swift in Sources */,
 				A0DB7DBD1A2FB96000C8C9A2 /* AddOrEditAlertTableViewController.swift in Sources */,
 				A06FFD671A06AA08001B3FF8 /* DrillAlert.xcdatamodeld in Sources */,
 				A066D5D21A2EBD4B00E16E58 /* PaddedUITextField.swift in Sources */,
@@ -586,7 +610,7 @@
 				A0F1B57E1A901B1200306DB7 /* HTMLParser.swift in Sources */,
 				A095FB8F1A2FC38C00B15D39 /* AlertWhenCell.swift in Sources */,
 				A095D5811A78A403000889CB /* JSONArray.swift in Sources */,
-				A0A783DA1A78BCFB00C3B20A /* AlertPriority.swift in Sources */,
+				A0A783DA1A78BCFB00C3B20A /* AlertPriorityStandard.swift in Sources */,
 				A087EEDE1A06C09D0073FDD0 /* HomeViewController.swift in Sources */,
 				A02D86451A6D97BF00D22A38 /* AlertInboxCell.swift in Sources */,
 			);

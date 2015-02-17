@@ -22,17 +22,34 @@ class ManageAlertsTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         self.title = "Manage Alerts"
+        /*
         alerts = Alert.getAlertsForUser(wellboreDetailViewController.currentUser, andWellbore: wellboreDetailViewController.currentWellbore)
+        */
+        
+        // Retrieve all the alerts that the user has 
+        // saved on their device.
+        alerts = Alert.fetchAllInstances()
         
         /*
         self.tableView.tableFooterView = UIView()
         self.tableView.backgroundColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1.0)
         self.tableView.separatorColor = UIColor(red: 0.122, green: 0.122, blue: 0.122, alpha: 1.0)
         */
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "rightBarButtonItemTapped:")
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Cancel, target: self, action: "leftBarButtonItemTapped:")
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .Add,
+            target: self,
+            action: "rightBarButtonItemTapped:")
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .Cancel,
+            target: self,
+            action: "leftBarButtonItemTapped:")
         
         super.viewDidLoad()
+    }
+    
+    func updateView() {
+        alerts = Alert.fetchAllInstances()
+        self.tableView.reloadData()
     }
     
     class func storyboardIdentifier() -> String! {
