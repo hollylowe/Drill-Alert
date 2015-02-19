@@ -72,34 +72,37 @@ class Well {
         }
     }
     
-    class func getWellsForUserID(userID: String) -> (Array<Well>, String?) {
+    class func getWellsForUser(user: User) -> (Array<Well>, String?) {
         var result = Array<Well>()
+        var errorMessage: String?
         
-        let url = "http://drillalert.azurewebsites.net/api/permissions/\(userID)"
-        let wellsJSONArray = JSONArray(url: url)
-        let errorMessage = wellsJSONArray.getErrorMessage()
-        
-        if errorMessage == nil {
-            if let wellJSONs = wellsJSONArray.array {
-                for wellJSONObject in wellJSONs {
-                    if let well = Well.wellFromJSONObject(wellJSONObject) {
-                        result.append(well)
+        let url = "https://drillalert.azurewebsites.net/api/permissions/\(user.guid)"
+        if let session = user.userSession {
+            let wellsJSONArray = session.getJSONArrayAtURL(url)
+            errorMessage = wellsJSONArray.getErrorMessage()
+            
+            if errorMessage == nil {
+                if let wellJSONs = wellsJSONArray.array {
+                    for wellJSONObject in wellJSONs {
+                        if let well = Well.wellFromJSONObject(wellJSONObject) {
+                            result.append(well)
+                        }
                     }
                 }
-            }
-        } else {
-            // TODO: delete this, only for when the connection doesn't work
-            if result.count == 0 {
-                let well = Well(id: 0, name: "Test", location: "Here")
-                well.wellbores.append(Wellbore(well: well, name: "test"))
-                result.append(well)
+            } else {
+                // TODO: delete this, only for when the connection doesn't work
+                if result.count == 0 {
+                    let well = Well(id: 0, name: "Test", location: "Here")
+                    well.wellbores.append(Wellbore(well: well, name: "test"))
+                    result.append(well)
+                }
             }
         }
-
+        
         return (result, errorMessage)
-
     }
 
+    
     
     /// Gets all of the users that have access to 
     /// this well.
@@ -107,8 +110,8 @@ class Well {
         var users = Array<User>()
         
         // Using canned data
-        users.append(User(firstName: "Lucas", lastName: "David", id: "123"))
-        users.append(User(firstName: "Another", lastName: "User", id: "117"))
+        users.append(User(firstName: "Lucas", lastName: "David", id: "123", guid: "00000000-0000-0000-0000-000000000000"))
+        users.append(User(firstName: "Another", lastName: "User", id: "117", guid: "00000000-0000-0000-0000-000000000000"))
         
         return users
     }

@@ -10,6 +10,7 @@ import UIKit
 
 class LoginViewController: UIViewController {
     
+    @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var passwordTextField: PaddedUITextField!
     @IBOutlet weak var usernameTextField: PaddedUITextField!
     @IBOutlet weak var sdiSignInButton: UIButton!
@@ -20,6 +21,13 @@ class LoginViewController: UIViewController {
     
     class func storyboardIdentifier() -> String! {
         return "LoginViewController"
+    }
+    
+    func userLoggedIn(user: User) {
+        self.currentUser = user
+        activityIndicator.hidden = true
+        activityIndicator.stopAnimating()
+        self.performSegueWithIdentifier(loginToHomeSegueIdentifier, sender: self)
     }
     
     func dismissKeyboard() {
@@ -33,10 +41,13 @@ class LoginViewController: UIViewController {
         let tapRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         self.view.addGestureRecognizer(tapRecognizer)
         
+        // TODO: Remove this, for testing only
+        self.usernameTextField.text = "capstone2015\\testuser"
+        
         /*
         let testCurve = Curve(id: 0, name: "test", tooltype: "test", units: "test", wellbore: Wellbore(id: 0, name: "test", well: Well(id: 0, name: "test", location: "test")))
         testCurve.getCurvePoints()
-
+        
         let testWellboreView = WellboreView.getWellboreViewsForUserID("1")
         let wellboreView = testWellboreView[0]
         
@@ -67,7 +78,12 @@ class LoginViewController: UIViewController {
         // SDI Text fields
         let borderColor = UIColor(red: 0.780, green: 0.780, blue: 0.804, alpha: 1.0).CGColor
         
+        self.loginButton.enabled = true
+        self.usernameTextField.enabled = true
+        self.passwordTextField.enabled = true
+        
         activityIndicator.hidden = true
+        activityIndicator.hidesWhenStopped = true
         usernameTextField.layer.borderColor = borderColor
         usernameTextField.layer.borderWidth = 1.0
         passwordTextField.layer.borderColor = borderColor
@@ -106,22 +122,30 @@ class LoginViewController: UIViewController {
     @IBAction func loginButtonTapped(sender: AnyObject) {
         self.dismissKeyboard()
 
+        var errorMessage: String?
+        
         let username = usernameTextField.text
         let password = passwordTextField.text
         
-        activityIndicator.startAnimating()
-        activityIndicator.hidden = false
-        
-        if let user = User.authenticateSDIUsername(username, andPassword: password) {
-            self.currentUser = user
-            activityIndicator.hidden = true
-            activityIndicator.stopAnimating()
-            self.performSegueWithIdentifier(loginToHomeSegueIdentifier, sender: self)
-        
+        if username.isEmpty {
+            errorMessage = "Invalid username."
+        } else if password.isEmpty {
+            errorMessage = "Please enter a password."
         } else {
+            activityIndicator.startAnimating()
+            activityIndicator.hidden = false
+            self.loginButton.enabled = false
+            self.usernameTextField.enabled = false
+            self.passwordTextField.enabled = false
+            
+            var newUserSession = UserSession()
+            newUserSession.loginWithUsername(username, andPassword: password, andDelegate: self)
+        }
+        
+        if errorMessage != nil {
             let alertController = UIAlertController(
                 title: "Error",
-                message: "Incorrect username or password.",
+                message: errorMessage,
                 preferredStyle: .Alert)
             
             let defaultAction = UIAlertAction(
@@ -133,6 +157,29 @@ class LoginViewController: UIViewController {
             
             self.presentViewController(alertController, animated: true, completion: nil)
         }
+    }
+    
+    func showInvalidLogInAlert() {
+        activityIndicator.stopAnimating()
+        activityIndicator.hidden = true
+        self.loginButton.enabled = true
+        self.usernameTextField.enabled = true
+        self.passwordTextField.enabled = true
+        
+        let alertController = UIAlertController(
+            title: "Error",
+            message: "Invalid username or password.",
+            preferredStyle: .Alert)
+        
+        let defaultAction = UIAlertAction(
+            title: "OK",
+            style: .Default,
+            handler: nil)
+        
+        alertController.addAction(defaultAction)
+        
+        self.presentViewController(alertController, animated: true, completion: nil)
+  
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

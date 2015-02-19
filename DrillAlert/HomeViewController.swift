@@ -34,6 +34,9 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var loadingData = true
     var loadError = false
     
+    // TODO: Remove, for debugging only
+    var shouldLoadFromNetwork = true
+    
     override func viewDidLoad() {
         setupView()
         loadData()
@@ -44,33 +47,32 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         loadError = false
         loadingData = false
         
-        // FOR TESTING
-        allWellbores.append(Wellbore(id: 0, name: "Test Bore", well: Well(id: 0, name: "Test Well", location: "Here")))
-        subscribedWellbores.append(Wellbore(id: 0, name: "Test Bore", well: Well(id: 0, name: "Test Well", location: "Here")))
-
-        
-        self.tableView.reloadData()
-        
-        /*
-        FOR NETWORK LOAD, DELETE THE ABOVE, AND UNCOMMENT THIS
-        
-        loadError = false
-        loadingData = true
-        self.tableView.reloadData()
-        
-        // TODO: This will need to change if we add a way to refresh this page, which we probably will.
-        // Instead, we could use the NSURLConnection asynchrounous call. This is because users could
-        // refresh the page faster than this call could load it, resulting in multiple threads doing
-        // the same operation and messing up the table view.
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
-            self.reloadWells()
+        if shouldLoadFromNetwork {
+            loadError = false
+            loadingData = true
+            self.tableView.reloadData()
             
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                self.loadingData = false
-                self.tableView.reloadData()
+            // TODO: This will need to change if we add a way to refresh this page, which we probably will.
+            // Instead, we could use the NSURLConnection asynchrounous call. This is because users could
+            // refresh the page faster than this call could load it, resulting in multiple threads doing
+            // the same operation and messing up the table view.
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
+                self.reloadWells()
+                
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.loadingData = false
+                    self.tableView.reloadData()
+                })
             })
-        })
-        */
+
+        } else {
+            allWellbores.append(Wellbore(id: 0, name: "Test Bore", well: Well(id: 0, name: "Test Well", location: "Here")))
+            subscribedWellbores.append(Wellbore(id: 0, name: "Test Bore", well: Well(id: 0, name: "Test Well", location: "Here")))
+            
+            
+            self.tableView.reloadData()
+        }
+        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -195,8 +197,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
     func reloadWells() {
         
-        /*
-        FOR NETWORK LOAD, UNCOMMENT THIS
+        
 
 
         // Only load the wells of the currently selected segment.
@@ -204,7 +205,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         allWellbores.removeAll(keepCapacity: false)
         subscribedWellbores.removeAll(keepCapacity: false)
 
-        let (wells, error) = Well.getWellsForUserID(currentUser.id)
+        let (wells, error) = Well.getWellsForUser(currentUser)
         
         if error == nil {
             for well in wells {
@@ -221,7 +222,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             self.presentViewController(alert, animated: true, completion: nil)
         }
         
-        */
+        
     }
     
     func wellboreAtIndex(index: Int) -> Wellbore {

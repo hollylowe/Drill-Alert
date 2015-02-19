@@ -138,6 +138,7 @@
                     <connections>
                         <outlet property="activityIndicator" destination="1PG-fI-ei2" id="awY-GO-ALU"/>
                         <outlet property="backgroundImageView" destination="ARm-4F-VO1" id="rJm-gz-d9p"/>
+                        <outlet property="loginButton" destination="Uf8-hT-C26" id="b8l-G9-ffJ"/>
                         <outlet property="passwordTextField" destination="mnf-Dc-ccz" id="bUD-Sb-d5a"/>
                         <outlet property="sdiSignInButton" destination="Uf8-hT-C26" id="WdC-wZ-xa1"/>
                         <outlet property="usernameTextField" destination="jBV-3p-PI0" id="377-ay-AhA"/>
@@ -171,28 +172,32 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Wellbore Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PIa-Ru-0cA">
-                                                    <rect key="frame" x="24" y="17" width="536" height="40"/>
+                                                    <rect key="frame" x="24" y="17" width="568" height="20"/>
                                                     <constraints>
+                                                        <constraint firstAttribute="height" constant="25" id="6cY-ak-AuQ"/>
                                                         <constraint firstAttribute="height" constant="40" id="U6f-6o-nmd"/>
                                                         <constraint firstAttribute="height" constant="21" id="cLy-VC-b8u"/>
+                                                        <constraint firstAttribute="height" constant="20" id="mkI-5C-hfT"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="22"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="16"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="default">
                                                         <mask key="constraints">
+                                                            <exclude reference="6cY-ak-AuQ"/>
                                                             <exclude reference="U6f-6o-nmd"/>
                                                             <exclude reference="cLy-VC-b8u"/>
                                                         </mask>
                                                     </variation>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Well Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jB6-rB-8cO">
-                                                    <rect key="frame" x="24" y="50" width="536" height="32"/>
+                                                    <rect key="frame" x="24" y="42" width="568" height="19"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="9wC-NK-dy3"/>
                                                         <constraint firstAttribute="height" constant="32" id="FAs-YV-ZL5"/>
+                                                        <constraint firstAttribute="height" constant="19" id="sC8-nV-uP3"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="default">
@@ -202,35 +207,72 @@
                                                         </mask>
                                                     </variation>
                                                 </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Well Location" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5dN-iC-SON">
+                                                    <rect key="frame" x="24" y="64" width="568" height="19"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="rb1-6i-uGF"/>
+                                                        <constraint firstAttribute="height" constant="19" id="yWs-C5-MGl"/>
+                                                        <constraint firstAttribute="height" constant="32" id="yes-8B-NGi"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="rb1-6i-uGF"/>
+                                                            <exclude reference="yes-8B-NGi"/>
+                                                        </mask>
+                                                    </variation>
+                                                </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="trailingMargin" secondItem="PIa-Ru-0cA" secondAttribute="trailing" constant="32" id="2eH-ds-LUO"/>
+                                                <constraint firstItem="jB6-rB-8cO" firstAttribute="top" secondItem="PIa-Ru-0cA" secondAttribute="bottom" constant="5" id="2hf-mu-0bR"/>
                                                 <constraint firstItem="PIa-Ru-0cA" firstAttribute="leading" secondItem="Feg-5d-tnM" secondAttribute="leadingMargin" constant="16" id="2rb-kx-W2u"/>
+                                                <constraint firstItem="PIa-Ru-0cA" firstAttribute="leading" secondItem="Feg-5d-tnM" secondAttribute="leadingMargin" constant="16" id="60K-xW-yYf"/>
                                                 <constraint firstItem="PIa-Ru-0cA" firstAttribute="top" secondItem="Feg-5d-tnM" secondAttribute="topMargin" id="69f-Mh-Onp"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="jB6-rB-8cO" secondAttribute="bottom" constant="19" id="CwM-aP-Ndd"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="jB6-rB-8cO" secondAttribute="bottom" constant="10" id="DIM-i9-5zD"/>
+                                                <constraint firstItem="5dN-iC-SON" firstAttribute="top" secondItem="jB6-rB-8cO" secondAttribute="bottom" constant="3" id="Ejg-a5-AcM"/>
                                                 <constraint firstItem="jB6-rB-8cO" firstAttribute="top" secondItem="Feg-5d-tnM" secondAttribute="topMargin" constant="42" id="Hn2-nK-gSk"/>
+                                                <constraint firstItem="jB6-rB-8cO" firstAttribute="trailing" secondItem="Feg-5d-tnM" secondAttribute="trailingMargin" id="KrZ-MZ-InW"/>
+                                                <constraint firstItem="5dN-iC-SON" firstAttribute="trailing" secondItem="Feg-5d-tnM" secondAttribute="trailingMargin" id="Mbt-JF-ert"/>
+                                                <constraint firstItem="PIa-Ru-0cA" firstAttribute="top" secondItem="Feg-5d-tnM" secondAttribute="topMargin" constant="9" id="OUq-Ey-ge3"/>
+                                                <constraint firstItem="PIa-Ru-0cA" firstAttribute="trailing" secondItem="Feg-5d-tnM" secondAttribute="trailingMargin" id="SFZ-eL-YVw"/>
                                                 <constraint firstItem="PIa-Ru-0cA" firstAttribute="leading" secondItem="Feg-5d-tnM" secondAttribute="leadingMargin" constant="16" id="Ti6-gZ-rJf"/>
                                                 <constraint firstItem="jB6-rB-8cO" firstAttribute="leading" secondItem="Feg-5d-tnM" secondAttribute="leadingMargin" constant="16" id="W9n-Ee-vem"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="jB6-rB-8cO" secondAttribute="trailing" constant="32" id="aik-hh-1ND"/>
                                                 <constraint firstItem="PIa-Ru-0cA" firstAttribute="top" secondItem="Feg-5d-tnM" secondAttribute="topMargin" constant="9" id="bSu-9F-9KR"/>
                                                 <constraint firstItem="jB6-rB-8cO" firstAttribute="top" secondItem="PIa-Ru-0cA" secondAttribute="bottom" constant="4" id="dpG-zQ-m80"/>
                                                 <constraint firstItem="jB6-rB-8cO" firstAttribute="top" secondItem="PIa-Ru-0cA" secondAttribute="bottom" constant="4" id="fNE-jZ-dZR"/>
+                                                <constraint firstItem="5dN-iC-SON" firstAttribute="top" secondItem="PIa-Ru-0cA" secondAttribute="bottom" id="hBv-7e-sum"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="PIa-Ru-0cA" secondAttribute="trailing" constant="32" id="ma8-7p-Mvk"/>
+                                                <constraint firstItem="jB6-rB-8cO" firstAttribute="leading" secondItem="Feg-5d-tnM" secondAttribute="leadingMargin" constant="16" id="qwr-wm-oZY"/>
+                                                <constraint firstItem="5dN-iC-SON" firstAttribute="leading" secondItem="Feg-5d-tnM" secondAttribute="leadingMargin" constant="16" id="sxR-0z-Aze"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="PIa-Ru-0cA" secondAttribute="bottom" constant="35" id="wG8-8S-JJB"/>
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
+                                                    <exclude reference="2eH-ds-LUO"/>
                                                     <exclude reference="2rb-kx-W2u"/>
                                                     <exclude reference="69f-Mh-Onp"/>
+                                                    <exclude reference="Ti6-gZ-rJf"/>
+                                                    <exclude reference="bSu-9F-9KR"/>
                                                     <exclude reference="ma8-7p-Mvk"/>
+                                                    <exclude reference="wG8-8S-JJB"/>
                                                     <exclude reference="CwM-aP-Ndd"/>
+                                                    <exclude reference="DIM-i9-5zD"/>
+                                                    <exclude reference="Hn2-nK-gSk"/>
+                                                    <exclude reference="W9n-Ee-vem"/>
+                                                    <exclude reference="aik-hh-1ND"/>
                                                     <exclude reference="dpG-zQ-m80"/>
                                                     <exclude reference="fNE-jZ-dZR"/>
+                                                    <exclude reference="hBv-7e-sum"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="wellLocationLabel" destination="5dN-iC-SON" id="vt0-sD-3UJ"/>
                                             <outlet property="wellNameLabel" destination="jB6-rB-8cO" id="V1q-a2-RgH"/>
                                             <outlet property="wellboreNameLabel" destination="PIa-Ru-0cA" id="uAu-Uv-Vxb"/>
                                         </connections>
@@ -691,16 +733,26 @@
                                     <outlet property="delegate" destination="LdQ-QI-dwH" id="CNu-nz-ITi"/>
                                 </connections>
                             </webView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8OQ-O0-5Id">
+                                <rect key="frame" x="36" y="38" width="535" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="8OQ-O0-5Id" firstAttribute="leading" secondItem="gFv-a6-E2y" secondAttribute="leadingMargin" constant="20" id="KKY-G1-tZZ"/>
                             <constraint firstItem="c2p-4E-tqC" firstAttribute="leading" secondItem="gFv-a6-E2y" secondAttribute="leadingMargin" constant="-16" id="Tue-o7-YGe"/>
                             <constraint firstItem="emb-M1-t5I" firstAttribute="top" secondItem="c2p-4E-tqC" secondAttribute="bottom" id="drB-Iz-6J8"/>
+                            <constraint firstItem="8OQ-O0-5Id" firstAttribute="top" secondItem="LzG-ri-8vJ" secondAttribute="bottom" constant="18" id="j9J-GN-JqB"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="8OQ-O0-5Id" secondAttribute="trailing" constant="13" id="leA-EE-HJ8"/>
                             <constraint firstItem="c2p-4E-tqC" firstAttribute="top" secondItem="gFv-a6-E2y" secondAttribute="topMargin" id="p7h-XL-pmH"/>
                             <constraint firstAttribute="trailingMargin" secondItem="c2p-4E-tqC" secondAttribute="trailing" constant="-16" id="zTO-aO-ECC"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="panelInformationLabel" destination="8OQ-O0-5Id" id="Lzb-9n-x0w"/>
                         <outlet property="webView" destination="c2p-4E-tqC" id="Vfv-hO-rgs"/>
                     </connections>
                 </viewController>
@@ -717,35 +769,62 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="AlertInboxCell" rowHeight="95" id="HAO-H7-VrC" customClass="AlertInboxCell" customModule="DrillAlert" customModuleProvider="target">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AlertInboxCell" rowHeight="95" id="HAO-H7-VrC" customClass="AlertInboxCell" customModule="DrillAlert" customModuleProvider="target">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HAO-H7-VrC" id="Oo8-Fn-gWv">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Alert Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y7G-fw-OAT">
-                                            <rect key="frame" x="33" y="21" width="501" height="20.5"/>
+                                            <rect key="frame" x="33" y="21" width="394" height="20.5"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Alert Information" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Jo-7u-v1F">
-                                            <rect key="frame" x="33" y="50" width="501" height="19"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <rect key="frame" x="33" y="49" width="559" height="19.5"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="19.5" id="cDg-lZ-Dkk"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12/12/12 00:00 PM" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oLs-5J-QyC">
+                                            <rect key="frame" x="427" y="21" width="147" height="19.5"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="147" id="XNY-fT-d8a"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstAttribute="trailingMargin" secondItem="oLs-5J-QyC" secondAttribute="trailing" constant="18" id="Bnd-5H-fDl"/>
                                         <constraint firstItem="9Jo-7u-v1F" firstAttribute="leading" secondItem="Oo8-Fn-gWv" secondAttribute="leadingMargin" constant="25" id="CwT-gO-Zc5"/>
+                                        <constraint firstItem="9Jo-7u-v1F" firstAttribute="top" secondItem="y7G-fw-OAT" secondAttribute="bottom" constant="7.5" id="GFt-Qu-P9k"/>
                                         <constraint firstItem="y7G-fw-OAT" firstAttribute="top" secondItem="Oo8-Fn-gWv" secondAttribute="topMargin" constant="13" id="Hje-xK-8xI"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="9Jo-7u-v1F" secondAttribute="trailing" constant="25" id="Oow-rM-3x3"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="y7G-fw-OAT" secondAttribute="trailing" constant="25" id="aX4-gt-c9g"/>
+                                        <constraint firstItem="oLs-5J-QyC" firstAttribute="top" secondItem="Oo8-Fn-gWv" secondAttribute="topMargin" constant="13" id="Ish-He-bbI"/>
+                                        <constraint firstItem="y7G-fw-OAT" firstAttribute="leading" secondItem="Oo8-Fn-gWv" secondAttribute="leadingMargin" constant="25" id="MYs-wI-dni"/>
+                                        <constraint firstItem="oLs-5J-QyC" firstAttribute="leading" secondItem="y7G-fw-OAT" secondAttribute="trailing" id="Rqp-FC-6V9"/>
+                                        <constraint firstItem="9Jo-7u-v1F" firstAttribute="top" secondItem="oLs-5J-QyC" secondAttribute="bottom" constant="8.5" id="Yvu-7t-RFm"/>
                                         <constraint firstItem="y7G-fw-OAT" firstAttribute="leading" secondItem="Oo8-Fn-gWv" secondAttribute="leadingMargin" constant="25" id="bgL-QU-raJ"/>
                                         <constraint firstItem="9Jo-7u-v1F" firstAttribute="top" secondItem="y7G-fw-OAT" secondAttribute="bottom" constant="8.5" id="cmQ-LB-nqv"/>
+                                        <constraint firstItem="oLs-5J-QyC" firstAttribute="trailing" secondItem="Oo8-Fn-gWv" secondAttribute="trailingMargin" constant="10" id="iT1-nE-LCu"/>
+                                        <constraint firstItem="9Jo-7u-v1F" firstAttribute="trailing" secondItem="Oo8-Fn-gWv" secondAttribute="trailingMargin" id="xkq-fm-h0p"/>
                                     </constraints>
+                                    <variation key="default">
+                                        <mask key="constraints">
+                                            <exclude reference="bgL-QU-raJ"/>
+                                            <exclude reference="Yvu-7t-RFm"/>
+                                            <exclude reference="cmQ-LB-nqv"/>
+                                            <exclude reference="iT1-nE-LCu"/>
+                                        </mask>
+                                    </variation>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="alertInformationLabel" destination="9Jo-7u-v1F" id="l5H-cG-jLV"/>
+                                    <outlet property="alertTimeLabel" destination="oLs-5J-QyC" id="d9s-4V-fFM"/>
                                     <outlet property="alertTitleLabel" destination="y7G-fw-OAT" id="Rrz-je-Nnf"/>
                                 </connections>
                             </tableViewCell>

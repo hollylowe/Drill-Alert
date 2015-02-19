@@ -15,6 +15,10 @@ class JSONArray {
     var error: NSError?
     var array: Array<JSON>?
     
+    init() {
+        
+    }
+    
     init(objectArray: Array<AnyObject>) {
         self.error = nil
         self.array = Array<JSON>()
@@ -23,6 +27,7 @@ class JSONArray {
             self.array!.append(JSON(dictionary: objectDictionary))
         }
     }
+    
     
     init(url: String) {
         var result: AnyObject?
@@ -112,7 +117,9 @@ class JSONArray {
                         }
                     } else {
                         errorMessage = "Unknown Error: \(error!.code)"
+                        println(error!)
                     }
+                    
                 }
             }
         }

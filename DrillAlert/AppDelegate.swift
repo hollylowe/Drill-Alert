@@ -13,13 +13,15 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    // If this is set, we know that we are currently on the Alert Inbox view
+    var alertInboxTableViewController: AlertInboxTableViewController?
     
     func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
         var state = application.applicationState
         
         if state == UIApplicationState.Active {
             let alertController = UIAlertController(
-                title: "Alert",
+                title: "Drill Alert",
                 message: notification.alertBody,
                 preferredStyle: .Alert)
             
@@ -38,23 +40,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
-    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         let pageControl = UIPageControl.appearance()
         pageControl.pageIndicatorTintColor = UIColor.lightGrayColor()
         pageControl.currentPageIndicatorTintColor = UIColor.blackColor()
         pageControl.backgroundColor = UIColor.whiteColor()
-        /*
-        let textColor = UIColor(red: 0.604, green: 0.792, blue: 1.0, alpha: 1.0)
-        // let textColor = UIColor.whiteColor()
-        UINavigationBar.appearance().barTintColor = UIColor(red: 0.122, green: 0.122, blue: 0.122, alpha: 1.0)
-        UINavigationBar.appearance().tintColor = textColor
-        UINavigationBar.appearance().translucent = false
-        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName : UIColor.whiteColor()]
-        UITabBar.appearance().tintColor = UIColor.whiteColor()
-        UITabBar.appearance().barTintColor = UIColor(red: 0.122, green: 0.122, blue: 0.122, alpha: 1.0)
-        */
+        
+        UIApplication.sharedApplication().registerForRemoteNotifications()
         
         // Override point for customization after application launch.
         if UIApplication.instancesRespondToSelector(Selector("registerUserNotificationSettings:")) {
@@ -66,7 +59,66 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
 
     }
+    
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+        println("Recieved a noti.")
+        
+        /*
+        var noti = UILocalNotification()
+        var body = parameter.name
+        noti.fireDate = NSDate(timeInterval: 6, sinceDate: NSDate())
+        
+        if alert.alertWhenRisesToValue {
+            body = body + " on Wellbore 1 has reached \(alert.value)."
+        } else {
+            body = body + " on Wellbore 1 has fallen to \(alert.value)."
+        }
+        
+        noti.alertBody = body
+        noti.timeZone = NSTimeZone.defaultTimeZone()
+        UIApplication.sharedApplication().scheduleLocalNotification(noti)
+        */
+        
+        if let alertNotificationAnyObject: AnyObject = userInfo["aps"] {
+            if let alertNotificationDictionary = alertNotificationAnyObject as? Dictionary<String, AnyObject> {
+                if let alertGUID = alertNotificationDictionary["alertGUID"] as? String {
+                    if let alertNotification = AlertNotification.createNewInstance(alertGUID, timeRecieved: NSDate()) {
+                        var alertLocalNotification = UILocalNotification()
+                        alertLocalNotification.fireDate = NSDate()
+                        alertLocalNotification.alertBody = alertNotification.getNotificationBody()
+                        alertLocalNotification.timeZone = NSTimeZone.defaultTimeZone()
+                        UIApplication.sharedApplication().scheduleLocalNotification(alertLocalNotification)
+                        
+                        if let alertInbox = self.alertInboxTableViewController {
+                            alertInbox.recievedRemoteNotification()
+                        }
+                        
+                    } else {
+                        // If for some reason it didn't save, still alert
+                        // the user anyway
+                    }
+                    
+                }
+                
+            }
+        }
+        
+    }
+    
+    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+        var token = deviceToken.description.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "<>"))
+        println("Successfully registered for push notifications.")
 
+    }
+    
+    func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
+        println("Failed to register for push notifications.")
+        
+        println("Error: ")
+        
+        println(error)
+    }
+    
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.

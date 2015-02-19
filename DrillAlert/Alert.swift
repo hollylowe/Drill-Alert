@@ -2,50 +2,134 @@
 //  Alert.swift
 //  DrillAlert
 //
-//  Created by Lucas David on 11/29/14.
-//  Copyright (c) 2014 Drillionaires. All rights reserved.
+//  Created by Lucas David on 2/16/15.
+//  Copyright (c) 2015 Drillionaires. All rights reserved.
 //
 
 import Foundation
+import CoreData
+import UIKit
 
-class Alert {
-    var type: AlertType
-    var value: Int
-    var priority: AlertPriority
-    var alertOnRise: Bool
-    var isActive: Bool
-    
-    init(type: AlertType, value: Int, alertOnRise: Bool, priority: AlertPriority) {
-        self.type = type
-        self.value = value
-        self.priority = priority
-        self.alertOnRise = alertOnRise
-        self.isActive = true
-    }
-    
-    // TODO: Use real API call
-    class func getAlertsForUser(user: User, andWellbore wellbore: Wellbore) -> Array<Alert> {
-        var result = Array<Alert>()
-        
-        result.append(Alert(type: .Temperature, value: 20, alertOnRise: true, priority: .Warning))
-        result.append(Alert(type: .Pressure, value: 30, alertOnRise: true, priority: .Critical))
-        result.append(Alert(type: .Azimuth, value: 56, alertOnRise: false, priority: .Information))
-        result.append(Alert(type: .Inclination, value: 11, alertOnRise: true, priority: .Information))
+@objc(Alert)
+class Alert: NSManagedObject {
 
-        return result
-    }
+    @NSManaged var value: NSNumber
+    @NSManaged var isActive: NSNumber
+    @NSManaged var alertOnRise: NSNumber
+    @NSManaged var alertType: NSNumber
+    @NSManaged var alertPriority: NSNumber
+    @NSManaged var guid: String
     
-    func getInformationText() -> String! {
-        var result = "\(self.type.name)"
+    func getAlertType() -> AlertType? {
+        var result: AlertType?
         
-        if alertOnRise {
-            result = result + " has risen to "
-        } else {
-            result = result + " has fallen to "
+        for alertType in AlertType.allValues {
+            if alertType.rawValue == self.alertType.integerValue {
+                result = alertType
+                break
+            }
         }
         
-        result = result + "\(self.value) \(self.type.units)"
+        return result
+    }
+    
+    func getAlertPriority() -> AlertPriority? {
+        var result: AlertPriority?
+        
+        for alertPriority in AlertPriority.allValues {
+            if alertPriority.rawValue == self.alertPriority.integerValue {
+                result = alertPriority
+                break
+            }
+        }
         
         return result
     }
+    
+    func setAlertType(alertType: AlertType) {
+        self.alertType = NSNumber(integer: Int(alertType.rawValue))
+    }
+    
+    func setAlertPriority(alertPriority: AlertPriority) {
+        self.alertPriority = NSNumber(integer: Int(alertPriority.rawValue))
+    }
+    
+    func save() -> Bool {
+        var success = false
+        
+        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        if let context = appDelegate.managedObjectContext {
+            var error: NSError?
+            context.save(&error)
+            if error != nil {
+                println("Core Data Error: ")
+                println(error)
+            } else {
+                success = true
+            }
+        }
+        
+        return success
+    }
+    
+    class func entityName() -> String {
+        return "Alert"
+    }
+    
+    class func createNewInstance(value: Float, isActive: Bool, alertOnRise: Bool, type: AlertType, priority: AlertPriority) -> Alert? {
+        var newAlert: Alert?
+        
+        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        if let context = appDelegate.managedObjectContext {
+            var alert = NSEntityDescription.insertNewObjectForEntityForName(Alert.entityName(), inManagedObjectContext: context) as Alert
+            alert.alertType = NSNumber(integer: Int(type.rawValue))
+            alert.value = NSNumber(float: value)
+            alert.isActive = NSNumber(bool: isActive)
+            alert.alertPriority = NSNumber(integer: Int(priority.rawValue))
+            alert.alertOnRise = NSNumber(bool: alertOnRise)
+            
+            // Create a UUID
+            var uuidObject = CFUUIDCreate(nil)
+            var uuidString = CFUUIDCreateString(nil, uuidObject)
+            alert.guid = uuidString;
+            
+            var error: NSError?
+            
+            context.save(&error)
+            
+            if error != nil {
+                println("Core Data Error: ")
+                println(error)
+            } else {
+                newAlert = alert
+            }
+        }
+        
+        return newAlert
+    }
+    
+    
+    class func fetchAllInstances() -> Array<Alert> {
+        var allAlerts = Array<Alert>()
+        
+        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        if let context = appDelegate.managedObjectContext {
+            var request = NSFetchRequest(entityName: Alert.entityName())
+            var error: NSError?
+            var results = context.executeFetchRequest(request, error: &error)
+            if error != nil {
+                println("Core Data Error: ")
+                println(error)
+            } else {
+                allAlerts = results as [Alert]
+                
+                for alert in allAlerts {
+                    println(alert.guid)
+                }
+            }
+        }
+        
+        return allAlerts
+    }
+
 }

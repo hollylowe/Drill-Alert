@@ -12,6 +12,8 @@
 	<dict>
 		<key>3579404F79A28BCD7B002C1ACE14EAD5E0D8972E</key>
 		<string>https://github.com/hollylowe/Drill-Alert.git</string>
+		<key>3F00198FD7638102954E2D442697C31855C6A5BC</key>
+		<string>https://github.com/tid-kijyun/Swift-HTML-Parser.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>DrillAlert.xcodeproj</string>
@@ -19,6 +21,8 @@
 	<dict>
 		<key>3579404F79A28BCD7B002C1ACE14EAD5E0D8972E</key>
 		<string>../..</string>
+		<key>3F00198FD7638102954E2D442697C31855C6A5BC</key>
+		<string>../../DrillAlert/Swift-HTML-Parser</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/hollylowe/Drill-Alert.git</string>
@@ -35,6 +39,14 @@
 			<string>3579404F79A28BCD7B002C1ACE14EAD5E0D8972E</string>
 			<key>IDESourceControlWCCName</key>
 			<string>Drill-Alert</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>3F00198FD7638102954E2D442697C31855C6A5BC</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Swift-HTML-Parser</string>
 		</dict>
 	</array>
 </dict>
