@@ -29,4 +29,26 @@ class ChooseAddVisualTableViewController: UITableViewController {
     func leftBarButtonItemTapped(sender: UIBarButtonItem) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let selected = indexPath.row
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        switch selected{
+            case 0:
+                var vc = storyboard.instantiateViewControllerWithIdentifier("NewPlotTableViewController") as NewPlotTableViewController
+                 //var vc = storyboard.instantiateViewControllerWithIdentifier("ChooseAddVisualTableViewController") as ChooseAddVisualTableViewController
+                self.navigationController?.pushViewController(vc, animated: true)
+            default:
+                println("something went wrong")
+        }
+        
+        
+//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//        var vc = storyboard.instantiateViewControllerWithIdentifier("EditViewTableViewController") as EditViewTableViewController
+//        vc.wellboreDetailViewController = self.wellboreDetailViewController
+//        vc.selectedView = view
+//        self.navigationController?.pushViewController(vc, animated: true)
+
+    }
 }

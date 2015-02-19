@@ -71,6 +71,7 @@
 		CF4007651A78BDF4008E9C1F /* ManageViewsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4007641A78BDF4008E9C1F /* ManageViewsTableViewController.swift */; };
 		CF4007681A78C789008E9C1F /* ManageVisualsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4007671A78C789008E9C1F /* ManageVisualsTableViewCell.swift */; };
 		CF75F7A91A95BA7100B7958D /* ChooseAddVisualTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF75F7A81A95BA7100B7958D /* ChooseAddVisualTableViewController.swift */; };
+		CF75F7AC1A95D60200B7958D /* NewPlotTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF75F7AA1A95CF1600B7958D /* NewPlotTableViewController.swift */; };
 		CF8E9A911A91A093008F8AF8 /* Visual.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8E9A901A91A093008F8AF8 /* Visual.swift */; };
 		CF8E9A941A91A17F008F8AF8 /* VisualType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8E9A931A91A17F008F8AF8 /* VisualType.swift */; };
 		CF8E9A9A1A91BBFB008F8AF8 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8E9A991A91BBFB008F8AF8 /* View.swift */; };
@@ -159,6 +160,7 @@
 		CF4007641A78BDF4008E9C1F /* ManageViewsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageViewsTableViewController.swift; sourceTree = "<group>"; };
 		CF4007671A78C789008E9C1F /* ManageVisualsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageVisualsTableViewCell.swift; sourceTree = "<group>"; };
 		CF75F7A81A95BA7100B7958D /* ChooseAddVisualTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseAddVisualTableViewController.swift; sourceTree = "<group>"; };
+		CF75F7AA1A95CF1600B7958D /* NewPlotTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewPlotTableViewController.swift; sourceTree = "<group>"; };
 		CF8E9A901A91A093008F8AF8 /* Visual.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Visual.swift; sourceTree = "<group>"; };
 		CF8E9A931A91A17F008F8AF8 /* VisualType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualType.swift; sourceTree = "<group>"; };
 		CF8E9A991A91BBFB008F8AF8 /* View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
@@ -397,6 +399,7 @@
 		A0CE03291A0ED5F60076EE3E /* Visuals */ = {
 			isa = PBXGroup;
 			children = (
+				CF75F7AA1A95CF1600B7958D /* NewPlotTableViewController.swift */,
 				CF75F7A81A95BA7100B7958D /* ChooseAddVisualTableViewController.swift */,
 				A0CCC5E91A81C6CA00F92B36 /* Visualizations */,
 			);
@@ -587,6 +590,7 @@
 			files = (
 				CF4007651A78BDF4008E9C1F /* ManageViewsTableViewController.swift in Sources */,
 				A018E4041A2B005A001EF20E /* ParameterAlert.swift in Sources */,
+				CF75F7AC1A95D60200B7958D /* NewPlotTableViewController.swift in Sources */,
 				A0343D411A2AFE9C00FA0464 /* ParameterAlertTableViewCell.swift in Sources */,
 				A05A35CE1A083727008EA386 /* AdminTableViewController.swift in Sources */,
 				A0343D331A2AB66100FA0464 /* WellboreTableViewCell.swift in Sources */,
