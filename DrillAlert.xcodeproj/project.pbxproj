@@ -74,6 +74,7 @@
 		A0F1B57E1A901B1200306DB7 /* HTMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F1B57A1A901B1200306DB7 /* HTMLParser.swift */; };
 		A0F1B57F1A901B1200306DB7 /* SwiftHTMLParserLicense in Resources */ = {isa = PBXBuildFile; fileRef = A0F1B57C1A901B1200306DB7 /* SwiftHTMLParserLicense */; };
 		A0F1B5811A901BE400306DB7 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A0F1B5801A901BE400306DB7 /* libxml2.dylib */; };
+		A0F5D6451A95906400B68548 /* AlertNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F5D6441A95906400B68548 /* AlertNotification.swift */; };
 		CF4007651A78BDF4008E9C1F /* ManageVisualsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4007641A78BDF4008E9C1F /* ManageVisualsTableViewController.swift */; };
 		CF4007681A78C789008E9C1F /* ManageVisualsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4007671A78C789008E9C1F /* ManageVisualsTableViewCell.swift */; };
 /* End PBXBuildFile section */
@@ -161,6 +162,7 @@
 		A0F1B57A1A901B1200306DB7 /* HTMLParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTMLParser.swift; sourceTree = "<group>"; };
 		A0F1B57C1A901B1200306DB7 /* SwiftHTMLParserLicense */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SwiftHTMLParserLicense; sourceTree = "<group>"; };
 		A0F1B5801A901BE400306DB7 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
+		A0F5D6441A95906400B68548 /* AlertNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertNotification.swift; sourceTree = "<group>"; };
 		CF4007641A78BDF4008E9C1F /* ManageVisualsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageVisualsTableViewController.swift; sourceTree = "<group>"; };
 		CF4007671A78C789008E9C1F /* ManageVisualsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageVisualsTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -318,6 +320,7 @@
 		A0772F1E1A928E2700DE37B1 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				A0F5D6441A95906400B68548 /* AlertNotification.swift */,
 				A0772F231A92921300DE37B1 /* AlertPriority.swift */,
 				A0772F211A92921300DE37B1 /* AlertType.swift */,
 				A0772F1F1A928EBD00DE37B1 /* Alert.swift */,
@@ -509,6 +512,11 @@
 					A06FFD5D1A06AA08001B3FF8 = {
 						CreatedOnToolsVersion = 6.1;
 						DevelopmentTeam = T696QZE37A;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					A06FFD751A06AA08001B3FF8 = {
 						CreatedOnToolsVersion = 6.1;
@@ -581,6 +589,7 @@
 				A0A783DC1A78BD1000C3B20A /* AlertTypeStandard.swift in Sources */,
 				A0EE29021A08AB7200B50700 /* UIViewExtension.swift in Sources */,
 				A02D86431A6D953A00D22A38 /* AlertInboxTableViewController.swift in Sources */,
+				A0F5D6451A95906400B68548 /* AlertNotification.swift in Sources */,
 				A0DB7DBF1A2FB96E00C8C9A2 /* SelectAlertTypeTableViewController.swift in Sources */,
 				A0F0FBED1A103DC600ADBDF3 /* WellUsersTableViewController.swift in Sources */,
 				A018E4001A2B003D001EF20E /* AlertStandard.swift in Sources */,

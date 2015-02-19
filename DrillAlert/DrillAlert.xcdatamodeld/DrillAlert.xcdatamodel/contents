@@ -4,10 +4,17 @@
         <attribute name="alertOnRise" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="alertPriority" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="alertType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="guid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="isActive" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="value" optional="YES" attributeType="Float" defaultValueString="0" syncable="YES"/>
     </entity>
+    <entity name="AlertNotification" representedClassName="AlertNotification" syncable="YES">
+        <attribute name="read" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="timeRecieved" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="alert" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Alert" syncable="YES"/>
+    </entity>
     <elements>
-        <element name="Alert" positionX="-63" positionY="-18" width="128" height="118"/>
+        <element name="Alert" positionX="-63" positionY="-18" width="128" height="133"/>
+        <element name="AlertNotification" positionX="-63" positionY="18" width="128" height="88"/>
     </elements>
 </model>

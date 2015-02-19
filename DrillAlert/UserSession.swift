@@ -62,11 +62,14 @@ class UserSession: NSObject, NSURLSessionDelegate, NSURLSessionTaskDelegate {
                         
                         resultJSONArray.array = Array<JSON>()
                         
-                        for index in 0...json.count - 1 {
-                            let object: AnyObject = json[index]
-                            let objectDictionary = object as Dictionary<String, AnyObject>
-                            resultJSONArray.array!.append(JSON(dictionary: objectDictionary))
+                        if (json.count - 1) >= 0 {
+                            for index in 0...json.count - 1 {
+                                let object: AnyObject = json[index]
+                                let objectDictionary = object as Dictionary<String, AnyObject>
+                                resultJSONArray.array!.append(JSON(dictionary: objectDictionary))
+                            }
                         }
+                        
                         
                     } else {
                         // Server Error occured
@@ -311,7 +314,7 @@ class UserSession: NSObject, NSURLSessionDelegate, NSURLSessionTaskDelegate {
         if self.loggedIn {
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 if let loginViewController = self.loginViewController {
-                    var user = User(firstName: "John", lastName: "Smith", id: "1", guid: "00000000-0000-0000-0000-000000000000", isAdmin: true)
+                    var user = User(firstName: "John", lastName: "Smith", id: "1", guid: "00000000-0000-0000-0000-000000000001", isAdmin: true)
                     user.userSession = self
                     
                     loginViewController.userLoggedIn(user)

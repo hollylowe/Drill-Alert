@@ -37,7 +37,7 @@ class WellboreDetailViewController: UIViewController {
     
     private func setupRightBarButtonItem() {
         let imageSize = CGSizeMake(30, 30)
-        self.rightBarButtonItem.title = "Manage"
+        self.rightBarButtonItem.title = ""
 
         if let manageDefaultIcon = UIImage(named: "settings_line.png") {
             rightBarButtonItem.image = imageWithImage(manageDefaultIcon, scaledToSize: imageSize)

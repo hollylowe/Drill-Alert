@@ -10,6 +10,7 @@ import UIKit
 
 class LoginViewController: UIViewController {
     
+    @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var passwordTextField: PaddedUITextField!
     @IBOutlet weak var usernameTextField: PaddedUITextField!
     @IBOutlet weak var sdiSignInButton: UIButton!
@@ -39,6 +40,9 @@ class LoginViewController: UIViewController {
         // Keyboard Dismissing
         let tapRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         self.view.addGestureRecognizer(tapRecognizer)
+        
+        // TODO: Remove this, for testing only
+        self.usernameTextField.text = "capstone2015\\testuser"
         
         /*
         let testCurve = Curve(id: 0, name: "test", tooltype: "test", units: "test", wellbore: Wellbore(id: 0, name: "test", well: Well(id: 0, name: "test", location: "test")))
@@ -73,6 +77,10 @@ class LoginViewController: UIViewController {
         
         // SDI Text fields
         let borderColor = UIColor(red: 0.780, green: 0.780, blue: 0.804, alpha: 1.0).CGColor
+        
+        self.loginButton.enabled = true
+        self.usernameTextField.enabled = true
+        self.passwordTextField.enabled = true
         
         activityIndicator.hidden = true
         activityIndicator.hidesWhenStopped = true
@@ -126,6 +134,10 @@ class LoginViewController: UIViewController {
         } else {
             activityIndicator.startAnimating()
             activityIndicator.hidden = false
+            self.loginButton.enabled = false
+            self.usernameTextField.enabled = false
+            self.passwordTextField.enabled = false
+            
             var newUserSession = UserSession()
             newUserSession.loginWithUsername(username, andPassword: password, andDelegate: self)
         }
@@ -150,7 +162,9 @@ class LoginViewController: UIViewController {
     func showInvalidLogInAlert() {
         activityIndicator.stopAnimating()
         activityIndicator.hidden = true
-        
+        self.loginButton.enabled = true
+        self.usernameTextField.enabled = true
+        self.passwordTextField.enabled = true
         
         let alertController = UIAlertController(
             title: "Error",

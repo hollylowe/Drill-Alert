@@ -13,6 +13,7 @@ class WellboreTableViewCell: UITableViewCell {
 
     @IBOutlet weak var wellboreNameLabel: UILabel!
     @IBOutlet weak var wellNameLabel: UILabel!
+    @IBOutlet weak var wellLocationLabel: UILabel!
 
     class func getCellIdentifier() -> String! {
         return "WellboreTableViewCell"
@@ -20,7 +21,9 @@ class WellboreTableViewCell: UITableViewCell {
     
     func setupWithWellbore(wellbore: Wellbore!) {
         self.wellboreNameLabel.text = wellbore.name
-        self.wellNameLabel.text = wellbore.well.name + ", " + wellbore.well.location
+        self.wellNameLabel.text = wellbore.well.name
+        self.wellLocationLabel.text = wellbore.well.location
+        
         self.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
         self.selectionStyle = .None
         // self.backgroundColor =  UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1.0)

@@ -12,16 +12,29 @@ import UIKit
 class AlertInboxCell: UITableViewCell {
     @IBOutlet weak var alertTitleLabel: UILabel!
     @IBOutlet weak var alertInformationLabel: UILabel!
+    @IBOutlet weak var alertTimeLabel: UILabel!
     
     class func cellIdentifier() -> String! {
         return "AlertInboxCell"
     }
     
-    func setupWithAlert(alert: Alert!) {
-        /*
-        self.alertTitleLabel.text = alert.title
-        self.alertInformationLabel.text = alert.information
-        */
+    func setupWithAlertNotification(alertNotification: AlertNotification!) {
+        
+        if let alertType = alertNotification.alert.getAlertType() {
+            self.alertTitleLabel.text = alertType.name
+        }
+        self.alertInformationLabel.text = alertNotification.getNotificationBody()
+        
+        self.alertTimeLabel.text = self.getDateString(alertNotification.timeRecieved)
+        self.selectionStyle = .None
+
     }
     
+    func getDateString(date: NSDate) -> String {
+        var dateString = ""
+        
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "M/dd/yy h:mm a"
+        return dateFormatter.stringFromDate(date)
+    }
 }

@@ -29,12 +29,7 @@ class ManageAlertsTableViewController: UITableViewController {
         // Retrieve all the alerts that the user has 
         // saved on their device.
         alerts = Alert.fetchAllInstances()
-        
-        /*
-        self.tableView.tableFooterView = UIView()
-        self.tableView.backgroundColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1.0)
-        self.tableView.separatorColor = UIColor(red: 0.122, green: 0.122, blue: 0.122, alpha: 1.0)
-        */
+
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(
             barButtonSystemItem: .Add,
             target: self,
@@ -80,6 +75,7 @@ class ManageAlertsTableViewController: UITableViewController {
                 let destination = segue.destinationViewController as AddEditAlertNavigationController
                 let addEditAlertTableViewController = destination.viewControllers[0] as AddEditAlertTableViewController
                 addEditAlertTableViewController.alertToEdit = alert
+                addEditAlertTableViewController.delegate = self
             }
             
         }

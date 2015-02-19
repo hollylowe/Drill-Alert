@@ -102,16 +102,15 @@ class AddEditAlertTableViewController: UITableViewController {
         }
         
         // Set the alert priority cell
-        alertCriticalPriorityCell.accessoryType = .None
-        alertWarningPriorityCell.accessoryType = .None
-        alertInformationPriorityCell.accessoryType = .None
-        /*
-        switch alert.priority {
-        case .Critical: alertCriticalPriorityCell.accessoryType = .Checkmark
-        case .Warning:  alertWarningPriorityCell.accessoryType = .Checkmark
-        case .Information: alertInformationPriorityCell.accessoryType = .Checkmark
+        if let priority = alert.getAlertPriority() {
+            switch priority {
+            case .Critical: alertCriticalPriorityCell.accessoryType = .Checkmark
+            case .Warning:  alertWarningPriorityCell.accessoryType = .Checkmark
+            case .Information: alertInformationPriorityCell.accessoryType = .Checkmark
+            }
         }
-        */
+        
+        
     }
     
     func getAlertOnRiseValue() -> Bool? {
@@ -158,7 +157,6 @@ class AddEditAlertTableViewController: UITableViewController {
             createNewAlert()
         }
         
-        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     func saveEditedAlert() {
@@ -166,21 +164,25 @@ class AddEditAlertTableViewController: UITableViewController {
             if let newValueText = alertValueTextField.text {
                 if let newValue = newValueText.toInt() {
                     if let newAlertOnRise = self.getAlertOnRiseValue() {
-                        if let newPriority = self.getAlertPriorityValue() {
+                        if let newAlertPriority = self.getAlertPriorityValue() {
                             // Edit an Alert
-                            /*
+                            
+                            
                             if let newAlert = alertToEdit {
-                                newAlert.type = newAlertType
+                                newAlert.setAlertType(newAlertType)
                                 newAlert.value = newValue
                                 newAlert.alertOnRise = newAlertOnRise
-                                newAlert.priority = newPriority
+                                newAlert.setAlertPriority(newAlertPriority)
                                 
-                                // Save the alert to whatever we're saving them to
+                                // Save the alert
+                                if newAlert.save() {
+                                    self.delegate.updateView()
+                                    self.dismissViewControllerAnimated(true, completion: nil)
+
+                                } else {
+                                    // TODO: Show save error
+                                }
                             }
-                            */
-                            // Refrese the previous view, to represent the added alert
-                            // TODO: Replace this with some actual model data
-                            self.delegate.tableView.reloadData()
                         } else {
                             // User didn't select a priority
                         }
@@ -207,26 +209,19 @@ class AddEditAlertTableViewController: UITableViewController {
                     if let newAlertOnRise = self.getAlertOnRiseValue() {
                         if let newPriority = self.getAlertPriorityValue() {
                             // Create a new Alert
-                            if let newAlert = Alert.createNewInstance(Float(newValue), isActive: true, alertOnRise: newAlertOnRise, type: newAlertType, priority: newPriority) {
+                            if let newAlert = Alert.createNewInstance(
+                                Float(newValue),
+                                isActive: true,
+                                alertOnRise: newAlertOnRise,
+                                type: newAlertType,
+                                priority: newPriority) {
                                 // Successful save
                                 self.delegate.updateView()
+                                self.dismissViewControllerAnimated(true, completion: nil)
 
                             } else {
                                 // Show alert that says it didn't work
                             }
-                            /*
-                            let newAlert = Alert(
-                                type: newAlertType,
-                                value: newValue,
-                                alertOnRise: newAlertOnRise,
-                                priority: newPriority
-                            )
-                            */
-                            
-                            // Refrese the previous view, to represent the added alert
-                            // TODO: Replace this with some actual model data
-                            
-                            // self.delegate.alerts.append(newAlert)
                         } else {
                             // User didn't select a priority
                         }

@@ -18,6 +18,7 @@ class Alert: NSManagedObject {
     @NSManaged var alertOnRise: NSNumber
     @NSManaged var alertType: NSNumber
     @NSManaged var alertPriority: NSNumber
+    @NSManaged var guid: String
     
     func getAlertType() -> AlertType? {
         var result: AlertType?
@@ -45,6 +46,32 @@ class Alert: NSManagedObject {
         return result
     }
     
+    func setAlertType(alertType: AlertType) {
+        self.alertType = NSNumber(integer: Int(alertType.rawValue))
+    }
+    
+    func setAlertPriority(alertPriority: AlertPriority) {
+        self.alertPriority = NSNumber(integer: Int(alertPriority.rawValue))
+    }
+    
+    func save() -> Bool {
+        var success = false
+        
+        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        if let context = appDelegate.managedObjectContext {
+            var error: NSError?
+            context.save(&error)
+            if error != nil {
+                println("Core Data Error: ")
+                println(error)
+            } else {
+                success = true
+            }
+        }
+        
+        return success
+    }
+    
     class func entityName() -> String {
         return "Alert"
     }
@@ -60,6 +87,12 @@ class Alert: NSManagedObject {
             alert.isActive = NSNumber(bool: isActive)
             alert.alertPriority = NSNumber(integer: Int(priority.rawValue))
             alert.alertOnRise = NSNumber(bool: alertOnRise)
+            
+            // Create a UUID
+            var uuidObject = CFUUIDCreate(nil)
+            var uuidString = CFUUIDCreateString(nil, uuidObject)
+            alert.guid = uuidString;
+            
             var error: NSError?
             
             context.save(&error)
@@ -75,6 +108,7 @@ class Alert: NSManagedObject {
         return newAlert
     }
     
+    
     class func fetchAllInstances() -> Array<Alert> {
         var allAlerts = Array<Alert>()
         
@@ -88,6 +122,10 @@ class Alert: NSManagedObject {
                 println(error)
             } else {
                 allAlerts = results as [Alert]
+                
+                for alert in allAlerts {
+                    println(alert.guid)
+                }
             }
         }
         
