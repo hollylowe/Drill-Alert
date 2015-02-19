@@ -26,9 +26,9 @@ class View {
         
         var emptyArray = Array<Visual>()
         
-        result.append(View(name: "Process X view", visuals: emptyArray, currentView: true))
-        result.append(View(name: "Process Y view", visuals: emptyArray, currentView: false))
-        result.append(View(name: "My favorite view", visuals: emptyArray, currentView: false))
+        result.append(View(name: "Process X Layout", visuals: emptyArray, currentView: true))
+        result.append(View(name: "Process Y Layout", visuals: emptyArray, currentView: false))
+        result.append(View(name: "My favorite Layout", visuals: emptyArray, currentView: false))
 
         
         return result

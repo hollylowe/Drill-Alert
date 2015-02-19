@@ -25,7 +25,7 @@ class ManageViewsTableViewController: UITableViewController {
     var selectedView: View!
     
     override func viewDidLoad() {
-        self.title = "Manage Views"
+        self.title = "Change Layout"
         
         views = View.getViewsForUser(wellboreDetailViewController.currentUser, andWellbore: wellboreDetailViewController.currentWellbore)
         for view in views{
@@ -34,7 +34,7 @@ class ManageViewsTableViewController: UITableViewController {
     
     
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Edit, target: self, action: "rightBarButtonItemTapped:")
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Cancel, target: self, action: "leftBarButtonItemTapped:")
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Done, target: self, action: "leftBarButtonItemTapped:")
         
         super.viewDidLoad()
     }
@@ -45,9 +45,9 @@ class ManageViewsTableViewController: UITableViewController {
     
     
     func rightBarButtonItemTapped(sender: UIBarButtonItem) {
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Done, target: self, action: "DoneButtonItemTapped:")
+        
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-              
+        
         var vc = storyboard.instantiateViewControllerWithIdentifier("EditViewsTableViewController") as EditViewsTableViewController
         vc.wellboreDetailViewController = self.wellboreDetailViewController
         let navigationController = UINavigationController(rootViewController: vc as UIViewController)
@@ -59,9 +59,7 @@ class ManageViewsTableViewController: UITableViewController {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    func DoneButtonItemTapped(sender: UIBarButtonItem) {
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
+    
     
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

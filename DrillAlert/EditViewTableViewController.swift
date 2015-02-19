@@ -1,45 +1,49 @@
 //
-//  EditViewsTableViewController.swift
+//  EditViewTableViewController.swift
 //  DrillAlert
 //
-//  Created by Holly Lowe on 2/16/15.
+//  Created by Holly Lowe on 2/18/15.
 //  Copyright (c) 2015 Drillionaires. All rights reserved.
 //
 
 import Foundation
 import UIKit
 
-class EditViewsTableViewController: UITableViewController {
+class EditViewTableViewController: UITableViewController {
     
     // Implicit, set by the previous view controller
     var wellboreDetailViewController: WellboreDetailViewController!
-    var views: [View]!
+    var visuals: [Visual]!
+    var selectedView: View!
     
     override func viewDidLoad() {
-        self.title = "Edit"
+        self.title = selectedView.name
         
         
         self.tableView.rowHeight = 65
-
-        views = View.getViewsForUser(wellboreDetailViewController.currentUser, andWellbore: wellboreDetailViewController.currentWellbore)
         
-//        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Edit, target: self, action: "rightBarButtonItemTapped:")
+        visuals = Visual.getVisualsForUser(wellboreDetailViewController.currentUser, andWellbore: wellboreDetailViewController.currentWellbore)
+        
+        for v in visuals {
+            println("OMG " + v.name)
+        }
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "rightBarButtonItemTapped:")
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Done, target: self, action: "leftBarButtonItemTapped:")
         
         super.viewDidLoad()
     }
     
     class func storyboardIdentifier() -> String! {
-        return "EditViewsTableViewController"
+        return "EditViewTableViewController"
     }
     
     func rightBarButtonItemTapped(sender: UIBarButtonItem) {
-//        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Done, target: self, action: "DoneButtonItemTapped:")
-//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//        
-//        var vc: UIViewController = storyboard.instantiateViewControllerWithIdentifier("EditViewsTableViewController") as UIViewController
-//        let navigationController = UINavigationController(rootViewController: vc as UIViewController)
-//        self.presentViewController(navigationController, animated: false, completion: nil)
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        var vc = storyboard.instantiateViewControllerWithIdentifier("ChooseAddVisualTableViewController") as ChooseAddVisualTableViewController
+        vc.wellboreDetailViewController = self.wellboreDetailViewController
+        self.navigationController?.pushViewController(vc, animated: true)
+
     }
     
     
@@ -63,32 +67,33 @@ class EditViewsTableViewController: UITableViewController {
     }
     
 }
-
-extension EditViewsTableViewController: UITableViewDataSource {
+extension EditViewTableViewController: UITableViewDataSource {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(EditViewTableViewCell.cellIdentifier()) as EditViewTableViewCell
-        let view = views[indexPath.row]
-        cell.setupWithView(view)
+        //let cell = tableView.dequeueReusableCellWithIdentifier(EditVisualTableViewCell.cellIdentifier()) as EditVisualTableViewCell
+        
+        let cell = tableView.dequeueReusableCellWithIdentifier("EditVisualTableViewCell", forIndexPath: indexPath) as EditVisualTableViewCell
+        let visual = visuals[indexPath.row]
+        cell.setupWithVisual(visual)
         
         return cell
         
     }
     
-
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return views.count
+        return visuals.count
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let view = views[indexPath.row]
-        print("you've selected \(view.name)")
+        let visual = visuals[indexPath.row]
+        print("you've selected \(visual.name)")
         
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                var vc = storyboard.instantiateViewControllerWithIdentifier("EditViewTableViewController") as EditViewTableViewController
-                vc.wellboreDetailViewController = self.wellboreDetailViewController
-                vc.selectedView = view
-                self.navigationController?.pushViewController(vc, animated: true)
+//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//        var vc = storyboard.instantiateViewControllerWithIdentifier("EditViewTableViewController") as EditViewTableViewController
+//        vc.wellboreDetailViewController = self.wellboreDetailViewController
+//        vc.selectedView = view
+//        self.navigationController?.pushViewController(vc, animated: false)
         
     }
     
@@ -98,8 +103,6 @@ extension EditViewsTableViewController: UITableViewDataSource {
     //
     //        self.performSegueWithIdentifier(AddEditAlertNavigationController.getEntrySegueIdentifier(), sender: alert)
 }
-
-
 
 
 

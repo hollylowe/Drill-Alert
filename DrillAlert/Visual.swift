@@ -24,7 +24,8 @@ class Visual {
         
         result.append(Visual(type: .Plot, name: "My Favorite Plot"))
         result.append(Visual(type: .Gauge, name: "Pressure Gauge"))
-            
+        
+        println("getvisulas for user called")
         return result
     }
 
