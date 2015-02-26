@@ -90,6 +90,7 @@ extension EditViewsTableViewController: UITableViewDataSource {
                 vc.selectedView = view
                 self.navigationController?.pushViewController(vc, animated: true)
         
+        
     }
     
     //    override func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
