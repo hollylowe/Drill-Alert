@@ -82,6 +82,9 @@
 		CF08A7801A9DD7BE00A33AFE /* AddCurveTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF08A77F1A9DD7BE00A33AFE /* AddCurveTableViewController.swift */; };
 		CF4007651A78BDF4008E9C1F /* ManageViewsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4007641A78BDF4008E9C1F /* ManageViewsTableViewController.swift */; };
 		CF4007681A78C789008E9C1F /* ManageVisualsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4007671A78C789008E9C1F /* ManageVisualsTableViewCell.swift */; };
+		CF6DD7561AA04B1C0030ADAB /* NewCanvasTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF6DD7551AA04B1C0030ADAB /* NewCanvasTableViewController.swift */; };
+		CF6DD7581AA04BED0030ADAB /* NewNumberReadoutTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF6DD7571AA04BED0030ADAB /* NewNumberReadoutTableViewController.swift */; };
+		CF6DD75A1AA04C300030ADAB /* NewGaugeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF6DD7591AA04C300030ADAB /* NewGaugeTableViewController.swift */; };
 		CF75F7A91A95BA7100B7958D /* ChooseAddVisualTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF75F7A81A95BA7100B7958D /* ChooseAddVisualTableViewController.swift */; };
 		CF75F7AC1A95D60200B7958D /* NewPlotTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF75F7AA1A95CF1600B7958D /* NewPlotTableViewController.swift */; };
 		CF8E9A911A91A093008F8AF8 /* Visual.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8E9A901A91A093008F8AF8 /* Visual.swift */; };
@@ -184,6 +187,9 @@
 		CF08A77F1A9DD7BE00A33AFE /* AddCurveTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCurveTableViewController.swift; sourceTree = "<group>"; };
 		CF4007641A78BDF4008E9C1F /* ManageViewsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageViewsTableViewController.swift; sourceTree = "<group>"; };
 		CF4007671A78C789008E9C1F /* ManageVisualsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageVisualsTableViewCell.swift; sourceTree = "<group>"; };
+		CF6DD7551AA04B1C0030ADAB /* NewCanvasTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewCanvasTableViewController.swift; sourceTree = "<group>"; };
+		CF6DD7571AA04BED0030ADAB /* NewNumberReadoutTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewNumberReadoutTableViewController.swift; sourceTree = "<group>"; };
+		CF6DD7591AA04C300030ADAB /* NewGaugeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewGaugeTableViewController.swift; sourceTree = "<group>"; };
 		CF75F7A81A95BA7100B7958D /* ChooseAddVisualTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseAddVisualTableViewController.swift; sourceTree = "<group>"; };
 		CF75F7AA1A95CF1600B7958D /* NewPlotTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewPlotTableViewController.swift; sourceTree = "<group>"; };
 		CF8E9A901A91A093008F8AF8 /* Visual.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Visual.swift; sourceTree = "<group>"; };
@@ -440,13 +446,9 @@
 		A0CE03291A0ED5F60076EE3E /* Visuals */ = {
 			isa = PBXGroup;
 			children = (
-				CF08A77F1A9DD7BE00A33AFE /* AddCurveTableViewController.swift */,
-				CF08A77D1A9DD6E900A33AFE /* ScaleTypeTableViewController.swift */,
-				CF08A77B1A9DD02600A33AFE /* AddTrackTableViewController.swift */,
-				CF08A7791A9DCFCD00A33AFE /* UnitsTableViewController.swift */,
-				CFA31B2F1A9DC97200BFBB23 /* IVTTableViewController.swift */,
-				CF75F7AA1A95CF1600B7958D /* NewPlotTableViewController.swift */,
 				CF75F7A81A95BA7100B7958D /* ChooseAddVisualTableViewController.swift */,
+				CF6DD7531AA03CD80030ADAB /* Add Plot */,
+				CF6DD7541AA04AD20030ADAB /* AddCanvas */,
 				A0CCC5E91A81C6CA00F92B36 /* Visualizations */,
 			);
 			name = Visuals;
@@ -495,6 +497,29 @@
 				CF0224E41A95A8B100115B0B /* EditVisualTableViewCell.swift */,
 			);
 			name = Visuals;
+			sourceTree = "<group>";
+		};
+		CF6DD7531AA03CD80030ADAB /* Add Plot */ = {
+			isa = PBXGroup;
+			children = (
+				CF08A77F1A9DD7BE00A33AFE /* AddCurveTableViewController.swift */,
+				CF08A77D1A9DD6E900A33AFE /* ScaleTypeTableViewController.swift */,
+				CF08A77B1A9DD02600A33AFE /* AddTrackTableViewController.swift */,
+				CF08A7791A9DCFCD00A33AFE /* UnitsTableViewController.swift */,
+				CFA31B2F1A9DC97200BFBB23 /* IVTTableViewController.swift */,
+				CF75F7AA1A95CF1600B7958D /* NewPlotTableViewController.swift */,
+			);
+			name = "Add Plot";
+			sourceTree = "<group>";
+		};
+		CF6DD7541AA04AD20030ADAB /* AddCanvas */ = {
+			isa = PBXGroup;
+			children = (
+				CF6DD7551AA04B1C0030ADAB /* NewCanvasTableViewController.swift */,
+				CF6DD7571AA04BED0030ADAB /* NewNumberReadoutTableViewController.swift */,
+				CF6DD7591AA04C300030ADAB /* NewGaugeTableViewController.swift */,
+			);
+			name = AddCanvas;
 			sourceTree = "<group>";
 		};
 		CF8E9A921A91A0A8008F8AF8 /* Visual */ = {
@@ -669,6 +694,7 @@
 				A0DB7DBF1A2FB96E00C8C9A2 /* SelectAlertTypeTableViewController.swift in Sources */,
 				A0F0FBED1A103DC600ADBDF3 /* WellUsersTableViewController.swift in Sources */,
 				CFC8DBE41A92AAA400727A97 /* EditViewsTableViewController.swift in Sources */,
+				CF6DD75A1AA04C300030ADAB /* NewGaugeTableViewController.swift in Sources */,
 				A0699A9E1A809102004F9C97 /* SegmentControlToolbar.swift in Sources */,
 				A0CE032C1A0ED67C0076EE3E /* VisualsViewController.swift in Sources */,
 				CF4007681A78C789008E9C1F /* ManageVisualsTableViewCell.swift in Sources */,
@@ -680,6 +706,7 @@
 				CF08A7801A9DD7BE00A33AFE /* AddCurveTableViewController.swift in Sources */,
 				CF0224E31A959E1F00115B0B /* EditViewTableViewController.swift in Sources */,
 				CF08A77E1A9DD6E900A33AFE /* ScaleTypeTableViewController.swift in Sources */,
+				CF6DD7581AA04BED0030ADAB /* NewNumberReadoutTableViewController.swift in Sources */,
 				A018E40A1A2B0733001EF20E /* ManageAlertsTableViewController.swift in Sources */,
 				A018E4061A2B010A001EF20E /* Parameter.swift in Sources */,
 				A0CEDBA21A0C3ADF0051BDB8 /* User.swift in Sources */,
@@ -707,6 +734,7 @@
 				A0A783DA1A78BCFB00C3B20A /* AlertPriorityStandard.swift in Sources */,
 				A087EEDE1A06C09D0073FDD0 /* HomeViewController.swift in Sources */,
 				A02D86451A6D97BF00D22A38 /* AlertInboxCell.swift in Sources */,
+				CF6DD7561AA04B1C0030ADAB /* NewCanvasTableViewController.swift in Sources */,
 				CF8E9A9D1A91BF49008F8AF8 /* ViewTableViewCell.swift in Sources */,
 				CF08A77A1A9DCFCD00A33AFE /* UnitsTableViewController.swift in Sources */,
 				CF0224E51A95A8B100115B0B /* EditVisualTableViewCell.swift in Sources */,

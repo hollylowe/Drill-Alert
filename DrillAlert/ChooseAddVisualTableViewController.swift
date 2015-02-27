@@ -37,7 +37,9 @@ class ChooseAddVisualTableViewController: UITableViewController {
         switch selected{
             case 0:
                 var vc = storyboard.instantiateViewControllerWithIdentifier("NewPlotTableViewController") as NewPlotTableViewController
-                 //var vc = storyboard.instantiateViewControllerWithIdentifier("ChooseAddVisualTableViewController") as ChooseAddVisualTableViewController
+                self.navigationController?.pushViewController(vc, animated: true)
+            case 1:
+                var vc = storyboard.instantiateViewControllerWithIdentifier("NewCanvasTableViewController") as NewCanvasTableViewController
                 self.navigationController?.pushViewController(vc, animated: true)
             default:
                 println("something went wrong")
