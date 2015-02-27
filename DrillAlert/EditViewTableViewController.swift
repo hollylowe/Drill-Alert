@@ -19,8 +19,7 @@ class EditViewTableViewController: UITableViewController {
     var selectedView: View!
     
     override func viewDidLoad() {
-        self.title = selectedView.name
-        
+        self.title = selectedView.name        
         
         self.tableView.rowHeight = 65
         

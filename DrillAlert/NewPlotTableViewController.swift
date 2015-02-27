@@ -17,6 +17,7 @@ class NewPlotTableViewController: UITableViewController {
     
     // Implicit, set by the previous view controller
     var wellboreDetailViewController: WellboreDetailViewController!
+    
     var visuals: [Visual]!
     
     override func viewDidLoad() {
@@ -37,11 +38,8 @@ class NewPlotTableViewController: UITableViewController {
     
     
     func rightBarButtonItemTapped(sender: UIBarButtonItem) {
-        self.dismissViewControllerAnimated(true, completion: nil)
-//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//
-//        var vc = storyboard.instantiateViewControllerWithIdentifier("EditViewTableViewController") as EditViewTableViewController
-//        self.navigationController?.pushViewController(vc, animated: true)
+        let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController];
+        self.navigationController!.popToViewController(viewControllers[viewControllers.count - 3], animated: true);
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
