@@ -630,10 +630,10 @@
             </objects>
             <point key="canvasLocation" x="9497" y="-2840"/>
         </scene>
-        <!--Table View Controller-->
+        <!--New Compass Table View Controller-->
         <scene sceneID="gcD-9a-iXA">
             <objects>
-                <tableViewController id="Vrn-i5-qFZ" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="NewCompassTableViewController" id="Vrn-i5-qFZ" customClass="NewCompassTableViewController" customModule="DrillAlert" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="Dcj-W2-hLD">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1980,10 +1980,10 @@
             </objects>
             <point key="canvasLocation" x="10358" y="-2488"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Sensor Table View Controller-->
         <scene sceneID="BMV-7T-7rA">
             <objects>
-                <tableViewController id="G6r-WO-14G" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="SensorTableViewController" id="G6r-WO-14G" customClass="SensorTableViewController" customModule="DrillAlert" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="Zc6-0K-L4m">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2061,10 +2061,10 @@
             </objects>
             <point key="canvasLocation" x="10367" y="-1742"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Compass Data Source Table View Controller-->
         <scene sceneID="L62-A1-afi">
             <objects>
-                <tableViewController id="xfj-eS-LdT" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="CompassDataSourceTableViewController" id="xfj-eS-LdT" customClass="CompassDataSourceTableViewController" customModule="DrillAlert" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="aOP-bg-zlC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2125,7 +2125,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s73-JU-aQj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="10400" y="-1026"/>
+            <point key="canvasLocation" x="10367" y="-1029"/>
         </scene>
     </scenes>
     <resources>

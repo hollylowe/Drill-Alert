@@ -41,6 +41,9 @@ class ChooseAddVisualTableViewController: UITableViewController {
             case 1:
                 var vc = storyboard.instantiateViewControllerWithIdentifier("NewCanvasTableViewController") as NewCanvasTableViewController
                 self.navigationController?.pushViewController(vc, animated: true)
+            case 2:
+                var vc = storyboard.instantiateViewControllerWithIdentifier("NewCompassTableViewController") as NewCompassTableViewController
+                self.navigationController?.pushViewController(vc, animated: true)
             default:
                 println("something went wrong")
         }
