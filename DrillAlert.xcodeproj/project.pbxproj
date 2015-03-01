@@ -88,6 +88,7 @@
 		CF6DD75D1AA065C30030ADAB /* NewCompassTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF6DD75C1AA065C30030ADAB /* NewCompassTableViewController.swift */; };
 		CF6DD75F1AA0662E0030ADAB /* SensorTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF6DD75E1AA0662E0030ADAB /* SensorTableViewController.swift */; };
 		CF6DD7611AA0669C0030ADAB /* CompassDataSourceTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF6DD7601AA0669C0030ADAB /* CompassDataSourceTableViewController.swift */; };
+		CF6DD7631AA071E70030ADAB /* AddViewTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF6DD7621AA071E70030ADAB /* AddViewTableViewController.swift */; };
 		CF75F7A91A95BA7100B7958D /* ChooseAddVisualTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF75F7A81A95BA7100B7958D /* ChooseAddVisualTableViewController.swift */; };
 		CF75F7AC1A95D60200B7958D /* NewPlotTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF75F7AA1A95CF1600B7958D /* NewPlotTableViewController.swift */; };
 		CF8E9A911A91A093008F8AF8 /* Visual.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8E9A901A91A093008F8AF8 /* Visual.swift */; };
@@ -196,6 +197,7 @@
 		CF6DD75C1AA065C30030ADAB /* NewCompassTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewCompassTableViewController.swift; sourceTree = "<group>"; };
 		CF6DD75E1AA0662E0030ADAB /* SensorTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SensorTableViewController.swift; sourceTree = "<group>"; };
 		CF6DD7601AA0669C0030ADAB /* CompassDataSourceTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompassDataSourceTableViewController.swift; sourceTree = "<group>"; };
+		CF6DD7621AA071E70030ADAB /* AddViewTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddViewTableViewController.swift; sourceTree = "<group>"; };
 		CF75F7A81A95BA7100B7958D /* ChooseAddVisualTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseAddVisualTableViewController.swift; sourceTree = "<group>"; };
 		CF75F7AA1A95CF1600B7958D /* NewPlotTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewPlotTableViewController.swift; sourceTree = "<group>"; };
 		CF8E9A901A91A093008F8AF8 /* Visual.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Visual.swift; sourceTree = "<group>"; };
@@ -556,6 +558,7 @@
 				CF4007641A78BDF4008E9C1F /* ManageViewsTableViewController.swift */,
 				CFC8DBE31A92AAA400727A97 /* EditViewsTableViewController.swift */,
 				CF0224E21A959E1F00115B0B /* EditViewTableViewController.swift */,
+				CF6DD7621AA071E70030ADAB /* AddViewTableViewController.swift */,
 				A0CE03291A0ED5F60076EE3E /* Visuals */,
 			);
 			name = "Views (\"layouts\")";
@@ -717,6 +720,7 @@
 				A0699A9E1A809102004F9C97 /* SegmentControlToolbar.swift in Sources */,
 				A0CE032C1A0ED67C0076EE3E /* VisualsViewController.swift in Sources */,
 				CF4007681A78C789008E9C1F /* ManageVisualsTableViewCell.swift in Sources */,
+				CF6DD7631AA071E70030ADAB /* AddViewTableViewController.swift in Sources */,
 				A05A35D21A0837ED008EA386 /* Well.swift in Sources */,
 				A06FFD691A06AA08001B3FF8 /* LoginViewController.swift in Sources */,
 				A095D5831A78B74D000889CB /* AlertTableViewCell.swift in Sources */,

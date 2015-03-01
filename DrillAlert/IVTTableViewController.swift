@@ -15,4 +15,5 @@ class IVTTableViewController: UITableViewController {
     class func storyboardIdentifier() -> String! {
         return "IVTTableViewController"
     }
+    
 }

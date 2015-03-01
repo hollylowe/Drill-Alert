@@ -9,5 +9,5 @@
 import Foundation
 
 enum VisualType {
-    case Plot, Gauge, Rose, Canvas
+    case Plot, Canvas, Compass
 }
