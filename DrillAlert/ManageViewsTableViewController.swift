@@ -26,6 +26,7 @@ class ManageViewsTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         self.title = "Change Layout"
+        self.tableView.rowHeight = 65
         
         views = View.getViewsForUser(wellboreDetailViewController.currentUser, andWellbore: wellboreDetailViewController.currentWellbore)
         for view in views{

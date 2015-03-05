@@ -23,7 +23,7 @@ class Visual {
         var result = Array<Visual>()
         
         result.append(Visual(type: .Plot, name: "My Favorite Plot"))
-        result.append(Visual(type: .Gauge, name: "Pressure Gauge"))
+        result.append(Visual(type: .Canvas, name: "Pressure Gauges"))
         
         println("getvisulas for user called")
         return result

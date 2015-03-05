@@ -23,7 +23,7 @@ class EditViewsTableViewController: UITableViewController {
 
         views = View.getViewsForUser(wellboreDetailViewController.currentUser, andWellbore: wellboreDetailViewController.currentWellbore)
         
-//        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Edit, target: self, action: "rightBarButtonItemTapped:")
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "rightBarButtonItemTapped:")
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Done, target: self, action: "leftBarButtonItemTapped:")
         
         super.viewDidLoad()
@@ -34,12 +34,10 @@ class EditViewsTableViewController: UITableViewController {
     }
     
     func rightBarButtonItemTapped(sender: UIBarButtonItem) {
-//        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Done, target: self, action: "DoneButtonItemTapped:")
-//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//        
-//        var vc: UIViewController = storyboard.instantiateViewControllerWithIdentifier("EditViewsTableViewController") as UIViewController
-//        let navigationController = UINavigationController(rootViewController: vc as UIViewController)
-//        self.presentViewController(navigationController, animated: false, completion: nil)
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+
+        var vc = storyboard.instantiateViewControllerWithIdentifier("AddViewTableViewController") as AddViewTableViewController
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     
@@ -89,6 +87,7 @@ extension EditViewsTableViewController: UITableViewDataSource {
                 vc.wellboreDetailViewController = self.wellboreDetailViewController
                 vc.selectedView = view
                 self.navigationController?.pushViewController(vc, animated: true)
+        
         
     }
     

@@ -9,6 +9,8 @@
 import Foundation
 import UIKit
 
+
+
 class EditViewTableViewController: UITableViewController {
     
     // Implicit, set by the previous view controller
@@ -17,8 +19,7 @@ class EditViewTableViewController: UITableViewController {
     var selectedView: View!
     
     override func viewDidLoad() {
-        self.title = selectedView.name
-        
+        self.title = selectedView.name        
         
         self.tableView.rowHeight = 65
         
@@ -41,7 +42,6 @@ class EditViewTableViewController: UITableViewController {
     func rightBarButtonItemTapped(sender: UIBarButtonItem) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         var vc = storyboard.instantiateViewControllerWithIdentifier("ChooseAddVisualTableViewController") as ChooseAddVisualTableViewController
-        vc.wellboreDetailViewController = self.wellboreDetailViewController
         self.navigationController?.pushViewController(vc, animated: true)
 
     }
@@ -88,6 +88,22 @@ extension EditViewTableViewController: UITableViewDataSource {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let visual = visuals[indexPath.row]
         print("you've selected \(visual.name)")
+        
+        if (visual.type == .Plot){
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            var vc = storyboard.instantiateViewControllerWithIdentifier("NewPlotTableViewController") as NewPlotTableViewController
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+        else if (visual.type == .Compass){
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            var vc = storyboard.instantiateViewControllerWithIdentifier("NewCompassTableViewController") as NewCompassTableViewController
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+        else if (visual.type == .Canvas){
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            var vc = storyboard.instantiateViewControllerWithIdentifier("NewCanvasTableViewController") as NewCanvasTableViewController
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
         
 //        let storyboard = UIStoryboard(name: "Main", bundle: nil)
 //        var vc = storyboard.instantiateViewControllerWithIdentifier("EditViewTableViewController") as EditViewTableViewController
