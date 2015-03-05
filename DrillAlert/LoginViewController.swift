@@ -11,8 +11,6 @@ import UIKit
 class LoginViewController: UIViewController {
     
     @IBOutlet weak var loginButton: UIButton!
-    @IBOutlet weak var passwordTextField: PaddedUITextField!
-    @IBOutlet weak var usernameTextField: PaddedUITextField!
     @IBOutlet weak var sdiSignInButton: UIButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var backgroundImageView: UIImageView!
@@ -30,11 +28,6 @@ class LoginViewController: UIViewController {
         self.performSegueWithIdentifier(loginToHomeSegueIdentifier, sender: self)
     }
     
-    func dismissKeyboard() {
-        self.passwordTextField.resignFirstResponder()
-        self.usernameTextField.resignFirstResponder()
-    }
-    
     override func viewDidLoad() {
         
         // Keyboard Dismissing
@@ -42,7 +35,6 @@ class LoginViewController: UIViewController {
         self.view.addGestureRecognizer(tapRecognizer)
         
         // TODO: Remove this, for testing only
-        self.usernameTextField.text = "capstone2015\\testuser"
         
         /*
         let testCurve = Curve(id: 0, name: "test", tooltype: "test", units: "test", wellbore: Wellbore(id: 0, name: "test", well: Well(id: 0, name: "test", location: "test")))
@@ -79,15 +71,9 @@ class LoginViewController: UIViewController {
         let borderColor = UIColor(red: 0.780, green: 0.780, blue: 0.804, alpha: 1.0).CGColor
         
         self.loginButton.enabled = true
-        self.usernameTextField.enabled = true
-        self.passwordTextField.enabled = true
         
         activityIndicator.hidden = true
         activityIndicator.hidesWhenStopped = true
-        usernameTextField.layer.borderColor = borderColor
-        usernameTextField.layer.borderWidth = 1.0
-        passwordTextField.layer.borderColor = borderColor
-        passwordTextField.layer.borderWidth = 1.0
         
         let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Dark)
         let blurView = UIVisualEffectView(effect: blurEffect)
@@ -105,13 +91,7 @@ class LoginViewController: UIViewController {
         if let navigationController = self.navigationController {
             navigationController.navigationBar.hidden = true
         }
-        self.dismissKeyboard()
         super.viewWillAppear(animated)
-    }
-    
-    override func viewWillDisappear(animated: Bool) {
-        self.dismissKeyboard()
-        super.viewWillDisappear(animated)
     }
     
     override func didReceiveMemoryWarning() {
@@ -120,8 +100,12 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func loginButtonTapped(sender: AnyObject) {
+
+        self.performSegueWithIdentifier("LoginToLoginWebView", sender: self)
+        /*
         self.dismissKeyboard()
 
+        // Without web view
         var errorMessage: String?
         
         let username = usernameTextField.text
@@ -157,14 +141,13 @@ class LoginViewController: UIViewController {
             
             self.presentViewController(alertController, animated: true, completion: nil)
         }
+        */
     }
     
     func showInvalidLogInAlert() {
         activityIndicator.stopAnimating()
         activityIndicator.hidden = true
         self.loginButton.enabled = true
-        self.usernameTextField.enabled = true
-        self.passwordTextField.enabled = true
         
         let alertController = UIAlertController(
             title: "Error",
@@ -186,10 +169,21 @@ class LoginViewController: UIViewController {
         if segue.identifier == loginToHomeSegueIdentifier {
              let homeViewController = segue.destinationViewController as HomeViewController
              homeViewController.currentUser = self.currentUser
+        } else if segue.identifier == "LoginToLoginWebView" {
+            let navigationController = segue.destinationViewController as UINavigationController
+            let loginWebViewController = navigationController.viewControllers[0] as LoginWebViewController
+
+            loginWebViewController.delegate = self
         }
         
         super.prepareForSegue(segue, sender: sender)
     }
 
+    func loginSuccess() {
+        var user = User(firstName: "John", lastName: "Smith", id: "1", guid: "00000000-0000-0000-0000-000000000001", isAdmin: true)
+        user.userSession = UserSession()
+        
+        self.userLoggedIn(user)
+    }
 }
 

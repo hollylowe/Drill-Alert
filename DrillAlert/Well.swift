@@ -51,7 +51,7 @@ class Well {
     
     func setWellboresFromJSONArray(wellboresJSONArray: JSONArray) {
         // Keys for the Wellbore
-        let APIWellboreIDKey = "wellboreId"
+        let APIWellboreIDKey = "id"
         let APIWellboreNameKey = "name"
         
         // For every wellbore this well has
