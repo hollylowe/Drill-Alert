@@ -58,6 +58,7 @@
 		A095FB8F1A2FC38C00B15D39 /* AlertWhenCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A095FB8E1A2FC38C00B15D39 /* AlertWhenCell.swift */; };
 		A095FB911A2FC39800B15D39 /* AlertPriorityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A095FB901A2FC39800B15D39 /* AlertPriorityCell.swift */; };
 		A095FB931A2FF20D00B15D39 /* gauge.html in Resources */ = {isa = PBXBuildFile; fileRef = A095FB921A2FF20D00B15D39 /* gauge.html */; };
+		A09CFE7F1AA7F8080094A582 /* LoginWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A09CFE7E1AA7F8080094A582 /* LoginWebViewController.swift */; };
 		A0A783DA1A78BCFB00C3B20A /* AlertPriorityStandard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A783D91A78BCFB00C3B20A /* AlertPriorityStandard.swift */; };
 		A0A783DC1A78BD1000C3B20A /* AlertTypeStandard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A783DB1A78BD1000C3B20A /* AlertTypeStandard.swift */; };
 		A0CCC5E51A81C69600F92B36 /* graph.html in Resources */ = {isa = PBXBuildFile; fileRef = A0CCC5E31A81C69600F92B36 /* graph.html */; };
@@ -167,6 +168,7 @@
 		A095FB8E1A2FC38C00B15D39 /* AlertWhenCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertWhenCell.swift; sourceTree = "<group>"; };
 		A095FB901A2FC39800B15D39 /* AlertPriorityCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertPriorityCell.swift; sourceTree = "<group>"; };
 		A095FB921A2FF20D00B15D39 /* gauge.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = gauge.html; sourceTree = "<group>"; };
+		A09CFE7E1AA7F8080094A582 /* LoginWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginWebViewController.swift; sourceTree = "<group>"; };
 		A0A783D91A78BCFB00C3B20A /* AlertPriorityStandard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertPriorityStandard.swift; sourceTree = "<group>"; };
 		A0A783DB1A78BD1000C3B20A /* AlertTypeStandard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertTypeStandard.swift; sourceTree = "<group>"; };
 		A0CCC5E31A81C69600F92B36 /* graph.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = graph.html; sourceTree = "<group>"; };
@@ -270,6 +272,7 @@
 		A05A35CF1A0837CC008EA386 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				A09CFE7E1AA7F8080094A582 /* LoginWebViewController.swift */,
 				A06FFD681A06AA08001B3FF8 /* LoginViewController.swift */,
 				A087EEDC1A06C0920073FDD0 /* Home */,
 				A05A35CC1A08370E008EA386 /* Admin */,
@@ -716,6 +719,7 @@
 				A0DB7DBF1A2FB96E00C8C9A2 /* SelectAlertTypeTableViewController.swift in Sources */,
 				A0F0FBED1A103DC600ADBDF3 /* WellUsersTableViewController.swift in Sources */,
 				CFC8DBE41A92AAA400727A97 /* EditViewsTableViewController.swift in Sources */,
+				A09CFE7F1AA7F8080094A582 /* LoginWebViewController.swift in Sources */,
 				CF6DD75A1AA04C300030ADAB /* NewGaugeTableViewController.swift in Sources */,
 				A0699A9E1A809102004F9C97 /* SegmentControlToolbar.swift in Sources */,
 				A0CE032C1A0ED67C0076EE3E /* VisualsViewController.swift in Sources */,
