@@ -30,10 +30,6 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         
-        // Keyboard Dismissing
-        let tapRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
-        self.view.addGestureRecognizer(tapRecognizer)
-        
         // TODO: Remove this, for testing only
         
         /*
@@ -70,7 +66,6 @@ class LoginViewController: UIViewController {
         // SDI Text fields
         let borderColor = UIColor(red: 0.780, green: 0.780, blue: 0.804, alpha: 1.0).CGColor
         
-        self.loginButton.enabled = true
         
         activityIndicator.hidden = true
         activityIndicator.hidesWhenStopped = true

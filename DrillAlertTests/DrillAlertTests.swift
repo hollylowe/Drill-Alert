@@ -27,9 +27,19 @@ class DrillAlertTests: XCTestCase {
         XCTAssert(true, "Pass")
     }
     
-    func testViewDidLoad() {
-        let v = LoginViewController()
+    func testLoginViewController() {
+        let storyboard = UIStoryboard(name: "Main", bundle: NSBundle(forClass: self.dynamicType))
+        let navigationLoginViewController = storyboard.instantiateInitialViewController() as UINavigationController
         
+        XCTAssert(navigationLoginViewController.viewControllers.count > 0,
+            "Initial navigation controller has no children.")
+        
+        if let loginViewController = navigationLoginViewController.viewControllers[0] as? LoginViewController {
+            XCTAssert(true, "Login view controller is inital view.")
+        } else {
+            XCTAssert(false, "First child of initial view controller is not login view controller.")
+        }
+
     }
     
     func testPerformanceExample() {
