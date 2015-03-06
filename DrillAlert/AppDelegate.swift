@@ -12,6 +12,8 @@ import CoreData
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+    var userSession: UserSession?
+    
     var window: UIWindow?
     // If this is set, we know that we are currently on the Alert Inbox view
     var alertInboxTableViewController: AlertInboxTableViewController?
@@ -46,15 +48,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         pageControl.pageIndicatorTintColor = UIColor.lightGrayColor()
         pageControl.currentPageIndicatorTintColor = UIColor.blackColor()
         pageControl.backgroundColor = UIColor.whiteColor()
-        
-        UIApplication.sharedApplication().registerForRemoteNotifications()
-        
-        // Override point for customization after application launch.
-        if UIApplication.instancesRespondToSelector(Selector("registerUserNotificationSettings:")) {
-            application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: UIUserNotificationType.Sound | UIUserNotificationType.Alert | UIUserNotificationType.Badge, categories: nil))
-        } else {
-            //do iOS 7 stuff, which is pretty much nothing for local notifications.
-        }
         
         return true
 
@@ -106,8 +99,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
-        var token = deviceToken.description.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "<>"))
-        println("Successfully registered for push notifications.")
+        if let session = self.userSession {
+            println("Successfully registered for push notifications.")
+            println("Sending token.")
+            var token = deviceToken.description.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "<>"))
+            session.sendDeviceToken(token)
+        }
+        
 
     }
     

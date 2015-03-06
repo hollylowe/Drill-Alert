@@ -50,6 +50,74 @@
 		A0772F201A928EBD00DE37B1 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0772F1F1A928EBD00DE37B1 /* Alert.swift */; };
 		A0772F221A92921300DE37B1 /* AlertType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0772F211A92921300DE37B1 /* AlertType.swift */; };
 		A0772F241A92921300DE37B1 /* AlertPriority.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0772F231A92921300DE37B1 /* AlertPriority.swift */; };
+		A08025B91AAA344100C8BE99 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06FFD681A06AA08001B3FF8 /* LoginViewController.swift */; };
+		A08025C01AAA372A00C8BE99 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A08025BF1AAA372A00C8BE99 /* libxml2.2.dylib */; };
+		A08025C51AAA380500C8BE99 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06FFD631A06AA08001B3FF8 /* AppDelegate.swift */; };
+		A08025C61AAA380F00C8BE99 /* AlertNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F5D6441A95906400B68548 /* AlertNotification.swift */; };
+		A08025C71AAA381D00C8BE99 /* AlertPriority.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0772F231A92921300DE37B1 /* AlertPriority.swift */; };
+		A08025C81AAA381D00C8BE99 /* AlertType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0772F211A92921300DE37B1 /* AlertType.swift */; };
+		A08025C91AAA381D00C8BE99 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0772F1F1A928EBD00DE37B1 /* Alert.swift */; };
+		A08025CA1AAA382200C8BE99 /* ParameterAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = A018E4031A2B005A001EF20E /* ParameterAlert.swift */; };
+		A08025CB1AAA382200C8BE99 /* Parameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A018E4051A2B010A001EF20E /* Parameter.swift */; };
+		A08025CC1AAA382200C8BE99 /* AlertPriorityStandard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A783D91A78BCFB00C3B20A /* AlertPriorityStandard.swift */; };
+		A08025CD1AAA382200C8BE99 /* AlertTypeStandard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A783DB1A78BD1000C3B20A /* AlertTypeStandard.swift */; };
+		A08025D31AAA382900C8BE99 /* Well.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05A35D11A0837ED008EA386 /* Well.swift */; };
+		A08025D41AAA382900C8BE99 /* Wellbore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CE03271A0ECEFB0076EE3E /* Wellbore.swift */; };
+		A08025D51AAA382900C8BE99 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CEDBA11A0C3ADF0051BDB8 /* User.swift */; };
+		A08025D61AAA382900C8BE99 /* APIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02679FA1A742A4900ED8FFB /* APIHelper.swift */; };
+		A08025D71AAA382900C8BE99 /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = A095D57E1A78A3FA000889CB /* JSON.swift */; };
+		A08025D81AAA382900C8BE99 /* JSONArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = A095D5801A78A403000889CB /* JSONArray.swift */; };
+		A08025D91AAA382900C8BE99 /* Curve.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0699A9B1A80231A004F9C97 /* Curve.swift */; };
+		A08025DA1AAA382900C8BE99 /* WellboreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0699A9F1A809B78004F9C97 /* WellboreView.swift */; };
+		A08025DB1AAA382900C8BE99 /* UserSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = A033918B1A92DC120018F2B6 /* UserSession.swift */; };
+		A08025DC1AAA383B00C8BE99 /* LoginWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A09CFE7E1AA7F8080094A582 /* LoginWebViewController.swift */; };
+		A08025DD1AAA383D00C8BE99 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A087EEDD1A06C09D0073FDD0 /* HomeViewController.swift */; };
+		A08025DE1AAA384000C8BE99 /* WellboreDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0343D381A2AC85400FA0464 /* WellboreDetailViewController.swift */; };
+		A08025DF1AAA384300C8BE99 /* ManageAlertsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A018E4091A2B0733001EF20E /* ManageAlertsTableViewController.swift */; };
+		A08025E01AAA384300C8BE99 /* AddEditAlertTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A018E40B1A2BB4E8001EF20E /* AddEditAlertTableViewController.swift */; };
+		A08025E11AAA384300C8BE99 /* AddOrEditAlertTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0DB7DBC1A2FB96000C8C9A2 /* AddOrEditAlertTableViewController.swift */; };
+		A08025E21AAA384300C8BE99 /* SelectAlertTypeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0DB7DBE1A2FB96E00C8C9A2 /* SelectAlertTypeTableViewController.swift */; };
+		A08025E31AAA384300C8BE99 /* AlertInboxTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02D86421A6D953A00D22A38 /* AlertInboxTableViewController.swift */; };
+		A08025E41AAA384C00C8BE99 /* VisualsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CE032B1A0ED67C0076EE3E /* VisualsViewController.swift */; };
+		A08025E51AAA384C00C8BE99 /* VisualViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A042B2DC1A195ED600660AB7 /* VisualViewController.swift */; };
+		A08025E61AAA384C00C8BE99 /* ManageViewsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4007641A78BDF4008E9C1F /* ManageViewsTableViewController.swift */; };
+		A08025E71AAA384C00C8BE99 /* EditViewsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFC8DBE31A92AAA400727A97 /* EditViewsTableViewController.swift */; };
+		A08025E81AAA384C00C8BE99 /* EditViewTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0224E21A959E1F00115B0B /* EditViewTableViewController.swift */; };
+		A08025E91AAA384C00C8BE99 /* AddViewTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF6DD7621AA071E70030ADAB /* AddViewTableViewController.swift */; };
+		A08025EA1AAA385000C8BE99 /* ChooseAddVisualTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF75F7A81A95BA7100B7958D /* ChooseAddVisualTableViewController.swift */; };
+		A08025EB1AAA386100C8BE99 /* AddCurveTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF08A77F1A9DD7BE00A33AFE /* AddCurveTableViewController.swift */; };
+		A08025EC1AAA386100C8BE99 /* ScaleTypeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF08A77D1A9DD6E900A33AFE /* ScaleTypeTableViewController.swift */; };
+		A08025ED1AAA386100C8BE99 /* AddTrackTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF08A77B1A9DD02600A33AFE /* AddTrackTableViewController.swift */; };
+		A08025EE1AAA386100C8BE99 /* UnitsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF08A7791A9DCFCD00A33AFE /* UnitsTableViewController.swift */; };
+		A08025EF1AAA386100C8BE99 /* IVTTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFA31B2F1A9DC97200BFBB23 /* IVTTableViewController.swift */; };
+		A08025F01AAA386100C8BE99 /* NewPlotTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF75F7AA1A95CF1600B7958D /* NewPlotTableViewController.swift */; };
+		A08025F11AAA386600C8BE99 /* NewCanvasTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF6DD7551AA04B1C0030ADAB /* NewCanvasTableViewController.swift */; };
+		A08025F21AAA386600C8BE99 /* NewNumberReadoutTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF6DD7571AA04BED0030ADAB /* NewNumberReadoutTableViewController.swift */; };
+		A08025F31AAA386600C8BE99 /* NewGaugeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF6DD7591AA04C300030ADAB /* NewGaugeTableViewController.swift */; };
+		A08025F41AAA386B00C8BE99 /* CompassDataSourceTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF6DD7601AA0669C0030ADAB /* CompassDataSourceTableViewController.swift */; };
+		A08025F51AAA386B00C8BE99 /* NewCompassTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF6DD75C1AA065C30030ADAB /* NewCompassTableViewController.swift */; };
+		A08025F61AAA386B00C8BE99 /* SensorTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF6DD75E1AA0662E0030ADAB /* SensorTableViewController.swift */; };
+		A08025F71AAA387300C8BE99 /* d3.js in Resources */ = {isa = PBXBuildFile; fileRef = A04AB1F21A81C9AD003704CC /* d3.js */; };
+		A08025F81AAA387300C8BE99 /* d3.min.js in Resources */ = {isa = PBXBuildFile; fileRef = A042B2E01A19669E00660AB7 /* d3.min.js */; };
+		A08025F91AAA387B00C8BE99 /* AdminTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05A35CD1A083727008EA386 /* AdminTableViewController.swift */; };
+		A08025FA1AAA387B00C8BE99 /* WellUsersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F0FBEC1A103DC600ADBDF3 /* WellUsersTableViewController.swift */; };
+		A08025FB1AAA388000C8BE99 /* WellboreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0343D321A2AB66100FA0464 /* WellboreTableViewCell.swift */; };
+		A08025FC1AAA388000C8BE99 /* ParameterAlertTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0343D401A2AFE9C00FA0464 /* ParameterAlertTableViewCell.swift */; };
+		A08025FD1AAA388000C8BE99 /* PaddedUITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = A066D5D11A2EBD4B00E16E58 /* PaddedUITextField.swift */; };
+		A08025FE1AAA388000C8BE99 /* SegmentControlToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0699A9D1A809102004F9C97 /* SegmentControlToolbar.swift */; };
+		A08025FF1AAA388400C8BE99 /* AlertValueCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A095FB8B1A2FC37200B15D39 /* AlertValueCell.swift */; };
+		A08026001AAA388400C8BE99 /* AlertWhenCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A095FB8E1A2FC38C00B15D39 /* AlertWhenCell.swift */; };
+		A08026011AAA388400C8BE99 /* AlertPriorityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A095FB901A2FC39800B15D39 /* AlertPriorityCell.swift */; };
+		A08026021AAA388400C8BE99 /* AlertInboxCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02D86441A6D97BF00D22A38 /* AlertInboxCell.swift */; };
+		A08026031AAA388400C8BE99 /* AlertTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A095D5821A78B74D000889CB /* AlertTableViewCell.swift */; };
+		A08026041AAA388800C8BE99 /* ManageVisualsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4007671A78C789008E9C1F /* ManageVisualsTableViewCell.swift */; };
+		A08026051AAA388800C8BE99 /* EditVisualTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0224E41A95A8B100115B0B /* EditVisualTableViewCell.swift */; };
+		A08026061AAA388C00C8BE99 /* ViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8E9A9C1A91BF49008F8AF8 /* ViewTableViewCell.swift */; };
+		A08026071AAA388C00C8BE99 /* EditViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFC8DBE51A92B21100727A97 /* EditViewTableViewCell.swift */; };
+		A08026081AAA389100C8BE99 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8E9A991A91BBFB008F8AF8 /* View.swift */; };
+		A08026091AAA389800C8BE99 /* Visual.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8E9A901A91A093008F8AF8 /* Visual.swift */; };
+		A080260A1AAA389800C8BE99 /* VisualType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8E9A931A91A17F008F8AF8 /* VisualType.swift */; };
+		A080260B1AAA389E00C8BE99 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EE29011A08AB7200B50700 /* UIViewExtension.swift */; };
 		A087EEDE1A06C09D0073FDD0 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A087EEDD1A06C09D0073FDD0 /* HomeViewController.swift */; };
 		A095D57F1A78A3FA000889CB /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = A095D57E1A78A3FA000889CB /* JSON.swift */; };
 		A095D5811A78A403000889CB /* JSONArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = A095D5801A78A403000889CB /* JSONArray.swift */; };
@@ -120,7 +188,6 @@
 		A02D86421A6D953A00D22A38 /* AlertInboxTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertInboxTableViewController.swift; sourceTree = "<group>"; };
 		A02D86441A6D97BF00D22A38 /* AlertInboxCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertInboxCell.swift; sourceTree = "<group>"; };
 		A033918B1A92DC120018F2B6 /* UserSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSession.swift; sourceTree = "<group>"; };
-		A0343D261A26493800FA0464 /* DrillAlert-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DrillAlert-Bridging-Header.h"; sourceTree = "<group>"; };
 		A0343D301A2674C100FA0464 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
 		A0343D321A2AB66100FA0464 /* WellboreTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WellboreTableViewCell.swift; sourceTree = "<group>"; };
 		A0343D381A2AC85400FA0464 /* WellboreDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WellboreDetailViewController.swift; sourceTree = "<group>"; };
@@ -160,6 +227,7 @@
 		A0772F1F1A928EBD00DE37B1 /* Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		A0772F211A92921300DE37B1 /* AlertType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertType.swift; sourceTree = "<group>"; };
 		A0772F231A92921300DE37B1 /* AlertPriority.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertPriority.swift; sourceTree = "<group>"; };
+		A08025BF1AAA372A00C8BE99 /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
 		A087EEDD1A06C09D0073FDD0 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		A095D57E1A78A3FA000889CB /* JSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSON.swift; sourceTree = "<group>"; };
 		A095D5801A78A403000889CB /* JSONArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONArray.swift; sourceTree = "<group>"; };
@@ -216,6 +284,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A08025C01AAA372A00C8BE99 /* libxml2.2.dylib in Frameworks */,
 				A0F1B5811A901BE400306DB7 /* libxml2.dylib in Frameworks */,
 				A066D5CC1A2EAA2900E16E58 /* UIKit.framework in Frameworks */,
 				A066D5CA1A2EAA2100E16E58 /* SystemConfiguration.framework in Frameworks */,
@@ -303,6 +372,7 @@
 		A06FFD551A06AA08001B3FF8 = {
 			isa = PBXGroup;
 			children = (
+				A08025BF1AAA372A00C8BE99 /* libxml2.2.dylib */,
 				A0F1B5801A901BE400306DB7 /* libxml2.dylib */,
 				A0343D301A2674C100FA0464 /* Entitlements.plist */,
 				A06FFD601A06AA08001B3FF8 /* DrillAlert */,
@@ -409,7 +479,6 @@
 			isa = PBXGroup;
 			children = (
 				A0F1B5781A901B1200306DB7 /* SwiftHTMLParser */,
-				A0343D261A26493800FA0464 /* DrillAlert-Bridging-Header.h */,
 				A066D5CB1A2EAA2900E16E58 /* UIKit.framework */,
 				A066D5C91A2EAA2100E16E58 /* SystemConfiguration.framework */,
 				A066D5C71A2EAA1700E16E58 /* Security.framework */,
@@ -633,7 +702,7 @@
 				TargetAttributes = {
 					A06FFD5D1A06AA08001B3FF8 = {
 						CreatedOnToolsVersion = 6.1;
-						DevelopmentTeam = PY9957M84G;
+						DevelopmentTeam = T696QZE37A;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -642,6 +711,7 @@
 					};
 					A06FFD751A06AA08001B3FF8 = {
 						CreatedOnToolsVersion = 6.1;
+						DevelopmentTeam = T696QZE37A;
 						TestTargetID = A06FFD5D1A06AA08001B3FF8;
 					};
 				};
@@ -688,6 +758,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A08025F71AAA387300C8BE99 /* d3.js in Resources */,
+				A08025F81AAA387300C8BE99 /* d3.min.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -773,7 +845,72 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A080260A1AAA389800C8BE99 /* VisualType.swift in Sources */,
+				A08025E51AAA384C00C8BE99 /* VisualViewController.swift in Sources */,
+				A08025EF1AAA386100C8BE99 /* IVTTableViewController.swift in Sources */,
+				A08025EE1AAA386100C8BE99 /* UnitsTableViewController.swift in Sources */,
+				A08025FD1AAA388000C8BE99 /* PaddedUITextField.swift in Sources */,
+				A08026011AAA388400C8BE99 /* AlertPriorityCell.swift in Sources */,
+				A08026081AAA389100C8BE99 /* View.swift in Sources */,
+				A08025CA1AAA382200C8BE99 /* ParameterAlert.swift in Sources */,
+				A08025E31AAA384300C8BE99 /* AlertInboxTableViewController.swift in Sources */,
+				A08025EB1AAA386100C8BE99 /* AddCurveTableViewController.swift in Sources */,
+				A08025E11AAA384300C8BE99 /* AddOrEditAlertTableViewController.swift in Sources */,
+				A08025DC1AAA383B00C8BE99 /* LoginWebViewController.swift in Sources */,
+				A08025DE1AAA384000C8BE99 /* WellboreDetailViewController.swift in Sources */,
+				A08025F21AAA386600C8BE99 /* NewNumberReadoutTableViewController.swift in Sources */,
+				A08025D41AAA382900C8BE99 /* Wellbore.swift in Sources */,
+				A08025D81AAA382900C8BE99 /* JSONArray.swift in Sources */,
+				A08025D31AAA382900C8BE99 /* Well.swift in Sources */,
+				A08025D61AAA382900C8BE99 /* APIHelper.swift in Sources */,
+				A08025FE1AAA388000C8BE99 /* SegmentControlToolbar.swift in Sources */,
+				A08025E91AAA384C00C8BE99 /* AddViewTableViewController.swift in Sources */,
+				A08025E61AAA384C00C8BE99 /* ManageViewsTableViewController.swift in Sources */,
+				A08025CC1AAA382200C8BE99 /* AlertPriorityStandard.swift in Sources */,
+				A08025F61AAA386B00C8BE99 /* SensorTableViewController.swift in Sources */,
+				A08025DD1AAA383D00C8BE99 /* HomeViewController.swift in Sources */,
+				A080260B1AAA389E00C8BE99 /* UIViewExtension.swift in Sources */,
+				A08025C61AAA380F00C8BE99 /* AlertNotification.swift in Sources */,
+				A08026001AAA388400C8BE99 /* AlertWhenCell.swift in Sources */,
+				A08025EA1AAA385000C8BE99 /* ChooseAddVisualTableViewController.swift in Sources */,
+				A08026051AAA388800C8BE99 /* EditVisualTableViewCell.swift in Sources */,
+				A08026091AAA389800C8BE99 /* Visual.swift in Sources */,
+				A08025E01AAA384300C8BE99 /* AddEditAlertTableViewController.swift in Sources */,
+				A08025F51AAA386B00C8BE99 /* NewCompassTableViewController.swift in Sources */,
+				A08025E81AAA384C00C8BE99 /* EditViewTableViewController.swift in Sources */,
+				A08025FF1AAA388400C8BE99 /* AlertValueCell.swift in Sources */,
+				A08025B91AAA344100C8BE99 /* LoginViewController.swift in Sources */,
+				A08025F91AAA387B00C8BE99 /* AdminTableViewController.swift in Sources */,
+				A08025D51AAA382900C8BE99 /* User.swift in Sources */,
+				A08025E21AAA384300C8BE99 /* SelectAlertTypeTableViewController.swift in Sources */,
 				A06FFD7D1A06AA08001B3FF8 /* DrillAlertTests.swift in Sources */,
+				A08025E41AAA384C00C8BE99 /* VisualsViewController.swift in Sources */,
+				A08025FA1AAA387B00C8BE99 /* WellUsersTableViewController.swift in Sources */,
+				A08026031AAA388400C8BE99 /* AlertTableViewCell.swift in Sources */,
+				A08025CD1AAA382200C8BE99 /* AlertTypeStandard.swift in Sources */,
+				A08026041AAA388800C8BE99 /* ManageVisualsTableViewCell.swift in Sources */,
+				A08025DB1AAA382900C8BE99 /* UserSession.swift in Sources */,
+				A08025CB1AAA382200C8BE99 /* Parameter.swift in Sources */,
+				A08025FC1AAA388000C8BE99 /* ParameterAlertTableViewCell.swift in Sources */,
+				A08025ED1AAA386100C8BE99 /* AddTrackTableViewController.swift in Sources */,
+				A08025C51AAA380500C8BE99 /* AppDelegate.swift in Sources */,
+				A08025E71AAA384C00C8BE99 /* EditViewsTableViewController.swift in Sources */,
+				A08025EC1AAA386100C8BE99 /* ScaleTypeTableViewController.swift in Sources */,
+				A08025D91AAA382900C8BE99 /* Curve.swift in Sources */,
+				A08025F11AAA386600C8BE99 /* NewCanvasTableViewController.swift in Sources */,
+				A08025C81AAA381D00C8BE99 /* AlertType.swift in Sources */,
+				A08026071AAA388C00C8BE99 /* EditViewTableViewCell.swift in Sources */,
+				A08025DF1AAA384300C8BE99 /* ManageAlertsTableViewController.swift in Sources */,
+				A08025DA1AAA382900C8BE99 /* WellboreView.swift in Sources */,
+				A08025C71AAA381D00C8BE99 /* AlertPriority.swift in Sources */,
+				A08025C91AAA381D00C8BE99 /* Alert.swift in Sources */,
+				A08025FB1AAA388000C8BE99 /* WellboreTableViewCell.swift in Sources */,
+				A08026021AAA388400C8BE99 /* AlertInboxCell.swift in Sources */,
+				A08026061AAA388C00C8BE99 /* ViewTableViewCell.swift in Sources */,
+				A08025D71AAA382900C8BE99 /* JSON.swift in Sources */,
+				A08025F41AAA386B00C8BE99 /* CompassDataSourceTableViewController.swift in Sources */,
+				A08025F31AAA386600C8BE99 /* NewGaugeTableViewController.swift in Sources */,
+				A08025F01AAA386100C8BE99 /* NewPlotTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -890,8 +1027,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Lucas David (P2KNH37UDW)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Lucas David (P2KNH37UDW)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/DrillAlert",
@@ -901,6 +1038,7 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					/usr/include/libxml2,
+					"$(SDKROOT)/usr/include/libxml2",
 				);
 				"HEADER_SEARCH_PATHS[arch=*]" = (
 					"$(inherited)",
@@ -912,7 +1050,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "DrillAlert/DrillAlert-Bridging-Header.h";
+				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -924,8 +1062,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Lucas David (P2KNH37UDW)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Lucas David (P2KNH37UDW)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/DrillAlert",
@@ -935,13 +1073,14 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					/usr/include/libxml2,
+					"$(SDKROOT)/usr/include/libxml2",
 				);
 				INFOPLIST_FILE = DrillAlert/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "DrillAlert/DrillAlert-Bridging-Header.h";
+				SWIFT_INSTALL_OBJC_HEADER = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

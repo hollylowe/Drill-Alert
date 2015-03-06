@@ -2,6 +2,7 @@
 * @brief Swift-HTML-Parser
 * @author _tid_
 */
+/*
 import Foundation
 
 let DUMP_BUFFER_SIZE : UInt = 4000
@@ -118,3 +119,5 @@ public class HTMLParser {
         xmlFreeDoc(_doc)
     }
 }
+
+*/

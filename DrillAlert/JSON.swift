@@ -26,6 +26,18 @@ class JSON {
         return result
     }
     
+    func getBoolAtKey(key: String) -> Bool? {
+        var result: Bool?
+        
+        if let implicitDictionary = dictionary {
+            if let object: AnyObject = implicitDictionary[key] {
+                result = object as? Bool
+            }
+        }
+        
+        return result
+    }
+    
     func getFloatAtKey(key: String) -> Float? {
         var result: Float?
         

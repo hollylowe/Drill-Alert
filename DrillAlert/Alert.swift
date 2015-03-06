@@ -10,6 +10,69 @@ import Foundation
 import CoreData
 import UIKit
 
+// TODO: Temporary class for getting alerts from
+// API. Once we only do API stuff this class
+// will probably take over the CoreData class
+// below.
+class AlertAPI {
+    init(id: Int, name: String, rising: Bool, curveID: Int, userID: Int) {
+        
+    }
+    
+    class func alertFromJSONObject(JSONObject: JSON) -> AlertAPI? {
+        var result: AlertAPI?
+        
+        // Keys for the Alert
+        let APINameKey = "Name"
+        let APIAlertIDKey = "Id"
+        let APIUserIDKey = "UserId"
+        let APIRisingKey = "Rising"
+        let APICurveIDKey = "CurveId"
+        
+        // Get the values at the above keys from the JSON Object
+        if let id = JSONObject.getIntAtKey(APIAlertIDKey) {
+            if let name = JSONObject.getStringAtKey(APINameKey) {
+                if let rising = JSONObject.getBoolAtKey(APIRisingKey) {
+                    if let curveID = JSONObject.getIntAtKey(APICurveIDKey) {
+                        if let userID = JSONObject.getIntAtKey(APIUserIDKey) {
+                            let alert = AlertAPI(id: id, name: name, rising: rising, curveID: curveID, userID: userID)
+                            result = alert
+                        }
+                    }
+                }
+            }
+        }
+        
+        return result
+    }
+    
+    class func getAlertsForUser(user: User) -> (Array<AlertAPI>, String?) {
+        var result = Array<AlertAPI>()
+        var errorMessage: String?
+        
+        let url = "https://drillalert.azurewebsites.net/api/alerts"
+        if let session = user.userSession {
+            let alertsJSONArray = session.getJSONArrayAtURL(url)
+            errorMessage = alertsJSONArray.getErrorMessage()
+            
+            if errorMessage == nil {
+                if let alertJSONs = alertsJSONArray.array {
+                    for alertJSONObject in alertJSONs {
+                        if let alert = AlertAPI.alertFromJSONObject(alertJSONObject) {
+                            result.append(alert)
+                        }
+                    }
+                }
+            } else {
+                // TODO: delete this, only for when the connection doesn't work
+                
+            }
+        }
+        
+        return (result, errorMessage)
+    }
+}
+
 @objc(Alert)
 class Alert: NSManagedObject {
 
@@ -131,5 +194,7 @@ class Alert: NSManagedObject {
         
         return allAlerts
     }
+    
+    
 
 }

@@ -8,6 +8,7 @@
 
 import UIKit
 import XCTest
+import DrillAlert
 
 class DrillAlertTests: XCTestCase {
     
@@ -24,6 +25,11 @@ class DrillAlertTests: XCTestCase {
     func testExample() {
         // This is an example of a functional test case.
         XCTAssert(true, "Pass")
+    }
+    
+    func testViewDidLoad() {
+        let v = LoginViewController()
+        
     }
     
     func testPerformanceExample() {

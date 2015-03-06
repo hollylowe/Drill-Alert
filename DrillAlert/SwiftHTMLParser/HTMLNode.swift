@@ -2,6 +2,7 @@
 * @brief Swift-HTML-Parser
 * @author _tid_
 */
+/*
 import Foundation
 
 /**
@@ -318,3 +319,4 @@ public class HTMLNodeGenerator : GeneratorType {
         return temp
     }
 }
+*/

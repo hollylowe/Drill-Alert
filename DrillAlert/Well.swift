@@ -26,7 +26,7 @@ class Well {
         
         // Keys for the Well
         let APINameKey = "name"
-        let APIWellIDKey = "wellId"
+        let APIWellIDKey = "id"
         let APILocationKey = "location"
         let APIWellboresKey = "wellBores"
         
@@ -76,7 +76,7 @@ class Well {
         var result = Array<Well>()
         var errorMessage: String?
         
-        let url = "https://drillalert.azurewebsites.net/api/permissions/\(user.guid)"
+        let url = "https://drillalert.azurewebsites.net/api/permissions/ios/\(user.guid)"
         if let session = user.userSession {
             let wellsJSONArray = session.getJSONArrayAtURL(url)
             errorMessage = wellsJSONArray.getErrorMessage()
@@ -84,7 +84,9 @@ class Well {
             if errorMessage == nil {
                 if let wellJSONs = wellsJSONArray.array {
                     for wellJSONObject in wellJSONs {
+                        println("Got wells.")
                         if let well = Well.wellFromJSONObject(wellJSONObject) {
+                            println(well.name)
                             result.append(well)
                         }
                     }

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class UserSession: NSObject, NSURLSessionDelegate, NSURLSessionTaskDelegate {
     var session: NSURLSession?
@@ -23,6 +24,55 @@ class UserSession: NSObject, NSURLSessionDelegate, NSURLSessionTaskDelegate {
         // Set up the session
         var sessionConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration()
         self.session = NSURLSession(configuration: sessionConfiguration, delegate: self, delegateQueue: nil)
+    }
+    
+    func sendDeviceToken(token: String) {
+        let url = "https://drillalert.azurewebsites.net/api/permissions/ios"
+        if let URL = NSURL(string: url) {
+            var newRequest = NSMutableURLRequest(URL: URL)
+            var postString = token
+            newRequest.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
+            
+            // Set it to POST, since we need to send
+            // the Username / Password to this new
+            // URL
+            newRequest.HTTPMethod = "POST"
+            
+            if let session = self.session {
+                println("POSTing device token.")
+                session.dataTaskWithRequest(newRequest, completionHandler: { (data, response, error) -> Void in
+                    if let content = NSString(data: data, encoding: NSASCIIStringEncoding) {
+                        println("Data from device token POST: ")
+                        println(content)
+                        println("Response from device token POST:")
+                        println(response)
+                    }
+                })
+            }
+        }
+    }
+    
+    func registerForNotifications() {
+        if let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate {
+            let application = UIApplication.sharedApplication()
+            appDelegate.userSession = self
+            
+            UIApplication.sharedApplication().registerForRemoteNotifications()
+            
+            // Override point for customization after application launch.
+            if UIApplication.instancesRespondToSelector(Selector("registerUserNotificationSettings:")) {
+                application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: UIUserNotificationType.Sound | UIUserNotificationType.Alert | UIUserNotificationType.Badge, categories: nil))
+            } else {
+                //do iOS 7 stuff, which is pretty much nothing for local notifications.
+            }
+            
+            
+            
+            
+        }
+        
+        
+
     }
     
     func getJSONArrayAtURL(url: String) -> JSONArray {
@@ -138,6 +188,9 @@ class UserSession: NSObject, NSURLSessionDelegate, NSURLSessionTaskDelegate {
         willPerformHTTPRedirection response: NSHTTPURLResponse,
         newRequest request: NSURLRequest,
         completionHandler: (NSURLRequest!) -> Void) {
+            /*
+            Used for non-web based login 
+            
             
             // We know we should log in if
             // this is set. It should
@@ -177,6 +230,8 @@ class UserSession: NSObject, NSURLSessionDelegate, NSURLSessionTaskDelegate {
                 // with it.
                 completionHandler(request)
             }
+            */
+            completionHandler(request)
     }
     
     func setFedAuthCookiesWithWResult(wresult: String, andWCTX wctx: String, andWA wa: String) {
@@ -210,6 +265,10 @@ class UserSession: NSObject, NSURLSessionDelegate, NSURLSessionTaskDelegate {
     }
     
     func extractWVariablesFromContent(content: String) -> (String?, String?, String?) {
+        /*
+        
+        Used for non web based login
+        
         var optionalWResult: String?
         var optionalWCTX: String?
         var optionalWA: String?
@@ -239,9 +298,16 @@ class UserSession: NSObject, NSURLSessionDelegate, NSURLSessionTaskDelegate {
         }
         
         return (optionalWResult, optionalWCTX, optionalWA)
+        */
+        return (nil, nil, nil)
     }
     
+    
     func loginAttemptResponse(data: NSData!, response: NSURLResponse!, error: NSError!) {
+        
+        /* 
+            Used in non-web based login
+
         // These are the three variables we need
         // to get from SDI's server to send to
         // our server via a POST in order to recieve
@@ -286,6 +352,8 @@ class UserSession: NSObject, NSURLSessionDelegate, NSURLSessionTaskDelegate {
                 }
             })
         }
+
+        */
     }
     
     func finalResponse(data: NSData!, response: NSURLResponse!, error: NSError!) {
