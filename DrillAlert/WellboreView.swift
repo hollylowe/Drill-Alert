@@ -94,13 +94,15 @@ class Visualization {
 
 class Panel {
     var id: Int
+    var name: String
     var position: Int
     var xDimension: Int
     var yDimension: Int
     var visualizations: Array<Visualization>
     
-    init(id: Int, position: Int, xDimension: Int, yDimension: Int, visualizations: Array<Visualization>) {
+    init(id: Int, name: String, position: Int, xDimension: Int, yDimension: Int, visualizations: Array<Visualization>) {
         self.id = id
+        self.name = name
         self.position = position
         self.xDimension = xDimension
         self.yDimension = yDimension
@@ -111,22 +113,32 @@ class Panel {
     class func getPanelsFromJSONArray(jsonArray: JSONArray) -> Array<Panel> {
         var result = Array<Panel>()
         
+        let APIPanelIDKey = "Id"
+        let APIPanelNameKey = "Name"
+        let APIPanelPositionKey = "Pos"
+        let APIPanelXDimensionKey = "XDim"
+        let APIPanelYDimensionKey = "YDim"
+        let APIPanelVisualizationsKey = "Visualizations"
+        
         if let panelJSONs = jsonArray.array {
             for panelJSON in panelJSONs {
-                if let id = panelJSON.getIntAtKey("Id") {
-                    if let position = panelJSON.getIntAtKey("Pos") {
-                        if let xDimension = panelJSON.getIntAtKey("XDim") {
-                            if let yDimension = panelJSON.getIntAtKey("YDim") {
-                                if let visualizationsJSONArray = panelJSON.getJSONArrayAtKey("Visualizations") {
-                                    let visualizations = Visualization.getVisualizationsFromJSONArray(visualizationsJSONArray)
-                                    let newPanel = Panel(
-                                        id: id,
-                                        position: position,
-                                        xDimension: xDimension,
-                                        yDimension: yDimension,
-                                        visualizations: visualizations
-                                    )
-                                    result.append(newPanel)
+                if let id = panelJSON.getIntAtKey(APIPanelIDKey) {
+                    if let position = panelJSON.getIntAtKey(APIPanelPositionKey) {
+                        if let xDimension = panelJSON.getIntAtKey(APIPanelXDimensionKey) {
+                            if let yDimension = panelJSON.getIntAtKey(APIPanelYDimensionKey) {
+                                if let name = panelJSON.getStringAtKey(APIPanelNameKey) {
+                                    if let visualizationsJSONArray = panelJSON.getJSONArrayAtKey(APIPanelVisualizationsKey) {
+                                        let visualizations = Visualization.getVisualizationsFromJSONArray(visualizationsJSONArray)
+                                        let newPanel = Panel(
+                                            id: id,
+                                            name: name,
+                                            position: position,
+                                            xDimension: xDimension,
+                                            yDimension: yDimension,
+                                            visualizations: visualizations
+                                        )
+                                        result.append(newPanel)
+                                    }
                                 }
                             }
                         }
@@ -158,7 +170,7 @@ class WellboreView {
         let newVisualization = Visualization(id: 1, xPosition: 0, yPosition: 0, jsFileName: "non", curveID: 1)
         visualizations.append(newVisualization)
         
-        let newPanel = Panel(id: 1, position: 0, xDimension: 0, yDimension: 0, visualizations: visualizations)
+        let newPanel = Panel(id: 1, name: "Fake Panel", position: 0, xDimension: 0, yDimension: 0, visualizations: visualizations)
         panels.append(newPanel)
         
         let newWellboreView = WellboreView(id: 1, name: "Fake View", panels: panels)
