@@ -131,6 +131,8 @@
 		A09CFE7F1AA7F8080094A582 /* LoginWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A09CFE7E1AA7F8080094A582 /* LoginWebViewController.swift */; };
 		A0A783DA1A78BCFB00C3B20A /* AlertPriorityStandard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A783D91A78BCFB00C3B20A /* AlertPriorityStandard.swift */; };
 		A0A783DC1A78BD1000C3B20A /* AlertTypeStandard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A783DB1A78BD1000C3B20A /* AlertTypeStandard.swift */; };
+		A0ABE79E1AAA5D7C00C73BD6 /* JSONTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0ABE79D1AAA5D7C00C73BD6 /* JSONTests.swift */; };
+		A0ABE7A01AAA875C00C73BD6 /* JSONArrayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0ABE79F1AAA875C00C73BD6 /* JSONArrayTests.swift */; };
 		A0CCC5E51A81C69600F92B36 /* graph.html in Resources */ = {isa = PBXBuildFile; fileRef = A0CCC5E31A81C69600F92B36 /* graph.html */; };
 		A0CCC5E61A81C69600F92B36 /* graph.js in Resources */ = {isa = PBXBuildFile; fileRef = A0CCC5E41A81C69600F92B36 /* graph.js */; };
 		A0CE03281A0ECEFB0076EE3E /* Wellbore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CE03271A0ECEFB0076EE3E /* Wellbore.swift */; };
@@ -241,6 +243,8 @@
 		A09CFE7E1AA7F8080094A582 /* LoginWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginWebViewController.swift; sourceTree = "<group>"; };
 		A0A783D91A78BCFB00C3B20A /* AlertPriorityStandard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertPriorityStandard.swift; sourceTree = "<group>"; };
 		A0A783DB1A78BD1000C3B20A /* AlertTypeStandard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertTypeStandard.swift; sourceTree = "<group>"; };
+		A0ABE79D1AAA5D7C00C73BD6 /* JSONTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONTests.swift; sourceTree = "<group>"; };
+		A0ABE79F1AAA875C00C73BD6 /* JSONArrayTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONArrayTests.swift; sourceTree = "<group>"; };
 		A0CCC5E31A81C69600F92B36 /* graph.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = graph.html; sourceTree = "<group>"; };
 		A0CCC5E41A81C69600F92B36 /* graph.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = graph.js; sourceTree = "<group>"; };
 		A0CE03271A0ECEFB0076EE3E /* Wellbore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Wellbore.swift; sourceTree = "<group>"; };
@@ -421,8 +425,10 @@
 		A06FFD791A06AA08001B3FF8 /* DrillAlertTests */ = {
 			isa = PBXGroup;
 			children = (
+				A0ABE79D1AAA5D7C00C73BD6 /* JSONTests.swift */,
 				A06FFD7C1A06AA08001B3FF8 /* DrillAlertTests.swift */,
 				A06FFD7A1A06AA08001B3FF8 /* Supporting Files */,
+				A0ABE79F1AAA875C00C73BD6 /* JSONArrayTests.swift */,
 			);
 			path = DrillAlertTests;
 			sourceTree = "<group>";
@@ -895,6 +901,7 @@
 				A08026041AAA388800C8BE99 /* ManageVisualsTableViewCell.swift in Sources */,
 				A08025DB1AAA382900C8BE99 /* UserSession.swift in Sources */,
 				A08025CB1AAA382200C8BE99 /* Parameter.swift in Sources */,
+				A0ABE79E1AAA5D7C00C73BD6 /* JSONTests.swift in Sources */,
 				A08025FC1AAA388000C8BE99 /* ParameterAlertTableViewCell.swift in Sources */,
 				A08025ED1AAA386100C8BE99 /* AddTrackTableViewController.swift in Sources */,
 				A08025C51AAA380500C8BE99 /* AppDelegate.swift in Sources */,
@@ -904,6 +911,7 @@
 				A08025F11AAA386600C8BE99 /* NewCanvasTableViewController.swift in Sources */,
 				A08025C81AAA381D00C8BE99 /* AlertType.swift in Sources */,
 				A08026071AAA388C00C8BE99 /* EditViewTableViewCell.swift in Sources */,
+				A0ABE7A01AAA875C00C73BD6 /* JSONArrayTests.swift in Sources */,
 				A08025DF1AAA384300C8BE99 /* ManageAlertsTableViewController.swift in Sources */,
 				A08025DA1AAA382900C8BE99 /* WellboreView.swift in Sources */,
 				A08025C71AAA381D00C8BE99 /* AlertPriority.swift in Sources */,

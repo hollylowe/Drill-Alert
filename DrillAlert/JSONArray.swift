@@ -15,10 +15,45 @@ class JSONArray {
     var error: NSError?
     var array: Array<JSON>?
     
-    init() {
-        
-    }
+    init() {}
     
+    init(string: String) {
+        var result: AnyObject?
+        var jsonError: NSError?
+        var urlError: NSError?
+        if let data = string.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false) {
+            result = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(0), error: &jsonError)
+            if jsonError != nil {
+                self.error = jsonError
+            } else {
+                if let json = result as? Array<AnyObject> {
+                    
+                    self.array = Array<JSON>()
+                    
+                    for index in 0...json.count - 1 {
+                        let object: AnyObject = json[index]
+                        let objectDictionary = object as Dictionary<String, AnyObject>
+                        self.array!.append(JSON(dictionary: objectDictionary))
+                    }
+                    
+                } else {
+                    
+                    if let errorDictionary = result as? Dictionary<String, AnyObject> {
+                        
+                        if let message = errorDictionary[APIErrorKey] as? String {
+                            if let domain = NSBundle.mainBundle().bundleIdentifier {
+                                var dictionary = Dictionary<String, String>()
+                                dictionary[APIErrorKey] = message
+                                
+                                self.error = NSError(domain: domain, code: SERVER_ERROR_CODE, userInfo: dictionary)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     init(objectArray: Array<AnyObject>) {
         self.error = nil
         self.array = Array<JSON>()
