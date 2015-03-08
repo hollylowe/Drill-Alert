@@ -142,11 +142,13 @@ class Panel {
 
 class WellboreView {
     var id: Int
+    var name: String
     var panels: Array<Panel>
 
-    init(id: Int, panels: Array<Panel>) {
+    init(id: Int, name: String, panels: Array<Panel>) {
         self.id = id
         self.panels = panels
+        self.name = name
     }
     
     class func getFakeWellboreViews() -> Array<WellboreView> {
@@ -159,33 +161,46 @@ class WellboreView {
         let newPanel = Panel(id: 1, position: 0, xDimension: 0, yDimension: 0, visualizations: visualizations)
         panels.append(newPanel)
         
-        let newWellboreView = WellboreView(id: 1, panels: panels)
+        let newWellboreView = WellboreView(id: 1, name: "Fake View", panels: panels)
         var wellboreViews = Array<WellboreView>()
         wellboreViews.append(newWellboreView)
         
         return wellboreViews
     }
     
-    class func getWellboreViewsForUserID(userID: String) -> (Array<WellboreView>, String?) {
+    class func getWellboreViewsForUser(user: User) -> (Array<WellboreView>, String?) {
         var result = Array<WellboreView>()
         var errorMessage: String?
         
-        let endpointURL = "http://drillalert.azurewebsites.net/api/views/\(userID)"
-        let resultJSONArray = JSONArray(url: endpointURL)
+        let endpointURL = "https://drillalert.azurewebsites.net/api/views"
+
+        let APIWellboreIDKey = "WellboreId"
+        let APIWellboreUserIDKey = "UserId"
+        let APIWellboreViewIDKey = "Id"
+        let APIWellboreViewNameKey = "Name"
+        let APIWellboreViewPanelsKey = "Panels"
         
-        if let resultJSONs = resultJSONArray.array {
-            for resultJSON in resultJSONs {
-                if let id = resultJSON.getIntAtKey("Id") {
-                    if let panelsJSONArray = resultJSON.getJSONArrayAtKey("Panels") {
-                        let panels = Panel.getPanelsFromJSONArray(panelsJSONArray)
-                        let newWellboreView = WellboreView(id: id, panels: panels)
-                        result.append(newWellboreView)
+        if let userSession = user.userSession {
+            let wellboreViewsJSONArray = userSession.getJSONArrayAtURL(endpointURL)
+            
+            if let wellboreViewJSONs = wellboreViewsJSONArray.array {
+                for wellboreViewJSON in wellboreViewJSONs {
+                    
+                    if let id = wellboreViewJSON.getIntAtKey(APIWellboreViewIDKey) {
+                        if let name = wellboreViewJSON.getStringAtKey(APIWellboreViewNameKey) {
+                            if let panelsJSONArray = wellboreViewJSON.getJSONArrayAtKey(APIWellboreViewPanelsKey) {
+                                let panels = Panel.getPanelsFromJSONArray(panelsJSONArray)
+                                let newWellboreView = WellboreView(id: id, name: name, panels: panels)
+                                result.append(newWellboreView)
+                            }
+                        }
                     }
                 }
+            } else if let error = wellboreViewsJSONArray.error {
+                errorMessage = WellboreView.getErrorMessageForCode(error.code)
             }
-        } else if let error = resultJSONArray.error {
-            errorMessage = WellboreView.getErrorMessageForCode(error.code)
         }
+        
         
         return (result, errorMessage)
     }

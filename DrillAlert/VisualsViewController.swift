@@ -17,23 +17,35 @@ class VisualsViewController: UIViewController, UIPageViewControllerDataSource {
     // Implicit, set in viewDidLoad
     var pageViewController: UIPageViewController!
     
-    // Panels 
-    var panels = Array<Panel>()
+    // These are all of a user's WellboreViews
+    var wellboreViews = Array<WellboreView>()
+    
+    // This will be the user's currently selected WellboreView.
+    // If they haven't selected one (or the backend doesn't support
+    // saving it yet), then this will just be set to the first 
+    // view that is in the wellboreViews array.
+    var currentWellboreView: WellboreView?
     
     // TODO: Remove this, for debuggin only
-    var shouldLoadFromNetwork = false
+    var shouldLoadFromNetwork = true
+    
+    func reloadVisuals() {
+        
+    }
     
     override func viewDidLoad() {
-        
-        
         // Get the visuals this user has saved 
         if shouldLoadFromNetwork {
-            let (userWellboreViews, error) = WellboreView.getWellboreViewsForUserID(self.user.id)
+            let (userWellboreViews, error) = WellboreView.getWellboreViewsForUser(self.user)
             if error == nil {
-                // There's probably only one wellbore view
-                for wellboreView in userWellboreViews {
-                    panels = wellboreView.panels
+                // TODO: Do something here to set the currentWellboreView
+                // to what the user has saved.
+                self.wellboreViews = userWellboreViews
+                if self.wellboreViews.count > 0 {
+                    self.currentWellboreView = self.wellboreViews[0]
+                    self.reloadVisuals()
                 }
+                
             } else {
                 if let message = error {
                     wellboreDetailViewController.showAlertWithMessage(message)
@@ -42,8 +54,10 @@ class VisualsViewController: UIViewController, UIPageViewControllerDataSource {
             
             super.viewDidLoad()
         } else {
-            for wellboreView in WellboreView.getFakeWellboreViews() {
-                panels = wellboreView.panels
+            self.wellboreViews = WellboreView.getFakeWellboreViews()
+            if self.wellboreViews.count > 0 {
+                self.currentWellboreView = self.wellboreViews[0]
+                self.reloadVisuals()
             }
         }
         
@@ -81,26 +95,20 @@ class VisualsViewController: UIViewController, UIPageViewControllerDataSource {
     
     func viewControllerAtIndex(index: Int) -> UIViewController? {
         var result: UIViewController?
-        let numberOfPanels = self.panels.count
-        
-        if numberOfPanels  == 0 || index >= numberOfPanels {
-            // TODO: Return something that says "no panels, add one"
-            return nil
-        } else if let storyboard = self.storyboard {
-            let panelViewController = storyboard.instantiateViewControllerWithIdentifier(VisualViewController.getStoryboardIdentifier()) as VisualViewController
-            panelViewController.pageIndex = index
-            let panel = panels[index]
-            // Create the panel with each visualization
-            panelViewController.panel = panel
-            /*
-            // For the demo 
-            if index == 1 {
-                panelViewController.htmlFileName = "gauge"
-            } else if index == 0 {
-                panelViewController.htmlFileName = "graph"
+        if let wellboreView = self.currentWellboreView {
+            let numberOfPanels = wellboreView.panels.count
+            
+            if numberOfPanels  == 0 || index >= numberOfPanels {
+                // TODO: Return something that says "no panels, add one"
+                return nil
+            } else if let storyboard = self.storyboard {
+                let panelViewController = storyboard.instantiateViewControllerWithIdentifier(VisualViewController.getStoryboardIdentifier()) as VisualViewController
+                panelViewController.pageIndex = index
+                let panel = wellboreView.panels[index]
+                // Create the panel with each visualization
+                panelViewController.panel = panel
+                result = panelViewController
             }
-            */
-            result = panelViewController
         }
         
         return result
@@ -109,7 +117,11 @@ class VisualsViewController: UIViewController, UIPageViewControllerDataSource {
 
 extension VisualsViewController: UIPageViewControllerDataSource {
     func presentationCountForPageViewController(pageViewController: UIPageViewController) -> Int {
-        return self.panels.count
+        var numberOfPanels = 0
+        if let wellboreView = self.currentWellboreView {
+            numberOfPanels = wellboreView.panels.count
+        }
+        return numberOfPanels
     }
     
     func presentationIndexForPageViewController(pageViewController: UIPageViewController) -> Int {
@@ -134,9 +146,12 @@ extension VisualsViewController: UIPageViewControllerDataSource {
         }
         
         index = index + 1
-        if index == self.panels.count {
-            return nil
+        if let wellboreView = self.currentWellboreView {
+            if index == wellboreView.panels.count {
+                return nil
+            }
         }
+        
         
         return self.viewControllerAtIndex(index)
     }
