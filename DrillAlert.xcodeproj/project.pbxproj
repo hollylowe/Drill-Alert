@@ -20,7 +20,7 @@
 		A0343D391A2AC85400FA0464 /* WellboreDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0343D381A2AC85400FA0464 /* WellboreDetailViewController.swift */; };
 		A0343D411A2AFE9C00FA0464 /* ParameterAlertTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0343D401A2AFE9C00FA0464 /* ParameterAlertTableViewCell.swift */; };
 		A042B2DD1A195ED600660AB7 /* VisualViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A042B2DC1A195ED600660AB7 /* VisualViewController.swift */; };
-		A042B2DF1A19645F00660AB7 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = A042B2DE1A19645F00660AB7 /* index.html */; };
+		A042B2DF1A19645F00660AB7 /* old-index.html in Resources */ = {isa = PBXBuildFile; fileRef = A042B2DE1A19645F00660AB7 /* old-index.html */; };
 		A042B2E11A19669E00660AB7 /* d3.min.js in Resources */ = {isa = PBXBuildFile; fileRef = A042B2E01A19669E00660AB7 /* d3.min.js */; };
 		A04AB1F31A81C9AD003704CC /* d3.js in Resources */ = {isa = PBXBuildFile; fileRef = A04AB1F21A81C9AD003704CC /* d3.js */; };
 		A05A35CE1A083727008EA386 /* AdminTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05A35CD1A083727008EA386 /* AdminTableViewController.swift */; };
@@ -127,14 +127,18 @@
 		A095FB8C1A2FC37200B15D39 /* AlertValueCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A095FB8B1A2FC37200B15D39 /* AlertValueCell.swift */; };
 		A095FB8F1A2FC38C00B15D39 /* AlertWhenCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A095FB8E1A2FC38C00B15D39 /* AlertWhenCell.swift */; };
 		A095FB911A2FC39800B15D39 /* AlertPriorityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A095FB901A2FC39800B15D39 /* AlertPriorityCell.swift */; };
-		A095FB931A2FF20D00B15D39 /* gauge.html in Resources */ = {isa = PBXBuildFile; fileRef = A095FB921A2FF20D00B15D39 /* gauge.html */; };
+		A095FB931A2FF20D00B15D39 /* old-gauge.html in Resources */ = {isa = PBXBuildFile; fileRef = A095FB921A2FF20D00B15D39 /* old-gauge.html */; };
 		A09CFE7F1AA7F8080094A582 /* LoginWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A09CFE7E1AA7F8080094A582 /* LoginWebViewController.swift */; };
 		A0A783DA1A78BCFB00C3B20A /* AlertPriorityStandard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A783D91A78BCFB00C3B20A /* AlertPriorityStandard.swift */; };
 		A0A783DC1A78BD1000C3B20A /* AlertTypeStandard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A783DB1A78BD1000C3B20A /* AlertTypeStandard.swift */; };
 		A0ABE79E1AAA5D7C00C73BD6 /* JSONTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0ABE79D1AAA5D7C00C73BD6 /* JSONTests.swift */; };
 		A0ABE7A01AAA875C00C73BD6 /* JSONArrayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0ABE79F1AAA875C00C73BD6 /* JSONArrayTests.swift */; };
-		A0CCC5E51A81C69600F92B36 /* graph.html in Resources */ = {isa = PBXBuildFile; fileRef = A0CCC5E31A81C69600F92B36 /* graph.html */; };
-		A0CCC5E61A81C69600F92B36 /* graph.js in Resources */ = {isa = PBXBuildFile; fileRef = A0CCC5E41A81C69600F92B36 /* graph.js */; };
+		A0AC42811AABF4FA000F12CD /* gauge.js in Resources */ = {isa = PBXBuildFile; fileRef = A0AC42801AABF4FA000F12CD /* gauge.js */; };
+		A0AC42831AABF546000F12CD /* graph.html in Resources */ = {isa = PBXBuildFile; fileRef = A0AC42821AABF546000F12CD /* graph.html */; };
+		A0AC42851AABF55E000F12CD /* graph.js in Resources */ = {isa = PBXBuildFile; fileRef = A0AC42841AABF55E000F12CD /* graph.js */; };
+		A0AC42871AABF56D000F12CD /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = A0AC42861AABF56D000F12CD /* index.html */; };
+		A0CCC5E51A81C69600F92B36 /* old-graph.html in Resources */ = {isa = PBXBuildFile; fileRef = A0CCC5E31A81C69600F92B36 /* old-graph.html */; };
+		A0CCC5E61A81C69600F92B36 /* old-graph.js in Resources */ = {isa = PBXBuildFile; fileRef = A0CCC5E41A81C69600F92B36 /* old-graph.js */; };
 		A0CE03281A0ECEFB0076EE3E /* Wellbore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CE03271A0ECEFB0076EE3E /* Wellbore.swift */; };
 		A0CE032C1A0ED67C0076EE3E /* VisualsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CE032B1A0ED67C0076EE3E /* VisualsViewController.swift */; };
 		A0CEDBA21A0C3ADF0051BDB8 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CEDBA11A0C3ADF0051BDB8 /* User.swift */; };
@@ -197,7 +201,7 @@
 		A0343D381A2AC85400FA0464 /* WellboreDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WellboreDetailViewController.swift; sourceTree = "<group>"; };
 		A0343D401A2AFE9C00FA0464 /* ParameterAlertTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParameterAlertTableViewCell.swift; sourceTree = "<group>"; };
 		A042B2DC1A195ED600660AB7 /* VisualViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualViewController.swift; sourceTree = "<group>"; };
-		A042B2DE1A19645F00660AB7 /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
+		A042B2DE1A19645F00660AB7 /* old-index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "old-index.html"; sourceTree = "<group>"; };
 		A042B2E01A19669E00660AB7 /* d3.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = d3.min.js; sourceTree = "<group>"; };
 		A04AB1F21A81C9AD003704CC /* d3.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = d3.js; sourceTree = "<group>"; };
 		A05A35CD1A083727008EA386 /* AdminTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdminTableViewController.swift; sourceTree = "<group>"; };
@@ -239,14 +243,18 @@
 		A095FB8B1A2FC37200B15D39 /* AlertValueCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertValueCell.swift; sourceTree = "<group>"; };
 		A095FB8E1A2FC38C00B15D39 /* AlertWhenCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertWhenCell.swift; sourceTree = "<group>"; };
 		A095FB901A2FC39800B15D39 /* AlertPriorityCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertPriorityCell.swift; sourceTree = "<group>"; };
-		A095FB921A2FF20D00B15D39 /* gauge.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = gauge.html; sourceTree = "<group>"; };
+		A095FB921A2FF20D00B15D39 /* old-gauge.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "old-gauge.html"; sourceTree = "<group>"; };
 		A09CFE7E1AA7F8080094A582 /* LoginWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginWebViewController.swift; sourceTree = "<group>"; };
 		A0A783D91A78BCFB00C3B20A /* AlertPriorityStandard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertPriorityStandard.swift; sourceTree = "<group>"; };
 		A0A783DB1A78BD1000C3B20A /* AlertTypeStandard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertTypeStandard.swift; sourceTree = "<group>"; };
 		A0ABE79D1AAA5D7C00C73BD6 /* JSONTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONTests.swift; sourceTree = "<group>"; };
 		A0ABE79F1AAA875C00C73BD6 /* JSONArrayTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONArrayTests.swift; sourceTree = "<group>"; };
-		A0CCC5E31A81C69600F92B36 /* graph.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = graph.html; sourceTree = "<group>"; };
-		A0CCC5E41A81C69600F92B36 /* graph.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = graph.js; sourceTree = "<group>"; };
+		A0AC42801AABF4FA000F12CD /* gauge.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = gauge.js; sourceTree = "<group>"; };
+		A0AC42821AABF546000F12CD /* graph.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = graph.html; sourceTree = "<group>"; };
+		A0AC42841AABF55E000F12CD /* graph.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = graph.js; sourceTree = "<group>"; };
+		A0AC42861AABF56D000F12CD /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
+		A0CCC5E31A81C69600F92B36 /* old-graph.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "old-graph.html"; sourceTree = "<group>"; };
+		A0CCC5E41A81C69600F92B36 /* old-graph.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "old-graph.js"; sourceTree = "<group>"; };
 		A0CE03271A0ECEFB0076EE3E /* Wellbore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Wellbore.swift; sourceTree = "<group>"; };
 		A0CE032B1A0ED67C0076EE3E /* VisualsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualsViewController.swift; sourceTree = "<group>"; };
 		A0CEDBA11A0C3ADF0051BDB8 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -505,8 +513,8 @@
 		A0CCC5E71A81C69D00F92B36 /* Graph */ = {
 			isa = PBXGroup;
 			children = (
-				A0CCC5E31A81C69600F92B36 /* graph.html */,
-				A0CCC5E41A81C69600F92B36 /* graph.js */,
+				A0CCC5E31A81C69600F92B36 /* old-graph.html */,
+				A0CCC5E41A81C69600F92B36 /* old-graph.js */,
 			);
 			name = Graph;
 			sourceTree = "<group>";
@@ -514,8 +522,8 @@
 		A0CCC5E81A81C6AB00F92B36 /* Examples */ = {
 			isa = PBXGroup;
 			children = (
-				A042B2DE1A19645F00660AB7 /* index.html */,
-				A095FB921A2FF20D00B15D39 /* gauge.html */,
+				A042B2DE1A19645F00660AB7 /* old-index.html */,
+				A095FB921A2FF20D00B15D39 /* old-gauge.html */,
 			);
 			name = Examples;
 			sourceTree = "<group>";
@@ -523,8 +531,12 @@
 		A0CCC5E91A81C6CA00F92B36 /* Visualizations */ = {
 			isa = PBXGroup;
 			children = (
+				A0AC42801AABF4FA000F12CD /* gauge.js */,
+				A0AC42821AABF546000F12CD /* graph.html */,
+				A0AC42841AABF55E000F12CD /* graph.js */,
 				A04AB1F21A81C9AD003704CC /* d3.js */,
 				A042B2E01A19669E00660AB7 /* d3.min.js */,
+				A0AC42861AABF56D000F12CD /* index.html */,
 				A0CCC5E81A81C6AB00F92B36 /* Examples */,
 				A0CCC5E71A81C69D00F92B36 /* Graph */,
 			);
@@ -748,17 +760,21 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0AC42871AABF56D000F12CD /* index.html in Resources */,
 				A0343D311A2674C100FA0464 /* Entitlements.plist in Resources */,
-				A095FB931A2FF20D00B15D39 /* gauge.html in Resources */,
+				A095FB931A2FF20D00B15D39 /* old-gauge.html in Resources */,
 				A0F1B57F1A901B1200306DB7 /* SwiftHTMLParserLicense in Resources */,
 				A042B2E11A19669E00660AB7 /* d3.min.js in Resources */,
 				A06FFD6C1A06AA08001B3FF8 /* Main.storyboard in Resources */,
-				A042B2DF1A19645F00660AB7 /* index.html in Resources */,
+				A042B2DF1A19645F00660AB7 /* old-index.html in Resources */,
 				A06FFD711A06AA08001B3FF8 /* LaunchScreen.xib in Resources */,
+				A0AC42851AABF55E000F12CD /* graph.js in Resources */,
 				A06FFD6E1A06AA08001B3FF8 /* Images.xcassets in Resources */,
+				A0AC42811AABF4FA000F12CD /* gauge.js in Resources */,
+				A0AC42831AABF546000F12CD /* graph.html in Resources */,
 				A04AB1F31A81C9AD003704CC /* d3.js in Resources */,
-				A0CCC5E51A81C69600F92B36 /* graph.html in Resources */,
-				A0CCC5E61A81C69600F92B36 /* graph.js in Resources */,
+				A0CCC5E51A81C69600F92B36 /* old-graph.html in Resources */,
+				A0CCC5E61A81C69600F92B36 /* old-graph.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
