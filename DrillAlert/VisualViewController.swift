@@ -9,7 +9,12 @@
 import Foundation
 import UIKit
 
-class JavaScriptPlot {
+protocol JavaScriptVisualization {
+    func getInitializerJavaScriptString() -> String!
+    func getTickJavaScriptStringWithDataPoint(dataPoint: NSNumber) -> String!
+}
+
+class JavaScriptPlot: JavaScriptVisualization {
     var id: Int
     var yMax: Int
     var xMax: Int
@@ -44,7 +49,7 @@ class JavaScriptPlot {
         return dataString
     }
     
-    func getInitializerJavaScriptString() -> String {
+    func getInitializerJavaScriptString() -> String! {
         var plotInitializer = "master.init("
         var config = "{id: \(self.id), yMax: \(self.yMax), xMax: \(self.xMax), width: \(self.width), height: \(self.height), data: \(self.getInitialDataString())}"
         
@@ -52,22 +57,22 @@ class JavaScriptPlot {
         return plotInitializer
     }
     
-    func getTickStringWithDataPoint(dataPoint: Float) -> String {
-        let tickString = "master.tick(\(dataPoint), \(self.id))"
+    func getTickJavaScriptStringWithDataPoint(dataPoint: NSNumber) -> String! {
+        let tickString = "master.tick(\(dataPoint.stringValue), \(self.id))"
         return tickString
     }
     
 }
 
-class JavaScriptGauge {
+class JavaScriptGauge: JavaScriptVisualization {
     
     var id: Int // id is required and is the identifier of the plot. (Should be unique)
-    var size: Int // size is the diameter of the whole gauge in px
-    var clipWidth: Int // the width of the div containing the gauge in px
-    var clipHeight: Int // the height of the div containing the gauge in px
-    var ringWidth: Int // how thick(wide) the color spectrum part of the gauge in px
-    var maxValue: Int // the maximum value the gauge can reach
-    var transitionMs: Int // the time it takes to transition from one value to the next in milliseconds
+    var size: Int = 300 // size is the diameter of the whole gauge in px
+    var clipWidth: Int = 300 // the width of the div containing the gauge in px
+    var clipHeight: Int = 300 // the height of the div containing the gauge in px
+    var ringWidth: Int = 60 // how thick(wide) the color spectrum part of the gauge in px
+    var maxValue: Int = 10  // the maximum value the gauge can reach
+    var transitionMs: Int = 4000 // the time it takes to transition from one value to the next in milliseconds
     
     init(id: Int, size: Int, clipWidth: Int, clipHeight: Int, ringWidth: Int, maxValue: Int, transitionMs: Int) {
         self.id = id
@@ -79,12 +84,22 @@ class JavaScriptGauge {
         self.transitionMs = transitionMs
     }
     
-    func getInitializerJavaScriptString() -> String {
+    init(id: Int) {
+        self.id = id
+    }
+    
+    func getInitializerJavaScriptString() -> String! {
         var gaugeInitializer = "masterGauge.init("
-        var config = "{id: \(self.id), size: \(self.size), clipWidth: \(self.clipWidth), clipHeight: \(self.clipHeight), ringWidth: \(self.ringWidth), maxValue: \(self.maxValue), transitionMs: \(self.transitionMs)}"
-        gaugeInitializer = gaugeInitializer + ")"
+        let config = "{id: \(self.id), size: \(self.size), clipWidth: \(self.clipWidth), clipHeight: \(self.clipHeight), ringWidth: \(self.ringWidth), maxValue: \(self.maxValue), transitionMs: \(self.transitionMs)}"
+        
+        gaugeInitializer = gaugeInitializer + config + ")"
         
         return gaugeInitializer
+    }
+    
+    func getTickJavaScriptStringWithDataPoint(dataPoint: NSNumber) -> String! {
+        let tickString = "masterGauge.update(\(dataPoint.stringValue), \(self.id))"
+        return tickString
     }
     
     
@@ -93,11 +108,14 @@ class JavaScriptGauge {
 class VisualViewController: UIViewController, UIWebViewDelegate {
     @IBOutlet weak var panelInformationLabel: UILabel!
     @IBOutlet weak var webView: UIWebView!
+    @IBOutlet weak var panelLastUpdatedLabel: UILabel!
     
     var panel: Panel!
     var timer: NSTimer?
     var pageIndex: Int!
-    var htmlFileName = "index"
+    var javaScriptVisualizations = Array<JavaScriptVisualization>()
+    
+    let htmlFileName = "index"
 
     class func getStoryboardIdentifier() -> String {
         return "VisualViewController"
@@ -105,8 +123,7 @@ class VisualViewController: UIViewController, UIWebViewDelegate {
     
     override func viewDidLoad() {
         self.panelInformationLabel.text = self.panel.name
-        var plot = JavaScriptPlot(id: 1, yMax: 1, xMax: 10, initialData: [0, 1, 2, 3, 4], width: 300, height: 500)
-        
+        self.panelLastUpdatedLabel.text = "Loading..."
         super.viewDidLoad()
     }
     
@@ -124,12 +141,16 @@ class VisualViewController: UIViewController, UIWebViewDelegate {
         }
     }
     
-    // This is purely for the demo
-    func updateGraphData() {
+    func updateVisualizations() {
         let xVal = 2
-        println("update graph..")
-        var dataStr = String("master.tick(\(xVal), 0)")
-        self.webView.stringByEvaluatingJavaScriptFromString(dataStr)
+        println("Updating visualizations..")
+        
+        for javaScriptVisualization in javaScriptVisualizations {
+            self.webView.stringByEvaluatingJavaScriptFromString(javaScriptVisualization.getTickJavaScriptStringWithDataPoint(xVal))
+            
+        }
+        
+        self.panelLastUpdatedLabel.text = "Updated \(NSDate())"
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -144,10 +165,34 @@ class VisualViewController: UIViewController, UIWebViewDelegate {
 
 extension VisualViewController: UIWebViewDelegate {
     func webViewDidFinishLoad(webView: UIWebView) {
-        self.webView.stringByEvaluatingJavaScriptFromString("master.init({yMax : 1, xMax : 10, data : [1, 2, 3, 4, 5], width : 500, height : 300, id: 0})")
+        let plotJSFileName = "Test.js"
+        let gaugeJSFileName = "Test2.js"
+        let defaultWidth = 300
+        let defaultHeight = 500
+        
+        
+        var newJavaScriptVisualizations = Array<JavaScriptVisualization>()
+        
+        for visualization in self.panel.visualizations {
+            switch visualization.jsFileName {
+            case plotJSFileName:
+                newJavaScriptVisualizations.append(JavaScriptPlot(id: visualization.id, yMax: visualization.yPosition, xMax: visualization.xPosition, initialData: Array<Int>(), width: defaultWidth, height: defaultHeight))
+            case gaugeJSFileName:
+                let newGauge = JavaScriptGauge(id: visualization.id)
+                newJavaScriptVisualizations.append(newGauge)
+            default: break
+            }
+        }
+        
+        self.javaScriptVisualizations = newJavaScriptVisualizations
+        
+        // Initialize all the visualizations
+        for javaScriptVisualization in javaScriptVisualizations {
+            self.webView.stringByEvaluatingJavaScriptFromString(javaScriptVisualization.getInitializerJavaScriptString())
+        }
+        
 
-        // This is purely for the demo
-        timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateGraphData", userInfo: nil, repeats: true)
+        timer = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: "updateVisualizations", userInfo: nil, repeats: true)
 
     }
 }

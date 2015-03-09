@@ -1405,33 +1405,74 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Panel Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8OQ-O0-5Id">
+                                <rect key="frame" x="16" y="44" width="568" height="20.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="249" id="WE5-rS-uxF"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="WE5-rS-uxF"/>
+                                    </mask>
+                                </variation>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Updated  10:20:00 12/2/02" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4nz-yN-zaT">
+                                <rect key="frame" x="16" y="64" width="568" height="20.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20.5" id="BXs-EV-pIC"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c2p-4E-tqC">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <rect key="frame" x="0.0" y="102" width="600" height="498"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <outlet property="delegate" destination="LdQ-QI-dwH" id="CNu-nz-ITi"/>
                                 </connections>
                             </webView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8OQ-O0-5Id">
-                                <rect key="frame" x="36" y="38" width="535" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="8OQ-O0-5Id" firstAttribute="leading" secondItem="gFv-a6-E2y" secondAttribute="leadingMargin" constant="20" id="KKY-G1-tZZ"/>
+                            <constraint firstItem="8OQ-O0-5Id" firstAttribute="top" secondItem="LzG-ri-8vJ" secondAttribute="bottom" id="2c7-QP-VlG"/>
+                            <constraint firstItem="8OQ-O0-5Id" firstAttribute="trailing" secondItem="gFv-a6-E2y" secondAttribute="trailingMargin" id="8OQ-mh-y1B"/>
+                            <constraint firstItem="4nz-yN-zaT" firstAttribute="trailing" secondItem="gFv-a6-E2y" secondAttribute="trailingMargin" id="8uE-y3-Pid"/>
+                            <constraint firstItem="4nz-yN-zaT" firstAttribute="top" secondItem="8OQ-O0-5Id" secondAttribute="bottom" constant="2" id="DjI-0Z-LbM"/>
                             <constraint firstItem="c2p-4E-tqC" firstAttribute="leading" secondItem="gFv-a6-E2y" secondAttribute="leadingMargin" constant="-16" id="Tue-o7-YGe"/>
+                            <constraint firstItem="4nz-yN-zaT" firstAttribute="top" secondItem="8OQ-O0-5Id" secondAttribute="bottom" id="WHR-q1-yRM"/>
+                            <constraint firstItem="emb-M1-t5I" firstAttribute="top" secondItem="c2p-4E-tqC" secondAttribute="bottom" id="XjG-oG-l4a"/>
                             <constraint firstItem="emb-M1-t5I" firstAttribute="top" secondItem="c2p-4E-tqC" secondAttribute="bottom" id="drB-Iz-6J8"/>
-                            <constraint firstItem="8OQ-O0-5Id" firstAttribute="top" secondItem="LzG-ri-8vJ" secondAttribute="bottom" constant="18" id="j9J-GN-JqB"/>
+                            <constraint firstItem="c2p-4E-tqC" firstAttribute="top" secondItem="8OQ-O0-5Id" secondAttribute="bottom" constant="17.5" id="g7F-mk-FHT"/>
+                            <constraint firstItem="8OQ-O0-5Id" firstAttribute="top" secondItem="LzG-ri-8vJ" secondAttribute="bottom" constant="24" id="h0v-Sl-LgD"/>
+                            <constraint firstItem="4nz-yN-zaT" firstAttribute="top" secondItem="LzG-ri-8vJ" secondAttribute="bottom" constant="18" id="ipk-so-F2f"/>
+                            <constraint firstItem="c2p-4E-tqC" firstAttribute="top" secondItem="4nz-yN-zaT" secondAttribute="bottom" constant="17.5" id="isy-hd-xO5"/>
                             <constraint firstAttribute="trailingMargin" secondItem="8OQ-O0-5Id" secondAttribute="trailing" constant="13" id="leA-EE-HJ8"/>
                             <constraint firstItem="c2p-4E-tqC" firstAttribute="top" secondItem="gFv-a6-E2y" secondAttribute="topMargin" id="p7h-XL-pmH"/>
+                            <constraint firstItem="8OQ-O0-5Id" firstAttribute="leading" secondItem="gFv-a6-E2y" secondAttribute="leadingMargin" id="pMz-Cj-WdV"/>
+                            <constraint firstItem="4nz-yN-zaT" firstAttribute="leading" secondItem="gFv-a6-E2y" secondAttribute="leadingMargin" id="po7-IG-TxT"/>
                             <constraint firstAttribute="trailingMargin" secondItem="c2p-4E-tqC" secondAttribute="trailing" constant="-16" id="zTO-aO-ECC"/>
+                            <constraint firstItem="4nz-yN-zaT" firstAttribute="trailing" secondItem="gFv-a6-E2y" secondAttribute="trailingMargin" id="zkv-lN-5dj"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="2c7-QP-VlG"/>
+                                <exclude reference="leA-EE-HJ8"/>
+                                <exclude reference="8uE-y3-Pid"/>
+                                <exclude reference="DjI-0Z-LbM"/>
+                                <exclude reference="ipk-so-F2f"/>
+                                <exclude reference="g7F-mk-FHT"/>
+                                <exclude reference="p7h-XL-pmH"/>
+                                <exclude reference="drB-Iz-6J8"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
                         <outlet property="panelInformationLabel" destination="8OQ-O0-5Id" id="Lzb-9n-x0w"/>
+                        <outlet property="panelLastUpdatedLabel" destination="4nz-yN-zaT" id="HZH-IT-Qia"/>
                         <outlet property="webView" destination="c2p-4E-tqC" id="Vfv-hO-rgs"/>
                     </connections>
                 </viewController>

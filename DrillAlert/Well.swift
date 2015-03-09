@@ -84,9 +84,7 @@ class Well {
             if errorMessage == nil {
                 if let wellJSONs = wellsJSONArray.array {
                     for wellJSONObject in wellJSONs {
-                        println("Got wells.")
                         if let well = Well.wellFromJSONObject(wellJSONObject) {
-                            println(well.name)
                             result.append(well)
                         }
                     }
