@@ -154,7 +154,32 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="WellboreTableViewCell" id="7yC-VC-mdV" customClass="WellboreTableViewCell" customModule="DrillAlert" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="WellTableViewCell" rowHeight="84" id="iYH-Br-H3B" customClass="WellTableViewCell" customModule="DrillAlert" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iYH-Br-H3B" id="4Jm-id-AA3">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Well Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T2G-hc-giP">
+                                                    <rect key="frame" x="21" y="19" width="563" height="21"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="20"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Well Location" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hsx-5L-IgS">
+                                                    <rect key="frame" x="21" y="48" width="563" height="24"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="wellLocationLabel" destination="Hsx-5L-IgS" id="XTF-4Y-8vW"/>
+                                            <outlet property="wellNameLabel" destination="T2G-hc-giP" id="anz-08-dMG"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="WellboreTableViewCell" rowHeight="57" id="7yC-VC-mdV" customClass="WellboreTableViewCell" customModule="DrillAlert" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7yC-VC-mdV" id="Feg-5d-tnM">
@@ -179,65 +204,17 @@
                                                         </mask>
                                                     </variation>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Well Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jB6-rB-8cO">
-                                                    <rect key="frame" x="24" y="42" width="568" height="19"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="21" id="9wC-NK-dy3"/>
-                                                        <constraint firstAttribute="height" constant="32" id="FAs-YV-ZL5"/>
-                                                        <constraint firstAttribute="height" constant="19" id="sC8-nV-uP3"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
-                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <nil key="highlightedColor"/>
-                                                    <variation key="default">
-                                                        <mask key="constraints">
-                                                            <exclude reference="9wC-NK-dy3"/>
-                                                            <exclude reference="FAs-YV-ZL5"/>
-                                                        </mask>
-                                                    </variation>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Well Location" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5dN-iC-SON">
-                                                    <rect key="frame" x="24" y="64" width="568" height="19"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="21" id="rb1-6i-uGF"/>
-                                                        <constraint firstAttribute="height" constant="19" id="yWs-C5-MGl"/>
-                                                        <constraint firstAttribute="height" constant="32" id="yes-8B-NGi"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
-                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <nil key="highlightedColor"/>
-                                                    <variation key="default">
-                                                        <mask key="constraints">
-                                                            <exclude reference="rb1-6i-uGF"/>
-                                                            <exclude reference="yes-8B-NGi"/>
-                                                        </mask>
-                                                    </variation>
-                                                </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="trailingMargin" secondItem="PIa-Ru-0cA" secondAttribute="trailing" constant="32" id="2eH-ds-LUO"/>
-                                                <constraint firstItem="jB6-rB-8cO" firstAttribute="top" secondItem="PIa-Ru-0cA" secondAttribute="bottom" constant="5" id="2hf-mu-0bR"/>
                                                 <constraint firstItem="PIa-Ru-0cA" firstAttribute="leading" secondItem="Feg-5d-tnM" secondAttribute="leadingMargin" constant="16" id="2rb-kx-W2u"/>
                                                 <constraint firstItem="PIa-Ru-0cA" firstAttribute="leading" secondItem="Feg-5d-tnM" secondAttribute="leadingMargin" constant="16" id="60K-xW-yYf"/>
                                                 <constraint firstItem="PIa-Ru-0cA" firstAttribute="top" secondItem="Feg-5d-tnM" secondAttribute="topMargin" id="69f-Mh-Onp"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="jB6-rB-8cO" secondAttribute="bottom" constant="19" id="CwM-aP-Ndd"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="jB6-rB-8cO" secondAttribute="bottom" constant="10" id="DIM-i9-5zD"/>
-                                                <constraint firstItem="5dN-iC-SON" firstAttribute="top" secondItem="jB6-rB-8cO" secondAttribute="bottom" constant="3" id="Ejg-a5-AcM"/>
-                                                <constraint firstItem="jB6-rB-8cO" firstAttribute="top" secondItem="Feg-5d-tnM" secondAttribute="topMargin" constant="42" id="Hn2-nK-gSk"/>
-                                                <constraint firstItem="jB6-rB-8cO" firstAttribute="trailing" secondItem="Feg-5d-tnM" secondAttribute="trailingMargin" id="KrZ-MZ-InW"/>
-                                                <constraint firstItem="5dN-iC-SON" firstAttribute="trailing" secondItem="Feg-5d-tnM" secondAttribute="trailingMargin" id="Mbt-JF-ert"/>
                                                 <constraint firstItem="PIa-Ru-0cA" firstAttribute="top" secondItem="Feg-5d-tnM" secondAttribute="topMargin" constant="9" id="OUq-Ey-ge3"/>
                                                 <constraint firstItem="PIa-Ru-0cA" firstAttribute="trailing" secondItem="Feg-5d-tnM" secondAttribute="trailingMargin" id="SFZ-eL-YVw"/>
                                                 <constraint firstItem="PIa-Ru-0cA" firstAttribute="leading" secondItem="Feg-5d-tnM" secondAttribute="leadingMargin" constant="16" id="Ti6-gZ-rJf"/>
-                                                <constraint firstItem="jB6-rB-8cO" firstAttribute="leading" secondItem="Feg-5d-tnM" secondAttribute="leadingMargin" constant="16" id="W9n-Ee-vem"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="jB6-rB-8cO" secondAttribute="trailing" constant="32" id="aik-hh-1ND"/>
                                                 <constraint firstItem="PIa-Ru-0cA" firstAttribute="top" secondItem="Feg-5d-tnM" secondAttribute="topMargin" constant="9" id="bSu-9F-9KR"/>
-                                                <constraint firstItem="jB6-rB-8cO" firstAttribute="top" secondItem="PIa-Ru-0cA" secondAttribute="bottom" constant="4" id="dpG-zQ-m80"/>
-                                                <constraint firstItem="jB6-rB-8cO" firstAttribute="top" secondItem="PIa-Ru-0cA" secondAttribute="bottom" constant="4" id="fNE-jZ-dZR"/>
-                                                <constraint firstItem="5dN-iC-SON" firstAttribute="top" secondItem="PIa-Ru-0cA" secondAttribute="bottom" id="hBv-7e-sum"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="PIa-Ru-0cA" secondAttribute="trailing" constant="32" id="ma8-7p-Mvk"/>
-                                                <constraint firstItem="jB6-rB-8cO" firstAttribute="leading" secondItem="Feg-5d-tnM" secondAttribute="leadingMargin" constant="16" id="qwr-wm-oZY"/>
-                                                <constraint firstItem="5dN-iC-SON" firstAttribute="leading" secondItem="Feg-5d-tnM" secondAttribute="leadingMargin" constant="16" id="sxR-0z-Aze"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="PIa-Ru-0cA" secondAttribute="bottom" constant="35" id="wG8-8S-JJB"/>
                                             </constraints>
                                             <variation key="default">
@@ -249,20 +226,10 @@
                                                     <exclude reference="bSu-9F-9KR"/>
                                                     <exclude reference="ma8-7p-Mvk"/>
                                                     <exclude reference="wG8-8S-JJB"/>
-                                                    <exclude reference="CwM-aP-Ndd"/>
-                                                    <exclude reference="DIM-i9-5zD"/>
-                                                    <exclude reference="Hn2-nK-gSk"/>
-                                                    <exclude reference="W9n-Ee-vem"/>
-                                                    <exclude reference="aik-hh-1ND"/>
-                                                    <exclude reference="dpG-zQ-m80"/>
-                                                    <exclude reference="fNE-jZ-dZR"/>
-                                                    <exclude reference="hBv-7e-sum"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="wellLocationLabel" destination="5dN-iC-SON" id="vt0-sD-3UJ"/>
-                                            <outlet property="wellNameLabel" destination="jB6-rB-8cO" id="V1q-a2-RgH"/>
                                             <outlet property="wellboreNameLabel" destination="PIa-Ru-0cA" id="uAu-Uv-Vxb"/>
                                         </connections>
                                     </tableViewCell>

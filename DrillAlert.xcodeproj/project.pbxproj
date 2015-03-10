@@ -151,6 +151,8 @@
 		A0F1B57F1A901B1200306DB7 /* SwiftHTMLParserLicense in Resources */ = {isa = PBXBuildFile; fileRef = A0F1B57C1A901B1200306DB7 /* SwiftHTMLParserLicense */; };
 		A0F1B5811A901BE400306DB7 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A0F1B5801A901BE400306DB7 /* libxml2.dylib */; };
 		A0F5D6451A95906400B68548 /* AlertNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F5D6441A95906400B68548 /* AlertNotification.swift */; };
+		A0F9D6831AAEA324001B03F1 /* WellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F9D6821AAEA324001B03F1 /* WellTableViewCell.swift */; };
+		A0F9D6841AAEA6D3001B03F1 /* WellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F9D6821AAEA324001B03F1 /* WellTableViewCell.swift */; };
 		CF0224E31A959E1F00115B0B /* EditViewTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0224E21A959E1F00115B0B /* EditViewTableViewController.swift */; };
 		CF0224E51A95A8B100115B0B /* EditVisualTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0224E41A95A8B100115B0B /* EditVisualTableViewCell.swift */; };
 		CF08A77A1A9DCFCD00A33AFE /* UnitsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF08A7791A9DCFCD00A33AFE /* UnitsTableViewController.swift */; };
@@ -267,6 +269,7 @@
 		A0F1B57C1A901B1200306DB7 /* SwiftHTMLParserLicense */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SwiftHTMLParserLicense; sourceTree = "<group>"; };
 		A0F1B5801A901BE400306DB7 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		A0F5D6441A95906400B68548 /* AlertNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertNotification.swift; sourceTree = "<group>"; };
+		A0F9D6821AAEA324001B03F1 /* WellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WellTableViewCell.swift; sourceTree = "<group>"; };
 		CF0224E21A959E1F00115B0B /* EditViewTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditViewTableViewController.swift; sourceTree = "<group>"; };
 		CF0224E41A95A8B100115B0B /* EditVisualTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditVisualTableViewCell.swift; sourceTree = "<group>"; };
 		CF08A7791A9DCFCD00A33AFE /* UnitsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnitsTableViewController.swift; sourceTree = "<group>"; };
@@ -577,6 +580,7 @@
 				A0343D401A2AFE9C00FA0464 /* ParameterAlertTableViewCell.swift */,
 				A066D5D11A2EBD4B00E16E58 /* PaddedUITextField.swift */,
 				A0699A9D1A809102004F9C97 /* SegmentControlToolbar.swift */,
+				A0F9D6821AAEA324001B03F1 /* WellTableViewCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -828,6 +832,7 @@
 				CF8E9A911A91A093008F8AF8 /* Visual.swift in Sources */,
 				A0CE03281A0ECEFB0076EE3E /* Wellbore.swift in Sources */,
 				CF08A7801A9DD7BE00A33AFE /* AddCurveTableViewController.swift in Sources */,
+				A0F9D6831AAEA324001B03F1 /* WellTableViewCell.swift in Sources */,
 				CF0224E31A959E1F00115B0B /* EditViewTableViewController.swift in Sources */,
 				CF08A77E1A9DD6E900A33AFE /* ScaleTypeTableViewController.swift in Sources */,
 				CF6DD7581AA04BED0030ADAB /* NewNumberReadoutTableViewController.swift in Sources */,
@@ -913,6 +918,7 @@
 				A08025FA1AAA387B00C8BE99 /* WellUsersTableViewController.swift in Sources */,
 				A080260D1AAA3B6B00C8BE99 /* DrillAlert.xcdatamodeld in Sources */,
 				A08026031AAA388400C8BE99 /* AlertTableViewCell.swift in Sources */,
+				A0F9D6841AAEA6D3001B03F1 /* WellTableViewCell.swift in Sources */,
 				A08025CD1AAA382200C8BE99 /* AlertTypeStandard.swift in Sources */,
 				A08026041AAA388800C8BE99 /* ManageVisualsTableViewCell.swift in Sources */,
 				A08025DB1AAA382900C8BE99 /* UserSession.swift in Sources */,

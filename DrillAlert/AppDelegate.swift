@@ -55,7 +55,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
         println("Recieved a noti.")
-        
+        println(userInfo)
         /*
         var noti = UILocalNotification()
         var body = parameter.name
@@ -74,6 +74,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if let alertNotificationAnyObject: AnyObject = userInfo["aps"] {
             if let alertNotificationDictionary = alertNotificationAnyObject as? Dictionary<String, AnyObject> {
+                
+                if let alertMessage = alertNotificationDictionary["alert"] as? String {
+                    if let alertBadge = alertNotificationDictionary["badge"] as? Int {
+                        var alertLocalNotification = UILocalNotification()
+                        alertLocalNotification.fireDate = NSDate()
+                        alertLocalNotification.alertBody = alertMessage
+                        UIApplication.sharedApplication().scheduleLocalNotification(alertLocalNotification)
+                    }
+                }
+                
+                /*
                 if let alertGUID = alertNotificationDictionary["alertGUID"] as? String {
                     if let alertNotification = AlertNotification.createNewInstance(alertGUID, timeRecieved: NSDate()) {
                         var alertLocalNotification = UILocalNotification()
@@ -92,6 +103,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     }
                     
                 }
+                */
                 
             }
         }
@@ -102,6 +114,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let session = self.userSession {
             println("Successfully registered for push notifications.")
             println("Sending token.")
+            println(deviceToken.description)
             var token = deviceToken.description.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "<>"))
             session.sendDeviceToken(token)
         }

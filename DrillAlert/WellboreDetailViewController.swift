@@ -127,6 +127,7 @@ class WellboreDetailViewController: UIViewController {
         let manageAlertsTableViewController = manageAlertsNavigationController.viewControllers[0] as ManageAlertsTableViewController
 
         manageAlertsTableViewController.wellboreDetailViewController = self
+        manageAlertsTableViewController.currentUser = self.currentUser
         self.presentViewController(manageAlertsNavigationController, animated: true, completion: nil)
     }
     

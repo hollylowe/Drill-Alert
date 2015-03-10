@@ -146,7 +146,9 @@ class VisualViewController: UIViewController, UIWebViewDelegate {
         println("Updating visualizations..")
         
         for javaScriptVisualization in javaScriptVisualizations {
-            self.webView.stringByEvaluatingJavaScriptFromString(javaScriptVisualization.getTickJavaScriptStringWithDataPoint(xVal))
+            let updateString = javaScriptVisualization.getTickJavaScriptStringWithDataPoint(xVal)
+            println(updateString)
+            self.webView.stringByEvaluatingJavaScriptFromString(updateString)
             
         }
         
@@ -176,7 +178,7 @@ extension VisualViewController: UIWebViewDelegate {
         for visualization in self.panel.visualizations {
             switch visualization.jsFileName {
             case plotJSFileName:
-                newJavaScriptVisualizations.append(JavaScriptPlot(id: visualization.id, yMax: visualization.yPosition, xMax: visualization.xPosition, initialData: Array<Int>(), width: defaultWidth, height: defaultHeight))
+                newJavaScriptVisualizations.append(JavaScriptPlot(id: visualization.id, yMax: 10, xMax: 10, initialData: Array<Int>(), width: defaultWidth, height: defaultHeight))
             case gaugeJSFileName:
                 let newGauge = JavaScriptGauge(id: visualization.id)
                 newJavaScriptVisualizations.append(newGauge)

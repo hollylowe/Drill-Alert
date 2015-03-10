@@ -43,6 +43,7 @@ class AddEditAlertTableViewController: UITableViewController {
     // from a seperate view controller (SelectAlertType),
     // and set here upon that view controller's dismissal.
     var selectedAlertType: AlertType?
+    var currentUser: User!
     
     // This will be set by the previous
     // view controller, Manage Alerts, if a 
@@ -177,8 +178,12 @@ class AddEditAlertTableViewController: UITableViewController {
                                 // Save the alert
                                 if newAlert.save() {
                                     self.delegate.updateView()
+                                    if let session = self.currentUser.userSession {
+                                        session.sendFakeNotificationRequest()
+                                        
+                                    }
                                     self.dismissViewControllerAnimated(true, completion: nil)
-
+                                    
                                 } else {
                                     // TODO: Show save error
                                 }
@@ -217,6 +222,7 @@ class AddEditAlertTableViewController: UITableViewController {
                                 priority: newPriority) {
                                 // Successful save
                                 self.delegate.updateView()
+                                
                                 self.dismissViewControllerAnimated(true, completion: nil)
 
                             } else {

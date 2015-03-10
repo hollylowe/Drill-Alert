@@ -27,8 +27,9 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var currentUser: User!
     
     // Data for the table view
-    var subscribedWellbores = Array<Wellbore>()
-    var allWellbores = Array<Wellbore>()
+    var wells = Array<Well>()
+    //var subscribedWellbores = Array<Wellbore>()
+    //var allWellbores = Array<Wellbore>()
     
     // Variables for loading
     var loadingData = true
@@ -66,10 +67,12 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             })
 
         } else {
-            allWellbores.append(Wellbore(id: 0, name: "Test Bore", well: Well(id: 0, name: "Test Well", location: "Here")))
-            subscribedWellbores.append(Wellbore(id: 0, name: "Test Bore", well: Well(id: 0, name: "Test Well", location: "Here")))
+            // allWellbores.append()
+            // subscribedWellbores.append(Wellbore(id: 0, name: "Test Bore", well: Well(id: 0, name: "Test Well", location: "Here")))
+            let well = Well(id: 0, name: "Test Well", location: "No Location")
+            well.wellbores.append(Wellbore(id: 0, name: "Test Bore", well: Well(id: 0, name: "Test Well", location: "Here")))
             
-            
+            self.wells.append(well)
             self.tableView.reloadData()
         }
         
@@ -126,6 +129,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             
             // Add the segmented control at the (navigation bar height + status bar height) y coordinate
             let yCoord = navigationController.navigationBar.frame.size.height + UIApplication.sharedApplication().statusBarFrame.size.height
+            
             // let yCoord: CGFloat = 0
             // let toolbarColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1.0)
             // Set up Toolbar
@@ -162,7 +166,8 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             
             // Sets the tableview y coordinate to the toolbarheight
             let headerViewRect = CGRectMake(0, 0, self.tableView.frame.width, toolbarHeight)
-            self.tableView.tableHeaderView = UIView(frame: headerViewRect)
+            // self.tableView.tableHeaderView = UIView(frame: headerViewRect)
+            self.tableView.contentInset = UIEdgeInsets(top: toolbarHeight, left: 0, bottom: 0, right: 0)
         }
        
     }
@@ -202,18 +207,22 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
         // Only load the wells of the currently selected segment.
         // TODO: Not sure if API is supporting this, we may remove it. For right now, just set both
-        allWellbores.removeAll(keepCapacity: false)
-        subscribedWellbores.removeAll(keepCapacity: false)
-
-        let (wells, error) = Well.getWellsForUser(currentUser)
+        // allWellbores.removeAll(keepCapacity: false)
+        // subscribedWellbores.removeAll(keepCapacity: false)
+        self.wells.removeAll(keepCapacity: false)
+        
+        let (newWells, error) = Well.getWellsForUser(currentUser)
         
         if error == nil {
+            /*
             for well in wells {
                 for wellbore in well.wellbores {
                     subscribedWellbores.append(wellbore)
                     // allWellbores.append(wellbore)
                 }
             }
+            */
+            self.wells = newWells
         } else {
             self.loadError = true
             
@@ -225,14 +234,23 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
     }
     
-    func wellboreAtIndex(index: Int) -> Wellbore {
+    func wellboreAtIndexPath(indexPath: NSIndexPath) -> Wellbore {
         var wellbore: Wellbore!
         
+        let well = self.wells[indexPath.section]
+        if well.wellbores.count > 0 {
+            wellbore = well.wellbores[indexPath.row]
+        }
+        
+        
+        /*
         if selectedSegmentIndex == subscribedWellboresIndex {
             wellbore = subscribedWellbores[index]
         } else {
             wellbore = allWellbores[index]
         }
+        */
+        
         
         return wellbore
     }
@@ -253,9 +271,20 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
 extension HomeViewController: UITableViewDataSource {
     
+    
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let cell = tableView.dequeueReusableCellWithIdentifier("WellTableViewCell") as WellTableViewCell
+        let well = wells[section]
+        
+        cell.setupWithWell(well)
+        
+        return cell
+        
+    }
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(WellboreTableViewCell.getCellIdentifier()) as WellboreTableViewCell
-        let wellbore = wellboreAtIndex(indexPath.row)
+        let wellbore = wellboreAtIndexPath(indexPath)
         
         cell.setupWithWellbore(wellbore)
         
@@ -264,12 +293,25 @@ extension HomeViewController: UITableViewDataSource {
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var count = 0
+        let well = self.wells[section]
+        count = well.wellbores.count
+        /*
         if selectedSegmentIndex == subscribedWellboresIndex {
             count = subscribedWellbores.count
         } else {
             count = allWellbores.count
         }
+        */
+        
         return count
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 57.0
+    }
+    
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 84.0
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -291,7 +333,7 @@ extension HomeViewController: UITableViewDataSource {
 
         } else {
             
-            if (selectedSegmentIndex == subscribedWellboresIndex && subscribedWellbores.count == 0) || (selectedSegmentIndex == allWellsIndex && allWellbores.count == 0) {
+            if (selectedSegmentIndex == subscribedWellboresIndex && wells.count == 0) || (selectedSegmentIndex == allWellsIndex && wells.count == 0) {
                 sections = 0
                 
                 // Display "No Wells" message
@@ -312,6 +354,7 @@ extension HomeViewController: UITableViewDataSource {
                 self.tableView.backgroundView = noWellsLabel
                 self.tableView.separatorStyle = .None
             } else {
+                sections = self.wells.count
                 self.tableView.backgroundView = nil
                 self.tableView.separatorStyle = .SingleLine
             }
@@ -324,7 +367,8 @@ extension HomeViewController: UITableViewDataSource {
 
 extension HomeViewController: UITableViewDelegate {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let wellbore = wellboreAtIndex(indexPath.row)
+        let wellbore = wellboreAtIndexPath(indexPath)
+        
         
         self.performSegueWithIdentifier(homeToWellboreDetailSegueIdentifier, sender: wellbore)
     }

@@ -8,49 +8,7 @@
 
 import Foundation
 
-//GET: /api/curves
-//  Client:
-//      drillalert.azurewebsites.net/api/curves/{wellbore_id}
-//  Returns:
-//      JSON:
-//          [
-//              {
-//                  id: 15,
-//                  name: "tool temp",
-//                  tooltype: "drill head",
-//                  units: "kelvin"
-//              },
-//          ...
-//         ]
 
-//GET: /api/curvepoints
-//  Client:
-//      drillalert.azurewebsites.net/api/curvepoints/{wellbore_id}/{curve_id}/{start_time}/{end_time}
-//      wellbore_id: 0, curve_id: 0-2,  any start/end time is fine
-//
-//  Parameter Header:
-//  {
-//      curve_id: 69,
-//		wellbore_id: 2,
-//		start_time: timestamp
-//      end_time: timestamp
-//  }
-//  Returns:
-//      JSON:
-//          [
-//              {
-//                  curve_id: 34,
-//                  wellbore_id: 3,
-//                  data [
-//                      {
-//                          value: 0,
-//                          time: timestamp
-//                      },
-//                      ...
-//                  ]
-//              },
-//              ...
-//           ]
 
 class CurvePoint {
     var value: Float
@@ -94,7 +52,7 @@ class Curve {
         let startTime = 0
         let endTime = 0
         
-        var endpointURL = "http://drillalert.azurewebsites.net/api/curvepoints/\(self.wellbore.id)/\(self.id)/\(startTime)/\(endTime)"
+        var endpointURL = "https://drillalert.azurewebsites.net/api/curvepoints/\(self.wellbore.id)/\(self.id)/\(startTime)/\(endTime)"
         println(endpointURL)
         let resultJSONArray = JSONArray(url: endpointURL)
         

@@ -19,6 +19,7 @@ class ManageAlertsTableViewController: UITableViewController {
     // Implicit, set by the previous view controller
     var wellboreDetailViewController: WellboreDetailViewController!
     var alerts: [Alert]!
+    var currentUser: User!
     
     override func viewDidLoad() {
         self.title = "Manage Alerts"
@@ -57,6 +58,7 @@ class ManageAlertsTableViewController: UITableViewController {
         let addEditAlertNavigationController = storyboard.instantiateViewControllerWithIdentifier(AddEditAlertNavigationController.getStoryboardIdentifier()) as AddEditAlertNavigationController
         let addEditAlertViewController = addEditAlertNavigationController.viewControllers[0] as AddEditAlertTableViewController
         addEditAlertViewController.delegate = self
+        addEditAlertViewController.currentUser = self.currentUser
         self.presentViewController(addEditAlertNavigationController, animated: true, completion: nil)
         
     }

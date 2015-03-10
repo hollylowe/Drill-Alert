@@ -27,27 +27,49 @@ class UserSession: NSObject, NSURLSessionDelegate, NSURLSessionTaskDelegate {
     }
     
     func sendDeviceToken(token: String) {
-        let url = "https://drillalert.azurewebsites.net/api/permissions/ios"
+        let url = "https://drillalert.azurewebsites.net/api/permissions/ios/" + token.stringByReplacingOccurrencesOfString(" ", withString: "", options: nil, range: nil)
+        println(url)
         if let URL = NSURL(string: url) {
             var newRequest = NSMutableURLRequest(URL: URL)
-            var postString = token
-            newRequest.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
+            // var postString = token
+            // newRequest.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
             
             // Set it to POST, since we need to send
             // the Username / Password to this new
             // URL
-            newRequest.HTTPMethod = "POST"
+            // newRequest.HTTPMethod = "GET"
             
             if let session = self.session {
-                println("POSTing device token.")
-                session.dataTaskWithRequest(newRequest, completionHandler: { (data, response, error) -> Void in
+                println("Sending device token.")
+                let task = session.dataTaskWithRequest(newRequest, completionHandler: { (data, response, error) -> Void in
                     if let content = NSString(data: data, encoding: NSASCIIStringEncoding) {
-                        println("Data from device token POST: ")
+                        println("Data from device token get: ")
                         println(content)
-                        println("Response from device token POST:")
+                        println("Response from device token get:")
                         println(response)
                     }
                 })
+                task.resume()
+            }
+        }
+    }
+    
+    func sendFakeNotificationRequest() {
+        println("sending fake request")
+        let url = "https://drillalert.azurewebsites.net/api/push/0"
+        if let URL = NSURL(string: url) {
+            var newRequest = NSMutableURLRequest(URL: URL)
+            
+            if let session = self.session {
+                let task = session.dataTaskWithRequest(newRequest, completionHandler: { (data, response, error) -> Void in
+                    if let content = NSString(data: data, encoding: NSASCIIStringEncoding) {
+                        println("Data from request: ")
+                        println(content)
+                        println("Response from request:")
+                        println(response)
+                    }
+                })
+                task.resume()
             }
         }
     }
