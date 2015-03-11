@@ -78,7 +78,10 @@ class VisualsViewController: UIViewController, UIPageViewControllerDataSource {
             self.pageViewController.didMoveToParentViewController(self)
         }
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "rightBarButtonItemTapped:")
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .Add,
+            target: self,
+            action: "rightBarButtonItemTapped:")
     }
     
     

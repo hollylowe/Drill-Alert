@@ -28,6 +28,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     // Data for the table view
     var wells = Array<Well>()
+    
     //var subscribedWellbores = Array<Wellbore>()
     //var allWellbores = Array<Wellbore>()
     
@@ -283,6 +284,8 @@ extension HomeViewController: UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+      
+        
         let cell = tableView.dequeueReusableCellWithIdentifier(WellboreTableViewCell.getCellIdentifier()) as WellboreTableViewCell
         let wellbore = wellboreAtIndexPath(indexPath)
         
