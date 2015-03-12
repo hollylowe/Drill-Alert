@@ -16,7 +16,6 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var backgroundImageView: UIImageView!
     let loginToHomeSegueIdentifier = "LoginToHomeSegue"
     var currentUser: User?
-    
     class func storyboardIdentifier() -> String! {
         return "LoginViewController"
     }

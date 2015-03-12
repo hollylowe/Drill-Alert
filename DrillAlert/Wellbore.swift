@@ -27,6 +27,7 @@ class Wellbore {
     var data = Array<Point>()
     var titles: Array<String>!
     var res: AnyObject!
+    var isFavorite: Bool = false
     
     init(id: Int, name: String, well: Well) {
         self.id = id

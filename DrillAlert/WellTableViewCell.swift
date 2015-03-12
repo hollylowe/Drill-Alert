@@ -14,7 +14,8 @@ class WellTableViewCell: UITableViewCell {
     @IBOutlet weak var wellLocationLabel: UILabel!
     let height: CGFloat = 84.0
     
-    func setupWithWell(well: Well!) {
+    func setupWithWell(well: Well!, andWidth width: CGFloat) {
+        self.frame = CGRectMake(0, 0, width, 84.0)
         self.backgroundColor = UIColor.whiteColor()
         
         var sepFrame = CGRectMake(0, self.height - 0.5, self.frame.size.width, 0.5)

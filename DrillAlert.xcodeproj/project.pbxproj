@@ -128,6 +128,7 @@
 		A095FB8F1A2FC38C00B15D39 /* AlertWhenCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A095FB8E1A2FC38C00B15D39 /* AlertWhenCell.swift */; };
 		A095FB911A2FC39800B15D39 /* AlertPriorityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A095FB901A2FC39800B15D39 /* AlertPriorityCell.swift */; };
 		A095FB931A2FF20D00B15D39 /* old-gauge.html in Resources */ = {isa = PBXBuildFile; fileRef = A095FB921A2FF20D00B15D39 /* old-gauge.html */; };
+		A09609411AB13004007B5643 /* FavoriteWellbore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F0BEEC1AB1294C003C3CCB /* FavoriteWellbore.swift */; };
 		A09CFE7F1AA7F8080094A582 /* LoginWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A09CFE7E1AA7F8080094A582 /* LoginWebViewController.swift */; };
 		A0A783DA1A78BCFB00C3B20A /* AlertPriorityStandard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A783D91A78BCFB00C3B20A /* AlertPriorityStandard.swift */; };
 		A0A783DC1A78BD1000C3B20A /* AlertTypeStandard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A783DB1A78BD1000C3B20A /* AlertTypeStandard.swift */; };
@@ -145,6 +146,7 @@
 		A0DB7DBD1A2FB96000C8C9A2 /* AddOrEditAlertTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0DB7DBC1A2FB96000C8C9A2 /* AddOrEditAlertTableViewController.swift */; };
 		A0DB7DBF1A2FB96E00C8C9A2 /* SelectAlertTypeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0DB7DBE1A2FB96E00C8C9A2 /* SelectAlertTypeTableViewController.swift */; };
 		A0EE29021A08AB7200B50700 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EE29011A08AB7200B50700 /* UIViewExtension.swift */; };
+		A0F0BEED1AB1294C003C3CCB /* FavoriteWellbore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F0BEEC1AB1294C003C3CCB /* FavoriteWellbore.swift */; };
 		A0F0FBED1A103DC600ADBDF3 /* WellUsersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F0FBEC1A103DC600ADBDF3 /* WellUsersTableViewController.swift */; };
 		A0F1B57D1A901B1200306DB7 /* HTMLNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F1B5791A901B1200306DB7 /* HTMLNode.swift */; };
 		A0F1B57E1A901B1200306DB7 /* HTMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F1B57A1A901B1200306DB7 /* HTMLParser.swift */; };
@@ -263,6 +265,7 @@
 		A0DB7DBC1A2FB96000C8C9A2 /* AddOrEditAlertTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddOrEditAlertTableViewController.swift; sourceTree = "<group>"; };
 		A0DB7DBE1A2FB96E00C8C9A2 /* SelectAlertTypeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectAlertTypeTableViewController.swift; sourceTree = "<group>"; };
 		A0EE29011A08AB7200B50700 /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
+		A0F0BEEC1AB1294C003C3CCB /* FavoriteWellbore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteWellbore.swift; sourceTree = "<group>"; };
 		A0F0FBEC1A103DC600ADBDF3 /* WellUsersTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WellUsersTableViewController.swift; sourceTree = "<group>"; };
 		A0F1B5791A901B1200306DB7 /* HTMLNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTMLNode.swift; sourceTree = "<group>"; };
 		A0F1B57A1A901B1200306DB7 /* HTMLParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTMLParser.swift; sourceTree = "<group>"; };
@@ -459,6 +462,7 @@
 				A0772F231A92921300DE37B1 /* AlertPriority.swift */,
 				A0772F211A92921300DE37B1 /* AlertType.swift */,
 				A0772F1F1A928EBD00DE37B1 /* Alert.swift */,
+				A0F0BEEC1AB1294C003C3CCB /* FavoriteWellbore.swift */,
 			);
 			name = CoreData;
 			sourceTree = "<group>";
@@ -836,6 +840,7 @@
 				CF0224E31A959E1F00115B0B /* EditViewTableViewController.swift in Sources */,
 				CF08A77E1A9DD6E900A33AFE /* ScaleTypeTableViewController.swift in Sources */,
 				CF6DD7581AA04BED0030ADAB /* NewNumberReadoutTableViewController.swift in Sources */,
+				A0F0BEED1AB1294C003C3CCB /* FavoriteWellbore.swift in Sources */,
 				A018E40A1A2B0733001EF20E /* ManageAlertsTableViewController.swift in Sources */,
 				A018E4061A2B010A001EF20E /* Parameter.swift in Sources */,
 				A0CEDBA21A0C3ADF0051BDB8 /* User.swift in Sources */,
@@ -903,6 +908,7 @@
 				A08025C61AAA380F00C8BE99 /* AlertNotification.swift in Sources */,
 				A08026001AAA388400C8BE99 /* AlertWhenCell.swift in Sources */,
 				A08025EA1AAA385000C8BE99 /* ChooseAddVisualTableViewController.swift in Sources */,
+				A09609411AB13004007B5643 /* FavoriteWellbore.swift in Sources */,
 				A08026051AAA388800C8BE99 /* EditVisualTableViewCell.swift in Sources */,
 				A08026091AAA389800C8BE99 /* Visual.swift in Sources */,
 				A08025E01AAA384300C8BE99 /* AddEditAlertTableViewController.swift in Sources */,

@@ -21,7 +21,6 @@ class WellboreTableViewCell: UITableViewCell {
         self.wellboreNameLabel.text = wellbore.name
         
         self.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
-        self.selectionStyle = .None
         // self.backgroundColor =  UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1.0)
         // self.wellboreNameLabel.textColor = UIColor.whiteColor()
         //  self.wellNameLabel.textColor = UIColor.whiteColor()

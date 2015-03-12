@@ -220,19 +220,7 @@ extension AlertInboxTableViewController: UITableViewDelegate {
                 
                 // Remove the marked as read notification
                 self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-                /*
-                if self.criticalAlertNotifications.count == 0 {
-                    self.tableView.deleteSections(NSIndexSet(index: self.getCriticalSection()), withRowAnimation: .Fade)
-                }
                 
-                if self.warningAlertNotifications.count == 0 {
-                    self.tableView.deleteSections(NSIndexSet(index: self.getWarningSection()), withRowAnimation: .Fade)
-                }
-                
-                if self.informationAlertNotifications.count == 0 {
-                    self.tableView.deleteSections(NSIndexSet(index: self.getInformationSection()), withRowAnimation: .Fade)
-                }
-                */
                 
                 var newRow = 0
                 for readAlertNotification in self.readAlertNotifications {
