@@ -75,7 +75,6 @@
 		A08025DE1AAA384000C8BE99 /* WellboreDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0343D381A2AC85400FA0464 /* WellboreDetailViewController.swift */; };
 		A08025DF1AAA384300C8BE99 /* ManageAlertsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A018E4091A2B0733001EF20E /* ManageAlertsTableViewController.swift */; };
 		A08025E01AAA384300C8BE99 /* AddEditAlertTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A018E40B1A2BB4E8001EF20E /* AddEditAlertTableViewController.swift */; };
-		A08025E11AAA384300C8BE99 /* AddOrEditAlertTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0DB7DBC1A2FB96000C8C9A2 /* AddOrEditAlertTableViewController.swift */; };
 		A08025E21AAA384300C8BE99 /* SelectAlertTypeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0DB7DBE1A2FB96E00C8C9A2 /* SelectAlertTypeTableViewController.swift */; };
 		A08025E31AAA384300C8BE99 /* AlertInboxTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02D86421A6D953A00D22A38 /* AlertInboxTableViewController.swift */; };
 		A08025E41AAA384C00C8BE99 /* VisualsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CE032B1A0ED67C0076EE3E /* VisualsViewController.swift */; };
@@ -143,7 +142,6 @@
 		A0CE03281A0ECEFB0076EE3E /* Wellbore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CE03271A0ECEFB0076EE3E /* Wellbore.swift */; };
 		A0CE032C1A0ED67C0076EE3E /* VisualsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CE032B1A0ED67C0076EE3E /* VisualsViewController.swift */; };
 		A0CEDBA21A0C3ADF0051BDB8 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CEDBA11A0C3ADF0051BDB8 /* User.swift */; };
-		A0DB7DBD1A2FB96000C8C9A2 /* AddOrEditAlertTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0DB7DBC1A2FB96000C8C9A2 /* AddOrEditAlertTableViewController.swift */; };
 		A0DB7DBF1A2FB96E00C8C9A2 /* SelectAlertTypeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0DB7DBE1A2FB96E00C8C9A2 /* SelectAlertTypeTableViewController.swift */; };
 		A0EE29021A08AB7200B50700 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EE29011A08AB7200B50700 /* UIViewExtension.swift */; };
 		A0F0BEED1AB1294C003C3CCB /* FavoriteWellbore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F0BEEC1AB1294C003C3CCB /* FavoriteWellbore.swift */; };
@@ -262,7 +260,6 @@
 		A0CE03271A0ECEFB0076EE3E /* Wellbore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Wellbore.swift; sourceTree = "<group>"; };
 		A0CE032B1A0ED67C0076EE3E /* VisualsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualsViewController.swift; sourceTree = "<group>"; };
 		A0CEDBA11A0C3ADF0051BDB8 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		A0DB7DBC1A2FB96000C8C9A2 /* AddOrEditAlertTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddOrEditAlertTableViewController.swift; sourceTree = "<group>"; };
 		A0DB7DBE1A2FB96E00C8C9A2 /* SelectAlertTypeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectAlertTypeTableViewController.swift; sourceTree = "<group>"; };
 		A0EE29011A08AB7200B50700 /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		A0F0BEEC1AB1294C003C3CCB /* FavoriteWellbore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteWellbore.swift; sourceTree = "<group>"; };
@@ -567,7 +564,6 @@
 			children = (
 				A018E4091A2B0733001EF20E /* ManageAlertsTableViewController.swift */,
 				A018E40B1A2BB4E8001EF20E /* AddEditAlertTableViewController.swift */,
-				A0DB7DBC1A2FB96000C8C9A2 /* AddOrEditAlertTableViewController.swift */,
 				A0DB7DBE1A2FB96E00C8C9A2 /* SelectAlertTypeTableViewController.swift */,
 				A02D86421A6D953A00D22A38 /* AlertInboxTableViewController.swift */,
 			);
@@ -855,7 +851,6 @@
 				A095D57F1A78A3FA000889CB /* JSON.swift in Sources */,
 				A0343D391A2AC85400FA0464 /* WellboreDetailViewController.swift in Sources */,
 				A0772F221A92921300DE37B1 /* AlertType.swift in Sources */,
-				A0DB7DBD1A2FB96000C8C9A2 /* AddOrEditAlertTableViewController.swift in Sources */,
 				A06FFD671A06AA08001B3FF8 /* DrillAlert.xcdatamodeld in Sources */,
 				A066D5D21A2EBD4B00E16E58 /* PaddedUITextField.swift in Sources */,
 				A06FFD641A06AA08001B3FF8 /* AppDelegate.swift in Sources */,
@@ -890,7 +885,6 @@
 				A08025CA1AAA382200C8BE99 /* ParameterAlert.swift in Sources */,
 				A08025E31AAA384300C8BE99 /* AlertInboxTableViewController.swift in Sources */,
 				A08025EB1AAA386100C8BE99 /* AddCurveTableViewController.swift in Sources */,
-				A08025E11AAA384300C8BE99 /* AddOrEditAlertTableViewController.swift in Sources */,
 				A08025DC1AAA383B00C8BE99 /* LoginWebViewController.swift in Sources */,
 				A08025DE1AAA384000C8BE99 /* WellboreDetailViewController.swift in Sources */,
 				A08025F21AAA386600C8BE99 /* NewNumberReadoutTableViewController.swift in Sources */,

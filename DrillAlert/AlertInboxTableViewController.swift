@@ -29,13 +29,18 @@ class AlertInboxTableViewController: UITableViewController {
         informationAlertNotifications = AlertNotification.fetchAllInformationAlertNotifications()
         readAlertNotifications = AlertNotification.fetchAllReadAlertNotifications()
         
-        // Let the app delegate know that we are on this view
-        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
-        appDelegate.alertInboxTableViewController = self
+        
         
         super.viewDidLoad()
     }
     
+    override func viewDidAppear(animated: Bool) {
+        // Let the app delegate know that we are on this view
+        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        appDelegate.alertInboxTableViewController = self
+        
+        println("View did appear")
+    }
     override func viewDidDisappear(animated: Bool) {
         let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
         appDelegate.alertInboxTableViewController = nil
@@ -54,38 +59,7 @@ class AlertInboxTableViewController: UITableViewController {
     class func storyboardIdentifier() -> String! {
         return "AlertInboxTableViewController"
     }
-    /*
-    func getCriticalSection() -> Int {
-        return self.getWarningSection() - 1
-    }
     
-    func getWarningSection() -> Int {
-        return self.getInformationSection() - 1
-    }
-    
-    func getInformationSection() -> Int {
-        return self.getReadSection() - 1
-    }
-    
-    func getReadSection() -> Int {
-        var section = 0
-        
-        // The read section is always the last section
-        if criticalAlertNotifications.count > 0 {
-            section++
-        }
-        
-        if warningAlertNotifications.count > 0 {
-            section++
-        }
-        
-        if informationAlertNotifications.count > 0 {
-            section++
-        }
-        
-        return section
-    }
-    */
 }
 
 extension AlertInboxTableViewController: UITableViewDataSource {

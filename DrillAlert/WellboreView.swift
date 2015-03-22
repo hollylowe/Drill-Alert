@@ -99,6 +99,7 @@ class Panel {
     var xDimension: Int
     var yDimension: Int
     var visualizations: Array<Visualization>
+    var shouldShowDemoPlot = false
     
     init(id: Int, name: String, position: Int, xDimension: Int, yDimension: Int, visualizations: Array<Visualization>) {
         self.id = id

@@ -43,6 +43,11 @@ class VisualsViewController: UIViewController, UIPageViewControllerDataSource {
                 self.wellboreViews = userWellboreViews
                 if self.wellboreViews.count > 0 {
                     self.currentWellboreView = self.wellboreViews[0]
+                    if let wellboreView = self.currentWellboreView {
+                        if wellboreView.panels.count > 1 {
+                            wellboreView.panels[0].shouldShowDemoPlot = true
+                        }
+                    }
                     self.reloadVisuals()
                 }
                 

@@ -124,17 +124,21 @@ class VisualViewController: UIViewController, UIWebViewDelegate {
     override func viewDidLoad() {
         self.panelInformationLabel.text = self.panel.name
         self.panelLastUpdatedLabel.text = "Loading..."
+        
         super.viewDidLoad()
     }
     
     override func viewDidAppear(animated: Bool) {
         // Once the view has loaded,
         // set up the web view.
+        println("View did appear.")
         if let htmlPath = NSBundle.mainBundle().pathForResource(htmlFileName, ofType: "html") {
-            
+            println("Set html path.")
             var possibleContent = String(contentsOfFile:htmlPath, usedEncoding: nil, error: nil)
             
             if let content = possibleContent {
+                println("Set possible content.")
+                self.webView.delegate = self
                 self.webView.loadHTMLString(content, baseURL: NSURL.fileURLWithPath(htmlPath.stringByDeletingLastPathComponent))
             }
             
@@ -142,12 +146,19 @@ class VisualViewController: UIViewController, UIWebViewDelegate {
     }
     
     func updateVisualizations() {
-        let xVal = 2
-        println("Updating visualizations..")
+        var dataValue: Float = 2.0
         
         for javaScriptVisualization in javaScriptVisualizations {
-            let updateString = javaScriptVisualization.getTickJavaScriptStringWithDataPoint(xVal)
-            println(updateString)
+            if javaScriptVisualization is JavaScriptPlot {
+                let testCurve = Curve(id: 0, name: "test curve", tooltype: "test type", units: "test units", wellbore: Wellbore(id: 0, name: "Test Wellbore", well: Well(id: 0, name: "Test well", location: "test location")))
+                let curvePoints = testCurve.getCurvePoints()
+                
+                if curvePoints.count > 0 {
+                    dataValue = curvePoints[0].value
+                }
+            }
+            
+            let updateString = javaScriptVisualization.getTickJavaScriptStringWithDataPoint(dataValue)
             self.webView.stringByEvaluatingJavaScriptFromString(updateString)
             
         }
@@ -167,23 +178,34 @@ class VisualViewController: UIViewController, UIWebViewDelegate {
 
 extension VisualViewController: UIWebViewDelegate {
     func webViewDidFinishLoad(webView: UIWebView) {
+        println("Web view did finish load.")
         let plotJSFileName = "Test.js"
         let gaugeJSFileName = "Test2.js"
-        let defaultWidth = 300
-        let defaultHeight = 500
+        let defaultWidth = 400
+        let defaultHeight = 300
         
         
         var newJavaScriptVisualizations = Array<JavaScriptVisualization>()
         
         for visualization in self.panel.visualizations {
-            switch visualization.jsFileName {
-            case plotJSFileName:
-                newJavaScriptVisualizations.append(JavaScriptPlot(id: visualization.id, yMax: 10, xMax: 10, initialData: Array<Int>(), width: defaultWidth, height: defaultHeight))
-            case gaugeJSFileName:
-                let newGauge = JavaScriptGauge(id: visualization.id)
-                newJavaScriptVisualizations.append(newGauge)
-            default: break
+            println("In visualizations.")
+            // TODO: Remove, only for the demo
+            if self.panel.shouldShowDemoPlot {
+                println("Showing demo plot.")
+                newJavaScriptVisualizations.append(JavaScriptPlot(id: visualization.id, yMax: 10, xMax: 20, initialData: Array<Int>(), width: defaultWidth, height: defaultHeight))
+            } else {
+                println("Not showing demo plot.")
+                switch visualization.jsFileName {
+                case plotJSFileName:
+                    newJavaScriptVisualizations.append(JavaScriptPlot(id: visualization.id, yMax: 10, xMax: 10, initialData: Array<Int>(), width: defaultWidth, height: defaultHeight))
+                case gaugeJSFileName:
+                    let newGauge = JavaScriptGauge(id: visualization.id)
+                    newJavaScriptVisualizations.append(newGauge)
+                default: break
+                }
             }
+            
+            
         }
         
         self.javaScriptVisualizations = newJavaScriptVisualizations

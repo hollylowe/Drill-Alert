@@ -55,7 +55,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
         println("Recieved a noti.")
-        println(userInfo)
         /*
         var noti = UILocalNotification()
         var body = parameter.name
@@ -77,10 +76,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 
                 if let alertMessage = alertNotificationDictionary["alert"] as? String {
                     if let alertBadge = alertNotificationDictionary["badge"] as? Int {
-                        var alertLocalNotification = UILocalNotification()
-                        alertLocalNotification.fireDate = NSDate()
-                        alertLocalNotification.alertBody = alertMessage
-                        UIApplication.sharedApplication().scheduleLocalNotification(alertLocalNotification)
+                        if let alertNotification = AlertNotification.createNewInstance("FA07B365-6EBD-4578-8264-A243A6702F20", timeRecieved: NSDate()) {
+                            var alertLocalNotification = UILocalNotification()
+                            alertLocalNotification.fireDate = NSDate()
+                            alertLocalNotification.alertBody = alertMessage
+                            UIApplication.sharedApplication().scheduleLocalNotification(alertLocalNotification)
+                            
+                            if let alertInbox = self.alertInboxTableViewController {
+                                alertInbox.recievedRemoteNotification()
+                            }
+                            
+                        }
+                        
                     }
                 }
                 

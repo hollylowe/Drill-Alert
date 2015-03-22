@@ -371,7 +371,11 @@ extension HomeViewController: UITableViewDataSource {
                 if loadError {
                     noWellsLabel.text = "Network Error"
                 } else {
-                    noWellsLabel.text = "No Wellbores"
+                    if selectedSegmentIndex == favoriteWellsIndex {
+                        noWellsLabel.text = "No Favorite Wells"
+                    } else {
+                        noWellsLabel.text = "No Wells"
+                    }
                 }
                 
                 noWellsLabel.textColor = textColor
@@ -419,7 +423,6 @@ extension HomeViewController: UITableViewDelegate {
                     favoriteWellbore.delete()
                 }
                 
-                println("Unfavorite")
                 self.tableView.setEditing(false, animated: true)
                 self.loadData()
             }
@@ -429,7 +432,6 @@ extension HomeViewController: UITableViewDelegate {
                 let wellbore = self.wellboreAtIndexPath(indexPath)
                 
                 FavoriteWellbore.createNewInstance(wellbore.id)
-                println("Favorite")
                 self.tableView.setEditing(false, animated: true)
                 self.loadData()
             }

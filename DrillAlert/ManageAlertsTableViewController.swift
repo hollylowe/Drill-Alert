@@ -78,6 +78,7 @@ class ManageAlertsTableViewController: UITableViewController {
                 let addEditAlertTableViewController = destination.viewControllers[0] as AddEditAlertTableViewController
                 addEditAlertTableViewController.alertToEdit = alert
                 addEditAlertTableViewController.delegate = self
+                addEditAlertTableViewController.currentUser = self.currentUser
             }
             
         }
