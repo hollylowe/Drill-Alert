@@ -146,9 +146,6 @@
 		A0EE29021A08AB7200B50700 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EE29011A08AB7200B50700 /* UIViewExtension.swift */; };
 		A0F0BEED1AB1294C003C3CCB /* FavoriteWellbore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F0BEEC1AB1294C003C3CCB /* FavoriteWellbore.swift */; };
 		A0F0FBED1A103DC600ADBDF3 /* WellUsersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F0FBEC1A103DC600ADBDF3 /* WellUsersTableViewController.swift */; };
-		A0F1B57D1A901B1200306DB7 /* HTMLNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F1B5791A901B1200306DB7 /* HTMLNode.swift */; };
-		A0F1B57E1A901B1200306DB7 /* HTMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F1B57A1A901B1200306DB7 /* HTMLParser.swift */; };
-		A0F1B57F1A901B1200306DB7 /* SwiftHTMLParserLicense in Resources */ = {isa = PBXBuildFile; fileRef = A0F1B57C1A901B1200306DB7 /* SwiftHTMLParserLicense */; };
 		A0F1B5811A901BE400306DB7 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A0F1B5801A901BE400306DB7 /* libxml2.dylib */; };
 		A0F5D6451A95906400B68548 /* AlertNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F5D6441A95906400B68548 /* AlertNotification.swift */; };
 		A0F9D6831AAEA324001B03F1 /* WellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F9D6821AAEA324001B03F1 /* WellTableViewCell.swift */; };
@@ -264,9 +261,6 @@
 		A0EE29011A08AB7200B50700 /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		A0F0BEEC1AB1294C003C3CCB /* FavoriteWellbore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteWellbore.swift; sourceTree = "<group>"; };
 		A0F0FBEC1A103DC600ADBDF3 /* WellUsersTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WellUsersTableViewController.swift; sourceTree = "<group>"; };
-		A0F1B5791A901B1200306DB7 /* HTMLNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTMLNode.swift; sourceTree = "<group>"; };
-		A0F1B57A1A901B1200306DB7 /* HTMLParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTMLParser.swift; sourceTree = "<group>"; };
-		A0F1B57C1A901B1200306DB7 /* SwiftHTMLParserLicense */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SwiftHTMLParserLicense; sourceTree = "<group>"; };
 		A0F1B5801A901BE400306DB7 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		A0F5D6441A95906400B68548 /* AlertNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertNotification.swift; sourceTree = "<group>"; };
 		A0F9D6821AAEA324001B03F1 /* WellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WellTableViewCell.swift; sourceTree = "<group>"; };
@@ -389,8 +383,6 @@
 		A06FFD551A06AA08001B3FF8 = {
 			isa = PBXGroup;
 			children = (
-				A08025BF1AAA372A00C8BE99 /* libxml2.2.dylib */,
-				A0F1B5801A901BE400306DB7 /* libxml2.dylib */,
 				A0343D301A2674C100FA0464 /* Entitlements.plist */,
 				A06FFD601A06AA08001B3FF8 /* DrillAlert */,
 				A06FFD791A06AA08001B3FF8 /* DrillAlertTests */,
@@ -498,7 +490,8 @@
 		A0CA2F5F1A26480500D12218 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				A0F1B5781A901B1200306DB7 /* SwiftHTMLParser */,
+				A08025BF1AAA372A00C8BE99 /* libxml2.2.dylib */,
+				A0F1B5801A901BE400306DB7 /* libxml2.dylib */,
 				A066D5CB1A2EAA2900E16E58 /* UIKit.framework */,
 				A066D5C91A2EAA2100E16E58 /* SystemConfiguration.framework */,
 				A066D5C71A2EAA1700E16E58 /* Security.framework */,
@@ -583,16 +576,6 @@
 				A0F9D6821AAEA324001B03F1 /* WellTableViewCell.swift */,
 			);
 			name = Views;
-			sourceTree = "<group>";
-		};
-		A0F1B5781A901B1200306DB7 /* SwiftHTMLParser */ = {
-			isa = PBXGroup;
-			children = (
-				A0F1B5791A901B1200306DB7 /* HTMLNode.swift */,
-				A0F1B57A1A901B1200306DB7 /* HTMLParser.swift */,
-				A0F1B57C1A901B1200306DB7 /* SwiftHTMLParserLicense */,
-			);
-			path = SwiftHTMLParser;
 			sourceTree = "<group>";
 		};
 		CF4007661A78C44C008E9C1F /* Visuals */ = {
@@ -767,7 +750,6 @@
 				A0AC42871AABF56D000F12CD /* index.html in Resources */,
 				A0343D311A2674C100FA0464 /* Entitlements.plist in Resources */,
 				A095FB931A2FF20D00B15D39 /* old-gauge.html in Resources */,
-				A0F1B57F1A901B1200306DB7 /* SwiftHTMLParserLicense in Resources */,
 				A042B2E11A19669E00660AB7 /* d3.min.js in Resources */,
 				A06FFD6C1A06AA08001B3FF8 /* Main.storyboard in Resources */,
 				A042B2DF1A19645F00660AB7 /* old-index.html in Resources */,
@@ -847,14 +829,12 @@
 				CF08A77C1A9DD02600A33AFE /* AddTrackTableViewController.swift in Sources */,
 				A018E40C1A2BB4E8001EF20E /* AddEditAlertTableViewController.swift in Sources */,
 				A0699A9C1A80231A004F9C97 /* Curve.swift in Sources */,
-				A0F1B57D1A901B1200306DB7 /* HTMLNode.swift in Sources */,
 				A095D57F1A78A3FA000889CB /* JSON.swift in Sources */,
 				A0343D391A2AC85400FA0464 /* WellboreDetailViewController.swift in Sources */,
 				A0772F221A92921300DE37B1 /* AlertType.swift in Sources */,
 				A06FFD671A06AA08001B3FF8 /* DrillAlert.xcdatamodeld in Sources */,
 				A066D5D21A2EBD4B00E16E58 /* PaddedUITextField.swift in Sources */,
 				A06FFD641A06AA08001B3FF8 /* AppDelegate.swift in Sources */,
-				A0F1B57E1A901B1200306DB7 /* HTMLParser.swift in Sources */,
 				CF8E9A941A91A17F008F8AF8 /* VisualType.swift in Sources */,
 				CFC8DBE61A92B21100727A97 /* EditViewTableViewCell.swift in Sources */,
 				CF75F7A91A95BA7100B7958D /* ChooseAddVisualTableViewController.swift in Sources */,
