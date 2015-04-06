@@ -77,7 +77,16 @@ class AddEditAlertTableViewController: UITableViewController {
             self.title = "Add Alert"
         }
         
+        // Dismiss keyboard on anywhere tap
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        tapRecognizer.cancelsTouchesInView = false
+        self.tableView.addGestureRecognizer(tapRecognizer)
+        
         super.viewDidLoad()
+    }
+    
+    func dismissKeyboard() {
+        alertValueTextField.resignFirstResponder()
     }
     
     func setAlertTypeLabelTextWithAlertType(alertType: AlertType) {
@@ -161,6 +170,8 @@ class AddEditAlertTableViewController: UITableViewController {
     }
     
     func saveEditedAlert() {
+        var alertMessage: String?
+        
         if let newAlertType = selectedAlertType {
             if let newValueText = alertValueTextField.text {
                 if let newValue = newValueText.toInt() {
@@ -186,36 +197,66 @@ class AddEditAlertTableViewController: UITableViewController {
                                     
                                 } else {
                                     // TODO: Show save error
+                                    alertMessage = "Unable to save alert."
                                 }
                             }
                         } else {
                             // User didn't select a priority
+                            alertMessage = "Please select a priority."
                         }
                     } else {
                         // User didn't select either rise or fall
+                        alertMessage = "Please select the alert on rise value."
                     }
                 } else {
                     // Invalid user input
+                    alertMessage = "Please enter a valid alert value."
                 }
             } else {
                 // User didn't enter anything for the value
+                alertMessage = "Please enter an alert value."
             }
         } else {
             // User didn't select a alert type
+            alertMessage = "Please select a alert type."
         }
+        
+        if let message = alertMessage {
+            let alertController = UIAlertController(
+                title: "Drill Alert",
+                message: message,
+                preferredStyle: .Alert)
+            
+            let defaultAction = UIAlertAction(
+                title: "OK",
+                style: .Default,
+                handler: nil)
+            
+            alertController.addAction(defaultAction)
+            
+            self.presentViewController(alertController, animated: true, completion: nil)
+        }
+        
     }
     
     // Creates a new alert, by saving it (in a way 
     // yet to be determined)
     func createNewAlert() {
+        var alertMessage: String?
+        
         if let newAlertType = selectedAlertType {
             if let newValueText = alertValueTextField.text {
-                if let newValue = newValueText.toInt() {
+                
+                let numberFormatter = NSNumberFormatter()
+                numberFormatter.numberStyle = .DecimalStyle
+                
+                if let newValue = numberFormatter.numberFromString(newValueText) {
+                    
                     if let newAlertOnRise = self.getAlertOnRiseValue() {
                         if let newPriority = self.getAlertPriorityValue() {
                             // Create a new Alert
                             if let newAlert = Alert.createNewInstance(
-                                Float(newValue),
+                                newValue.floatValue,
                                 isActive: true,
                                 alertOnRise: newAlertOnRise,
                                 type: newAlertType,
@@ -227,22 +268,45 @@ class AddEditAlertTableViewController: UITableViewController {
 
                             } else {
                                 // Show alert that says it didn't work
+                                alertMessage = "Unable to save  alert."
                             }
                         } else {
                             // User didn't select a priority
+                            alertMessage = "Please select a priority."
                         }
                     } else {
                         // User didn't select either rise or fall
+                        alertMessage = "Please select the alert on rise value."
                     }
                 } else {
                     // Invalid user input
+                    alertMessage = "Please enter a valid alert value."
                 }
             } else {
                 // User didn't enter anything for the value
+                alertMessage = "Please enter an alert value."
             }
         } else {
             // User didn't select a alert type
+            alertMessage = "Please select a alert type."
         }
+        
+        if let message = alertMessage {
+            let alertController = UIAlertController(
+                title: "Drill Alert",
+                message: message,
+                preferredStyle: .Alert)
+            
+            let defaultAction = UIAlertAction(
+                title: "OK",
+                style: .Default,
+                handler: nil)
+            
+            alertController.addAction(defaultAction)
+            
+            self.presentViewController(alertController, animated: true, completion: nil)
+        }
+        
     }
     
     func pushSelectAlertTypeViewController() {
@@ -272,6 +336,7 @@ extension AddEditAlertTableViewController: UITableViewDelegate {
             let alertInformationPriorityCellRow = 2
             
             switch indexPath.section {
+            
             case alertWhenSection:
                 alertOnFallCell.accessoryType = .None
                 alertOnRiseCell.accessoryType = .None

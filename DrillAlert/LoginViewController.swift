@@ -16,6 +16,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var backgroundImageView: UIImageView!
     let loginToHomeSegueIdentifier = "LoginToHomeSegue"
     var currentUser: User?
+    
     class func storyboardIdentifier() -> String! {
         return "LoginViewController"
     }
@@ -28,34 +29,9 @@ class LoginViewController: UIViewController {
     }
     
     override func viewDidLoad() {
-        
-        // TODO: Remove this, for testing only
-        
-        /*
-        let testCurve = Curve(id: 0, name: "test", tooltype: "test", units: "test", wellbore: Wellbore(id: 0, name: "test", well: Well(id: 0, name: "test", location: "test")))
-        testCurve.getCurvePoints()
-        
-        let testWellboreView = WellboreView.getWellboreViewsForUserID("1")
-        let wellboreView = testWellboreView[0]
-        
-        println(wellboreView.id)
-        
-        for panel in wellboreView.panels {
-            println("panel id: \(panel.id)")
-            for visualization in panel.visualizations {
-                println("visualization id: \(visualization.id)")
-            }
-        }
-        */
-        
         setupView()
         
-        // Check if user is already logged in, if they are, go
-        // straight to the home view controller
-        
-        // Need to do some kind of session stuff here,
-        // i.e. check if there is an SDI session open. If so
-        // then skip the login view, otherwise show it
+       
         super.viewDidLoad()
     }
     
