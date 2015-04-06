@@ -29,8 +29,6 @@ class AlertInboxTableViewController: UITableViewController {
         informationAlertNotifications = AlertNotification.fetchAllInformationAlertNotifications()
         readAlertNotifications = AlertNotification.fetchAllReadAlertNotifications()
         
-        
-        
         super.viewDidLoad()
     }
     
@@ -89,24 +87,27 @@ extension AlertInboxTableViewController: UITableViewDataSource {
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         var numberOfSections = 4
-        
-        /*
-        if criticalAlertNotifications.count > 0 {
-            numberOfSections++
+       
+        if criticalAlertNotifications.count == 0 && warningAlertNotifications.count == 0 && informationAlertNotifications.count == 0 && readAlertNotifications.count == 0 {
+            // Show no alert notifications message
+            numberOfSections = 0
+
+            let textColor = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1.0)
+            var noAlertNotificationsLabel = UILabel(frame: CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height - 39.0))
+            noAlertNotificationsLabel.text = "No Alert Notifications"
+            noAlertNotificationsLabel.textColor = textColor
+            noAlertNotificationsLabel.numberOfLines = 0
+            noAlertNotificationsLabel.textAlignment = .Center
+            noAlertNotificationsLabel.font = UIFont(name: "HelveticaNeue", size: 26.0)
+            noAlertNotificationsLabel.sizeToFit()
+            
+            self.tableView.backgroundView = noAlertNotificationsLabel
+            self.tableView.separatorStyle = .None
+            
+        } else {
+            self.tableView.backgroundView = nil
+            self.tableView.separatorStyle = .SingleLine
         }
-        
-        if warningAlertNotifications.count > 0 {
-            numberOfSections++
-        }
-        
-        if informationAlertNotifications.count > 0 {
-            numberOfSections++
-        }
-        
-        if readAlertNotifications.count > 0 {
-            numberOfSections++
-        }
-        */
         
         return numberOfSections
     }
