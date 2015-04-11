@@ -19,13 +19,17 @@ class AlertInboxCell: UITableViewCell {
     }
     
     func setupWithAlertNotification(alertNotification: AlertNotification!) {
-        
+        /*
         if let alertType = alertNotification.alert.getAlertType() {
             self.alertTitleLabel.text = alertType.name
         }
+        */
+        
         self.alertInformationLabel.text = alertNotification.getNotificationBody()
         
-        self.alertTimeLabel.text = self.getDateString(alertNotification.timeRecieved)
+        if let date = alertNotification.date {
+            self.alertTimeLabel.text = self.getDateString(date)
+        }
         self.selectionStyle = .None
 
     }

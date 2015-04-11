@@ -7,11 +7,68 @@
 //
 
 import Foundation
-import CoreData
 import UIKit
 
-@objc(AlertNotification)
-class AlertNotification: NSManagedObject {
+enum Severity: Int {
+    case Information = 0
+    case Warning = 1
+    case Critical = 2
+}
+
+class AlertNotification {
+    var message: String?
+    var severity: Severity?
+    var date: NSDate?
+    var alertID: Int?
+    var acknowledged: Bool?
+    
+    init(JSONObject: JSON) {
+        self.message = JSONObject.getStringAtKey("Message")
+        
+        if let severityInt = JSONObject.getIntAtKey("NotificationSeverity") {
+             self.severity = Severity(rawValue: severityInt)
+        }
+       
+        self.date = JSONObject.getDateAtKey("NotificationDate")
+        self.alertID = JSONObject.getIntAtKey("TriggeringAlert")
+        self.acknowledged = JSONObject.getBoolAtKey("Acknowledged")
+        
+    }
+    
+    init(message: String, severity: Severity, date: NSDate, alertID: Int, acknowledged: Bool) {
+        self.message = message;
+        self.severity = severity;
+        self.date = date
+        self.alertID = alertID
+        self.acknowledged = acknowledged
+    }
+    
+    class func getAlertHistory() -> [AlertNotification] {
+        var result = Array<AlertNotification>()
+        
+        let url = "https://drillalert.azurewebsites.net/api/alertshistory/"
+        let alertNotificationJSONArray = JSONArray(url: url)
+        
+        if let error = alertNotificationJSONArray.error {
+            // TODO: Show error message to user
+
+            println(error.description)
+        } else {
+            println(alertNotificationJSONArray)
+        }
+        
+        
+        return result;
+    }
+    
+    func getNotificationBody() -> String! {
+        return "Notification body."
+    }
+    
+}
+/*
+@objc(CDAlertNotification)
+class CDAlertNotification: NSManagedObject {
 
     @NSManaged var timeRecieved: NSDate
     @NSManaged var read: NSNumber
@@ -197,3 +254,4 @@ class AlertNotification: NSManagedObject {
     }
     
 }
+*/

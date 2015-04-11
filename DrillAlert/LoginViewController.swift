@@ -137,11 +137,11 @@ class LoginViewController: UIViewController {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == loginToHomeSegueIdentifier {
-             let homeViewController = segue.destinationViewController as HomeViewController
+             let homeViewController = segue.destinationViewController as! HomeViewController
              homeViewController.currentUser = self.currentUser
         } else if segue.identifier == "LoginToLoginWebView" {
-            let navigationController = segue.destinationViewController as UINavigationController
-            let loginWebViewController = navigationController.viewControllers[0] as LoginWebViewController
+            let navigationController = segue.destinationViewController as! UINavigationController
+            let loginWebViewController = navigationController.viewControllers[0] as! LoginWebViewController
 
             loginWebViewController.delegate = self
         }

@@ -25,7 +25,7 @@ class WellUsersTableViewController: UITableViewController {
 
 extension WellUsersTableViewController: UITableViewDataSource {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(userCellIdentifier) as UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(userCellIdentifier) as! UITableViewCell
         let user = users[indexPath.row]
         
         if let textLabel = cell.textLabel {

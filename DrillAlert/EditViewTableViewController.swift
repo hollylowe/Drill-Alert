@@ -41,7 +41,7 @@ class EditViewTableViewController: UITableViewController {
     
     func rightBarButtonItemTapped(sender: UIBarButtonItem) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        var vc = storyboard.instantiateViewControllerWithIdentifier("ChooseAddVisualTableViewController") as ChooseAddVisualTableViewController
+        var vc = storyboard.instantiateViewControllerWithIdentifier("ChooseAddVisualTableViewController") as! ChooseAddVisualTableViewController
         self.navigationController?.pushViewController(vc, animated: true)
 
     }
@@ -59,8 +59,8 @@ class EditViewTableViewController: UITableViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
         
-        let wellbore = sender as Wellbore
-        let destinationViewController = segue.destinationViewController as WellboreDetailViewController
+        let wellbore = sender as! Wellbore
+        let destinationViewController = segue.destinationViewController as! WellboreDetailViewController
         destinationViewController.currentWellbore = wellbore
         
         super.prepareForSegue(segue, sender: self)
@@ -72,7 +72,7 @@ extension EditViewTableViewController: UITableViewDataSource {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         //let cell = tableView.dequeueReusableCellWithIdentifier(EditVisualTableViewCell.cellIdentifier()) as EditVisualTableViewCell
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("EditVisualTableViewCell", forIndexPath: indexPath) as EditVisualTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("EditVisualTableViewCell", forIndexPath: indexPath) as! EditVisualTableViewCell
         let visual = visuals[indexPath.row]
         cell.setupWithVisual(visual)
         
@@ -91,17 +91,17 @@ extension EditViewTableViewController: UITableViewDataSource {
         
         if (visual.type == .Plot){
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            var vc = storyboard.instantiateViewControllerWithIdentifier("NewPlotTableViewController") as NewPlotTableViewController
+            var vc = storyboard.instantiateViewControllerWithIdentifier("NewPlotTableViewController") as! NewPlotTableViewController
             self.navigationController?.pushViewController(vc, animated: true)
         }
         else if (visual.type == .Compass){
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            var vc = storyboard.instantiateViewControllerWithIdentifier("NewCompassTableViewController") as NewCompassTableViewController
+            var vc = storyboard.instantiateViewControllerWithIdentifier("NewCompassTableViewController") as! NewCompassTableViewController
             self.navigationController?.pushViewController(vc, animated: true)
         }
         else if (visual.type == .Canvas){
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            var vc = storyboard.instantiateViewControllerWithIdentifier("NewCanvasTableViewController") as NewCanvasTableViewController
+            var vc = storyboard.instantiateViewControllerWithIdentifier("NewCanvasTableViewController") as! NewCanvasTableViewController
             self.navigationController?.pushViewController(vc, animated: true)
         }
         

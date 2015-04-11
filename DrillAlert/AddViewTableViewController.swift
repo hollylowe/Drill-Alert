@@ -34,13 +34,13 @@ class AddViewTableViewController: UITableViewController {
         if (indexPath.section == 1 ){
             switch selected{
                 case 0:
-                    var vc = storyboard.instantiateViewControllerWithIdentifier("NewPlotTableViewController") as NewPlotTableViewController
+                    var vc = storyboard.instantiateViewControllerWithIdentifier("NewPlotTableViewController") as! NewPlotTableViewController
                     self.navigationController?.pushViewController(vc, animated: true)
                 case 1:
-                    var vc = storyboard.instantiateViewControllerWithIdentifier("NewCanvasTableViewController") as NewCanvasTableViewController
+                    var vc = storyboard.instantiateViewControllerWithIdentifier("NewCanvasTableViewController") as! NewCanvasTableViewController
                     self.navigationController?.pushViewController(vc, animated: true)
                 case 2:
-                    var vc = storyboard.instantiateViewControllerWithIdentifier("NewCompassTableViewController") as NewCompassTableViewController
+                    var vc = storyboard.instantiateViewControllerWithIdentifier("NewCompassTableViewController") as! NewCompassTableViewController
                     self.navigationController?.pushViewController(vc, animated: true)
                 default:
                     println("something went wrong")

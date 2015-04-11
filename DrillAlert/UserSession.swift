@@ -137,7 +137,7 @@ class UserSession: NSObject, NSURLSessionDelegate, NSURLSessionTaskDelegate {
                         if (json.count - 1) >= 0 {
                             for index in 0...json.count - 1 {
                                 let object: AnyObject = json[index]
-                                let objectDictionary = object as Dictionary<String, AnyObject>
+                                let objectDictionary = object as! Dictionary<String, AnyObject>
                                 resultJSONArray.array!.append(JSON(dictionary: objectDictionary))
                             }
                         }
@@ -256,6 +256,7 @@ class UserSession: NSObject, NSURLSessionDelegate, NSURLSessionTaskDelegate {
             completionHandler(request)
     }
     
+    /*
     func setFedAuthCookiesWithWResult(wresult: String, andWCTX wctx: String, andWA wa: String) {
         // We need to encode each of these variables
         // into a URL safe format before sending them.
@@ -285,6 +286,7 @@ class UserSession: NSObject, NSURLSessionDelegate, NSURLSessionTaskDelegate {
             }
         }
     }
+    */
     
     func extractWVariablesFromContent(content: String) -> (String?, String?, String?) {
         /*
@@ -419,8 +421,10 @@ class UserSession: NSObject, NSURLSessionDelegate, NSURLSessionTaskDelegate {
         }
     }
     
+    /*
     class func encodeStringToPercentEscapedString(string: String) -> String {
         return CFURLCreateStringByAddingPercentEscapes(nil, string as CFStringRef, nil, "!*'();:@&=+$,/?%#[]" as CFStringRef, kCFStringEncodingASCII)
     }
+    */
     
 }

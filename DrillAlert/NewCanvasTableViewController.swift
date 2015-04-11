@@ -35,7 +35,7 @@ class NewCanvasTableViewController: UITableViewController {
     
     
     func rightBarButtonItemTapped(sender: UIBarButtonItem) {
-        let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController];
+        let viewControllers: [UIViewController] = self.navigationController!.viewControllers as! [UIViewController];
         self.navigationController!.popToViewController(viewControllers[viewControllers.count - 3], animated: true);
 
     }
@@ -48,10 +48,10 @@ class NewCanvasTableViewController: UITableViewController {
         if (indexPath.section == 1 ){
             switch selected {
             case 0:
-                var vc = storyboard.instantiateViewControllerWithIdentifier("NewNumberReadoutTableViewController") as NewNumberReadoutTableViewController
+                var vc = storyboard.instantiateViewControllerWithIdentifier("NewNumberReadoutTableViewController") as! NewNumberReadoutTableViewController
                 self.navigationController?.pushViewController(vc, animated: true)
             case 1:
-                var vc = storyboard.instantiateViewControllerWithIdentifier("NewGaugeTableViewController") as NewGaugeTableViewController
+                var vc = storyboard.instantiateViewControllerWithIdentifier("NewGaugeTableViewController") as! NewGaugeTableViewController
                 self.navigationController?.pushViewController(vc, animated: true)
             default:
                 println("something went wrong")

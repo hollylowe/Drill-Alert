@@ -76,6 +76,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 
                 if let alertMessage = alertNotificationDictionary["alert"] as? String {
                     if let alertBadge = alertNotificationDictionary["badge"] as? Int {
+                        /*
                         if let alertNotification = AlertNotification.createNewInstance("FA07B365-6EBD-4578-8264-A243A6702F20", timeRecieved: NSDate()) {
                             var alertLocalNotification = UILocalNotification()
                             alertLocalNotification.fireDate = NSDate()
@@ -87,6 +88,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                             }
                             
                         }
+                        */
                         
                     }
                 }
@@ -166,7 +168,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     lazy var applicationDocumentsDirectory: NSURL = {
         // The directory the application uses to store the Core Data store file. This code uses a directory named "Drillionaires.DrillAlert" in the application's documents Application Support directory.
         let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
-        return urls[urls.count-1] as NSURL
+        return urls[urls.count-1] as! NSURL
     }()
 
     lazy var managedObjectModel: NSManagedObjectModel = {
@@ -189,7 +191,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             dict[NSLocalizedDescriptionKey] = "Failed to initialize the application's saved data"
             dict[NSLocalizedFailureReasonErrorKey] = failureReason
             dict[NSUnderlyingErrorKey] = error
-            error = NSError(domain: "YOUR_ERROR_DOMAIN", code: 9999, userInfo: dict)
+            error = NSError(domain: "YOUR_ERROR_DOMAIN", code: 9999, userInfo: dict as [NSObject : AnyObject])
             // Replace this with code to handle the error appropriately.
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
             NSLog("Unresolved error \(error), \(error!.userInfo)")

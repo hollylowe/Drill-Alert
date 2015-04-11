@@ -70,7 +70,7 @@ class VisualsViewController: UIViewController, UIPageViewControllerDataSource {
         
         self.view.frame = CGRectMake(0, 0, self.view.frame.size.width, wellboreDetailViewController.topBarHeight)
         if let storyboard = self.storyboard {
-            self.pageViewController = storyboard.instantiateViewControllerWithIdentifier("PageViewController") as UIPageViewController
+            self.pageViewController = storyboard.instantiateViewControllerWithIdentifier("PageViewController") as! UIPageViewController
             self.pageViewController.dataSource = self
             
             let startViewController = self.viewControllerAtIndex(0)!
@@ -94,8 +94,8 @@ class VisualsViewController: UIViewController, UIPageViewControllerDataSource {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
         
-        let addEditAlertNavigationController = storyboard.instantiateViewControllerWithIdentifier(AddEditAlertNavigationController.getStoryboardIdentifier()) as AddEditAlertNavigationController
-        let addEditAlertViewController = addEditAlertNavigationController.viewControllers[0] as AddEditAlertTableViewController
+        let addEditAlertNavigationController = storyboard.instantiateViewControllerWithIdentifier(AddEditAlertNavigationController.getStoryboardIdentifier()) as! AddEditAlertNavigationController
+        let addEditAlertViewController = addEditAlertNavigationController.viewControllers[0] as! AddEditAlertTableViewController
         //addParameterAlertViewController.delegate = self
         self.presentViewController(addEditAlertNavigationController, animated: true, completion: nil)
     }
@@ -110,7 +110,7 @@ class VisualsViewController: UIViewController, UIPageViewControllerDataSource {
                 // TODO: Return something that says "no panels, add one"
                 return nil
             } else if let storyboard = self.storyboard {
-                let panelViewController = storyboard.instantiateViewControllerWithIdentifier(VisualViewController.getStoryboardIdentifier()) as VisualViewController
+                let panelViewController = storyboard.instantiateViewControllerWithIdentifier(VisualViewController.getStoryboardIdentifier()) as! VisualViewController
                 panelViewController.pageIndex = index
                 let panel = wellboreView.panels[index]
                 // Create the panel with each visualization
@@ -136,7 +136,7 @@ extension VisualsViewController: UIPageViewControllerDataSource {
         return 0
     }
     func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
-        var index = (viewController as VisualViewController).pageIndex
+        var index = (viewController as! VisualViewController).pageIndex
         
         if index == 0 || index == NSNotFound {
             return nil
@@ -147,7 +147,7 @@ extension VisualsViewController: UIPageViewControllerDataSource {
     }
     
     func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController? {
-        var index = (viewController as VisualViewController).pageIndex
+        var index = (viewController as! VisualViewController).pageIndex
         
         if index == NSNotFound {
             return nil

@@ -28,8 +28,8 @@ class AdminTableViewController: UITableViewController {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == adminToWellUsersSegueIdentifier {
-            let well = sender as Well
-            let destinationViewController = segue.destinationViewController as WellUsersTableViewController
+            let well = sender as! Well
+            let destinationViewController = segue.destinationViewController as! WellUsersTableViewController
             destinationViewController.currentWell = well
         }
         
@@ -39,7 +39,7 @@ class AdminTableViewController: UITableViewController {
 
 extension AdminTableViewController: UITableViewDataSource {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("WellCell") as UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("WellCell") as! UITableViewCell
         let well = wells[indexPath.row]
         
         if let textLabel = cell.textLabel {

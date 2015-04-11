@@ -36,7 +36,7 @@ class EditViewsTableViewController: UITableViewController {
     func rightBarButtonItemTapped(sender: UIBarButtonItem) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
 
-        var vc = storyboard.instantiateViewControllerWithIdentifier("AddViewTableViewController") as AddViewTableViewController
+        var vc = storyboard.instantiateViewControllerWithIdentifier("AddViewTableViewController") as! AddViewTableViewController
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -53,8 +53,8 @@ class EditViewsTableViewController: UITableViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
         
-        let wellbore = sender as Wellbore
-        let destinationViewController = segue.destinationViewController as WellboreDetailViewController
+        let wellbore = sender as! Wellbore
+        let destinationViewController = segue.destinationViewController as! WellboreDetailViewController
         destinationViewController.currentWellbore = wellbore
         
         super.prepareForSegue(segue, sender: self)
@@ -65,7 +65,7 @@ class EditViewsTableViewController: UITableViewController {
 extension EditViewsTableViewController: UITableViewDataSource {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(EditViewTableViewCell.cellIdentifier()) as EditViewTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(EditViewTableViewCell.cellIdentifier()) as! EditViewTableViewCell
         let view = views[indexPath.row]
         cell.setupWithView(view)
         
@@ -83,7 +83,7 @@ extension EditViewsTableViewController: UITableViewDataSource {
         print("you've selected \(view.name)")
         
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                var vc = storyboard.instantiateViewControllerWithIdentifier("EditViewTableViewController") as EditViewTableViewController
+                var vc = storyboard.instantiateViewControllerWithIdentifier("EditViewTableViewController") as! EditViewTableViewController
                 vc.wellboreDetailViewController = self.wellboreDetailViewController
                 vc.selectedView = view
                 self.navigationController?.pushViewController(vc, animated: true)

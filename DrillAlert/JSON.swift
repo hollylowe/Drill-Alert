@@ -14,6 +14,18 @@ class JSON {
         self.dictionary = dictionary
     }
     
+    func getDateAtKey(key: String) -> NSDate? {
+        var result: NSDate?
+        
+        if let implicitDictionary = dictionary {
+            if let object: AnyObject = implicitDictionary[key] {
+                result = object as? NSDate
+            }
+        }
+        
+        return result
+    }
+    
     func getIntAtKey(key: String) -> Int? {
         var result: Int?
         

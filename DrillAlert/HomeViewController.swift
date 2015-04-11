@@ -183,7 +183,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             return view as? UIImageView
         } else {
             for subview in view.subviews {
-                var imageView = self.findHairlineImageViewUnder(subview as UIView)
+                var imageView = self.findHairlineImageViewUnder(subview as! UIView)
                 if imageView != nil {
                     return imageView
                 }
@@ -278,8 +278,8 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
         if segue.identifier == homeToWellboreDetailSegueIdentifier {
-            let wellbore = sender as Wellbore
-            let destinationViewController = segue.destinationViewController as WellboreDetailViewController
+            let wellbore = sender as! Wellbore
+            let destinationViewController = segue.destinationViewController as! WellboreDetailViewController
             destinationViewController.currentWellbore = wellbore
             destinationViewController.currentUser = currentUser
         }
@@ -293,7 +293,7 @@ extension HomeViewController: UITableViewDataSource {
     
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let cell = tableView.dequeueReusableCellWithIdentifier("WellTableViewCell") as WellTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("WellTableViewCell") as! WellTableViewCell
         var view = UIView(frame: CGRectMake(0, 0, self.tableView.frame.size.width, 84.0))
         
         if selectedSegmentIndex == favoriteWellsIndex {
@@ -313,7 +313,7 @@ extension HomeViewController: UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(WellboreTableViewCell.getCellIdentifier()) as WellboreTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(WellboreTableViewCell.getCellIdentifier()) as! WellboreTableViewCell
         let wellbore = wellboreAtIndexPath(indexPath)
         
         cell.setupWithWellbore(wellbore)

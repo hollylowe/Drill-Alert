@@ -32,7 +32,7 @@ class JSONArray {
                     
                     for index in 0...json.count - 1 {
                         let object: AnyObject = json[index]
-                        let objectDictionary = object as Dictionary<String, AnyObject>
+                        let objectDictionary = object as! Dictionary<String, AnyObject>
                         self.array!.append(JSON(dictionary: objectDictionary))
                     }
                     
@@ -58,7 +58,7 @@ class JSONArray {
         self.error = nil
         self.array = Array<JSON>()
         for object in objectArray {
-            let objectDictionary = object as Dictionary<String, AnyObject>
+            let objectDictionary = object as! Dictionary<String, AnyObject>
             self.array!.append(JSON(dictionary: objectDictionary))
         }
     }
@@ -102,7 +102,7 @@ class JSONArray {
                         
                         for index in 0...json.count - 1 {
                             let object: AnyObject = json[index]
-                            let objectDictionary = object as Dictionary<String, AnyObject>
+                            let objectDictionary = object as! Dictionary<String, AnyObject>
                             self.array!.append(JSON(dictionary: objectDictionary))
                         }
                         

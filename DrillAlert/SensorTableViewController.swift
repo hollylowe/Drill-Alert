@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import UIkit
+import UIKit
 
 class SensorTableViewController: UITableViewController {
     

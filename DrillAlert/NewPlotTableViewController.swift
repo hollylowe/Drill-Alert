@@ -38,7 +38,7 @@ class NewPlotTableViewController: UITableViewController {
     
     
     func rightBarButtonItemTapped(sender: UIBarButtonItem) {
-        let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController];
+        let viewControllers: [UIViewController] = self.navigationController!.viewControllers as! [UIViewController];
         self.navigationController!.popToViewController(viewControllers[viewControllers.count - 3], animated: true);
     }
     
@@ -50,17 +50,17 @@ class NewPlotTableViewController: UITableViewController {
         if (indexPath.section == 1 ){
             switch selected {
                 case 0:
-                    var vc = storyboard.instantiateViewControllerWithIdentifier("IVTTableViewController") as IVTTableViewController
+                    var vc = storyboard.instantiateViewControllerWithIdentifier("IVTTableViewController") as! IVTTableViewController
                     self.navigationController?.pushViewController(vc, animated: true)
                 case 1:
-                    var vc = storyboard.instantiateViewControllerWithIdentifier("UnitsTableViewController") as UnitsTableViewController
+                    var vc = storyboard.instantiateViewControllerWithIdentifier("UnitsTableViewController") as! UnitsTableViewController
                     self.navigationController?.pushViewController(vc, animated: true)
                 default:
                     println("something went wrong")
             }
         }
         else {
-           var vc = storyboard.instantiateViewControllerWithIdentifier("AddTrackTableViewController") as AddTrackTableViewController
+           var vc = storyboard.instantiateViewControllerWithIdentifier("AddTrackTableViewController") as! AddTrackTableViewController
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }

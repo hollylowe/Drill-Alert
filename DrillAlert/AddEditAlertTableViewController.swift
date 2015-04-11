@@ -355,7 +355,7 @@ extension AddEditAlertTableViewController: UITableViewDelegate {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == SelectAlertTypeTableViewController.getEntrySegueIdentifier() {
-            let destinationViewController = segue.destinationViewController as SelectAlertTypeTableViewController
+            let destinationViewController = segue.destinationViewController as! SelectAlertTypeTableViewController
             destinationViewController.delegate = self
         }
     }

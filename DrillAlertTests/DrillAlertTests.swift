@@ -29,7 +29,7 @@ class DrillAlertTests: XCTestCase {
     
     func testLoginViewController() {
         let storyboard = UIStoryboard(name: "Main", bundle: NSBundle(forClass: self.dynamicType))
-        let navigationLoginViewController = storyboard.instantiateInitialViewController() as UINavigationController
+        let navigationLoginViewController = storyboard.instantiateInitialViewController() as! UINavigationController
         
         XCTAssert(navigationLoginViewController.viewControllers.count > 0,
             "Initial navigation controller has no children.")

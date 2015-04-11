@@ -49,7 +49,7 @@ class ManageViewsTableViewController: UITableViewController {
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
-        var vc = storyboard.instantiateViewControllerWithIdentifier("EditViewsTableViewController") as EditViewsTableViewController
+        var vc = storyboard.instantiateViewControllerWithIdentifier("EditViewsTableViewController") as! EditViewsTableViewController
         vc.wellboreDetailViewController = self.wellboreDetailViewController
         let navigationController = UINavigationController(rootViewController: vc as UIViewController)
         self.presentViewController(navigationController, animated: false, completion: nil)
@@ -66,8 +66,8 @@ class ManageViewsTableViewController: UITableViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
       
-            let wellbore = sender as Wellbore
-            let destinationViewController = segue.destinationViewController as WellboreDetailViewController
+            let wellbore = sender as! Wellbore
+            let destinationViewController = segue.destinationViewController as! WellboreDetailViewController
             destinationViewController.currentWellbore = wellbore
         
         super.prepareForSegue(segue, sender: self)
@@ -78,7 +78,7 @@ class ManageViewsTableViewController: UITableViewController {
 extension ManageViewsTableViewController: UITableViewDataSource {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(ViewTableViewCell.cellIdentifier()) as ViewTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(ViewTableViewCell.cellIdentifier()) as! ViewTableViewCell
         let view = views[indexPath.row]
         
         if let s = self.selectedView {
@@ -111,7 +111,7 @@ extension ManageViewsTableViewController: UITableViewDataSource {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let view = views[indexPath.row] as View
-        let cell = tableView.dequeueReusableCellWithIdentifier(ViewTableViewCell.cellIdentifier()) as ViewTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(ViewTableViewCell.cellIdentifier()) as! ViewTableViewCell
         
         
         self.selectedView = view

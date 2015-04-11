@@ -67,11 +67,11 @@ class WellboreDetailViewController: UIViewController {
             // Set up the Visuals view controller,
             // which is inside a container on this view controller
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let visualsViewController = storyboard.instantiateViewControllerWithIdentifier("VisualsViewController") as VisualsViewController
+            let visualsViewController = storyboard.instantiateViewControllerWithIdentifier("VisualsViewController") as! VisualsViewController
             
             // Set up the Alert Inbox view controller,
             // which is inside a container on this view controller
-            let alertInboxTableViewController = storyboard.instantiateViewControllerWithIdentifier(AlertInboxTableViewController.storyboardIdentifier()) as AlertInboxTableViewController
+            let alertInboxTableViewController = storyboard.instantiateViewControllerWithIdentifier(AlertInboxTableViewController.storyboardIdentifier()) as! AlertInboxTableViewController
             
             let viewControllers = [visualsViewController, alertInboxTableViewController]
             visualsViewController.wellboreDetailViewController = self
@@ -123,8 +123,8 @@ class WellboreDetailViewController: UIViewController {
     func manageAlertsBarButtonTapped(sender: AnyObject) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let manageAlertsNavigationController = storyboard.instantiateViewControllerWithIdentifier(
-            ManageAlertsNavigationController.storyboardIdentifier()) as ManageAlertsNavigationController
-        let manageAlertsTableViewController = manageAlertsNavigationController.viewControllers[0] as ManageAlertsTableViewController
+            ManageAlertsNavigationController.storyboardIdentifier()) as! ManageAlertsNavigationController
+        let manageAlertsTableViewController = manageAlertsNavigationController.viewControllers[0] as! ManageAlertsTableViewController
 
         manageAlertsTableViewController.wellboreDetailViewController = self
         manageAlertsTableViewController.currentUser = self.currentUser
@@ -133,8 +133,8 @@ class WellboreDetailViewController: UIViewController {
     
     func manageViewsBarButtonTapped(sender: AnyObject) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let manageViewsNavigationController = storyboard.instantiateViewControllerWithIdentifier(ManageViewsNavigationController.storyboardIdentifier()) as ManageViewsNavigationController
-        let manageViewsTableViewController = manageViewsNavigationController.viewControllers[0] as ManageViewsTableViewController
+        let manageViewsNavigationController = storyboard.instantiateViewControllerWithIdentifier(ManageViewsNavigationController.storyboardIdentifier()) as! ManageViewsNavigationController
+        let manageViewsTableViewController = manageViewsNavigationController.viewControllers[0] as! ManageViewsTableViewController
 
         manageViewsTableViewController.wellboreDetailViewController = self
         self.presentViewController(manageViewsNavigationController, animated: true, completion: nil)
@@ -163,7 +163,7 @@ class WellboreDetailViewController: UIViewController {
             return view as? UIImageView
         } else {
             for subview in view.subviews {
-                var imageView = self.findHairlineImageViewUnder(subview as UIView)
+                var imageView = self.findHairlineImageViewUnder(subview as! UIView)
                 if imageView != nil {
                     return imageView
                 }

@@ -16,7 +16,7 @@ class FavoriteWellbore : NSManagedObject {
     @NSManaged var wellboreID: NSNumber
     
     func delete() {
-        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         if let context = appDelegate.managedObjectContext {
             context.deleteObject(self)
             var error: NSError?
@@ -33,7 +33,7 @@ class FavoriteWellbore : NSManagedObject {
     class func fetchAllInstances() -> Array<FavoriteWellbore> {
         var allFavoriteWellbores = Array<FavoriteWellbore>()
         
-        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         if let context = appDelegate.managedObjectContext {
             var request = NSFetchRequest(entityName: FavoriteWellbore.entityName())
             var error: NSError?
@@ -42,7 +42,7 @@ class FavoriteWellbore : NSManagedObject {
                 println("Core Data Error: ")
                 println(error)
             } else {
-                allFavoriteWellbores = results as [FavoriteWellbore]
+                allFavoriteWellbores = results as! [FavoriteWellbore]
             }
         }
         
@@ -52,9 +52,9 @@ class FavoriteWellbore : NSManagedObject {
     class func createNewInstance(wellboreID: Int) -> FavoriteWellbore? {
         var newFavoriteWellbore: FavoriteWellbore?
         
-        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         if let context = appDelegate.managedObjectContext {
-            var favoriteWellbore = NSEntityDescription.insertNewObjectForEntityForName(FavoriteWellbore.entityName(), inManagedObjectContext: context) as FavoriteWellbore
+            var favoriteWellbore = NSEntityDescription.insertNewObjectForEntityForName(FavoriteWellbore.entityName(), inManagedObjectContext: context) as! FavoriteWellbore
             
             favoriteWellbore.wellboreID = NSNumber(integer: wellboreID)
             
@@ -76,7 +76,7 @@ class FavoriteWellbore : NSManagedObject {
     class func fetchFavoriteWellboreWithWellboreID(wellboreID: Int) -> FavoriteWellbore? {
         var favoriteWellbore: FavoriteWellbore?
         
-        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         if let context = appDelegate.managedObjectContext {
             
             let favoriteWellboreFetchRequest = NSFetchRequest(entityName: FavoriteWellbore.entityName())

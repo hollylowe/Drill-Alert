@@ -35,7 +35,7 @@ class NewCompassTableViewController: UITableViewController {
     
     
     func rightBarButtonItemTapped(sender: UIBarButtonItem) {
-        let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController];
+        let viewControllers: [UIViewController] = self.navigationController!.viewControllers as! [UIViewController];
         self.navigationController!.popToViewController(viewControllers[viewControllers.count - 3], animated: true);
         
     }
@@ -48,10 +48,10 @@ class NewCompassTableViewController: UITableViewController {
         if (indexPath.section == 1 ){
             switch selected {
             case 0:
-                var vc = storyboard.instantiateViewControllerWithIdentifier("SensorTableViewController") as SensorTableViewController
+                var vc = storyboard.instantiateViewControllerWithIdentifier("SensorTableViewController") as! SensorTableViewController
                 self.navigationController?.pushViewController(vc, animated: true)
             case 1:
-                var vc = storyboard.instantiateViewControllerWithIdentifier("CompassDataSourceTableViewController") as CompassDataSourceTableViewController
+                var vc = storyboard.instantiateViewControllerWithIdentifier("CompassDataSourceTableViewController") as! CompassDataSourceTableViewController
                 self.navigationController?.pushViewController(vc, animated: true)
             default:
                 println("something went wrong")

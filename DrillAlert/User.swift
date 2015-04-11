@@ -28,6 +28,8 @@ class User {
         self.guid = guid
     }
     
+    
+    
     /// Authenticate a username and password. If
     /// successful, return a new user object. Otherwise,
     /// return nil.

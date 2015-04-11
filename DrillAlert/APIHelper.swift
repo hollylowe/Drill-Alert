@@ -37,7 +37,7 @@ class APIHelper {
         if let json = result as? Array<AnyObject> {
             for index in 0...json.count - 1 {
                 let object: AnyObject = json[index]
-                let objectDictionary = object as Dictionary<String, AnyObject>
+                let objectDictionary = object as! Dictionary<String, AnyObject>
                 resultArray.append(objectDictionary)
             }
         } else {

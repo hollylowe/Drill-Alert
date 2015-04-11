@@ -24,14 +24,14 @@ class AddTrackTableViewController: UITableViewController {
         if (indexPath.section == 0 ){
             switch selected {
             case 1:
-                var vc = storyboard.instantiateViewControllerWithIdentifier("ScaleTypeTableViewController") as ScaleTypeTableViewController
+                var vc = storyboard.instantiateViewControllerWithIdentifier("ScaleTypeTableViewController") as! ScaleTypeTableViewController
                 self.navigationController?.pushViewController(vc, animated: true)
             default:
                 println("something went wrong")
             }
         }
         else {
-            var vc = storyboard.instantiateViewControllerWithIdentifier("AddCurveTableViewController") as AddCurveTableViewController
+            var vc = storyboard.instantiateViewControllerWithIdentifier("AddCurveTableViewController") as! AddCurveTableViewController
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }

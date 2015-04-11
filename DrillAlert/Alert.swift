@@ -120,7 +120,7 @@ class Alert: NSManagedObject {
     func save() -> Bool {
         var success = false
         
-        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         if let context = appDelegate.managedObjectContext {
             var error: NSError?
             context.save(&error)
@@ -142,9 +142,9 @@ class Alert: NSManagedObject {
     class func createNewInstance(value: Float, isActive: Bool, alertOnRise: Bool, type: AlertType, priority: AlertPriority) -> Alert? {
         var newAlert: Alert?
         
-        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         if let context = appDelegate.managedObjectContext {
-            var alert = NSEntityDescription.insertNewObjectForEntityForName(Alert.entityName(), inManagedObjectContext: context) as Alert
+            var alert = NSEntityDescription.insertNewObjectForEntityForName(Alert.entityName(), inManagedObjectContext: context) as! Alert
             alert.alertType = NSNumber(integer: Int(type.rawValue))
             alert.value = NSNumber(float: value)
             alert.isActive = NSNumber(bool: isActive)
@@ -154,7 +154,9 @@ class Alert: NSManagedObject {
             // Create a UUID
             var uuidObject = CFUUIDCreate(nil)
             var uuidString = CFUUIDCreateString(nil, uuidObject)
-            alert.guid = uuidString;
+            
+            // TODO: Change this
+            // alert.guid = uuidString;
             
             var error: NSError?
             
@@ -175,7 +177,7 @@ class Alert: NSManagedObject {
     class func fetchAllInstances() -> Array<Alert> {
         var allAlerts = Array<Alert>()
         
-        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         if let context = appDelegate.managedObjectContext {
             var request = NSFetchRequest(entityName: Alert.entityName())
             var error: NSError?
@@ -184,7 +186,7 @@ class Alert: NSManagedObject {
                 println("Core Data Error: ")
                 println(error)
             } else {
-                allAlerts = results as [Alert]
+                allAlerts = results as! [Alert]
                 
                 for alert in allAlerts {
                     println(alert.guid)

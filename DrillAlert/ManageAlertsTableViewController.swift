@@ -55,8 +55,8 @@ class ManageAlertsTableViewController: UITableViewController {
     func rightBarButtonItemTapped(sender: UIBarButtonItem) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
 
-        let addEditAlertNavigationController = storyboard.instantiateViewControllerWithIdentifier(AddEditAlertNavigationController.getStoryboardIdentifier()) as AddEditAlertNavigationController
-        let addEditAlertViewController = addEditAlertNavigationController.viewControllers[0] as AddEditAlertTableViewController
+        let addEditAlertNavigationController = storyboard.instantiateViewControllerWithIdentifier(AddEditAlertNavigationController.getStoryboardIdentifier()) as! AddEditAlertNavigationController
+        let addEditAlertViewController = addEditAlertNavigationController.viewControllers[0] as! AddEditAlertTableViewController
         addEditAlertViewController.delegate = self
         addEditAlertViewController.currentUser = self.currentUser
         self.presentViewController(addEditAlertNavigationController, animated: true, completion: nil)
@@ -74,8 +74,8 @@ class ManageAlertsTableViewController: UITableViewController {
         if segue.identifier == AddEditAlertNavigationController.getEntrySegueIdentifier() {
             if let alert = sender as? Alert {
                 // Set the alert to edit in the following view controller
-                let destination = segue.destinationViewController as AddEditAlertNavigationController
-                let addEditAlertTableViewController = destination.viewControllers[0] as AddEditAlertTableViewController
+                let destination = segue.destinationViewController as! AddEditAlertNavigationController
+                let addEditAlertTableViewController = destination.viewControllers[0] as! AddEditAlertTableViewController
                 addEditAlertTableViewController.alertToEdit = alert
                 addEditAlertTableViewController.delegate = self
                 addEditAlertTableViewController.currentUser = self.currentUser
@@ -87,7 +87,7 @@ class ManageAlertsTableViewController: UITableViewController {
 
 extension ManageAlertsTableViewController: UITableViewDataSource {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(AlertTableViewCell.cellIdentifier()) as AlertTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(AlertTableViewCell.cellIdentifier()) as! AlertTableViewCell
         let alert = alerts[indexPath.row]
         
         cell.setupWithAlert(alert)

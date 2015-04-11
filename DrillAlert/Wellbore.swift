@@ -78,10 +78,10 @@ class Wellbore {
         var (urlResult, urlError) = APIHelper.getSynchronousJSONArray(url)
         for dictionary in urlResult {
             if let xValue: AnyObject = dictionary["X"] {
-                x = (xValue as NSNumber).doubleValue
+                x = (xValue as! NSNumber).doubleValue
             }
             if let yValue: AnyObject = dictionary["Y"] {
-                y = (yValue as NSNumber).doubleValue
+                y = (yValue as! NSNumber).doubleValue
             }
         }
         
@@ -95,10 +95,10 @@ class Wellbore {
             var x: Double = 0
             var y: Double = 0
             if let xValue: AnyObject = dictionary["X"] {
-                x = (xValue as NSNumber).doubleValue
+                x = (xValue as! NSNumber).doubleValue
             }
             if let yValue: AnyObject = dictionary["Y"] {
-                y = (yValue as NSNumber).doubleValue
+                y = (yValue as! NSNumber).doubleValue
             }
             
             self.data.append(Point(x: x, y: y))

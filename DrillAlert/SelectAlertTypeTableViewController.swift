@@ -68,7 +68,7 @@ extension SelectAlertTypeTableViewController: UITableViewDataSource {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(alertTypeCellIdentifier) as UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(alertTypeCellIdentifier) as! UITableViewCell
         
         if let textLabel = cell.textLabel {
             let alertType = AlertType.allValues[indexPath.row]

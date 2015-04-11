@@ -23,34 +23,58 @@ class AlertInboxTableViewController: UITableViewController {
     var informationAlertNotifications: [AlertNotification]!
     var readAlertNotifications: [AlertNotification]!
     
+    
     override func viewDidLoad() {
-        criticalAlertNotifications = AlertNotification.fetchAllCriticalAlertNotifications()
-        warningAlertNotifications = AlertNotification.fetchAllWarningAlertNotifications()
-        informationAlertNotifications = AlertNotification.fetchAllInformationAlertNotifications()
-        readAlertNotifications = AlertNotification.fetchAllReadAlertNotifications()
+        self.reloadData()
         
         super.viewDidLoad()
     }
     
     override func viewDidAppear(animated: Bool) {
         // Let the app delegate know that we are on this view
-        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         appDelegate.alertInboxTableViewController = self
         
         println("View did appear")
     }
     override func viewDidDisappear(animated: Bool) {
-        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         appDelegate.alertInboxTableViewController = nil
         super.viewDidDisappear(animated)
     }
     
-    func recievedRemoteNotification() {
-        criticalAlertNotifications = AlertNotification.fetchAllCriticalAlertNotifications()
-        warningAlertNotifications = AlertNotification.fetchAllWarningAlertNotifications()
-        informationAlertNotifications = AlertNotification.fetchAllInformationAlertNotifications()
-        readAlertNotifications = AlertNotification.fetchAllReadAlertNotifications()
+    func reloadData() {
+        var alertNotifications = AlertNotification.getAlertHistory()
         
+        self.criticalAlertNotifications = Array<AlertNotification>()
+        self.warningAlertNotifications = Array<AlertNotification>()
+        self.informationAlertNotifications = Array<AlertNotification>()
+        self.readAlertNotifications = Array<AlertNotification>()
+        
+        for alertNotification in alertNotifications {
+            if let acknowledged = alertNotification.acknowledged {
+                if acknowledged {
+                    readAlertNotifications.append(alertNotification)
+                } else {
+                    if let severity = alertNotification.severity {
+                        switch severity {
+                            case .Critical:
+                                criticalAlertNotifications.append(alertNotification)
+                            case .Warning:
+                                warningAlertNotifications.append(alertNotification)
+                            case .Information:
+                                informationAlertNotifications.append(alertNotification)
+                            default: break
+                        }
+                    }
+                   
+                }
+            }
+        }
+    }
+    
+    func recievedRemoteNotification() {
+        self.reloadData()
         self.tableView.reloadData()
     }
     
@@ -64,7 +88,7 @@ extension AlertInboxTableViewController: UITableViewDataSource {
     override func tableView(tableView: UITableView,
         cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
             let cell = tableView.dequeueReusableCellWithIdentifier(
-                AlertInboxCell.cellIdentifier()) as AlertInboxCell
+                AlertInboxCell.cellIdentifier()) as! AlertInboxCell
             var alertNotification: AlertNotification!
             
             
@@ -158,9 +182,10 @@ extension AlertInboxTableViewController: UITableViewDelegate {
     
     override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [AnyObject]? {
         var result: [AnyObject]?
-        
+        /*
         if indexPath.section != readSection {
             let markAsReadAction = UITableViewRowAction(style: .Normal, title: "Mark as Read", handler: { (rowAction, indexPath) -> Void in
+                /*
                 var alertNotification: AlertNotification!
                 
                 switch indexPath.section {
@@ -218,6 +243,7 @@ extension AlertInboxTableViewController: UITableViewDelegate {
             markAsReadAction.backgroundColor = UIColor(red: 0.424, green: 0.675, blue: 0.890, alpha: 1.0)
             
             result = [markAsReadAction]
+            */
         } else {
             let deleteAction = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title: "Delete", handler: { (rowAction, indexPath) -> Void in
                 var alertNotification = self.readAlertNotifications[indexPath.row]
@@ -284,7 +310,7 @@ extension AlertInboxTableViewController: UITableViewDelegate {
             result = [unmarkAsReadAction, deleteAction]
         }
         
-        
+        */
         return result
     }
     
