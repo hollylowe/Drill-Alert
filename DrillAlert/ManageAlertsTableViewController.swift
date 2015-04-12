@@ -21,12 +21,20 @@ class ManageAlertsTableViewController: UITableViewController {
     var alerts = Array<Alert>()
     var currentUser: User!
     
+    var shouldLoadFromNetwork = true
+    var loadingIndicator: UIActivityIndicatorView?
+    var loadingData = true
+    var loadError = false
+    
     override func viewDidLoad() {
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl!.attributedTitle = NSAttributedString(string: "Pull To Refresh")
+        self.refreshControl!.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
+        
+        self.loadData()
+        
         self.title = "Manage Alerts"
         
-        // Retrieve all the alerts that the user has 
-        // saved on their device.
-        self.updateAlerts()
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(
             barButtonSystemItem: .Add,
@@ -40,14 +48,57 @@ class ManageAlertsTableViewController: UITableViewController {
         super.viewDidLoad()
     }
     
-    func updateAlerts() {
+    func refresh(sender:AnyObject)
+    {
+        self.reloadAlerts()
+        self.refreshControl!.endRefreshing()
+        self.tableView.reloadData()
+    }
+    
+    func reloadAlerts() {
         var (resultAlerts, resultError) = Alert.getAllAlertsForUser(currentUser)
         
         self.alerts = resultAlerts
     }
     
+    func loadData() {
+        loadError = false
+        loadingData = false
+        
+        if shouldLoadFromNetwork {
+            loadError = false
+            loadingData = true
+            self.tableView.reloadData()
+            
+            // TODO: This will need to change if we add a way to refresh this page, which we probably will.
+            // Instead, we could use the NSURLConnection asynchrounous call. This is because users could
+            // refresh the page faster than this call could load it, resulting in multiple threads doing
+            // the same operation and messing up the table view.
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
+                self.reloadAlerts()
+                
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.loadingData = false
+                    self.tableView.reloadData()
+                })
+            })
+            
+        } else {
+            /*
+            let well = Well(id: 0, name: "Test Well", location: "No Location")
+            well.wellbores.append(Wellbore(id: 0, name: "Test Bore", well: Well(id: 0, name: "Test Well", location: "Here")))
+            
+            self.wells.append(well)
+            */
+            self.tableView.reloadData()
+        }
+
+        
+        
+    }
+    
     func updateView() {
-        self.updateAlerts()
+        self.reloadAlerts()
         self.tableView.reloadData()
     }
     
@@ -89,6 +140,47 @@ class ManageAlertsTableViewController: UITableViewController {
 }
 
 extension ManageAlertsTableViewController: UITableViewDataSource {
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        var numberOfSections = 1
+        
+        if loadingData {
+            numberOfSections = 0
+            let indicatorWidth: CGFloat = 20
+            let indicatorHeight: CGFloat = 20
+            // Display loading indicator
+            var backgroundView = UIView(frame: CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height))
+            var loadingIndicator = UIActivityIndicatorView(frame: CGRectMake((self.view.bounds.size.width - indicatorWidth) / 2, (self.view.bounds.size.height - indicatorHeight) / 2, indicatorWidth, indicatorHeight))
+            
+            loadingIndicator.color = UIColor.grayColor()
+            loadingIndicator.startAnimating()
+            backgroundView.addSubview(loadingIndicator)
+            self.tableView.backgroundView = backgroundView
+            self.tableView.separatorStyle = .None
+            
+        } else if self.alerts.count == 0 {
+                // Show no alerts message
+                numberOfSections = 0
+                
+                let textColor = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1.0)
+                var noAlertNotificationsLabel = UILabel(frame: CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height - 39.0))
+                noAlertNotificationsLabel.text = "No Alerts"
+                noAlertNotificationsLabel.textColor = textColor
+                noAlertNotificationsLabel.numberOfLines = 0
+                noAlertNotificationsLabel.textAlignment = .Center
+                noAlertNotificationsLabel.font = UIFont(name: "HelveticaNeue", size: 26.0)
+                noAlertNotificationsLabel.sizeToFit()
+                
+                self.tableView.backgroundView = noAlertNotificationsLabel
+                self.tableView.separatorStyle = .None
+                
+        } else {
+            self.tableView.backgroundView = nil
+            self.tableView.separatorStyle = .SingleLine
+        }
+        
+        return numberOfSections
+    }
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(AlertTableViewCell.cellIdentifier()) as! AlertTableViewCell
         let alert = alerts[indexPath.row]
