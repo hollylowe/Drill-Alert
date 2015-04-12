@@ -131,13 +131,10 @@ class VisualViewController: UIViewController, UIWebViewDelegate {
     override func viewDidAppear(animated: Bool) {
         // Once the view has loaded,
         // set up the web view.
-        println("View did appear.")
         if let htmlPath = NSBundle.mainBundle().pathForResource(htmlFileName, ofType: "html") {
-            println("Set html path.")
             var possibleContent = String(contentsOfFile:htmlPath, usedEncoding: nil, error: nil)
             
             if let content = possibleContent {
-                println("Set possible content.")
                 self.webView.delegate = self
                 self.webView.loadHTMLString(content, baseURL: NSURL.fileURLWithPath(htmlPath.stringByDeletingLastPathComponent))
             }
@@ -178,7 +175,6 @@ class VisualViewController: UIViewController, UIWebViewDelegate {
 
 extension VisualViewController: UIWebViewDelegate {
     func webViewDidFinishLoad(webView: UIWebView) {
-        println("Web view did finish load.")
         let plotJSFileName = "Test.js"
         let gaugeJSFileName = "Test2.js"
         let defaultWidth = 400
@@ -188,13 +184,10 @@ extension VisualViewController: UIWebViewDelegate {
         var newJavaScriptVisualizations = Array<JavaScriptVisualization>()
         
         for visualization in self.panel.visualizations {
-            println("In visualizations.")
             // TODO: Remove, only for the demo
             if self.panel.shouldShowDemoPlot {
-                println("Showing demo plot.")
                 newJavaScriptVisualizations.append(JavaScriptPlot(id: visualization.id, yMax: 10, xMax: 20, initialData: Array<Int>(), width: defaultWidth, height: defaultHeight))
             } else {
-                println("Not showing demo plot.")
                 switch visualization.jsFileName {
                 case plotJSFileName:
                     newJavaScriptVisualizations.append(JavaScriptPlot(id: visualization.id, yMax: 10, xMax: 10, initialData: Array<Int>(), width: defaultWidth, height: defaultHeight))

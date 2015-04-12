@@ -28,10 +28,24 @@ class AlertInboxTableViewController: UITableViewController {
     var loadingData = true
     var loadError = false
     
+    
     override func viewDidLoad() {
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl!.attributedTitle = NSAttributedString(string: "Pull To Refresh")
+        self.refreshControl!.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
+        //self.tableView.addSubview(self.refreshControl!)
+        
         self.loadData()
         
         super.viewDidLoad()
+    }
+    
+    func refresh(sender:AnyObject)
+    {
+        self.reloadAlertHistory()
+        self.refreshControl!.endRefreshing()
+        self.tableView.reloadData()
+        
     }
     
     override func viewDidAppear(animated: Bool) {
