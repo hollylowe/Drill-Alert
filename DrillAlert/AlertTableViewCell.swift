@@ -23,17 +23,12 @@ class AlertTableViewCell: UITableViewCell {
         */
         self.alertOnSwitch.onTintColor = UIColor(red: 0.604, green: 0.792, blue: 1.0, alpha: 1.0)
 
-        if let alertType = alert.getAlertType() {
-            if let alertPriority = alert.getAlertPriority() {
-                self.alertTitleLabel.text = "\(alertType.name) Alert, \(alertPriority.description)"
-                if alert.alertOnRise.boolValue {
-                    self.alertDetailLabel.text = "Alert on rise to \(alert.value.floatValue) \(alertType.units)"
-                } else {
-                    self.alertDetailLabel.text = "Alert on fall to \(alert.value.floatValue) \(alertType.units)"
-                }
-            }
+        self.alertTitleLabel.text = "\(alert.name), \(alert.severity.toString())"
+        if alert.rising.boolValue {
+            self.alertDetailLabel.text = "Alert on rise to \(alert.threshold)"
+        } else {
+            self.alertDetailLabel.text = "Alert on fall to \(alert.threshold)"
         }
-        
     }
     
     class func cellIdentifier() -> String! {

@@ -24,8 +24,10 @@ class AddEditAlertNavigationController: UINavigationController {
 class AddEditAlertTableViewController: UITableViewController {
     
     // Static UI elements on the Add or Edit view
-    @IBOutlet weak var alertTypeLabel: UILabel!
+    // @IBOutlet weak var alertTypeLabel: UILabel!
     @IBOutlet weak var alertValueTextField: UITextField!
+    @IBOutlet weak var alertNameTextField: UITextField!
+    
     
     // These Rise / Fall cells will have a checkmark next to them,
     // representing the selected value for this alert.
@@ -38,11 +40,14 @@ class AddEditAlertTableViewController: UITableViewController {
     @IBOutlet weak var alertWarningPriorityCell: UITableViewCell!
     @IBOutlet weak var alertInformationPriorityCell: UITableViewCell!
     
+    // TODO: Remove this, for debugging
+    @IBOutlet weak var sendAlertNotificationCell: UITableViewCell!
+    
     // This is the alert's type, which must be set
     // by the user to create a new alert. It is selected
     // from a seperate view controller (SelectAlertType),
     // and set here upon that view controller's dismissal.
-    var selectedAlertType: AlertType?
+    // var selectedAlertType: AlertType?
     var currentUser: User!
     
     // This will be set by the previous
@@ -89,21 +94,26 @@ class AddEditAlertTableViewController: UITableViewController {
         alertValueTextField.resignFirstResponder()
     }
     
+    /*
     func setAlertTypeLabelTextWithAlertType(alertType: AlertType) {
-        self.alertTypeLabel.text = alertType.name
+        self.alertname.text = alertType.name
     }
+    */
     
     func setupViewWithAlert(alert: Alert) {
         // Set the alert type and value
+        /*
         if let alertType = alert.getAlertType() {
             self.setAlertTypeLabelTextWithAlertType(alertType)
             self.selectedAlertType = alertType
         }
+        */
         
-        self.alertValueTextField.text = "\(alert.value)"
+        self.alertNameTextField.text = alert.name
+        self.alertValueTextField.text = "\(alert.threshold)"
         
         // Set the alert when cell
-        if alert.alertOnRise.boolValue {
+        if alert.rising {
             self.alertOnRiseCell.accessoryType = .Checkmark
             self.alertOnFallCell.accessoryType = .None
         } else {
@@ -111,19 +121,18 @@ class AddEditAlertTableViewController: UITableViewController {
             self.alertOnFallCell.accessoryType = .Checkmark
         }
         
-        // Set the alert priority cell
-        if let priority = alert.getAlertPriority() {
-            switch priority {
+        // Set the alert severity cell
+        switch alert.severity {
             case .Critical: alertCriticalPriorityCell.accessoryType = .Checkmark
             case .Warning:  alertWarningPriorityCell.accessoryType = .Checkmark
             case .Information: alertInformationPriorityCell.accessoryType = .Checkmark
-            }
+            default: break
         }
-        
+    
         
     }
     
-    func getAlertOnRiseValue() -> Bool? {
+    func getAlertRisingValue() -> Bool? {
         var result: Bool?
         
         // Only return a value if the user has selected one
@@ -135,8 +144,8 @@ class AddEditAlertTableViewController: UITableViewController {
         return result
     }
     
-    func getAlertPriorityValue() -> AlertPriority? {
-        var result: AlertPriority?
+    func getAlertSeverityValue() -> Severity? {
+        var result: Severity?
         
         
         if alertCriticalPriorityCell.accessoryType == .Checkmark {
@@ -172,54 +181,79 @@ class AddEditAlertTableViewController: UITableViewController {
     func saveEditedAlert() {
         var alertMessage: String?
         
-        if let newAlertType = selectedAlertType {
+        // if let newAlertType = selectedAlertType {
+    
+        if let newName = alertNameTextField.text {
             if let newValueText = alertValueTextField.text {
-                if let newValue = newValueText.toInt() {
-                    if let newAlertOnRise = self.getAlertOnRiseValue() {
-                        if let newAlertPriority = self.getAlertPriorityValue() {
-                            // Edit an Alert
-                            
-                            
+                let numberFormatter = NSNumberFormatter()
+                numberFormatter.numberStyle = .DecimalStyle
+                
+                if let newValue = numberFormatter.numberFromString(newValueText) {
+                    if let newRising = self.getAlertRisingValue() {
+                        if let newSeverity = self.getAlertSeverityValue() {
                             if let newAlert = alertToEdit {
-                                newAlert.setAlertType(newAlertType)
-                                newAlert.value = newValue
-                                newAlert.alertOnRise = newAlertOnRise
-                                newAlert.setAlertPriority(newAlertPriority)
-                                
-                                // Save the alert
-                                if newAlert.save() {
-                                    self.delegate.updateView()
-                                    if let session = self.currentUser.userSession {
-                                        session.sendFakeNotificationRequest()
-                                        
-                                    }
-                                    self.dismissViewControllerAnimated(true, completion: nil)
-                                    
-                                } else {
-                                    // TODO: Show save error
-                                    alertMessage = "Unable to save alert."
-                                }
+                                newAlert.name = newName
+                                newAlert.threshold = newValue.doubleValue
+                                newAlert.rising = newRising
+                                newAlert.severity = newSeverity
+                                newAlert.save(self.currentUser)
                             }
-                        } else {
-                            // User didn't select a priority
-                            alertMessage = "Please select a priority."
                         }
-                    } else {
-                        // User didn't select either rise or fall
-                        alertMessage = "Please select the alert on rise value."
                     }
+                }
+            }
+        }
+        
+                    
+                    // let newSeverity = self.getAlertSeverityValue() {
+                        // Edit an Alert
+                        /*
+                        
+                        if let newAlert = alertToEdit {
+                            newAlert.setAlertType(newAlertType)
+                            newAlert.value = newValue
+                            newAlert.alertOnRise = newAlertOnRise
+                            newAlert.setAlertPriority(newAlertPriority)
+                            
+                            // Save the alert
+                            if newAlert.save() {
+                                self.delegate.updateView()
+                                if let session = self.currentUser.userSession {
+                                    session.sendFakeNotificationRequest()
+                                    
+                                }
+                                self.dismissViewControllerAnimated(true, completion: nil)
+                                
+                            } else {
+                                // TODO: Show save error
+                                alertMessage = "Unable to save alert."
+                            }
+
+                        }
+                        */
+                    /* } else {
+                        // User didn't select a priority
+                        alertMessage = "Please select a priority."
+                    }*/
+        /*
                 } else {
-                    // Invalid user input
-                    alertMessage = "Please enter a valid alert value."
+                    // User didn't select either rise or fall
+                    alertMessage = "Please select the alert on rise value."
                 }
             } else {
-                // User didn't enter anything for the value
-                alertMessage = "Please enter an alert value."
+                // Invalid user input
+                alertMessage = "Please enter a valid alert value."
             }
+        } else {
+            // User didn't enter anything for the value
+            alertMessage = "Please enter an alert value."
+        }
+        /*
         } else {
             // User didn't select a alert type
             alertMessage = "Please select a alert type."
         }
+        */
         
         if let message = alertMessage {
             let alertController = UIAlertController(
@@ -236,12 +270,14 @@ class AddEditAlertTableViewController: UITableViewController {
             
             self.presentViewController(alertController, animated: true, completion: nil)
         }
+        */
         
     }
     
     // Creates a new alert, by saving it (in a way 
     // yet to be determined)
     func createNewAlert() {
+        /*
         var alertMessage: String?
         
         if let newAlertType = selectedAlertType {
@@ -255,6 +291,7 @@ class AddEditAlertTableViewController: UITableViewController {
                     if let newAlertOnRise = self.getAlertOnRiseValue() {
                         if let newPriority = self.getAlertPriorityValue() {
                             // Create a new Alert
+                            /*
                             if let newAlert = Alert.createNewInstance(
                                 newValue.floatValue,
                                 isActive: true,
@@ -265,7 +302,8 @@ class AddEditAlertTableViewController: UITableViewController {
                                 self.delegate.updateView()
                                 
                                 self.dismissViewControllerAnimated(true, completion: nil)
-
+                              */
+                            
                             } else {
                                 // Show alert that says it didn't work
                                 alertMessage = "Unable to save  alert."
@@ -290,6 +328,7 @@ class AddEditAlertTableViewController: UITableViewController {
             // User didn't select a alert type
             alertMessage = "Please select a alert type."
         }
+    
         
         if let message = alertMessage {
             let alertController = UIAlertController(
@@ -306,13 +345,16 @@ class AddEditAlertTableViewController: UITableViewController {
             
             self.presentViewController(alertController, animated: true, completion: nil)
         }
-        
+        */
     }
     
     func pushSelectAlertTypeViewController() {
-        self.performSegueWithIdentifier(SelectAlertTypeTableViewController.getEntrySegueIdentifier(), sender: nil)
+        // self.performSegueWithIdentifier(SelectAlertTypeTableViewController.getEntrySegueIdentifier(), sender: nil)
     }
     
+    func sendTestNotification() {
+        
+    }
 }
 
 extension AddEditAlertTableViewController: UITableViewDelegate {
@@ -335,6 +377,9 @@ extension AddEditAlertTableViewController: UITableViewDelegate {
             let alertWarningPriorityCellRow = 1
             let alertInformationPriorityCellRow = 2
             
+            let alertDebugSection = 4
+            let sendAlertNotificationCellRow = 0
+            
             switch indexPath.section {
             
             case alertWhenSection:
@@ -348,6 +393,8 @@ extension AddEditAlertTableViewController: UITableViewDelegate {
                 selectedCell.accessoryType = .Checkmark
             case alertTypeSection:
                 pushSelectAlertTypeViewController()
+            case alertDebugSection:
+                self.sendTestNotification()
             default: break
             }
         }

@@ -44,9 +44,10 @@ extension SelectAlertTypeTableViewController: UITableViewDelegate {
             tableView.deselectRowAtIndexPath(indexPath, animated: true)
             cell.accessoryType = .Checkmark
             let selectedAlertType = AlertType.allValues[indexPath.row]
-            
+            /*
             delegate.selectedAlertType = selectedAlertType
             delegate.setAlertTypeLabelTextWithAlertType(selectedAlertType)
+            */
         }
         
         if let navigationController = self.navigationController {
@@ -74,11 +75,13 @@ extension SelectAlertTypeTableViewController: UITableViewDataSource {
             let alertType = AlertType.allValues[indexPath.row]
             textLabel.text = alertType.name
             
+            /*
             if let selectedAlertType = delegate.selectedAlertType {
                 if selectedAlertType == alertType {
                     cell.accessoryType = .Checkmark
                 }
             }
+            */
             
         }
         

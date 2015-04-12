@@ -18,19 +18,16 @@ class ManageAlertsNavigationController: UINavigationController {
 class ManageAlertsTableViewController: UITableViewController {
     // Implicit, set by the previous view controller
     var wellboreDetailViewController: WellboreDetailViewController!
-    var alerts: [Alert]!
+    var alerts = Array<Alert>()
     var currentUser: User!
     
     override func viewDidLoad() {
         self.title = "Manage Alerts"
-        /*
-        alerts = Alert.getAlertsForUser(wellboreDetailViewController.currentUser, andWellbore: wellboreDetailViewController.currentWellbore)
-        */
         
         // Retrieve all the alerts that the user has 
         // saved on their device.
-        alerts = Alert.fetchAllInstances()
-
+        self.updateAlerts()
+        
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(
             barButtonSystemItem: .Add,
             target: self,
@@ -43,8 +40,14 @@ class ManageAlertsTableViewController: UITableViewController {
         super.viewDidLoad()
     }
     
+    func updateAlerts() {
+        var (resultAlerts, resultError) = Alert.getAllAlertsForUser(currentUser)
+        
+        self.alerts = resultAlerts
+    }
+    
     func updateView() {
-        alerts = Alert.fetchAllInstances()
+        self.updateAlerts()
         self.tableView.reloadData()
     }
     

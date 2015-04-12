@@ -14,29 +14,143 @@ import UIKit
 // API. Once we only do API stuff this class
 // will probably take over the CoreData class
 // below.
-class AlertAPI {
-    init(id: Int, name: String, rising: Bool, curveID: Int, userID: Int) {
+class Alert {
+    var id: Int
+    var userID: Int
+    var curveID: Int
+    var name: String
+    var rising: Bool
+    var wellboreID: Int
+    var severity: Severity
+    var threshold: Double
+    
+    // Keys for the Alert
+    let APIUserIDKey = "UserId"
+    let APIAlertIDKey = "Id"
+    let APICurveIDKey = "CurveId"
+    let APINameKey = "Name"
+    let APIRisingKey = "Rising"
+    
+    let APIWellboreIDKey = "WellBoreId"
+    let APISeverityKey = "Priority"
+    let APIThresholdKey = "Threshold"
+    
+    init(id: Int, curveID: Int, userID: Int, name: String, rising: Bool, wellboreID: Int, severity: Int, threshold: Double) {
+        self.id = id
+        self.userID = userID
+        self.curveID = curveID
+        self.name = name
+        self.rising = rising
+        self.wellboreID = wellboreID
+        
+        if let newSeverity = Severity(rawValue: severity) {
+            self.severity = newSeverity
+        } else {
+            self.severity = Severity.None
+        }
+        
+        self.threshold = threshold
+    }
+    
+    func save(user: User) {
+        let URLString = "https://drillalert.azurewebsites.net/api/Alerts/PostAlert"
+        if let URL = NSURL(string: URLString) {
+            var newRequest = NSMutableURLRequest(URL: URL)
+            newRequest.HTTPMethod = "POST"
+
+            /*
+            let params = [
+                self.APIAlertIDKey : self.id,
+                self.APINameKey : self.name,
+                self.APIUserIDKey : self.userID,
+                self.APIRisingKey : self.rising,
+                self.APIThresholdKey : self.threshold,
+                self.APICurveIDKey : self.curveID,
+                
+                self.APISeverityKey : self.severity.rawValue,
+                self.APIWellboreIDKey : self.wellboreID
+            ] as Dictionary<String, AnyObject>
+            
+            var error: NSError?
+            
+            newRequest.HTTPBody = NSJSONSerialization.dataWithJSONObject(params, options: NSJSONWritingOptions.allZeros, error: &error)
+            
+            if error != nil {
+                println(error)
+                
+            }
+            */
+            
+            let jsonString = "{\"" +
+                "\(self.APIAlertIDKey)\":\(self.id)," +
+                "\(self.APINameKey)\":\"\(self.name)\"," +
+                "\"\(self.APIUserIDKey)\":\(self.userID)," +
+                "\"\(self.APIRisingKey)\":\(self.rising)," +
+                "\"\(self.APIThresholdKey)\":\(self.threshold)," +
+                "\"\(self.APICurveIDKey)\":\(self.curveID)," +
+                "\"\(self.APISeverityKey)\":\(self.severity.rawValue)," +
+                "\"\(self.APIWellboreIDKey)\":\(self.wellboreID)" +
+                "}"
+            
+            println(jsonString)
+            newRequest.HTTPBody = jsonString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)
+            newRequest.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+            if let userSession = user.userSession {
+                if let session = userSession.session {
+                    let task = session.dataTaskWithRequest(newRequest, completionHandler: { (data, response, error) -> Void in
+                        println("save Task: ")
+                        if let content = NSString(data: data, encoding: NSASCIIStringEncoding) {
+                            println("Data get: ")
+                            println(content)
+                            println("Response get:")
+                            println(response)
+                        }
+                    })
+                    
+                    task.resume()
+                }
+            }
+        }
         
     }
     
-    class func alertFromJSONObject(JSONObject: JSON) -> AlertAPI? {
-        var result: AlertAPI?
-        
+    class func alertFromJSONObject(JSONObject: JSON, user: User) -> Alert? {
+        var result: Alert?
         // Keys for the Alert
-        let APINameKey = "Name"
         let APIAlertIDKey = "Id"
-        let APIUserIDKey = "UserId"
-        let APIRisingKey = "Rising"
         let APICurveIDKey = "CurveId"
+        let APINameKey = "Name"
+        let APIRisingKey = "Rising"
+        let APIUserIDKey = "UserId"
+        
+        let APIWellboreIDKey = "WellBoreId"
+        let APISeverityKey = "Priority"
+        let APIThresholdKey = "Threshold"
+        
         
         // Get the values at the above keys from the JSON Object
         if let id = JSONObject.getIntAtKey(APIAlertIDKey) {
-            if let name = JSONObject.getStringAtKey(APINameKey) {
-                if let rising = JSONObject.getBoolAtKey(APIRisingKey) {
-                    if let curveID = JSONObject.getIntAtKey(APICurveIDKey) {
-                        if let userID = JSONObject.getIntAtKey(APIUserIDKey) {
-                            let alert = AlertAPI(id: id, name: name, rising: rising, curveID: curveID, userID: userID)
-                            result = alert
+            if let curveID = JSONObject.getIntAtKey(APICurveIDKey) {
+                if let name = JSONObject.getStringAtKey(APINameKey) {
+                    if let rising = JSONObject.getBoolAtKey(APIRisingKey) {
+                        if let wellboreID = JSONObject.getIntAtKey(APIWellboreIDKey) {
+                            if let severityInt = JSONObject.getIntAtKey(APISeverityKey) {
+                                if let threshold = JSONObject.getDoubleAtKey(APIThresholdKey) {
+                                    if let userID = user.id.toInt() {
+                                        let alert = Alert(
+                                            id: id,
+                                            curveID: curveID,
+                                            userID: userID,
+                                            name: name,
+                                            rising: rising,
+                                            wellboreID: wellboreID,
+                                            severity: severityInt,
+                                            threshold: threshold)
+                                        
+                                        result = alert
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -46,8 +160,9 @@ class AlertAPI {
         return result
     }
     
-    class func getAlertsForUser(user: User) -> (Array<AlertAPI>, String?) {
-        var result = Array<AlertAPI>()
+    // GET api/Alerts
+    class func getAllAlertsForUser(user: User) -> (Array<Alert>, String?) {
+        var result = Array<Alert>()
         var errorMessage: String?
         
         let url = "https://drillalert.azurewebsites.net/api/alerts"
@@ -58,13 +173,13 @@ class AlertAPI {
             if errorMessage == nil {
                 if let alertJSONs = alertsJSONArray.array {
                     for alertJSONObject in alertJSONs {
-                        if let alert = AlertAPI.alertFromJSONObject(alertJSONObject) {
+                        if let alert = Alert.alertFromJSONObject(alertJSONObject, user: user) {
                             result.append(alert)
                         }
                     }
                 }
             } else {
-                // TODO: delete this, only for when the connection doesn't work
+                // TODO:  Show error message to user
                 
             }
         }
@@ -73,6 +188,7 @@ class AlertAPI {
     }
 }
 
+/*
 @objc(Alert)
 class Alert: NSManagedObject {
 
@@ -196,7 +312,5 @@ class Alert: NSManagedObject {
         
         return allAlerts
     }
-    
-    
-
 }
+*/

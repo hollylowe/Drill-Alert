@@ -38,6 +38,18 @@ class JSON {
         return result
     }
     
+    func getDoubleAtKey(key: String) -> Double? {
+        var result: Double?
+        
+        if let implicitDictionary = dictionary {
+            if let object: AnyObject = implicitDictionary[key] {
+                result = object as? Double
+            }
+        }
+        
+        return result
+    }
+    
     func getBoolAtKey(key: String) -> Bool? {
         var result: Bool?
         

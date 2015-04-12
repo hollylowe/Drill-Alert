@@ -13,6 +13,25 @@ enum Severity: Int {
     case Information = 0
     case Warning = 1
     case Critical = 2
+    case None = 9
+    
+    func toString() -> String {
+        var result: String!
+        
+        switch self {
+        case Information:
+            result = "Information"
+        case Warning:
+            result = "Warning"
+        case Critical:
+            result = "Critical"
+        case None:
+            result = "None"
+            
+        }
+        
+        return result
+    }
 }
 
 class AlertNotification {
