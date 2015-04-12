@@ -79,6 +79,7 @@ class WellboreDetailViewController: UIViewController {
             let viewControllers = [visualsViewController, alertInboxTableViewController]
             visualsViewController.wellboreDetailViewController = self
             visualsViewController.user = self.currentUser
+            visualsViewController.currentWellbore = self.currentWellbore
             alertInboxTableViewController.wellboreDetailViewController = self
             
             self.segmentViewControllers = [visualsViewController, alertInboxTableViewController]

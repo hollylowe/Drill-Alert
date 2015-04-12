@@ -36,7 +36,6 @@ class Curve {
     var tooltype: String
     var units: String
     var wellbore: Wellbore
-    
     init(id: Int, name: String, tooltype: String, units: String, wellbore: Wellbore) {
         self.id = id
         self.name = name
@@ -89,4 +88,28 @@ class Curve {
         
         return result
     }
+    
+    class func curveFromJSONObject(JSONObject: JSON, user: User, wellbore: Wellbore) -> Curve? {
+        var result: Curve?
+        // Keys for the Alert
+        let APICurveIDKey = "Id"
+        let APINameKey = "Name"
+        let APIToolTypeKey = "ToolType"
+        let APIUnitsKey = "Units"
+        
+        
+        // Get the values at the above keys from the JSON Object
+        if let id = JSONObject.getIntAtKey(APICurveIDKey) {
+            if let name = JSONObject.getStringAtKey(APINameKey) {
+                if let tooltype = JSONObject.getStringAtKey(APIToolTypeKey) {
+                    if let units = JSONObject.getStringAtKey(APIUnitsKey) {
+                        result = Curve(id: id, name: name, tooltype: tooltype, units: units, wellbore: wellbore)
+                    }
+                }
+            }
+        }
+        
+        return result
+    }
+    
 }

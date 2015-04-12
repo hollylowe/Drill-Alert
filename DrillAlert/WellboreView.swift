@@ -181,11 +181,11 @@ class WellboreView {
         return wellboreViews
     }
     
-    class func getWellboreViewsForUser(user: User) -> (Array<WellboreView>, String?) {
+    class func getWellboreViewsForUser(user: User, andWellbore wellbore: Wellbore) -> (Array<WellboreView>, String?) {
         var result = Array<WellboreView>()
         var errorMessage: String?
         
-        let endpointURL = "https://drillalert.azurewebsites.net/api/views"
+        let endpointURL = "https://drillalert.azurewebsites.net/api/views/\(wellbore.id)"
 
         let APIWellboreIDKey = "WellboreId"
         let APIWellboreUserIDKey = "UserId"

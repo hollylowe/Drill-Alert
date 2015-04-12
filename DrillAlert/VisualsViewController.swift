@@ -25,6 +25,8 @@ class VisualsViewController: UIViewController, UIPageViewControllerDataSource {
     // saving it yet), then this will just be set to the first 
     // view that is in the wellboreViews array.
     var currentWellboreView: WellboreView?
+    var currentWellbore: Wellbore!
+    var curves = Array<Curve>()
     
     // TODO: Remove this, for debuggin only
     var shouldLoadFromNetwork = true
@@ -33,12 +35,8 @@ class VisualsViewController: UIViewController, UIPageViewControllerDataSource {
     var loadingData = true
     var loadError = false
     
-    func reloadVisuals() {
-        
-    }
-    
     func reloadWellboreViews() {
-        let (userWellboreViews, error) = WellboreView.getWellboreViewsForUser(self.user)
+        let (userWellboreViews, error) = WellboreView.getWellboreViewsForUser(self.user, andWellbore: currentWellbore)
         if error == nil {
             // TODO: Do something here to set the currentWellboreView
             // to what the user has saved.
@@ -50,7 +48,7 @@ class VisualsViewController: UIViewController, UIPageViewControllerDataSource {
                         wellboreView.panels[0].shouldShowDemoPlot = true
                     }
                 }
-                self.reloadVisuals()
+                // self.reloadVisuals()
             }
             
         } else {
@@ -99,18 +97,24 @@ class VisualsViewController: UIViewController, UIPageViewControllerDataSource {
             // the same operation and messing up the table view.
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
                 self.reloadWellboreViews()
+                self.curves = self.currentWellbore.getCurves(self.user)
+                
+                for curve in self.curves {
+                    println(curve.name)
+                }
                 
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     self.loadingData = false
                     self.removeLoadingIndicator()
                     
-                    let startViewController = self.viewControllerAtIndex(0)!
-                    let viewControllers = [startViewController]
-                    self.pageViewController.setViewControllers(
-                        viewControllers,
-                        direction: .Forward,
-                        animated: false,
-                        completion: nil)
+                    if let startViewController = self.viewControllerAtIndex(0) {
+                        let viewControllers = [startViewController]
+                        self.pageViewController.setViewControllers(
+                            viewControllers,
+                            direction: .Forward,
+                            animated: false,
+                            completion: nil)
+                    }
                     
                 })
             })
@@ -121,7 +125,7 @@ class VisualsViewController: UIViewController, UIPageViewControllerDataSource {
             self.wellboreViews = WellboreView.getFakeWellboreViews()
             if self.wellboreViews.count > 0 {
                 self.currentWellboreView = self.wellboreViews[0]
-                self.reloadVisuals()
+                // self.reloadVisuals()
             }
         }
 
@@ -130,6 +134,7 @@ class VisualsViewController: UIViewController, UIPageViewControllerDataSource {
     
     
     override func viewDidLoad() {
+        
         self.loadData()
         
         self.view.frame = CGRectMake(0, 0, self.view.frame.size.width, wellboreDetailViewController.topBarHeight)
@@ -172,6 +177,7 @@ class VisualsViewController: UIViewController, UIPageViewControllerDataSource {
                 let panelViewController = storyboard.instantiateViewControllerWithIdentifier(VisualViewController.getStoryboardIdentifier()) as! VisualViewController
                 panelViewController.pageIndex = index
                 let panel = wellboreView.panels[index]
+                
                 // Create the panel with each visualization
                 panelViewController.panel = panel
                 result = panelViewController
