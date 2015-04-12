@@ -104,7 +104,6 @@ class VisualsViewController: UIViewController, UIPageViewControllerDataSource {
                     self.loadingData = false
                     self.removeLoadingIndicator()
                     
-                    println("Done loading.")
                     let startViewController = self.viewControllerAtIndex(0)!
                     let viewControllers = [startViewController]
                     self.pageViewController.setViewControllers(

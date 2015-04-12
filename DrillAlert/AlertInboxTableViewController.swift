@@ -23,9 +23,13 @@ class AlertInboxTableViewController: UITableViewController {
     var informationAlertNotifications: [AlertNotification]!
     var readAlertNotifications: [AlertNotification]!
     
+    var shouldLoadFromNetwork = true
+    var loadingIndicator: UIActivityIndicatorView?
+    var loadingData = true
+    var loadError = false
     
     override func viewDidLoad() {
-        self.reloadData()
+        self.loadData()
         
         super.viewDidLoad()
     }
@@ -43,7 +47,7 @@ class AlertInboxTableViewController: UITableViewController {
         super.viewDidDisappear(animated)
     }
     
-    func reloadData() {
+    func reloadAlertHistory() {
         var alertNotifications = AlertNotification.getAlertHistory()
         
         self.criticalAlertNotifications = Array<AlertNotification>()
@@ -58,23 +62,59 @@ class AlertInboxTableViewController: UITableViewController {
                 } else {
                     if let severity = alertNotification.severity {
                         switch severity {
-                            case .Critical:
-                                criticalAlertNotifications.append(alertNotification)
-                            case .Warning:
-                                warningAlertNotifications.append(alertNotification)
-                            case .Information:
-                                informationAlertNotifications.append(alertNotification)
-                            default: break
+                        case .Critical:
+                            criticalAlertNotifications.append(alertNotification)
+                        case .Warning:
+                            warningAlertNotifications.append(alertNotification)
+                        case .Information:
+                            informationAlertNotifications.append(alertNotification)
+                        default: break
                         }
                     }
-                   
+                    
                 }
             }
         }
     }
     
+    func loadData() {
+        loadError = false
+        loadingData = false
+        
+        if shouldLoadFromNetwork {
+            loadError = false
+            loadingData = true
+            self.tableView.reloadData()
+            
+            // TODO: This will need to change if we add a way to refresh this page, which we probably will.
+            // Instead, we could use the NSURLConnection asynchrounous call. This is because users could
+            // refresh the page faster than this call could load it, resulting in multiple threads doing
+            // the same operation and messing up the table view.
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
+                self.reloadAlertHistory()
+                
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.loadingData = false
+                    self.tableView.reloadData()
+                })
+            })
+            
+        } else {
+            /*
+            let well = Well(id: 0, name: "Test Well", location: "No Location")
+            well.wellbores.append(Wellbore(id: 0, name: "Test Bore", well: Well(id: 0, name: "Test Well", location: "Here")))
+            
+            self.wells.append(well)
+            */
+            self.tableView.reloadData()
+        }
+
+        
+        
+    }
+    
     func recievedRemoteNotification() {
-        self.reloadData()
+        self.loadData()
         self.tableView.reloadData()
     }
     
@@ -112,7 +152,24 @@ extension AlertInboxTableViewController: UITableViewDataSource {
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         var numberOfSections = 4
        
-        if criticalAlertNotifications.count == 0 && warningAlertNotifications.count == 0 && informationAlertNotifications.count == 0 && readAlertNotifications.count == 0 {
+        if loadingData {
+            numberOfSections = 0
+            let indicatorWidth: CGFloat = 20
+            let indicatorHeight: CGFloat = 20
+            // Display loading indicator
+            var backgroundView = UIView(frame: CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height))
+            var loadingIndicator = UIActivityIndicatorView(frame: CGRectMake((self.view.bounds.size.width - indicatorWidth) / 2, (self.view.bounds.size.height - indicatorHeight) / 2, indicatorWidth, indicatorHeight))
+            
+            loadingIndicator.color = UIColor.grayColor()
+            loadingIndicator.startAnimating()
+            backgroundView.addSubview(loadingIndicator)
+            self.tableView.backgroundView = backgroundView
+            self.tableView.separatorStyle = .None
+            
+        } else if criticalAlertNotifications.count == 0 &&
+            warningAlertNotifications.count == 0 &&
+            informationAlertNotifications.count == 0 &&
+            readAlertNotifications.count == 0 {
             // Show no alert notifications message
             numberOfSections = 0
 
