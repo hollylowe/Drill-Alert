@@ -24,6 +24,9 @@ class AlertInboxCell: UITableViewCell {
             self.alertTitleLabel.text = alertType.name
         }
         */
+        if let severity = alertNotification.severity {
+            self.alertTitleLabel.text = severity.toString()
+        }
         
         self.alertInformationLabel.text = alertNotification.getNotificationBody()
         

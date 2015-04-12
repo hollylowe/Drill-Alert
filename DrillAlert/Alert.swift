@@ -10,12 +10,8 @@ import Foundation
 import CoreData
 import UIKit
 
-// TODO: Temporary class for getting alerts from
-// API. Once we only do API stuff this class
-// will probably take over the CoreData class
-// below.
 class Alert {
-    var id: Int
+    var id: Int?
     var userID: Int
     var curveID: Int
     var name: String
@@ -34,6 +30,16 @@ class Alert {
     let APIWellboreIDKey = "WellBoreId"
     let APISeverityKey = "Priority"
     let APIThresholdKey = "Threshold"
+    
+    init(curveID: Int, userID: Int, name: String, rising: Bool, wellboreID: Int, severity: Severity, threshold: Double) {
+        self.userID = userID
+        self.curveID = curveID
+        self.name = name
+        self.rising = rising
+        self.wellboreID = wellboreID
+        self.severity = severity
+        self.threshold = threshold
+    }
     
     init(id: Int, curveID: Int, userID: Int, name: String, rising: Bool, wellboreID: Int, severity: Int, threshold: Double) {
         self.id = id
@@ -80,17 +86,30 @@ class Alert {
                 
             }
             */
+            var jsonString = ""
             
-            let jsonString = "{\"" +
-                "\(self.APIAlertIDKey)\":\(self.id)," +
-                "\(self.APINameKey)\":\"\(self.name)\"," +
-                "\"\(self.APIUserIDKey)\":\(self.userID)," +
-                "\"\(self.APIRisingKey)\":\(self.rising)," +
-                "\"\(self.APIThresholdKey)\":\(self.threshold)," +
-                "\"\(self.APICurveIDKey)\":\(self.curveID)," +
-                "\"\(self.APISeverityKey)\":\(self.severity.rawValue)," +
-                "\"\(self.APIWellboreIDKey)\":\(self.wellboreID)" +
+            if let id = self.id {
+                jsonString = "{" +
+                    "\"\(self.APIAlertIDKey)\":\(self.id)," +
+                    "\"\(self.APINameKey)\":\"\(self.name)\"," +
+                    "\"\(self.APIUserIDKey)\":\(self.userID)," +
+                    "\"\(self.APIRisingKey)\":\(self.rising)," +
+                    "\"\(self.APIThresholdKey)\":\(self.threshold)," +
+                    "\"\(self.APICurveIDKey)\":\(self.curveID)," +
+                    "\"\(self.APISeverityKey)\":\(self.severity.rawValue)," +
+                    "\"\(self.APIWellboreIDKey)\":\(self.wellboreID)" +
                 "}"
+            } else {
+                jsonString = "{" +
+                    "\"\(self.APINameKey)\":\"\(self.name)\"," +
+                    "\"\(self.APIUserIDKey)\":\(self.userID)," +
+                    "\"\(self.APIRisingKey)\":\(self.rising)," +
+                    "\"\(self.APIThresholdKey)\":\(self.threshold)," +
+                    "\"\(self.APICurveIDKey)\":\(self.curveID)," +
+                    "\"\(self.APISeverityKey)\":\(self.severity.rawValue)," +
+                    "\"\(self.APIWellboreIDKey)\":\(self.wellboreID)" +
+                "}"
+            }
             
             println(jsonString)
             newRequest.HTTPBody = jsonString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)

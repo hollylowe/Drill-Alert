@@ -277,6 +277,27 @@ class AddEditAlertTableViewController: UITableViewController {
     // Creates a new alert, by saving it (in a way 
     // yet to be determined)
     func createNewAlert() {
+        if let newName = alertNameTextField.text {
+            if let newValueText = alertValueTextField.text {
+                let numberFormatter = NSNumberFormatter()
+                numberFormatter.numberStyle = .DecimalStyle
+                
+                if let newValue = numberFormatter.numberFromString(newValueText) {
+                    if let newRising = self.getAlertRisingValue() {
+                        if let newSeverity = self.getAlertSeverityValue() {
+                            
+                            // TODO: Curve ID and Wellbore ID
+                            if let userID = self.currentUser.id.toInt() {
+                                let newAlert = Alert(curveID: 0, userID: userID, name: newName, rising: newRising, wellboreID: 0, severity: newSeverity, threshold: newValue.doubleValue)
+                                
+                                newAlert.save(self.currentUser)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
         /*
         var alertMessage: String?
         
@@ -353,7 +374,29 @@ class AddEditAlertTableViewController: UITableViewController {
     }
     
     func sendTestNotification() {
+        let URLString = "https://drillalert.azurewebsites.net/api/push/ios"
         
+        if let URL = NSURL(string: URLString) {
+            var newRequest = NSMutableURLRequest(URL: URL)
+            newRequest.HTTPMethod = "GET"
+            
+            if let userSession = currentUser.userSession {
+                if let session = userSession.session {
+                    let task = session.dataTaskWithRequest(newRequest, completionHandler: { (data, response, error) -> Void in
+                        println("test Task: ")
+                        if let content = NSString(data: data, encoding: NSASCIIStringEncoding) {
+                            println("Data get: ")
+                            println(content)
+                            println("Response get:")
+                            println(response)
+                        }
+                    })
+                    
+                    task.resume()
+                }
+            }
+        }
+
     }
 }
 

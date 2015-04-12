@@ -67,13 +67,17 @@ class AlertNotification {
         
         let url = "https://drillalert.azurewebsites.net/api/alertshistory/"
         let alertNotificationJSONArray = JSONArray(url: url)
-        
         if let error = alertNotificationJSONArray.error {
             // TODO: Show error message to user
 
             println(error.description)
         } else {
-            println(alertNotificationJSONArray)
+            if let array = alertNotificationJSONArray.array {
+                for JSONObject in array {
+                    result.append(AlertNotification(JSONObject: JSONObject))
+                }
+            }
+            
         }
         
         
@@ -81,7 +85,7 @@ class AlertNotification {
     }
     
     func getNotificationBody() -> String! {
-        return "Notification body."
+        return self.message
     }
     
 }

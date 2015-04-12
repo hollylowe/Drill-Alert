@@ -19,7 +19,12 @@ class JSON {
         
         if let implicitDictionary = dictionary {
             if let object: AnyObject = implicitDictionary[key] {
-                result = object as? NSDate
+                if let dateString = object as? String {
+                    let dateFormatter = NSDateFormatter()
+                    
+                    dateFormatter.dateFormat = "yyyy-MM-ddThh:mm:ss.SSSSSSSxxx"
+                    result = dateFormatter.dateFromString(dateString)
+                }
             }
         }
         
