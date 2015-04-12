@@ -198,10 +198,6 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
 
     func reloadWells() {
-        
-        
-
-
         // Only load the wells of the currently selected segment.
         // TODO: Not sure if API is supporting this, we may remove it. For right now, just set both
         // allWellbores.removeAll(keepCapacity: false)
@@ -407,7 +403,7 @@ extension HomeViewController: UITableViewDelegate {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let wellbore = wellboreAtIndexPath(indexPath)
         
-        
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
         self.performSegueWithIdentifier(homeToWellboreDetailSegueIdentifier, sender: wellbore)
     }
     

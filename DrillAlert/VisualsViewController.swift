@@ -29,33 +29,93 @@ class VisualsViewController: UIViewController, UIPageViewControllerDataSource {
     // TODO: Remove this, for debuggin only
     var shouldLoadFromNetwork = true
     
+    var loadingIndicator: UIActivityIndicatorView?
+    var loadingData = true
+    var loadError = false
+    
     func reloadVisuals() {
         
     }
     
-    override func viewDidLoad() {
-        // Get the visuals this user has saved 
-        if shouldLoadFromNetwork {
-            let (userWellboreViews, error) = WellboreView.getWellboreViewsForUser(self.user)
-            if error == nil {
-                // TODO: Do something here to set the currentWellboreView
-                // to what the user has saved.
-                self.wellboreViews = userWellboreViews
-                if self.wellboreViews.count > 0 {
-                    self.currentWellboreView = self.wellboreViews[0]
-                    if let wellboreView = self.currentWellboreView {
-                        if wellboreView.panels.count > 1 {
-                            wellboreView.panels[0].shouldShowDemoPlot = true
-                        }
+    func reloadWellboreViews() {
+        let (userWellboreViews, error) = WellboreView.getWellboreViewsForUser(self.user)
+        if error == nil {
+            // TODO: Do something here to set the currentWellboreView
+            // to what the user has saved.
+            self.wellboreViews = userWellboreViews
+            if self.wellboreViews.count > 0 {
+                self.currentWellboreView = self.wellboreViews[0]
+                if let wellboreView = self.currentWellboreView {
+                    if wellboreView.panels.count > 1 {
+                        wellboreView.panels[0].shouldShowDemoPlot = true
                     }
-                    self.reloadVisuals()
                 }
-                
-            } else {
-                if let message = error {
-                    wellboreDetailViewController.showAlertWithMessage(message)
-                }
+                self.reloadVisuals()
             }
+            
+        } else {
+            if let message = error {
+                wellboreDetailViewController.showAlertWithMessage(message)
+            }
+        }
+
+    }
+    
+    func addLoadingIndicator() {
+        let indicatorWidth: CGFloat = 20
+        let indicatorHeight: CGFloat = 20
+        // Display loading indicator
+        
+        var backgroundView = UIView(frame: CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height / 2))
+        self.loadingIndicator = UIActivityIndicatorView(frame: CGRectMake((self.view.bounds.size.width - indicatorWidth) / 2, ((self.view.bounds.size.height / 2) - indicatorHeight) / 2, indicatorWidth, indicatorHeight))
+        
+        self.loadingIndicator!.color = UIColor.grayColor()
+        self.loadingIndicator!.startAnimating()
+        backgroundView.addSubview(loadingIndicator!)
+        
+        self.view.addSubview(backgroundView)
+        
+    }
+    
+    func removeLoadingIndicator() {
+        self.loadingIndicator!.removeFromSuperview()
+        self.loadingIndicator = nil
+    }
+    
+    func loadData() {
+        
+        loadError = false
+        loadingData = false
+        
+        // Get the visuals this user has saved
+        if shouldLoadFromNetwork {
+            loadError = false
+            loadingData = true
+            
+            self.addLoadingIndicator()
+            // TODO: This will need to change if we add a way to refresh this page, which we probably will.
+            // Instead, we could use the NSURLConnection asynchrounous call. This is because users could
+            // refresh the page faster than this call could load it, resulting in multiple threads doing
+            // the same operation and messing up the table view.
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
+                self.reloadWellboreViews()
+                
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.loadingData = false
+                    self.removeLoadingIndicator()
+                    
+                    println("Done loading.")
+                    let startViewController = self.viewControllerAtIndex(0)!
+                    let viewControllers = [startViewController]
+                    self.pageViewController.setViewControllers(
+                        viewControllers,
+                        direction: .Forward,
+                        animated: false,
+                        completion: nil)
+                    
+                })
+            })
+            
             
             super.viewDidLoad()
         } else {
@@ -65,18 +125,19 @@ class VisualsViewController: UIViewController, UIPageViewControllerDataSource {
                 self.reloadVisuals()
             }
         }
+
         
-        
+    }
+    
+    
+    override func viewDidLoad() {
+        self.loadData()
         
         self.view.frame = CGRectMake(0, 0, self.view.frame.size.width, wellboreDetailViewController.topBarHeight)
         if let storyboard = self.storyboard {
             self.pageViewController = storyboard.instantiateViewControllerWithIdentifier("PageViewController") as! UIPageViewController
             self.pageViewController.dataSource = self
             
-            let startViewController = self.viewControllerAtIndex(0)!
-            let viewControllers = [startViewController]
-            self.pageViewController.setViewControllers(viewControllers, direction: .Forward, animated: false, completion: nil)
-
             self.pageViewController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)
             self.addChildViewController(self.pageViewController)
             self.view.addSubview(self.pageViewController.view)
@@ -92,7 +153,6 @@ class VisualsViewController: UIViewController, UIPageViewControllerDataSource {
     
     func rightBarButtonItemTapped(sender: UIBarButtonItem) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        
         
         let addEditAlertNavigationController = storyboard.instantiateViewControllerWithIdentifier(AddEditAlertNavigationController.getStoryboardIdentifier()) as! AddEditAlertNavigationController
         let addEditAlertViewController = addEditAlertNavigationController.viewControllers[0] as! AddEditAlertTableViewController

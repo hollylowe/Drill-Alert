@@ -64,6 +64,7 @@ class WellboreDetailViewController: UIViewController {
             let segmentedControlNavigationController = UINavigationController()
             segmentedControlNavigationController.navigationBarHidden = true
             
+            
             // Set up the Visuals view controller,
             // which is inside a container on this view controller
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -71,7 +72,9 @@ class WellboreDetailViewController: UIViewController {
             
             // Set up the Alert Inbox view controller,
             // which is inside a container on this view controller
+            
             let alertInboxTableViewController = storyboard.instantiateViewControllerWithIdentifier(AlertInboxTableViewController.storyboardIdentifier()) as! AlertInboxTableViewController
+            
             
             let viewControllers = [visualsViewController, alertInboxTableViewController]
             visualsViewController.wellboreDetailViewController = self
