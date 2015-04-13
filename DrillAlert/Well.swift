@@ -76,7 +76,7 @@ class Well {
         var result = Array<Well>()
         var errorMessage: String?
         
-        let url = "https://drillalert.azurewebsites.net/api/permissions/ios/\(user.guid)"
+        let url = "https://drillalert.azurewebsites.net/api/wells"
         if let session = user.userSession {
             let wellsJSONArray = session.getJSONArrayAtURL(url)
             errorMessage = wellsJSONArray.getErrorMessage()
