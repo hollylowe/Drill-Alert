@@ -150,8 +150,8 @@ class LoginViewController: UIViewController {
     }
 
     func loginSuccess() {
-        var user = User(firstName: "John", lastName: "Smith", id: "1", guid: "00000000-0000-0000-0000-000000000001", isAdmin: true)
-        user.userSession = UserSession()
+        var user = User(session: UserSession())
+        
         if let userSession = user.userSession {
             let application = UIApplication.sharedApplication()
             if let appDelegate = application.delegate as? AppDelegate {

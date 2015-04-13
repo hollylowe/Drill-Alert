@@ -29,7 +29,7 @@ extension WellUsersTableViewController: UITableViewDataSource {
         let user = users[indexPath.row]
         
         if let textLabel = cell.textLabel {
-            textLabel.text = user.fullName
+            // textLabel.text = user.fullName
         }
         cell.accessoryType = .DisclosureIndicator
         

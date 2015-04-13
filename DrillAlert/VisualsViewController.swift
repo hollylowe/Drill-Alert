@@ -97,8 +97,9 @@ class VisualsViewController: UIViewController, UIPageViewControllerDataSource {
             // the same operation and messing up the table view.
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
                 self.reloadWellboreViews()
-                self.curves = self.currentWellbore.getCurves(self.user)
+                var (newCurves, errorMessage) = self.currentWellbore.getCurves(self.user)
                 
+                self.curves = newCurves 
                 for curve in self.curves {
                     println(curve.name)
                 }

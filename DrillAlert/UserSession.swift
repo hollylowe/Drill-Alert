@@ -18,6 +18,15 @@ class UserSession: NSObject, NSURLSessionDelegate, NSURLSessionTaskDelegate {
     var username: String?
     var password: String?
     
+    init(username: String, password: String) {
+        super.init()
+        self.username = username
+        self.password = password
+        
+        var sessionConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration()
+        self.session = NSURLSession(configuration: sessionConfiguration, delegate: self, delegateQueue: nil)
+    }
+    
     override init() {
         super.init()
         
@@ -95,6 +104,23 @@ class UserSession: NSObject, NSURLSessionDelegate, NSURLSessionTaskDelegate {
         
         
 
+    }
+    
+    func logout(callback: ((Bool) -> Void)) {
+        let url = "https://drillalert.azurewebsites.net/api/logout"
+        if let URL = NSURL(string: url) {
+            var newRequest = NSMutableURLRequest(URL: URL)
+            
+            if let session = self.session {
+                let task = session.dataTaskWithRequest(newRequest, completionHandler: { (data, response, error) -> Void in
+                    println(" Logout response")
+                    println(response)
+                    
+                    callback(true)
+                })
+                task.resume()
+            }
+        }
     }
     
     func getJSONArrayAtURL(url: String) -> JSONArray {
@@ -177,13 +203,9 @@ class UserSession: NSObject, NSURLSessionDelegate, NSURLSessionTaskDelegate {
         return resultJSONArray
     }
     
-    func loginWithUsername(username: String, andPassword password: String, andDelegate delegate: LoginViewController) {
+    func login(callback: ((Bool) -> Void)) {
         // The URL we're attempting to reach
         var URLString = "https://drillalert.azurewebsites.net/"
-        
-        self.loginViewController = delegate
-        self.username = username
-        self.password = password
         
         if let URL = NSURL(string: URLString) {
             if let currentSession = self.session {
@@ -198,7 +220,51 @@ class UserSession: NSObject, NSURLSessionDelegate, NSURLSessionTaskDelegate {
                 // After we are redirected to the login page and
                 // login, once that is complete, the loginAttemptResponse
                 // method will be called.
-                var task = currentSession.dataTaskWithURL(URL, completionHandler: loginAttemptResponse)
+                var task = currentSession.dataTaskWithURL(URL, completionHandler: { (data, response, error) -> Void in
+                    // These are the three variables we need
+                    // to get from SDI's server to send to
+                    // our server via a POST in order to recieve
+                    // the FedAuth and FedAuth1 cookies,
+                    // which grants us access to our API.
+                    var optionalWResult: String?
+                    var optionalWCTX: String?
+                    var optionalWA: String?
+                    
+                    // Now that we've logged the user in, the
+                    // app has redirected us to the URL we were
+                    // originally trying to reach.
+                    //
+                    // The DrillAlert server sees that we have logged in,
+                    // but it still needs the FedAuth and FedAuth1 cookies
+                    // before allowing access to our API. To get these,
+                    // it redirects us to an SDI server page that is just
+                    // a form.
+                    //
+                    // This form contains three variables, wresult, wctx, and
+                    // wa, in inputs. These variables need to be sent
+                    // via a POST to our Drill Alert server. Once they are
+                    // sent, we are given the FedAuth and FedAuth1 cookies.
+                    //
+                    // Here, we're using an HTML parser to get those three
+                    // variables out of that form.
+                    if let content = NSString(data: data, encoding: NSASCIIStringEncoding) {
+                        (optionalWResult, optionalWCTX, optionalWA) = self.extractWVariablesFromContent(content)
+                    }
+                    
+                    // Verify we have each input before moving forward.
+                    if let wresult = optionalWResult {
+                        if let wctx = optionalWCTX {
+                            if let wa = optionalWA {
+                                self.setFedAuthCookiesWithWResult(wresult, andWCTX: wctx, andWA: wa, callback: callback)
+                            }
+                        }
+                    } else {
+                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            callback(false)
+                        })
+                    }
+
+                })
                 task.resume()
                 
             }
@@ -210,8 +276,8 @@ class UserSession: NSObject, NSURLSessionDelegate, NSURLSessionTaskDelegate {
         willPerformHTTPRedirection response: NSHTTPURLResponse,
         newRequest request: NSURLRequest,
         completionHandler: (NSURLRequest!) -> Void) {
-            /*
-            Used for non-web based login 
+            
+            // Used for non-web based login
             
             
             // We know we should log in if
@@ -223,28 +289,31 @@ class UserSession: NSObject, NSURLSessionDelegate, NSURLSessionTaskDelegate {
                 // Now we need to login
                 
                 // Create a new request with the redirect URL
-                var newRequest = NSMutableURLRequest(URL: request.URL)
-                
-                // Set it to POST, since we need to send
-                // the Username / Password to this new
-                // URL
-                newRequest.HTTPMethod = "POST"
-                
-                // Set the username and password
-                if let username = self.username {
-                    if let password = self.password {
-                        let encodedUsername = UserSession.encodeStringToPercentEscapedString(username)
-                        var postString = "UserName=\(encodedUsername)&Password=\(password)&AuthMethod=FormsAuthentication"
-                        
-                        // Set the POST data to the HTTP body of the request
-                        newRequest.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
-                        
-                        // Now send it again, logging the user in. We
-                        // will return to this same method since it will
-                        // redirect the user to their logged in view.
-                        completionHandler(newRequest)
+                if let URL = request.URL {
+                    var newRequest = NSMutableURLRequest(URL: URL)
+                    
+                    // Set it to POST, since we need to send
+                    // the Username / Password to this new
+                    // URL
+                    newRequest.HTTPMethod = "POST"
+                    
+                    // Set the username and password
+                    if let username = self.username {
+                        if let password = self.password {
+                            let encodedUsername = UserSession.encodeStringToPercentEscapedString(username)
+                            var postString = "UserName=\(encodedUsername)&Password=\(password)&AuthMethod=FormsAuthentication"
+                            
+                            // Set the POST data to the HTTP body of the request
+                            newRequest.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
+                            
+                            // Now send it again, logging the user in. We
+                            // will return to this same method since it will
+                            // redirect the user to their logged in view.
+                            completionHandler(newRequest)
+                        }
                     }
                 }
+                
                 
             } else {
                 // We were redirected again, but
@@ -252,12 +321,11 @@ class UserSession: NSObject, NSURLSessionDelegate, NSURLSessionTaskDelegate {
                 // with it.
                 completionHandler(request)
             }
-            */
-            completionHandler(request)
+            
     }
     
-    /*
-    func setFedAuthCookiesWithWResult(wresult: String, andWCTX wctx: String, andWA wa: String) {
+    
+    func setFedAuthCookiesWithWResult(wresult: String, andWCTX wctx: String, andWA wa: String, callback: ((Bool) -> Void)) {
         // We need to encode each of these variables
         // into a URL safe format before sending them.
         var encodedWResult = UserSession.encodeStringToPercentEscapedString(wresult)
@@ -280,25 +348,56 @@ class UserSession: NSObject, NSURLSessionDelegate, NSURLSessionTaskDelegate {
                 request.HTTPBody = encodedPostData
                 
                 if let currentSession = session {
-                    var task = currentSession.dataTaskWithRequest(request, completionHandler: finalResponse)
+                    var task = currentSession.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
+                        // Check the cookies we have now
+                        // to verify we are logged in.
+                        // If we have FedAuth and FedAuth1,
+                        // we should be good.
+                        var hasFedAuth = false
+                        var hasFedAuth1 = false
+                        
+                        if let cookies = NSHTTPCookieStorage.sharedHTTPCookieStorage().cookies {
+                            for cookie in cookies {
+                                if let HTTPCookie = cookie as? NSHTTPCookie {
+                                    if HTTPCookie.name == "FedAuth" {
+                                        hasFedAuth = true
+                                    } else if HTTPCookie.name == "FedAuth1" {
+                                        hasFedAuth1 = true
+                                    }
+                                }
+                            }
+                        }
+                        
+                        self.loggedIn = hasFedAuth && hasFedAuth1
+                        self.username = nil
+                        self.password = nil
+                        if self.loggedIn {
+                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                callback(true)
+                            })
+                        } else {
+                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                callback(false)
+                            })
+                        }
+                    })
                     task.resume()
                 }
             }
         }
     }
-    */
     
-    func extractWVariablesFromContent(content: String) -> (String?, String?, String?) {
-        /*
-        
-        Used for non web based login
+    
+    func extractWVariablesFromContent(content: NSString) -> (String?, String?, String?) {
+
         
         var optionalWResult: String?
         var optionalWCTX: String?
         var optionalWA: String?
         var error: NSError?
         
-        var parser = HTMLParser(html: content, encoding: NSASCIIStringEncoding, error: &error)
+        
+        var parser = HTMLParser(html: content as String, encoding: NSASCIIStringEncoding, error: &error)
 
         if error != nil {
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
@@ -322,16 +421,11 @@ class UserSession: NSObject, NSURLSessionDelegate, NSURLSessionTaskDelegate {
         }
         
         return (optionalWResult, optionalWCTX, optionalWA)
-        */
-        return (nil, nil, nil)
     }
     
-    
+    /*
     func loginAttemptResponse(data: NSData!, response: NSURLResponse!, error: NSError!) {
         
-        /* 
-            Used in non-web based login
-
         // These are the three variables we need
         // to get from SDI's server to send to
         // our server via a POST in order to recieve
@@ -366,7 +460,7 @@ class UserSession: NSObject, NSURLSessionDelegate, NSURLSessionTaskDelegate {
         if let wresult = optionalWResult {
             if let wctx = optionalWCTX {
                 if let wa = optionalWA {
-                    self.setFedAuthCookiesWithWResult(wresult, andWCTX: wctx, andWA: wa)
+                    self.setFedAuthCookiesWithWResult(wresult, andWCTX: wctx, andWA: wa, callback: callback)
                 }
             }
         } else {
@@ -377,8 +471,8 @@ class UserSession: NSObject, NSURLSessionDelegate, NSURLSessionTaskDelegate {
             })
         }
 
-        */
     }
+    */
     
     func finalResponse(data: NSData!, response: NSURLResponse!, error: NSError!) {
         // Check the cookies we have now
@@ -421,10 +515,10 @@ class UserSession: NSObject, NSURLSessionDelegate, NSURLSessionTaskDelegate {
         }
     }
     
-    /*
+    
     class func encodeStringToPercentEscapedString(string: String) -> String {
-        return CFURLCreateStringByAddingPercentEscapes(nil, string as CFStringRef, nil, "!*'();:@&=+$,/?%#[]" as CFStringRef, kCFStringEncodingASCII)
+        return CFURLCreateStringByAddingPercentEscapes(nil, string as CFStringRef, nil, "!*'();:@&=+$,/?%#[]" as CFStringRef, kCFStringEncodingASCII) as String
     }
-    */
+    
     
 }

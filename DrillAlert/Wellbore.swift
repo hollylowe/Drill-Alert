@@ -44,7 +44,7 @@ class Wellbore {
         self.id = 0
     }
     
-    func getCurves(user: User) -> Array<Curve> {
+    func getCurves(user: User) -> (Array<Curve>, String?) {
         var result = Array<Curve>()
         var errorMessage: String?
         let URLString = "https://drillalert.azurewebsites.net/api/curves/\(self.id)"
@@ -67,7 +67,7 @@ class Wellbore {
             }
         }
 
-        return result
+        return (result, errorMessage)
     }
     
     // Data is in the form of

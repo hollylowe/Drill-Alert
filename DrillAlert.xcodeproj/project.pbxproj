@@ -137,11 +137,19 @@
 		A0AC42831AABF546000F12CD /* graph.html in Resources */ = {isa = PBXBuildFile; fileRef = A0AC42821AABF546000F12CD /* graph.html */; };
 		A0AC42851AABF55E000F12CD /* graph.js in Resources */ = {isa = PBXBuildFile; fileRef = A0AC42841AABF55E000F12CD /* graph.js */; };
 		A0AC42871AABF56D000F12CD /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = A0AC42861AABF56D000F12CD /* index.html */; };
+		A0CA28301ADB3E8600192F38 /* UserSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CA282F1ADB3E8600192F38 /* UserSessionTests.swift */; };
+		A0CA283C1ADB429700192F38 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A0F1B5801A901BE400306DB7 /* libxml2.dylib */; };
+		A0CA28461ADB47C600192F38 /* HTMLNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CA28431ADB47C600192F38 /* HTMLNode.swift */; };
+		A0CA28471ADB47C600192F38 /* HTMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CA28441ADB47C600192F38 /* HTMLParser.swift */; };
+		A0CA28481ADB486200192F38 /* HTMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CA28441ADB47C600192F38 /* HTMLParser.swift */; };
+		A0CA28491ADB486500192F38 /* HTMLNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CA28431ADB47C600192F38 /* HTMLNode.swift */; };
 		A0CCC5E51A81C69600F92B36 /* old-graph.html in Resources */ = {isa = PBXBuildFile; fileRef = A0CCC5E31A81C69600F92B36 /* old-graph.html */; };
 		A0CCC5E61A81C69600F92B36 /* old-graph.js in Resources */ = {isa = PBXBuildFile; fileRef = A0CCC5E41A81C69600F92B36 /* old-graph.js */; };
 		A0CE03281A0ECEFB0076EE3E /* Wellbore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CE03271A0ECEFB0076EE3E /* Wellbore.swift */; };
 		A0CE032C1A0ED67C0076EE3E /* VisualsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CE032B1A0ED67C0076EE3E /* VisualsViewController.swift */; };
 		A0CEDBA21A0C3ADF0051BDB8 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CEDBA11A0C3ADF0051BDB8 /* User.swift */; };
+		A0D7007D1ADB4C56008A1B97 /* WellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D7007C1ADB4C56008A1B97 /* WellTests.swift */; };
+		A0D7007F1ADB63FC008A1B97 /* WellboreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D7007E1ADB63FC008A1B97 /* WellboreTests.swift */; };
 		A0DB7DBF1A2FB96E00C8C9A2 /* SelectAlertTypeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0DB7DBE1A2FB96E00C8C9A2 /* SelectAlertTypeTableViewController.swift */; };
 		A0EE29021A08AB7200B50700 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EE29011A08AB7200B50700 /* UIViewExtension.swift */; };
 		A0F0BEED1AB1294C003C3CCB /* FavoriteWellbore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F0BEEC1AB1294C003C3CCB /* FavoriteWellbore.swift */; };
@@ -252,11 +260,17 @@
 		A0AC42821AABF546000F12CD /* graph.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = graph.html; sourceTree = "<group>"; };
 		A0AC42841AABF55E000F12CD /* graph.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = graph.js; sourceTree = "<group>"; };
 		A0AC42861AABF56D000F12CD /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
+		A0CA282F1ADB3E8600192F38 /* UserSessionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSessionTests.swift; sourceTree = "<group>"; };
+		A0CA28431ADB47C600192F38 /* HTMLNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HTMLNode.swift; path = DrillAlert/HTMLNode.swift; sourceTree = "<group>"; };
+		A0CA28441ADB47C600192F38 /* HTMLParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HTMLParser.swift; path = DrillAlert/HTMLParser.swift; sourceTree = "<group>"; };
+		A0CA28451ADB47C600192F38 /* Swift-HTML-Parser-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Swift-HTML-Parser-Bridging-Header.h"; sourceTree = "<group>"; };
 		A0CCC5E31A81C69600F92B36 /* old-graph.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "old-graph.html"; sourceTree = "<group>"; };
 		A0CCC5E41A81C69600F92B36 /* old-graph.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "old-graph.js"; sourceTree = "<group>"; };
 		A0CE03271A0ECEFB0076EE3E /* Wellbore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Wellbore.swift; sourceTree = "<group>"; };
 		A0CE032B1A0ED67C0076EE3E /* VisualsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualsViewController.swift; sourceTree = "<group>"; };
 		A0CEDBA11A0C3ADF0051BDB8 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		A0D7007C1ADB4C56008A1B97 /* WellTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WellTests.swift; sourceTree = "<group>"; };
+		A0D7007E1ADB63FC008A1B97 /* WellboreTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WellboreTests.swift; sourceTree = "<group>"; };
 		A0DB7DBE1A2FB96E00C8C9A2 /* SelectAlertTypeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectAlertTypeTableViewController.swift; sourceTree = "<group>"; };
 		A0EE29011A08AB7200B50700 /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		A0F0BEEC1AB1294C003C3CCB /* FavoriteWellbore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteWellbore.swift; sourceTree = "<group>"; };
@@ -315,6 +329,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0CA283C1ADB429700192F38 /* libxml2.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -383,6 +398,9 @@
 		A06FFD551A06AA08001B3FF8 = {
 			isa = PBXGroup;
 			children = (
+				A0CA28431ADB47C600192F38 /* HTMLNode.swift */,
+				A0CA28441ADB47C600192F38 /* HTMLParser.swift */,
+				A0CA28451ADB47C600192F38 /* Swift-HTML-Parser-Bridging-Header.h */,
 				A0343D301A2674C100FA0464 /* Entitlements.plist */,
 				A06FFD601A06AA08001B3FF8 /* DrillAlert */,
 				A06FFD791A06AA08001B3FF8 /* DrillAlertTests */,
@@ -432,6 +450,9 @@
 				A06FFD7C1A06AA08001B3FF8 /* DrillAlertTests.swift */,
 				A06FFD7A1A06AA08001B3FF8 /* Supporting Files */,
 				A0ABE79F1AAA875C00C73BD6 /* JSONArrayTests.swift */,
+				A0CA282F1ADB3E8600192F38 /* UserSessionTests.swift */,
+				A0D7007C1ADB4C56008A1B97 /* WellTests.swift */,
+				A0D7007E1ADB63FC008A1B97 /* WellboreTests.swift */,
 			);
 			path = DrillAlertTests;
 			sourceTree = "<group>";
@@ -802,6 +823,7 @@
 				A0DB7DBF1A2FB96E00C8C9A2 /* SelectAlertTypeTableViewController.swift in Sources */,
 				A0F0FBED1A103DC600ADBDF3 /* WellUsersTableViewController.swift in Sources */,
 				CFC8DBE41A92AAA400727A97 /* EditViewsTableViewController.swift in Sources */,
+				A0CA28471ADB47C600192F38 /* HTMLParser.swift in Sources */,
 				A09CFE7F1AA7F8080094A582 /* LoginWebViewController.swift in Sources */,
 				CF6DD75A1AA04C300030ADAB /* NewGaugeTableViewController.swift in Sources */,
 				A0699A9E1A809102004F9C97 /* SegmentControlToolbar.swift in Sources */,
@@ -829,6 +851,7 @@
 				CF08A77C1A9DD02600A33AFE /* AddTrackTableViewController.swift in Sources */,
 				A018E40C1A2BB4E8001EF20E /* AddEditAlertTableViewController.swift in Sources */,
 				A0699A9C1A80231A004F9C97 /* Curve.swift in Sources */,
+				A0CA28461ADB47C600192F38 /* HTMLNode.swift in Sources */,
 				A095D57F1A78A3FA000889CB /* JSON.swift in Sources */,
 				A0343D391A2AC85400FA0464 /* WellboreDetailViewController.swift in Sources */,
 				A0772F221A92921300DE37B1 /* AlertType.swift in Sources */,
@@ -863,6 +886,7 @@
 				A08026011AAA388400C8BE99 /* AlertPriorityCell.swift in Sources */,
 				A08026081AAA389100C8BE99 /* View.swift in Sources */,
 				A08025CA1AAA382200C8BE99 /* ParameterAlert.swift in Sources */,
+				A0D7007F1ADB63FC008A1B97 /* WellboreTests.swift in Sources */,
 				A08025E31AAA384300C8BE99 /* AlertInboxTableViewController.swift in Sources */,
 				A08025EB1AAA386100C8BE99 /* AddCurveTableViewController.swift in Sources */,
 				A08025DC1AAA383B00C8BE99 /* LoginWebViewController.swift in Sources */,
@@ -876,6 +900,7 @@
 				A08025E91AAA384C00C8BE99 /* AddViewTableViewController.swift in Sources */,
 				A08025E61AAA384C00C8BE99 /* ManageViewsTableViewController.swift in Sources */,
 				A08025CC1AAA382200C8BE99 /* AlertPriorityStandard.swift in Sources */,
+				A0CA28491ADB486500192F38 /* HTMLNode.swift in Sources */,
 				A08025F61AAA386B00C8BE99 /* SensorTableViewController.swift in Sources */,
 				A08025DD1AAA383D00C8BE99 /* HomeViewController.swift in Sources */,
 				A080260B1AAA389E00C8BE99 /* UIViewExtension.swift in Sources */,
@@ -897,9 +922,11 @@
 				A08025E41AAA384C00C8BE99 /* VisualsViewController.swift in Sources */,
 				A08025FA1AAA387B00C8BE99 /* WellUsersTableViewController.swift in Sources */,
 				A080260D1AAA3B6B00C8BE99 /* DrillAlert.xcdatamodeld in Sources */,
+				A0D7007D1ADB4C56008A1B97 /* WellTests.swift in Sources */,
 				A08026031AAA388400C8BE99 /* AlertTableViewCell.swift in Sources */,
 				A0F9D6841AAEA6D3001B03F1 /* WellTableViewCell.swift in Sources */,
 				A08025CD1AAA382200C8BE99 /* AlertTypeStandard.swift in Sources */,
+				A0CA28481ADB486200192F38 /* HTMLParser.swift in Sources */,
 				A08026041AAA388800C8BE99 /* ManageVisualsTableViewCell.swift in Sources */,
 				A08025DB1AAA382900C8BE99 /* UserSession.swift in Sources */,
 				A08025CB1AAA382200C8BE99 /* Parameter.swift in Sources */,
@@ -922,6 +949,7 @@
 				A08026021AAA388400C8BE99 /* AlertInboxCell.swift in Sources */,
 				A08026061AAA388C00C8BE99 /* ViewTableViewCell.swift in Sources */,
 				A08025D71AAA382900C8BE99 /* JSON.swift in Sources */,
+				A0CA28301ADB3E8600192F38 /* UserSessionTests.swift in Sources */,
 				A08025F41AAA386B00C8BE99 /* CompassDataSourceTableViewController.swift in Sources */,
 				A08025F31AAA386600C8BE99 /* NewGaugeTableViewController.swift in Sources */,
 				A08025F01AAA386100C8BE99 /* NewPlotTableViewController.swift in Sources */,
@@ -1049,10 +1077,9 @@
 					"/Users/lucas/Developer/CPE402/Resources/google-plus-ios-sdk-1.7.1",
 				);
 				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"<Multiple",
+					"values>",
 					/usr/include/libxml2,
-					"$(SDKROOT)/usr/include/libxml2",
 				);
 				"HEADER_SEARCH_PATHS[arch=*]" = (
 					"$(inherited)",
@@ -1065,6 +1092,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "Swift-HTML-Parser-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1084,10 +1112,9 @@
 					"/Users/lucas/Developer/CPE402/Resources/google-plus-ios-sdk-1.7.1",
 				);
 				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"<Multiple",
+					"values>",
 					/usr/include/libxml2,
-					"$(SDKROOT)/usr/include/libxml2",
 				);
 				INFOPLIST_FILE = DrillAlert/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1095,6 +1122,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "Swift-HTML-Parser-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -1113,9 +1141,15 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/usr/include/libxml2,
+				);
 				INFOPLIST_FILE = DrillAlertTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Swift-HTML-Parser-Bridging-Header.h";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DrillAlert.app/DrillAlert";
 			};
 			name = Debug;
@@ -1130,9 +1164,15 @@
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/usr/include/libxml2,
+				);
 				INFOPLIST_FILE = DrillAlertTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Swift-HTML-Parser-Bridging-Header.h";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DrillAlert.app/DrillAlert";
 			};
 			name = Release;
