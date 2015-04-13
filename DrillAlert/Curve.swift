@@ -8,7 +8,49 @@
 
 import Foundation
 
-
+class CurvePointCollection {
+    var curveID: Int
+    var wellboreID: Int
+    var curvePoints: Array<CurvePoint>
+    
+    init(curveID: Int, wellboreID: Int) {
+        self.curveID = curveID
+        self.wellboreID = wellboreID
+        self.curvePoints = Array<CurvePoint>()
+    }
+    
+    init(curveID: Int, wellboreID: Int, curvePoints: Array<CurvePoint>) {
+        self.curveID = curveID
+        self.wellboreID = wellboreID
+        self.curvePoints = curvePoints
+    }
+    
+    class func curvePointCollectionFromJSONObject(JSONObject: JSON) -> CurvePointCollection? {
+        var result: CurvePointCollection?
+        
+        if let wellboreID = JSONObject.getIntAtKey("wellboreId") {
+            if let curveID = JSONObject.getIntAtKey("curveId") {
+                
+                // Now get each curve point.
+                if let data = JSONObject.getJSONArrayAtKey("data") {
+                    var curvePoints = Array<CurvePoint>()
+                    
+                    if let curvePointJSONs = data.array {
+                        for curvePointJSON in curvePointJSONs {
+                            if let curvePoint = CurvePoint.curvePointFromJSON(curvePointJSON) {
+                                curvePoints.append(curvePoint)
+                            }
+                        }
+                    }
+                    
+                    result = CurvePointCollection(curveID: curveID, wellboreID: wellboreID, curvePoints: curvePoints)
+                }
+            }
+        }
+        
+        return result
+    }
+}
 
 class CurvePoint {
     var value: Float
@@ -19,6 +61,18 @@ class CurvePoint {
         self.time = time
     }
     
+    class func curvePointFromJSON(curvePointJSON: JSON) -> CurvePoint? {
+        var result: CurvePoint?
+        
+        if let curvePointValue = curvePointJSON.getFloatAtKey("value") {
+            if let curvePointTime = curvePointJSON.getStringAtKey("time") {
+                result = CurvePoint(value: curvePointValue, stringTime: curvePointTime)
+            }
+        }
+        
+        return result
+    }
+    
     init(value: Float, stringTime: String) {
         self.value = value
         if let newTime = stringTime.toInt() {
@@ -26,8 +80,9 @@ class CurvePoint {
         } else {
             self.time = 0
         }
-        
     }
+    
+    
 }
 
 class Curve {
@@ -44,49 +99,34 @@ class Curve {
         self.wellbore = wellbore
     }
     
-    func getCurvePoints() -> Array<CurvePoint> {
-        var result = Array<CurvePoint>()
+    func getCurvePointCollectionBetweenStartDate(startDate: NSDate, andEndDate endDate: NSDate) -> (CurvePointCollection?, String?) {
+        var result: CurvePointCollection?
+        var errorMessage: String?
         
         // TODO: Change this to real values
         let startTime = 0
         let endTime = 0
         
-        var endpointURL = "https://drillalert.azurewebsites.net/api/curvepoints/\(self.wellbore.id)/\(self.id)/\(startTime)/\(endTime)"
+        var endpointURL = "https://drillalert.azurewebsites.net/api/curvepoints/\(self.id)/\(self.wellbore.id)/\(startTime)/\(endTime)"
         println(endpointURL)
         let resultJSONArray = JSONArray(url: endpointURL)
         
         if let resultJSONs = resultJSONArray.array {
-            // There's probably only one...
-            for resultJSON in resultJSONs {
-                if let wellboreId = resultJSON.getIntAtKey("wellboreId") {
-                    if let curveId = resultJSON.getIntAtKey("curveId") {
-                        if let data = resultJSON.getJSONArrayAtKey("data") {
-                            if let curvePointJSONs = data.array {
-                                for curvePointJSON in curvePointJSONs {
-                                    
-                                    if let curvePointValue = curvePointJSON.getFloatAtKey("value") {
-                                        if let curvePointTime = curvePointJSON.getStringAtKey("time") {
-                                            let curvePoint = CurvePoint(value: curvePointValue, stringTime: curvePointTime)
-                                            result.append(curvePoint)
-                                            println(curvePoint.value)
-                                            println(curvePoint.time)
-                                        }
-                                    }
-                                    
-                                }
-                            }
-                            
-                        }
-                    }
-                }
+            // There should only be one 
+            if resultJSONs.count > 0 {
+                let curvePointCollectionJSON = resultJSONs[0]
+                result = CurvePointCollection.curvePointCollectionFromJSONObject(curvePointCollectionJSON)
             }
         } else {
             if let error = resultJSONArray.error {
-                println(error)
+                errorMessage = error.description
+                println("Error while getting CurvePointCollection: ")
+                println(errorMessage)
+                println()
             }
         }
         
-        return result
+        return (result, errorMessage)
     }
     
     class func curveFromJSONObject(JSONObject: JSON, user: User, wellbore: Wellbore) -> Curve? {
@@ -111,5 +151,7 @@ class Curve {
         
         return result
     }
+    
+    
     
 }

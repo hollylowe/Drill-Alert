@@ -93,7 +93,7 @@ class Well {
                 // TODO: delete this, only for when the connection doesn't work
                 if result.count == 0 {
                     let well = Well(id: 0, name: "Test", location: "Here")
-                    well.wellbores.append(Wellbore(well: well, name: "test"))
+                    well.wellbores.append(Wellbore(id: 0, name: "Test Wellbore", well: well))
                     result.append(well)
                 }
             }

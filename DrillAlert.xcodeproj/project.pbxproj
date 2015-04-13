@@ -150,6 +150,7 @@
 		A0CEDBA21A0C3ADF0051BDB8 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CEDBA11A0C3ADF0051BDB8 /* User.swift */; };
 		A0D7007D1ADB4C56008A1B97 /* WellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D7007C1ADB4C56008A1B97 /* WellTests.swift */; };
 		A0D7007F1ADB63FC008A1B97 /* WellboreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D7007E1ADB63FC008A1B97 /* WellboreTests.swift */; };
+		A0D700811ADB846C008A1B97 /* CurveTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D700801ADB846C008A1B97 /* CurveTests.swift */; };
 		A0DB7DBF1A2FB96E00C8C9A2 /* SelectAlertTypeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0DB7DBE1A2FB96E00C8C9A2 /* SelectAlertTypeTableViewController.swift */; };
 		A0EE29021A08AB7200B50700 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EE29011A08AB7200B50700 /* UIViewExtension.swift */; };
 		A0F0BEED1AB1294C003C3CCB /* FavoriteWellbore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F0BEEC1AB1294C003C3CCB /* FavoriteWellbore.swift */; };
@@ -271,6 +272,7 @@
 		A0CEDBA11A0C3ADF0051BDB8 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		A0D7007C1ADB4C56008A1B97 /* WellTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WellTests.swift; sourceTree = "<group>"; };
 		A0D7007E1ADB63FC008A1B97 /* WellboreTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WellboreTests.swift; sourceTree = "<group>"; };
+		A0D700801ADB846C008A1B97 /* CurveTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurveTests.swift; sourceTree = "<group>"; };
 		A0DB7DBE1A2FB96E00C8C9A2 /* SelectAlertTypeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectAlertTypeTableViewController.swift; sourceTree = "<group>"; };
 		A0EE29011A08AB7200B50700 /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		A0F0BEEC1AB1294C003C3CCB /* FavoriteWellbore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteWellbore.swift; sourceTree = "<group>"; };
@@ -453,6 +455,7 @@
 				A0CA282F1ADB3E8600192F38 /* UserSessionTests.swift */,
 				A0D7007C1ADB4C56008A1B97 /* WellTests.swift */,
 				A0D7007E1ADB63FC008A1B97 /* WellboreTests.swift */,
+				A0D700801ADB846C008A1B97 /* CurveTests.swift */,
 			);
 			path = DrillAlertTests;
 			sourceTree = "<group>";
@@ -881,6 +884,7 @@
 				A080260A1AAA389800C8BE99 /* VisualType.swift in Sources */,
 				A08025E51AAA384C00C8BE99 /* VisualViewController.swift in Sources */,
 				A08025EF1AAA386100C8BE99 /* IVTTableViewController.swift in Sources */,
+				A0D700811ADB846C008A1B97 /* CurveTests.swift in Sources */,
 				A08025EE1AAA386100C8BE99 /* UnitsTableViewController.swift in Sources */,
 				A08025FD1AAA388000C8BE99 /* PaddedUITextField.swift in Sources */,
 				A08026011AAA388400C8BE99 /* AlertPriorityCell.swift in Sources */,

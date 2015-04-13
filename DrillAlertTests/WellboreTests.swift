@@ -40,7 +40,7 @@ class WellboreTests: XCTestCase {
     }
 
     
-    func testGetWellboresForUser() {
+    func testGetCurvesForUser() {
         println("--- Get Wellbores API Test ---")
         
         var expectation: XCTestExpectation?

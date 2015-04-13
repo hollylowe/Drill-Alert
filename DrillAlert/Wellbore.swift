@@ -35,15 +35,6 @@ class Wellbore {
         self.well = well
     }
     
-    // TODO: reomve, deprecated
-    init(well: Well, name: String) {
-        self.name = name
-        self.well = well
-        self.titles = ["\"blue\"", "\"more blue\""]
-        // self.updateData()
-        self.id = 0
-    }
-    
     func getCurves(user: User) -> (Array<Curve>, String?) {
         var result = Array<Curve>()
         var errorMessage: String?
@@ -129,33 +120,6 @@ class Wellbore {
             
             self.data.append(Point(x: x, y: y))
         }
-    }
-    
-    /// An API call to get all of the wellbores a user
-    /// is subscribed to.
-    class func getSubscribedWellboresForUserID(userID: String) -> Array<Wellbore> {
-        var wellbores = Array<Wellbore>()
-        
-        
-        
-        // Using canned data
-        wellbores.append(Wellbore(well: Well(id: 0, name: "Well One", location: "Houston"), name: "Wellbore 1"))
-        wellbores.append(Wellbore(well: Well(id: 0, name: "Well One", location: "Houston"), name: "Wellbore 3"))
-        
-        return wellbores
-    }
-    
-    /// An API call to get all of the wellbores a user has
-    /// access to.
-    class func getAllWellboresForUserID(userID: String) -> Array<Wellbore> {
-        var wellbores = Array<Wellbore>()
-        
-        // Using canned data
-        wellbores.append(Wellbore(well: Well(id: 0, name: "Well One", location: "Houston"), name: "Wellbore 1"))
-        wellbores.append(Wellbore(well: Well(id: 0, name: "Well One", location: "Houston"), name: "Wellbore 3"))
-        wellbores.append(Wellbore(well: Well(id: 0, name: "Well One", location: "Houston"), name: "Wellbore 4"))
-        
-        return wellbores
     }
     
     func getData() -> Array<Point> {

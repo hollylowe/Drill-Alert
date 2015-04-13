@@ -113,8 +113,6 @@ class UserSession: NSObject, NSURLSessionDelegate, NSURLSessionTaskDelegate {
             
             if let session = self.session {
                 let task = session.dataTaskWithRequest(newRequest, completionHandler: { (data, response, error) -> Void in
-                    println(" Logout response")
-                    println(response)
                     
                     callback(true)
                 })

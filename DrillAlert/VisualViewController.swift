@@ -148,11 +148,20 @@ class VisualViewController: UIViewController, UIWebViewDelegate {
         for javaScriptVisualization in javaScriptVisualizations {
             if javaScriptVisualization is JavaScriptPlot {
                 let testCurve = Curve(id: 0, name: "test curve", tooltype: "test type", units: "test units", wellbore: Wellbore(id: 0, name: "Test Wellbore", well: Well(id: 0, name: "Test well", location: "test location")))
-                let curvePoints = testCurve.getCurvePoints()
                 
-                if curvePoints.count > 0 {
-                    dataValue = curvePoints[0].value
+                let (optionalCurvePointCollection, error) = testCurve.getCurvePointCollectionBetweenStartDate(NSDate(), andEndDate: NSDate())
+                if error == nil {
+                    if let curvePointCollection = optionalCurvePointCollection {
+                        let curvePoints = curvePointCollection.curvePoints
+                        if curvePoints.count > 0 {
+                            dataValue = curvePoints[0].value
+                        }
+                    }
+                } else {
+                    // TODO: Show error to user
+                    println("Error Getting Curve Points: " + error!)
                 }
+                
             }
             
             let updateString = javaScriptVisualization.getTickJavaScriptStringWithDataPoint(dataValue)
