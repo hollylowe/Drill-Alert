@@ -51,12 +51,7 @@ class UserSession: NSObject, NSURLSessionDelegate, NSURLSessionTaskDelegate {
             if let session = self.session {
                 println("Sending device token.")
                 let task = session.dataTaskWithRequest(newRequest, completionHandler: { (data, response, error) -> Void in
-                    if let content = NSString(data: data, encoding: NSASCIIStringEncoding) {
-                        println("Data from device token get: ")
-                        println(content)
-                        println("Response from device token get:")
-                        println(response)
-                    }
+                    println("Device token sent.")
                 })
                 task.resume()
             }
@@ -93,17 +88,8 @@ class UserSession: NSObject, NSURLSessionDelegate, NSURLSessionTaskDelegate {
             // Override point for customization after application launch.
             if UIApplication.instancesRespondToSelector(Selector("registerUserNotificationSettings:")) {
                 application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: UIUserNotificationType.Sound | UIUserNotificationType.Alert | UIUserNotificationType.Badge, categories: nil))
-            } else {
-                //do iOS 7 stuff, which is pretty much nothing for local notifications.
             }
-            
-            
-            
-            
         }
-        
-        
-
     }
     
     func logout(callback: ((Bool) -> Void)) {
@@ -347,6 +333,8 @@ class UserSession: NSObject, NSURLSessionDelegate, NSURLSessionTaskDelegate {
                 
                 if let currentSession = session {
                     var task = currentSession.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
+                        
+                        
                         // Check the cookies we have now
                         // to verify we are logged in.
                         // If we have FedAuth and FedAuth1,
@@ -356,6 +344,7 @@ class UserSession: NSObject, NSURLSessionDelegate, NSURLSessionTaskDelegate {
                         
                         if let cookies = NSHTTPCookieStorage.sharedHTTPCookieStorage().cookies {
                             for cookie in cookies {
+                                println(cookie)
                                 if let HTTPCookie = cookie as? NSHTTPCookie {
                                     if HTTPCookie.name == "FedAuth" {
                                         hasFedAuth = true
