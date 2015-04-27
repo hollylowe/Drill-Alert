@@ -287,11 +287,9 @@ class AddEditAlertTableViewController: UITableViewController {
                         if let newSeverity = self.getAlertSeverityValue() {
                             
                             // TODO: Curve ID and Wellbore ID
-                            if let userID = self.currentUser.id.toInt() {
-                                let newAlert = Alert(curveID: 0, userID: userID, name: newName, rising: newRising, wellboreID: 0, severity: newSeverity, threshold: newValue.doubleValue)
-                                
-                                newAlert.save(self.currentUser)
-                            }
+                            let newAlert = Alert(curveID: 0, userID: currentUser.id, name: newName, rising: newRising, wellboreID: 0, severity: newSeverity, threshold: newValue.doubleValue)
+                            
+                            newAlert.save(self.currentUser)
                         }
                     }
                 }
@@ -380,21 +378,21 @@ class AddEditAlertTableViewController: UITableViewController {
             var newRequest = NSMutableURLRequest(URL: URL)
             newRequest.HTTPMethod = "GET"
             
-            if let userSession = currentUser.userSession {
-                if let session = userSession.session {
-                    let task = session.dataTaskWithRequest(newRequest, completionHandler: { (data, response, error) -> Void in
-                        println("test Task: ")
-                        if let content = NSString(data: data, encoding: NSASCIIStringEncoding) {
-                            println("Data get: ")
-                            println(content)
-                            println("Response get:")
-                            println(response)
-                        }
-                    })
-                    
-                    task.resume()
-                }
+            let userSession = currentUser.session
+            if let session = userSession.session {
+                let task = session.dataTaskWithRequest(newRequest, completionHandler: { (data, response, error) -> Void in
+                    println("test Task: ")
+                    if let content = NSString(data: data, encoding: NSASCIIStringEncoding) {
+                        println("Data get: ")
+                        println(content)
+                        println("Response get:")
+                        println(response)
+                    }
+                })
+                
+                task.resume()
             }
+            
         }
 
     }

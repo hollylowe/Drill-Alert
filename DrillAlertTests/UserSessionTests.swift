@@ -12,7 +12,7 @@ import DrillAlert
 
 
 class UserSessionTests: XCTestCase {
-    
+    /*
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -28,4 +28,5 @@ class UserSessionTests: XCTestCase {
         // userSession.loginWithUsername("capstone2015\\testuser",
          //   andPassword: "StartUp!", andDelegate: nil)
     }
+    */
 }

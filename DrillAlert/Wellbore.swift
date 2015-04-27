@@ -40,22 +40,21 @@ class Wellbore {
         var errorMessage: String?
         let URLString = "https://drillalert.azurewebsites.net/api/curves/\(self.id)"
         
-        if let session = user.userSession {
-            let curvesJSONArray = session.getJSONArrayAtURL(URLString)
-            errorMessage = curvesJSONArray.getErrorMessage()
-            
-            if errorMessage == nil {
-                if let curveJSONs = curvesJSONArray.array {
-                    for curveJSONObject in curveJSONs {
-                        if let curve = Curve.curveFromJSONObject(curveJSONObject, user: user, wellbore: self) {
-                            result.append(curve)
-                        }
+        let session = user.session
+        let curvesJSONArray = session.getJSONArrayAtURL(URLString)
+        errorMessage = curvesJSONArray.getErrorMessage()
+        
+        if errorMessage == nil {
+            if let curveJSONs = curvesJSONArray.array {
+                for curveJSONObject in curveJSONs {
+                    if let curve = Curve.curveFromJSONObject(curveJSONObject, user: user, wellbore: self) {
+                        result.append(curve)
                     }
                 }
-            } else {
-                // TODO:  Show error message to user
-                println(errorMessage)
             }
+        } else {
+            // TODO:  Show error message to user
+            println(errorMessage)
         }
 
         return (result, errorMessage)

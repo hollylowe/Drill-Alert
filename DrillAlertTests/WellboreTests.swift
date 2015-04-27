@@ -12,7 +12,7 @@ import DrillAlert
 
 class WellboreTests: XCTestCase {
     
-    
+    /*
     var optionalUserSession: UserSession?
     var optionalUser: User?
     
@@ -81,5 +81,7 @@ class WellboreTests: XCTestCase {
         
         
     }
+
+    */
 }
     

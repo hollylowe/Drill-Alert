@@ -11,7 +11,7 @@ import XCTest
 import DrillAlert
 
 class WellTests: XCTestCase {
-    
+    /*
     var optionalUserSession: UserSession?
     var optionalUser: User?
     
@@ -72,5 +72,7 @@ class WellTests: XCTestCase {
         }
         
     }
+
+    */
 }
     

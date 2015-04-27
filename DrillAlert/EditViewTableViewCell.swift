@@ -8,7 +8,7 @@
 
 import Foundation
 import UIKit
-
+/*
 class EditViewTableViewCell: UITableViewCell {
     
     @IBOutlet weak var viewTitleLabel: UILabel!
@@ -21,4 +21,4 @@ class EditViewTableViewCell: UITableViewCell {
         return "ViewTableViewCell"
     }
     
-}
+}*/

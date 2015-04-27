@@ -79,26 +79,33 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         super.viewWillAppear(animated)
         // Hiding the navigation bar line
         if let navigationController = self.navigationController {
-            navBarHairlineImageView = self.findHairlineImageViewUnder(navigationController.navigationBar)
-            navBarHairlineImageView.hidden = true
+           // navBarHairlineImageView = self.findHairlineImageViewUnder(navigationController.navigationBar)
+           // navBarHairlineImageView.hidden = true
         }
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        navBarHairlineImageView.hidden = false
+       // navBarHairlineImageView.hidden = false
     }
     
     func logoutButtonTapped(sender: UIBarButtonItem) {
-        currentUser.logout()
-        
-        if let navigationController = self.navigationController {
-            navigationController.popToRootViewControllerAnimated(true)
+        println("Logout tapped.")
+        self.currentUser.logout { (loggedOut) -> Void in
+            if loggedOut {
+                if let navigationController = self.navigationController {
+                    navigationController.popToRootViewControllerAnimated(true)
+                }
+            }
         }
     }
     
     private func setupView() {
         self.title = "Wells"
+        let footerView = UIView()
+        self.tableView.backgroundColor = UIColor(red: 0.937, green: 0.937, blue: 0.937, alpha: 1.0)
+        self.tableView.tableFooterView = UIView()
+        
         let toolbarWidth = self.view.frame.size.width
         let toolbarHeight: CGFloat = 39.0
 
@@ -111,10 +118,10 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             navigationController.navigationBar.hidden = false
             
             // Disable the back button
-            self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.Bordered, target: nil, action: nil)
+            self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
             self.navigationItem.hidesBackButton = true
             
-            let logoutButton = UIBarButtonItem(title: "Logout", style: .Bordered, target: self, action: "logoutButtonTapped:")
+            let logoutButton = UIBarButtonItem(title: "Logout", style: .Plain, target: self, action: "logoutButtonTapped:")
             
             if let image = UIImage(named: "logouticon.png") {
                 let logoutImage = imageWithImage(image, scaledToSize: CGSize(width: 40, height: 40))

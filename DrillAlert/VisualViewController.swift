@@ -195,14 +195,34 @@ extension VisualViewController: UIWebViewDelegate {
         for visualization in self.panel.visualizations {
             // TODO: Remove, only for the demo
             if self.panel.shouldShowDemoPlot {
-                newJavaScriptVisualizations.append(JavaScriptPlot(id: visualization.id, yMax: 10, xMax: 20, initialData: Array<Int>(), width: defaultWidth, height: defaultHeight))
+                if let id = visualization.id {
+                    newJavaScriptVisualizations.append(JavaScriptPlot(
+                        id: id,
+                        yMax: 10,
+                        xMax: 20,
+                        initialData: Array<Int>(),
+                        width: defaultWidth,
+                        height: defaultHeight))
+                }
+                
             } else {
                 switch visualization.jsFileName {
                 case plotJSFileName:
-                    newJavaScriptVisualizations.append(JavaScriptPlot(id: visualization.id, yMax: 10, xMax: 10, initialData: Array<Int>(), width: defaultWidth, height: defaultHeight))
+                    if let id = visualization.id {
+
+                    newJavaScriptVisualizations.append(JavaScriptPlot(
+                        id: id,
+                        yMax: 10,
+                        xMax: 10,
+                        initialData: Array<Int>(),
+                        width: defaultWidth,
+                        height: defaultHeight))
+                    }
                 case gaugeJSFileName:
-                    let newGauge = JavaScriptGauge(id: visualization.id)
-                    newJavaScriptVisualizations.append(newGauge)
+                    if let id = visualization.id {
+                        let newGauge = JavaScriptGauge(id: id)
+                        newJavaScriptVisualizations.append(newGauge)
+                    }
                 default: break
                 }
             }

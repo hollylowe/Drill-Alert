@@ -9,9 +9,36 @@
 import Foundation
 class JSON {
     var dictionary: Dictionary<String, AnyObject>?
+    var error: NSError?
+    
+    init() {}
     
     init(dictionary: Dictionary<String, AnyObject>) {
         self.dictionary = dictionary
+    }
+    
+    func getErrorMessage() -> String? {
+        var errorMessage: String?
+        
+        if self.error != nil {
+            if error!.code == -1005 {
+                errorMessage = "The network connection was lost."
+            } else {
+                if let domain = NSBundle.mainBundle().bundleIdentifier {
+                    if error!.code == SERVER_ERROR_CODE {
+                        if let userInfo = error!.userInfo {
+                            errorMessage = userInfo[APIErrorKey] as? String
+                        }
+                    } else {
+                        errorMessage = "Unknown Error: \(error!.code)"
+                        println(error!)
+                    }
+                    
+                }
+            }
+        }
+        
+        return errorMessage
     }
     
     func getDateAtKey(key: String) -> NSDate? {

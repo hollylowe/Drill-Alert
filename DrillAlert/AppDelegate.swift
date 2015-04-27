@@ -11,10 +11,9 @@ import CoreData
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-    var userSession: UserSession?
-    
+    var user: User?
     var window: UIWindow?
+    
     // If this is set, we know that we are currently on the Alert Inbox view
     var alertInboxTableViewController: AlertInboxTableViewController?
     
@@ -120,15 +119,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
-        if let session = self.userSession {
-            println("Successfully registered for push notifications.")
-            println("Sending token.")
-            println(deviceToken.description)
-            var token = deviceToken.description.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "<>"))
-            session.sendDeviceToken(token)
-        }
+        println("Successfully registered for push notifications.")
+        println("Sending token.")
+        println(deviceToken.description)
+        let token = deviceToken.description.stringByTrimmingCharactersInSet(
+            NSCharacterSet(charactersInString: "<>"))
         
-
+        if let user = self.user {
+            user.session.sendDeviceToken(token)
+        }
     }
     
     func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {

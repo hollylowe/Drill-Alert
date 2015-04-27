@@ -112,6 +112,7 @@ class Alert {
             }
             
             println(jsonString)
+            /*
             newRequest.HTTPBody = jsonString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)
             newRequest.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
             if let userSession = user.userSession {
@@ -129,6 +130,7 @@ class Alert {
                     task.resume()
                 }
             }
+            */
         }
         
     }
@@ -155,19 +157,17 @@ class Alert {
                         if let wellboreID = JSONObject.getIntAtKey(APIWellboreIDKey) {
                             if let severityInt = JSONObject.getIntAtKey(APISeverityKey) {
                                 if let threshold = JSONObject.getDoubleAtKey(APIThresholdKey) {
-                                    if let userID = user.id.toInt() {
-                                        let alert = Alert(
-                                            id: id,
-                                            curveID: curveID,
-                                            userID: userID,
-                                            name: name,
-                                            rising: rising,
-                                            wellboreID: wellboreID,
-                                            severity: severityInt,
-                                            threshold: threshold)
-                                        
-                                        result = alert
-                                    }
+                                    let alert = Alert(
+                                        id: id,
+                                        curveID: curveID,
+                                        userID: user.id,
+                                        name: name,
+                                        rising: rising,
+                                        wellboreID: wellboreID,
+                                        severity: severityInt,
+                                        threshold: threshold)
+                                    
+                                    result = alert
                                 }
                             }
                         }
@@ -185,23 +185,23 @@ class Alert {
         var errorMessage: String?
         
         let url = "https://drillalert.azurewebsites.net/api/alerts"
-        if let session = user.userSession {
-            let alertsJSONArray = session.getJSONArrayAtURL(url)
-            errorMessage = alertsJSONArray.getErrorMessage()
-            
-            if errorMessage == nil {
-                if let alertJSONs = alertsJSONArray.array {
-                    for alertJSONObject in alertJSONs {
-                        if let alert = Alert.alertFromJSONObject(alertJSONObject, user: user) {
-                            result.append(alert)
-                        }
+        let session = user.session
+        let alertsJSONArray = session.getJSONArrayAtURL(url)
+        errorMessage = alertsJSONArray.getErrorMessage()
+        
+        if errorMessage == nil {
+            if let alertJSONs = alertsJSONArray.array {
+                for alertJSONObject in alertJSONs {
+                    if let alert = Alert.alertFromJSONObject(alertJSONObject, user: user) {
+                        result.append(alert)
                     }
                 }
-            } else {
-                // TODO:  Show error message to user
-                
             }
+        } else {
+            // TODO:  Show error message to user
+            
         }
+        
         
         return (result, errorMessage)
     }

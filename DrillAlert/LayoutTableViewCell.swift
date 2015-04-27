@@ -9,16 +9,16 @@
 import Foundation
 import UIKit
 
-class ViewTableViewCell: UITableViewCell {
+class LayoutTableViewCell: UITableViewCell {
     
-    @IBOutlet weak var viewTitleLabel: UILabel!
+    @IBOutlet weak var layoutTitleLabel: UILabel!
     
-    func setupWithView(view: View) {
-        self.viewTitleLabel.text = "\(view.name)"
+    func setupWithLayout(layout: Layout) {
+        self.layoutTitleLabel.text = "\(layout.name)"
     }
     
     class func cellIdentifier() -> String! {
-        return "ViewTableViewCell"
+        return "LayoutTableViewCell"
     }
     
 }

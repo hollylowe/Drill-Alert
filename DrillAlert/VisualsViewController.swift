@@ -17,15 +17,15 @@ class VisualsViewController: UIViewController, UIPageViewControllerDataSource {
     // Implicit, set in viewDidLoad
     var pageViewController: UIPageViewController!
     
-    // These are all of a user's WellboreViews
-    var wellboreViews = Array<WellboreView>()
+    // These are all of a user's Layouts
+    var layouts = Array<Layout>()
     
-    // This will be the user's currently selected WellboreView.
+    // This will be the user's currently selected Layout.
     // If they haven't selected one (or the backend doesn't support
     // saving it yet), then this will just be set to the first 
     // view that is in the wellboreViews array.
-    var currentWellboreView: WellboreView?
-    var currentWellbore: Wellbore!
+    var currentLayout: Layout?
+    var wellbore: Wellbore!
     var curves = Array<Curve>()
     
     // TODO: Remove this, for debuggin only
@@ -35,27 +35,24 @@ class VisualsViewController: UIViewController, UIPageViewControllerDataSource {
     var loadingData = true
     var loadError = false
     
-    func reloadWellboreViews() {
-        let (userWellboreViews, error) = WellboreView.getWellboreViewsForUser(self.user, andWellbore: currentWellbore)
+    func reloadLayouts() {
+        let (newLayouts, error) = Layout.getLayoutsForUser(self.user, andWellbore: self.wellbore)
+        
         if error == nil {
-            // TODO: Do something here to set the currentWellboreView
-            // to what the user has saved.
-            self.wellboreViews = userWellboreViews
-            if self.wellboreViews.count > 0 {
-                self.currentWellboreView = self.wellboreViews[0]
-                if let wellboreView = self.currentWellboreView {
-                    if wellboreView.panels.count > 1 {
-                        wellboreView.panels[0].shouldShowDemoPlot = true
+            self.layouts = newLayouts
+            if self.layouts.count > 0 {
+                self.currentLayout = self.layouts[0]
+                if let layout = self.currentLayout {
+                    if layout.panels.count > 1 {
+                        layout.panels[0].shouldShowDemoPlot = true
                     }
                 }
-                // self.reloadVisuals()
             }
-            
         } else {
-            if let message = error {
-                wellboreDetailViewController.showAlertWithMessage(message)
-            }
+            // TODO: Show user error
+            println(error)
         }
+        
 
     }
     
@@ -96,8 +93,8 @@ class VisualsViewController: UIViewController, UIPageViewControllerDataSource {
             // refresh the page faster than this call could load it, resulting in multiple threads doing
             // the same operation and messing up the table view.
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
-                self.reloadWellboreViews()
-                var (newCurves, errorMessage) = self.currentWellbore.getCurves(self.user)
+                self.reloadLayouts()
+                var (newCurves, errorMessage) = self.wellbore.getCurves(self.user)
                 
                 self.curves = newCurves 
                 for curve in self.curves {
@@ -123,11 +120,13 @@ class VisualsViewController: UIViewController, UIPageViewControllerDataSource {
             
             super.viewDidLoad()
         } else {
-            self.wellboreViews = WellboreView.getFakeWellboreViews()
+            /*
+            self.layouts = WellboreView.getFakeWellboreViews()
             if self.wellboreViews.count > 0 {
                 self.currentWellboreView = self.wellboreViews[0]
                 // self.reloadVisuals()
             }
+            */
         }
 
         
@@ -168,8 +167,8 @@ class VisualsViewController: UIViewController, UIPageViewControllerDataSource {
     
     func viewControllerAtIndex(index: Int) -> UIViewController? {
         var result: UIViewController?
-        if let wellboreView = self.currentWellboreView {
-            let numberOfPanels = wellboreView.panels.count
+        if let layout = self.currentLayout {
+            let numberOfPanels = layout.panels.count
             
             if numberOfPanels  == 0 || index >= numberOfPanels {
                 // TODO: Return something that says "no panels, add one"
@@ -177,7 +176,7 @@ class VisualsViewController: UIViewController, UIPageViewControllerDataSource {
             } else if let storyboard = self.storyboard {
                 let panelViewController = storyboard.instantiateViewControllerWithIdentifier(VisualViewController.getStoryboardIdentifier()) as! VisualViewController
                 panelViewController.pageIndex = index
-                let panel = wellboreView.panels[index]
+                let panel = layout.panels[index]
                 
                 // Create the panel with each visualization
                 panelViewController.panel = panel
@@ -192,8 +191,8 @@ class VisualsViewController: UIViewController, UIPageViewControllerDataSource {
 extension VisualsViewController: UIPageViewControllerDataSource {
     func presentationCountForPageViewController(pageViewController: UIPageViewController) -> Int {
         var numberOfPanels = 0
-        if let wellboreView = self.currentWellboreView {
-            numberOfPanels = wellboreView.panels.count
+        if let layout = self.currentLayout {
+            numberOfPanels = layout.panels.count
         }
         return numberOfPanels
     }
@@ -220,8 +219,8 @@ extension VisualsViewController: UIPageViewControllerDataSource {
         }
         
         index = index + 1
-        if let wellboreView = self.currentWellboreView {
-            if index == wellboreView.panels.count {
+        if let layout = self.currentLayout {
+            if index == layout.panels.count {
                 return nil
             }
         }

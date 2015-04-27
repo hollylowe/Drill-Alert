@@ -79,7 +79,7 @@ class WellboreDetailViewController: UIViewController {
             let viewControllers = [visualsViewController, alertInboxTableViewController]
             visualsViewController.wellboreDetailViewController = self
             visualsViewController.user = self.currentUser
-            visualsViewController.currentWellbore = self.currentWellbore
+            visualsViewController.wellbore = self.currentWellbore
             alertInboxTableViewController.wellboreDetailViewController = self
             
             self.segmentViewControllers = [visualsViewController, alertInboxTableViewController]
@@ -109,7 +109,7 @@ class WellboreDetailViewController: UIViewController {
     @IBAction func rightBarButtonItemTapped(sender: AnyObject) {
         switch self.selectedSegmentIndex {
         case visualsIndex:
-            manageViewsBarButtonTapped(sender)
+            manageLayoutsBarButtonTapped(sender)
         case alertsIndex:
             manageAlertsBarButtonTapped(sender)
             // addAlertBarButtonTapped(sender)
@@ -135,13 +135,17 @@ class WellboreDetailViewController: UIViewController {
         self.presentViewController(manageAlertsNavigationController, animated: true, completion: nil)
     }
     
-    func manageViewsBarButtonTapped(sender: AnyObject) {
+    func manageLayoutsBarButtonTapped(sender: AnyObject) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let manageViewsNavigationController = storyboard.instantiateViewControllerWithIdentifier(ManageViewsNavigationController.storyboardIdentifier()) as! ManageViewsNavigationController
-        let manageViewsTableViewController = manageViewsNavigationController.viewControllers[0] as! ManageViewsTableViewController
+        let manageLayoutsNavigationController = storyboard.instantiateViewControllerWithIdentifier(
+            ManageLayoutsNavigationController.storyboardIdentifier()) as! ManageLayoutsNavigationController
+        let manageLayoutsTableViewController = manageLayoutsNavigationController.viewControllers[0] as! ManageLayoutsTableViewController
 
-        manageViewsTableViewController.wellboreDetailViewController = self
-        self.presentViewController(manageViewsNavigationController, animated: true, completion: nil)
+        manageLayoutsTableViewController.wellboreDetailViewController = self
+        manageLayoutsTableViewController.user = self.currentUser
+        manageLayoutsTableViewController.wellbore = self.currentWellbore
+        
+        self.presentViewController(manageLayoutsNavigationController, animated: true, completion: nil)
     }
 
     
@@ -180,13 +184,13 @@ class WellboreDetailViewController: UIViewController {
         super.viewWillAppear(animated)
         // Hiding the navigation bar line
         if let navigationController = self.navigationController {
-            navBarHairlineImageView = self.findHairlineImageViewUnder(navigationController.navigationBar)
-            navBarHairlineImageView.hidden = true
+           // navBarHairlineImageView = self.findHairlineImageViewUnder(navigationController.navigationBar)
+           // navBarHairlineImageView.hidden = true
         }
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        navBarHairlineImageView.hidden = false
+        //navBarHairlineImageView.hidden = false
     }
 }

@@ -9,11 +9,11 @@
 import UIKit
 
 class LoginViewController: UIViewController {
-    
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var sdiSignInButton: UIButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var backgroundImageView: UIImageView!
+    
     let loginToHomeSegueIdentifier = "LoginToHomeSegue"
     var currentUser: User?
     
@@ -21,35 +21,33 @@ class LoginViewController: UIViewController {
         return "LoginViewController"
     }
     
-    func userLoggedIn(user: User) {
-        self.currentUser = user
-        activityIndicator.hidden = true
-        activityIndicator.stopAnimating()
-        self.performSegueWithIdentifier(loginToHomeSegueIdentifier, sender: self)
-    }
-    
-    override func viewDidLoad() {
-        setupView()
+    @IBAction func testSignInButtonTapped(sender: AnyObject) {
+        activityIndicator.startAnimating()
+        activityIndicator.hidden = false
+        loginButton.hidden = true
         
-       
-        super.viewDidLoad()
-    }
-    
-    func setupView() {
+        let session = SDISession(username: "capstone2015\\testuser", password: "StartUp!")
+        session.login { (loggedIn) -> Void in
+            if loggedIn {
+                self.currentUser = User.getCurrentUser()
+                
+                self.activityIndicator.hidden = true
+                self.activityIndicator.stopAnimating()
+                self.loginButton.hidden = false
+                self.performSegueWithIdentifier(self.loginToHomeSegueIdentifier, sender: self)
+            }
+        }
 
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        self.loginButton.hidden = false
         
-        // SDI Text fields
-        let borderColor = UIColor(red: 0.780, green: 0.780, blue: 0.804, alpha: 1.0).CGColor
-        
-        
-        activityIndicator.hidden = true
-        activityIndicator.hidesWhenStopped = true
-        
-        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Dark)
-        let blurView = UIVisualEffectView(effect: blurEffect)
-        blurView.frame = self.view.frame
-        backgroundImageView.addSubview(blurView)
-        
+        super.viewDidAppear(animated)
+    }
+    override func viewDidLoad() {
+        self.setupView()
+        super.viewDidLoad()
     }
     
     override func prefersStatusBarHidden() -> Bool {
@@ -64,54 +62,18 @@ class LoginViewController: UIViewController {
         super.viewWillAppear(animated)
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    func setupView() {
+        activityIndicator.hidden = true
+        activityIndicator.hidesWhenStopped = true
+        
+        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Dark)
+        let blurView = UIVisualEffectView(effect: blurEffect)
+        blurView.frame = self.view.frame
+        backgroundImageView.addSubview(blurView)
     }
     
     @IBAction func loginButtonTapped(sender: AnyObject) {
-
-        self.performSegueWithIdentifier("LoginToLoginWebView", sender: self)
-        /*
-        self.dismissKeyboard()
-
-        // Without web view
-        var errorMessage: String?
-        
-        let username = usernameTextField.text
-        let password = passwordTextField.text
-        
-        if username.isEmpty {
-            errorMessage = "Invalid username."
-        } else if password.isEmpty {
-            errorMessage = "Please enter a password."
-        } else {
-            activityIndicator.startAnimating()
-            activityIndicator.hidden = false
-            self.loginButton.enabled = false
-            self.usernameTextField.enabled = false
-            self.passwordTextField.enabled = false
-            
-            var newUserSession = UserSession()
-            newUserSession.loginWithUsername(username, andPassword: password, andDelegate: self)
-        }
-        
-        if errorMessage != nil {
-            let alertController = UIAlertController(
-                title: "Error",
-                message: errorMessage,
-                preferredStyle: .Alert)
-            
-            let defaultAction = UIAlertAction(
-                title: "OK",
-                style: .Default,
-                handler: nil)
-            
-            alertController.addAction(defaultAction)
-            
-            self.presentViewController(alertController, animated: true, completion: nil)
-        }
-        */
+        self.performSegueWithIdentifier("LoginToLoginWebView", sender: nil)
     }
     
     func showInvalidLogInAlert() {
@@ -150,18 +112,35 @@ class LoginViewController: UIViewController {
     }
 
     func loginSuccess() {
-        var user = User(session: UserSession())
+        // User has logged in.
+        //
+        // Create a new SDISession.
+        activityIndicator.startAnimating()
+        activityIndicator.hidden = false
+        loginButton.hidden = true
         
-        if let userSession = user.userSession {
-            let application = UIApplication.sharedApplication()
-            if let appDelegate = application.delegate as? AppDelegate {
-                appDelegate.userSession = userSession
-                println("Registering for notifications...")
-                application.registerForRemoteNotifications()
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
+            if let user = User.getCurrentUser() {
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    let application = UIApplication.sharedApplication()
+                    if let appDelegate = application.delegate as? AppDelegate {
+                        appDelegate.user = user
+                        application.registerForRemoteNotifications()
+                        
+                        self.currentUser = user
+                        
+                        println(user.displayName)
+                        self.activityIndicator.hidden = true
+                        self.activityIndicator.stopAnimating()
+                        self.performSegueWithIdentifier(self.loginToHomeSegueIdentifier, sender: self)
+                    }
+                })
+                
+            } else {
+                println("Unable to get user.")
             }
-        }
+        })
         
-        self.userLoggedIn(user)
     }
 }
 

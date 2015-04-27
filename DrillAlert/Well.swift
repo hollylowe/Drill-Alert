@@ -77,25 +77,24 @@ class Well {
         var errorMessage: String?
         
         let url = "https://drillalert.azurewebsites.net/api/wells"
-        if let session = user.userSession {
-            let wellsJSONArray = session.getJSONArrayAtURL(url)
-            errorMessage = wellsJSONArray.getErrorMessage()
-            
-            if errorMessage == nil {
-                if let wellJSONs = wellsJSONArray.array {
-                    for wellJSONObject in wellJSONs {
-                        if let well = Well.wellFromJSONObject(wellJSONObject) {
-                            result.append(well)
-                        }
+        let session = user.session
+        let wellsJSONArray = session.getJSONArrayAtURL(url)
+        errorMessage = wellsJSONArray.getErrorMessage()
+        
+        if errorMessage == nil {
+            if let wellJSONs = wellsJSONArray.array {
+                for wellJSONObject in wellJSONs {
+                    if let well = Well.wellFromJSONObject(wellJSONObject) {
+                        result.append(well)
                     }
                 }
-            } else {
-                // TODO: delete this, only for when the connection doesn't work
-                if result.count == 0 {
-                    let well = Well(id: 0, name: "Test", location: "Here")
-                    well.wellbores.append(Wellbore(id: 0, name: "Test Wellbore", well: well))
-                    result.append(well)
-                }
+            }
+        } else {
+            // TODO: delete this, only for when the connection doesn't work
+            if result.count == 0 {
+                let well = Well(id: 0, name: "Test", location: "Here")
+                well.wellbores.append(Wellbore(id: 0, name: "Test Wellbore", well: well))
+                result.append(well)
             }
         }
         
@@ -108,11 +107,11 @@ class Well {
     /// this well.
     func getUsers() -> Array<User> {
         var users = Array<User>()
-        
+        /*
         // Using canned data
         users.append(User(firstName: "Lucas", lastName: "David", id: "123", guid: "00000000-0000-0000-0000-000000000000"))
         users.append(User(firstName: "Another", lastName: "User", id: "117", guid: "00000000-0000-0000-0000-000000000000"))
-        
+        */
         return users
     }
 
