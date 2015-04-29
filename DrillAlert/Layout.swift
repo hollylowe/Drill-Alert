@@ -76,7 +76,6 @@ class Layout {
                     if let wellboreID = JSONObject.getIntAtKey("WellboreId") {
                         if let panelsJSONArray = JSONObject.getJSONArrayAtKey("Panels") {
                             let panels = Panel.getPanelsFromJSONArray(panelsJSONArray)
-                            
                             layout = Layout(id: id, name: name, panels: panels, userID: userID, wellboreID: wellboreID)
                         }
                     }

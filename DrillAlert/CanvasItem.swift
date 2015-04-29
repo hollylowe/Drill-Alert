@@ -51,6 +51,6 @@ class CanvasItem: Visualization {
         self.type = type
         self.dataSource = dataSource
         
-        super.init(xPosition: xPosition, yPosition: yPosition, jsFileName: type.getTitle() + ".js", curveID: 0)
+        super.init(xPosition: xPosition, yPosition: yPosition, jsFileName: type.getTitle() + ".js")
     }
 }

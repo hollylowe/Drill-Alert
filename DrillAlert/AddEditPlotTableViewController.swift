@@ -88,7 +88,7 @@ class AddEditPlotTableViewController: UITableViewController {
                                     xDimension: 0,
                                     yDimension: 0,
                                     visualizations: visualizations)
-                                newPanel.type = PanelType.Plot
+                                newPanel.type = .Plot
                                 self.delegate.addPanel(newPanel)
                                 self.dismissViewControllerAnimated(true, completion: nil)
                             }
@@ -104,7 +104,6 @@ class AddEditPlotTableViewController: UITableViewController {
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        println("Prepareing for segue")
         if segue.identifier == SelectIVTTableViewController.entrySegueIdentifier() {
             let viewController = segue.destinationViewController as! SelectIVTTableViewController
             viewController.delegate = self

@@ -11,6 +11,8 @@
 		A018E4061A2B010A001EF20E /* Parameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A018E4051A2B010A001EF20E /* Parameter.swift */; };
 		A018E40A1A2B0733001EF20E /* ManageAlertsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A018E4091A2B0733001EF20E /* ManageAlertsTableViewController.swift */; };
 		A018E40C1A2BB4E8001EF20E /* AddEditAlertTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A018E40B1A2BB4E8001EF20E /* AddEditAlertTableViewController.swift */; };
+		A01E74F71AF059F10083ED93 /* LayoutPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A01E74F61AF059F10083ED93 /* LayoutPageViewController.swift */; };
+		A01E74F81AF05AB10083ED93 /* LayoutPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A01E74F61AF059F10083ED93 /* LayoutPageViewController.swift */; };
 		A01F2AE11AE6D6B1000A7957 /* Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A01F2AE01AE6D6B1000A7957 /* Layout.swift */; };
 		A01F2AE21AE6DA6F000A7957 /* Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A01F2AE01AE6D6B1000A7957 /* Layout.swift */; };
 		A01F2AE41AE720E2000A7957 /* ChangeLayoutTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A01F2AE31AE720E2000A7957 /* ChangeLayoutTableViewController.swift */; };
@@ -38,7 +40,7 @@
 		A0343D331A2AB66100FA0464 /* WellboreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0343D321A2AB66100FA0464 /* WellboreTableViewCell.swift */; };
 		A0343D391A2AC85400FA0464 /* WellboreDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0343D381A2AC85400FA0464 /* WellboreDetailViewController.swift */; };
 		A0343D411A2AFE9C00FA0464 /* ParameterAlertTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0343D401A2AFE9C00FA0464 /* ParameterAlertTableViewCell.swift */; };
-		A042B2DD1A195ED600660AB7 /* VisualViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A042B2DC1A195ED600660AB7 /* VisualViewController.swift */; };
+		A042B2DD1A195ED600660AB7 /* PanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A042B2DC1A195ED600660AB7 /* PanelViewController.swift */; };
 		A042B2DF1A19645F00660AB7 /* old-index.html in Resources */ = {isa = PBXBuildFile; fileRef = A042B2DE1A19645F00660AB7 /* old-index.html */; };
 		A042B2E11A19669E00660AB7 /* d3.min.js in Resources */ = {isa = PBXBuildFile; fileRef = A042B2E01A19669E00660AB7 /* d3.min.js */; };
 		A04AB1F31A81C9AD003704CC /* d3.js in Resources */ = {isa = PBXBuildFile; fileRef = A04AB1F21A81C9AD003704CC /* d3.js */; };
@@ -94,8 +96,8 @@
 		A08025E01AAA384300C8BE99 /* AddEditAlertTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A018E40B1A2BB4E8001EF20E /* AddEditAlertTableViewController.swift */; };
 		A08025E21AAA384300C8BE99 /* SelectAlertTypeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0DB7DBE1A2FB96E00C8C9A2 /* SelectAlertTypeTableViewController.swift */; };
 		A08025E31AAA384300C8BE99 /* AlertInboxTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02D86421A6D953A00D22A38 /* AlertInboxTableViewController.swift */; };
-		A08025E41AAA384C00C8BE99 /* VisualsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CE032B1A0ED67C0076EE3E /* VisualsViewController.swift */; };
-		A08025E51AAA384C00C8BE99 /* VisualViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A042B2DC1A195ED600660AB7 /* VisualViewController.swift */; };
+		A08025E41AAA384C00C8BE99 /* LayoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CE032B1A0ED67C0076EE3E /* LayoutViewController.swift */; };
+		A08025E51AAA384C00C8BE99 /* PanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A042B2DC1A195ED600660AB7 /* PanelViewController.swift */; };
 		A08025E61AAA384C00C8BE99 /* ManageLayoutsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4007641A78BDF4008E9C1F /* ManageLayoutsTableViewController.swift */; };
 		A08025ED1AAA386100C8BE99 /* AddTrackTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF08A77B1A9DD02600A33AFE /* AddTrackTableViewController.swift */; };
 		A08025EE1AAA386100C8BE99 /* SelectUnitsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF08A7791A9DCFCD00A33AFE /* SelectUnitsTableViewController.swift */; };
@@ -198,7 +200,7 @@
 		A0CCC5E51A81C69600F92B36 /* old-graph.html in Resources */ = {isa = PBXBuildFile; fileRef = A0CCC5E31A81C69600F92B36 /* old-graph.html */; };
 		A0CCC5E61A81C69600F92B36 /* old-graph.js in Resources */ = {isa = PBXBuildFile; fileRef = A0CCC5E41A81C69600F92B36 /* old-graph.js */; };
 		A0CE03281A0ECEFB0076EE3E /* Wellbore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CE03271A0ECEFB0076EE3E /* Wellbore.swift */; };
-		A0CE032C1A0ED67C0076EE3E /* VisualsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CE032B1A0ED67C0076EE3E /* VisualsViewController.swift */; };
+		A0CE032C1A0ED67C0076EE3E /* LayoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CE032B1A0ED67C0076EE3E /* LayoutViewController.swift */; };
 		A0CEDBA21A0C3ADF0051BDB8 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CEDBA11A0C3ADF0051BDB8 /* User.swift */; };
 		A0D7007D1ADB4C56008A1B97 /* WellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D7007C1ADB4C56008A1B97 /* WellTests.swift */; };
 		A0D7007F1ADB63FC008A1B97 /* WellboreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D7007E1ADB63FC008A1B97 /* WellboreTests.swift */; };
@@ -236,6 +238,7 @@
 		A018E4051A2B010A001EF20E /* Parameter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parameter.swift; sourceTree = "<group>"; };
 		A018E4091A2B0733001EF20E /* ManageAlertsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageAlertsTableViewController.swift; sourceTree = "<group>"; };
 		A018E40B1A2BB4E8001EF20E /* AddEditAlertTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEditAlertTableViewController.swift; sourceTree = "<group>"; };
+		A01E74F61AF059F10083ED93 /* LayoutPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutPageViewController.swift; sourceTree = "<group>"; };
 		A01F2AE01AE6D6B1000A7957 /* Layout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Layout.swift; sourceTree = "<group>"; };
 		A01F2AE31AE720E2000A7957 /* ChangeLayoutTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeLayoutTableViewController.swift; sourceTree = "<group>"; };
 		A01F2AE61AE72A3D000A7957 /* LayoutNameInputTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutNameInputTableViewCell.swift; sourceTree = "<group>"; };
@@ -254,7 +257,7 @@
 		A0343D321A2AB66100FA0464 /* WellboreTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WellboreTableViewCell.swift; sourceTree = "<group>"; };
 		A0343D381A2AC85400FA0464 /* WellboreDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WellboreDetailViewController.swift; sourceTree = "<group>"; };
 		A0343D401A2AFE9C00FA0464 /* ParameterAlertTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParameterAlertTableViewCell.swift; sourceTree = "<group>"; };
-		A042B2DC1A195ED600660AB7 /* VisualViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualViewController.swift; sourceTree = "<group>"; };
+		A042B2DC1A195ED600660AB7 /* PanelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PanelViewController.swift; sourceTree = "<group>"; };
 		A042B2DE1A19645F00660AB7 /* old-index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "old-index.html"; sourceTree = "<group>"; };
 		A042B2E01A19669E00660AB7 /* d3.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = d3.min.js; sourceTree = "<group>"; };
 		A04AB1F21A81C9AD003704CC /* d3.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = d3.js; sourceTree = "<group>"; };
@@ -339,7 +342,7 @@
 		A0CCC5E31A81C69600F92B36 /* old-graph.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "old-graph.html"; sourceTree = "<group>"; };
 		A0CCC5E41A81C69600F92B36 /* old-graph.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "old-graph.js"; sourceTree = "<group>"; };
 		A0CE03271A0ECEFB0076EE3E /* Wellbore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Wellbore.swift; sourceTree = "<group>"; };
-		A0CE032B1A0ED67C0076EE3E /* VisualsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualsViewController.swift; sourceTree = "<group>"; };
+		A0CE032B1A0ED67C0076EE3E /* LayoutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutViewController.swift; sourceTree = "<group>"; };
 		A0CEDBA11A0C3ADF0051BDB8 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		A0D7007C1ADB4C56008A1B97 /* WellTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WellTests.swift; sourceTree = "<group>"; };
 		A0D7007E1ADB63FC008A1B97 /* WellboreTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WellboreTests.swift; sourceTree = "<group>"; };
@@ -408,9 +411,9 @@
 			isa = PBXGroup;
 			children = (
 				CF4007641A78BDF4008E9C1F /* ManageLayoutsTableViewController.swift */,
+				A01F2AE31AE720E2000A7957 /* ChangeLayoutTableViewController.swift */,
 				A0C949311AEB40BF00B7143B /* Edit Layouts */,
 				A01F2AF91AE84689000A7957 /* Add Layout */,
-				A01F2AE31AE720E2000A7957 /* ChangeLayoutTableViewController.swift */,
 			);
 			name = Manage;
 			sourceTree = "<group>";
@@ -824,9 +827,10 @@
 		CF8E9A951A91B0BC008F8AF8 /* Layouts */ = {
 			isa = PBXGroup;
 			children = (
+				A0CE032B1A0ED67C0076EE3E /* LayoutViewController.swift */,
+				A042B2DC1A195ED600660AB7 /* PanelViewController.swift */,
+				A01E74F61AF059F10083ED93 /* LayoutPageViewController.swift */,
 				A01F2AF71AE8465D000A7957 /* Manage */,
-				A0CE032B1A0ED67C0076EE3E /* VisualsViewController.swift */,
-				A042B2DC1A195ED600660AB7 /* VisualViewController.swift */,
 				A0CE03291A0ED5F60076EE3E /* Visuals */,
 			);
 			name = Layouts;
@@ -997,7 +1001,7 @@
 				A09CFE7F1AA7F8080094A582 /* LoginWebViewController.swift in Sources */,
 				A0699A9E1A809102004F9C97 /* SegmentControlToolbar.swift in Sources */,
 				A0C9494E1AEEA6E100B7143B /* CompassSensorTypeCell.swift in Sources */,
-				A0CE032C1A0ED67C0076EE3E /* VisualsViewController.swift in Sources */,
+				A0CE032C1A0ED67C0076EE3E /* LayoutViewController.swift in Sources */,
 				CF4007681A78C789008E9C1F /* ManageVisualsTableViewCell.swift in Sources */,
 				A01F2AE71AE72A3D000A7957 /* LayoutNameInputTableViewCell.swift in Sources */,
 				A05A35D21A0837ED008EA386 /* Well.swift in Sources */,
@@ -1013,11 +1017,12 @@
 				A018E4061A2B010A001EF20E /* Parameter.swift in Sources */,
 				A0CEDBA21A0C3ADF0051BDB8 /* User.swift in Sources */,
 				A095FB8C1A2FC37200B15D39 /* AlertValueCell.swift in Sources */,
-				A042B2DD1A195ED600660AB7 /* VisualViewController.swift in Sources */,
+				A042B2DD1A195ED600660AB7 /* PanelViewController.swift in Sources */,
 				CF08A77C1A9DD02600A33AFE /* AddTrackTableViewController.swift in Sources */,
 				A0C949421AEC2D0600B7143B /* Panel.swift in Sources */,
 				A018E40C1A2BB4E8001EF20E /* AddEditAlertTableViewController.swift in Sources */,
 				A0699A9C1A80231A004F9C97 /* Curve.swift in Sources */,
+				A01E74F71AF059F10083ED93 /* LayoutPageViewController.swift in Sources */,
 				A0CA28461ADB47C600192F38 /* HTMLNode.swift in Sources */,
 				A0C949531AEEA7B700B7143B /* AddEditCompassTableViewController.swift in Sources */,
 				A095D57F1A78A3FA000889CB /* JSON.swift in Sources */,
@@ -1062,7 +1067,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A0C949481AEC311200B7143B /* Compass.swift in Sources */,
-				A08025E51AAA384C00C8BE99 /* VisualViewController.swift in Sources */,
+				A08025E51AAA384C00C8BE99 /* PanelViewController.swift in Sources */,
 				A0C949371AEB42C600B7143B /* EditLayoutsTableViewController.swift in Sources */,
 				A0D700811ADB846C008A1B97 /* CurveTests.swift in Sources */,
 				A08025EE1AAA386100C8BE99 /* SelectUnitsTableViewController.swift in Sources */,
@@ -1091,6 +1096,7 @@
 				A01F2AF11AE73933000A7957 /* AddNewPanelTableViewCell.swift in Sources */,
 				A08025E61AAA384C00C8BE99 /* ManageLayoutsTableViewController.swift in Sources */,
 				A0C9491E1AEA0A7000B7143B /* CanvasItemTableViewCell.swift in Sources */,
+				A01E74F81AF05AB10083ED93 /* LayoutPageViewController.swift in Sources */,
 				A0C9490E1AE9F04800B7143B /* PlotTrackTableViewCell.swift in Sources */,
 				A08025CC1AAA382200C8BE99 /* AlertPriorityStandard.swift in Sources */,
 				A0CA28491ADB486500192F38 /* HTMLNode.swift in Sources */,
@@ -1112,7 +1118,7 @@
 				A08025E21AAA384300C8BE99 /* SelectAlertTypeTableViewController.swift in Sources */,
 				A01F2AEF1AE73892000A7957 /* LayoutNameInputTableViewCell.swift in Sources */,
 				A06FFD7D1A06AA08001B3FF8 /* DrillAlertTests.swift in Sources */,
-				A08025E41AAA384C00C8BE99 /* VisualsViewController.swift in Sources */,
+				A08025E41AAA384C00C8BE99 /* LayoutViewController.swift in Sources */,
 				A08025FA1AAA387B00C8BE99 /* WellUsersTableViewController.swift in Sources */,
 				A080260D1AAA3B6B00C8BE99 /* DrillAlert.xcdatamodeld in Sources */,
 				A0C949011AE97A4300B7143B /* PlotUnitsCell.swift in Sources */,

@@ -105,10 +105,11 @@ class JavaScriptGauge: JavaScriptVisualization {
     
 }
 
-class VisualViewController: UIViewController, UIWebViewDelegate {
+class PanelViewController: UIViewController, UIWebViewDelegate {
     @IBOutlet weak var panelInformationLabel: UILabel!
     @IBOutlet weak var webView: UIWebView!
     @IBOutlet weak var panelLastUpdatedLabel: UILabel!
+    @IBOutlet weak var panelHeaderView: UIView!
     
     var panel: Panel!
     var timer: NSTimer?
@@ -118,10 +119,15 @@ class VisualViewController: UIViewController, UIWebViewDelegate {
     let htmlFileName = "index"
 
     class func getStoryboardIdentifier() -> String {
-        return "VisualViewController"
+        return "PanelViewController"
     }
     
     override func viewDidLoad() {
+        var bottomBorder = CALayer()
+        bottomBorder.frame = CGRectMake(0, self.panelHeaderView.frame.size.height, self.panelHeaderView.frame.size.width, 1.0)
+        bottomBorder.backgroundColor = UIColor(white: 0.8, alpha: 1.0).CGColor
+        self.panelHeaderView.layer.addSublayer(bottomBorder)
+        
         self.panelInformationLabel.text = self.panel.name
         self.panelLastUpdatedLabel.text = "Loading..."
         
@@ -169,7 +175,10 @@ class VisualViewController: UIViewController, UIWebViewDelegate {
             
         }
         
-        self.panelLastUpdatedLabel.text = "Updated \(NSDate())"
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd 'at' h:mm a" 
+        let stringDate = dateFormatter.stringFromDate(NSDate())
+        self.panelLastUpdatedLabel.text = "Updated \(stringDate)"
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -182,10 +191,10 @@ class VisualViewController: UIViewController, UIWebViewDelegate {
     }
 }
 
-extension VisualViewController: UIWebViewDelegate {
+extension PanelViewController: UIWebViewDelegate {
     func webViewDidFinishLoad(webView: UIWebView) {
-        let plotJSFileName = "Test.js"
-        let gaugeJSFileName = "Test2.js"
+        let plotJSFileName = "Plot.js"
+        let gaugeJSFileName = "Gauge.js"
         let defaultWidth = 400
         let defaultHeight = 300
         
@@ -194,6 +203,7 @@ extension VisualViewController: UIWebViewDelegate {
         
         for visualization in self.panel.visualizations {
             // TODO: Remove, only for the demo
+            println(visualization.jsFileName)
             if self.panel.shouldShowDemoPlot {
                 if let id = visualization.id {
                     newJavaScriptVisualizations.append(JavaScriptPlot(
@@ -223,7 +233,17 @@ extension VisualViewController: UIWebViewDelegate {
                         let newGauge = JavaScriptGauge(id: id)
                         newJavaScriptVisualizations.append(newGauge)
                     }
-                default: break
+                default:
+                    if let id = visualization.id {
+                        
+                        newJavaScriptVisualizations.append(JavaScriptPlot(
+                            id: id,
+                            yMax: 10,
+                            xMax: 10,
+                            initialData: Array<Int>(),
+                            width: defaultWidth,
+                            height: defaultHeight))
+                    }
                 }
             }
             

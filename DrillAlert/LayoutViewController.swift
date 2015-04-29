@@ -9,21 +9,20 @@
 import Foundation
 import UIKit
 
-class VisualsViewController: UIViewController, UIPageViewControllerDataSource {
+class LayoutViewController: UIViewController, UIPageViewControllerDataSource {
     // Implicit, set by the previous view controller
     var wellboreDetailViewController: WellboreDetailViewController!
     var user: User!
     
     // Implicit, set in viewDidLoad
-    var pageViewController: UIPageViewController!
+    var layoutPageViewController: LayoutPageViewController!
     
-    // These are all of a user's Layouts
-    var layouts = Array<Layout>()
     
     // This will be the user's currently selected Layout.
     // If they haven't selected one (or the backend doesn't support
     // saving it yet), then this will just be set to the first 
-    // view that is in the wellboreViews array.
+    // view that is in the layouts array.
+    var layouts = Array<Layout>()
     var currentLayout: Layout?
     var wellbore: Wellbore!
     var curves = Array<Curve>()
@@ -35,6 +34,34 @@ class VisualsViewController: UIViewController, UIPageViewControllerDataSource {
     var loadingData = true
     var loadError = false
     
+    override func viewDidLoad() {
+        self.loadData()
+        self.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.wellboreDetailViewController.topBarHeight)
+        if let storyboard = self.storyboard {
+            self.layoutPageViewController = storyboard.instantiateViewControllerWithIdentifier(
+                LayoutPageViewController.storyboardIdentifier()) as! LayoutPageViewController
+            self.layoutPageViewController.dataSource = self
+            
+            self.layoutPageViewController.view.frame = CGRectMake(
+                0,
+                0,
+                self.view.frame.size.width,
+                self.view.frame.size.height)
+            
+            self.addChildViewController(self.layoutPageViewController)
+            self.view.addSubview(self.layoutPageViewController.view)
+            self.layoutPageViewController.didMoveToParentViewController(self)
+        }
+        /*
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .Add,
+            target: self,
+            action: "rightBarButtonItemTapped:")
+        */
+        
+        super.viewDidLoad()
+    }
+    
     func reloadLayouts() {
         let (newLayouts, error) = Layout.getLayoutsForUser(self.user, andWellbore: self.wellbore)
         
@@ -42,18 +69,44 @@ class VisualsViewController: UIViewController, UIPageViewControllerDataSource {
             self.layouts = newLayouts
             if self.layouts.count > 0 {
                 self.currentLayout = self.layouts[0]
-                if let layout = self.currentLayout {
-                    if layout.panels.count > 1 {
-                        layout.panels[0].shouldShowDemoPlot = true
-                    }
-                }
             }
         } else {
             // TODO: Show user error
             println(error)
         }
+    }
+    
+    func updateCurrentLayout(newCurrentLayout: Layout) {
+        self.currentLayout = newCurrentLayout
+        if let storyboard = self.storyboard {
+            // Remove the current page view controller
+            self.layoutPageViewController.removeFromParentViewController()
+            self.layoutPageViewController.view.removeFromSuperview()
+            self.layoutPageViewController = nil
+            
+            // Create a new one with the new layout
+            self.layoutPageViewController = storyboard.instantiateViewControllerWithIdentifier(LayoutPageViewController.storyboardIdentifier()) as! LayoutPageViewController
+            self.layoutPageViewController.dataSource = self
+            
+            self.layoutPageViewController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)
+            self.addChildViewController(self.layoutPageViewController)
+            self.view.addSubview(self.layoutPageViewController.view)
+            self.layoutPageViewController.didMoveToParentViewController(self)
+            
+            if let startViewController = self.viewControllerAtIndex(0) {
+                let viewControllers = [startViewController]
+                self.layoutPageViewController.setViewControllers(
+                    viewControllers,
+                    direction: .Forward,
+                    animated: true,
+                    completion: nil)
+            }
+        }
         
-
+    }
+    
+    class func storyboardIdentifier() -> String {
+        return "LayoutViewController"
     }
     
     func addLoadingIndicator() {
@@ -78,7 +131,6 @@ class VisualsViewController: UIViewController, UIPageViewControllerDataSource {
     }
     
     func loadData() {
-        
         loadError = false
         loadingData = false
         
@@ -94,6 +146,7 @@ class VisualsViewController: UIViewController, UIPageViewControllerDataSource {
             // the same operation and messing up the table view.
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
                 self.reloadLayouts()
+                
                 var (newCurves, errorMessage) = self.wellbore.getCurves(self.user)
                 
                 self.curves = newCurves 
@@ -107,7 +160,7 @@ class VisualsViewController: UIViewController, UIPageViewControllerDataSource {
                     
                     if let startViewController = self.viewControllerAtIndex(0) {
                         let viewControllers = [startViewController]
-                        self.pageViewController.setViewControllers(
+                        self.layoutPageViewController.setViewControllers(
                             viewControllers,
                             direction: .Forward,
                             animated: false,
@@ -117,8 +170,6 @@ class VisualsViewController: UIViewController, UIPageViewControllerDataSource {
                 })
             })
             
-            
-            super.viewDidLoad()
         } else {
             /*
             self.layouts = WellboreView.getFakeWellboreViews()
@@ -133,26 +184,7 @@ class VisualsViewController: UIViewController, UIPageViewControllerDataSource {
     }
     
     
-    override func viewDidLoad() {
-        
-        self.loadData()
-        
-        self.view.frame = CGRectMake(0, 0, self.view.frame.size.width, wellboreDetailViewController.topBarHeight)
-        if let storyboard = self.storyboard {
-            self.pageViewController = storyboard.instantiateViewControllerWithIdentifier("PageViewController") as! UIPageViewController
-            self.pageViewController.dataSource = self
-            
-            self.pageViewController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)
-            self.addChildViewController(self.pageViewController)
-            self.view.addSubview(self.pageViewController.view)
-            self.pageViewController.didMoveToParentViewController(self)
-        }
-        
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .Add,
-            target: self,
-            action: "rightBarButtonItemTapped:")
-    }
+    
     
     
     func rightBarButtonItemTapped(sender: UIBarButtonItem) {
@@ -170,11 +202,11 @@ class VisualsViewController: UIViewController, UIPageViewControllerDataSource {
         if let layout = self.currentLayout {
             let numberOfPanels = layout.panels.count
             
-            if numberOfPanels  == 0 || index >= numberOfPanels {
+            if numberOfPanels == 0 || index >= numberOfPanels {
                 // TODO: Return something that says "no panels, add one"
                 return nil
             } else if let storyboard = self.storyboard {
-                let panelViewController = storyboard.instantiateViewControllerWithIdentifier(VisualViewController.getStoryboardIdentifier()) as! VisualViewController
+                let panelViewController = storyboard.instantiateViewControllerWithIdentifier(PanelViewController.getStoryboardIdentifier()) as! PanelViewController
                 panelViewController.pageIndex = index
                 let panel = layout.panels[index]
                 
@@ -188,7 +220,7 @@ class VisualsViewController: UIViewController, UIPageViewControllerDataSource {
     }
 }
 
-extension VisualsViewController: UIPageViewControllerDataSource {
+extension LayoutViewController: UIPageViewControllerDataSource {
     func presentationCountForPageViewController(pageViewController: UIPageViewController) -> Int {
         var numberOfPanels = 0
         if let layout = self.currentLayout {
@@ -200,9 +232,11 @@ extension VisualsViewController: UIPageViewControllerDataSource {
     func presentationIndexForPageViewController(pageViewController: UIPageViewController) -> Int {
         return 0
     }
+    
     func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
-        var index = (viewController as! VisualViewController).pageIndex
-        
+        var index = (viewController as! PanelViewController).pageIndex
+        println(" before View controller at index: \(index)")
+
         if index == 0 || index == NSNotFound {
             return nil
         }
@@ -212,8 +246,9 @@ extension VisualsViewController: UIPageViewControllerDataSource {
     }
     
     func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController? {
-        var index = (viewController as! VisualViewController).pageIndex
-        
+        var index = (viewController as! PanelViewController).pageIndex
+        println("after View controller at index: \(index)")
+
         if index == NSNotFound {
             return nil
         }

@@ -52,7 +52,7 @@ class LayoutTests: XCTestCase {
         println("Testing Get Layout JSON String")
         var panels = Array<Panel>()
         var visualizations = Array<Visualization>()
-        let visualization = Visualization(id: 0, xPosition: 0, yPosition: 0, jsFileName: "Test.js", curveID: 0)
+        let visualization = Visualization(id: 0, xPosition: 0, yPosition: 0, jsFileName: "Test.js")
         let panel = Panel(id: 0, name: "Panel Test", position: 0, xDimension: 0, yDimension: 0, visualizations: visualizations, type: "None")
         visualizations.append(visualization)
         panels.append(panel)

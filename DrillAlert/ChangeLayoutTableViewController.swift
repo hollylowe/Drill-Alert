@@ -41,7 +41,9 @@ class ChangeLayoutTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
+        let layout = self.layouts[indexPath.row]
+        self.manageLayoutsTableViewController.wellboreDetailViewController.layoutViewController.updateCurrentLayout(layout)
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     class func entrySegueIdentifier() -> String! {

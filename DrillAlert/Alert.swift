@@ -30,7 +30,8 @@ class Alert {
     let APIWellboreIDKey = "WellBoreId"
     let APISeverityKey = "Priority"
     let APIThresholdKey = "Threshold"
-    
+    let validSaveStatusCode = 200
+
     init(curveID: Int, userID: Int, name: String, rising: Bool, wellboreID: Int, severity: Severity, threshold: Double) {
         self.userID = userID
         self.curveID = curveID
@@ -58,34 +59,12 @@ class Alert {
         self.threshold = threshold
     }
     
-    func save(user: User) {
+    func save(user: User, completion: ((error: NSError?) -> Void)) {
         let URLString = "https://drillalert.azurewebsites.net/api/Alerts/PostAlert"
         if let URL = NSURL(string: URLString) {
             var newRequest = NSMutableURLRequest(URL: URL)
             newRequest.HTTPMethod = "POST"
-
-            /*
-            let params = [
-                self.APIAlertIDKey : self.id,
-                self.APINameKey : self.name,
-                self.APIUserIDKey : self.userID,
-                self.APIRisingKey : self.rising,
-                self.APIThresholdKey : self.threshold,
-                self.APICurveIDKey : self.curveID,
-                
-                self.APISeverityKey : self.severity.rawValue,
-                self.APIWellboreIDKey : self.wellboreID
-            ] as Dictionary<String, AnyObject>
             
-            var error: NSError?
-            
-            newRequest.HTTPBody = NSJSONSerialization.dataWithJSONObject(params, options: NSJSONWritingOptions.allZeros, error: &error)
-            
-            if error != nil {
-                println(error)
-                
-            }
-            */
             var jsonString = ""
             
             if let id = self.id {
@@ -111,26 +90,35 @@ class Alert {
                 "}"
             }
             
-            println(jsonString)
-            /*
+            
             newRequest.HTTPBody = jsonString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)
             newRequest.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
-            if let userSession = user.userSession {
-                if let session = userSession.session {
-                    let task = session.dataTaskWithRequest(newRequest, completionHandler: { (data, response, error) -> Void in
-                        println("save Task: ")
-                        if let content = NSString(data: data, encoding: NSASCIIStringEncoding) {
-                            println("Data get: ")
-                            println(content)
-                            println("Response get:")
-                            println(response)
+            if let session = user.session.session {
+                let task = session.dataTaskWithRequest(newRequest, completionHandler: { (data, response, error) -> Void in
+                    if let HTTPResponse = response as? NSHTTPURLResponse {
+                        let statusCode = HTTPResponse.statusCode
+                        if statusCode != self.validSaveStatusCode {
+                            // Show error
+                            println("Unable to save Alert (\(statusCode)")
+                            println("JSON Sent: ")
+                            println()
+                            println(jsonString)
+                            println()
+                            println("Data: ")
+                            println()
+                            println(NSString(data: data, encoding: NSASCIIStringEncoding))
+                            
+                            let newError = NSError(domain: "com.lucashd.drillalert", code: statusCode, userInfo: nil)
+                            completion(error: newError)
+                            
+                        } else {
+                            completion(error: nil)
                         }
-                    })
-                    
-                    task.resume()
-                }
+                    }
+                })
+                task.resume()
             }
-            */
+            
         }
         
     }
@@ -193,7 +181,38 @@ class Alert {
             if let alertJSONs = alertsJSONArray.array {
                 for alertJSONObject in alertJSONs {
                     if let alert = Alert.alertFromJSONObject(alertJSONObject, user: user) {
+                        // TODO: 
                         result.append(alert)
+                    }
+                }
+            }
+        } else {
+            // TODO:  Show error message to user
+            
+        }
+        
+        
+        return (result, errorMessage)
+    }
+    
+    class func getAlertsForUser(user: User, andWellbore wellbore: Wellbore) -> (Array<Alert>, String?) {
+        var result = Array<Alert>()
+        var errorMessage: String?
+        
+        let url = "https://drillalert.azurewebsites.net/api/alerts"
+        let session = user.session
+        let alertsJSONArray = session.getJSONArrayAtURL(url)
+        errorMessage = alertsJSONArray.getErrorMessage()
+        
+        if errorMessage == nil {
+            if let alertJSONs = alertsJSONArray.array {
+                for alertJSONObject in alertJSONs {
+                    if let alert = Alert.alertFromJSONObject(alertJSONObject, user: user) {
+                        // TODO: Get an actual endpoint for this,
+                        // instead of retrieving all alerts and filtering
+                        if alert.wellboreID == wellbore.id {
+                            result.append(alert)
+                        }
                     }
                 }
             }

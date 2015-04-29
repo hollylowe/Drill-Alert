@@ -25,7 +25,8 @@ class WellboreDetailViewController: UIViewController {
     var segmentViewControllers: [UIViewController]!
     var segmentNavigationController: UINavigationController!
     var containerView: UIView!
-
+    var layoutViewController: LayoutViewController!
+    
     var selectedSegmentIndex = 0
     let visualsIndex = 0
     let alertsIndex = 1
@@ -68,7 +69,7 @@ class WellboreDetailViewController: UIViewController {
             // Set up the Visuals view controller,
             // which is inside a container on this view controller
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let visualsViewController = storyboard.instantiateViewControllerWithIdentifier("VisualsViewController") as! VisualsViewController
+            self.layoutViewController = storyboard.instantiateViewControllerWithIdentifier(LayoutViewController.storyboardIdentifier()) as! LayoutViewController
             
             // Set up the Alert Inbox view controller,
             // which is inside a container on this view controller
@@ -76,13 +77,13 @@ class WellboreDetailViewController: UIViewController {
             let alertInboxTableViewController = storyboard.instantiateViewControllerWithIdentifier(AlertInboxTableViewController.storyboardIdentifier()) as! AlertInboxTableViewController
             
             
-            let viewControllers = [visualsViewController, alertInboxTableViewController]
-            visualsViewController.wellboreDetailViewController = self
-            visualsViewController.user = self.currentUser
-            visualsViewController.wellbore = self.currentWellbore
+            //let viewControllers = [layoutViewController, alertInboxTableViewController]
+            self.layoutViewController.wellboreDetailViewController = self
+            self.layoutViewController.user = self.currentUser
+            self.layoutViewController.wellbore = self.currentWellbore
             alertInboxTableViewController.wellboreDetailViewController = self
             
-            self.segmentViewControllers = [visualsViewController, alertInboxTableViewController]
+            self.segmentViewControllers = [layoutViewController, alertInboxTableViewController]
             self.segmentNavigationController = segmentedControlNavigationController
             self.segmentedControlAction(toolbar.segmentedControl)
             
@@ -132,6 +133,7 @@ class WellboreDetailViewController: UIViewController {
 
         manageAlertsTableViewController.wellboreDetailViewController = self
         manageAlertsTableViewController.currentUser = self.currentUser
+        manageAlertsTableViewController.wellbore = self.currentWellbore
         self.presentViewController(manageAlertsNavigationController, animated: true, completion: nil)
     }
     
@@ -142,6 +144,7 @@ class WellboreDetailViewController: UIViewController {
         let manageLayoutsTableViewController = manageLayoutsNavigationController.viewControllers[0] as! ManageLayoutsTableViewController
 
         manageLayoutsTableViewController.wellboreDetailViewController = self
+        manageLayoutsTableViewController.currentLayout = self.layoutViewController.currentLayout
         manageLayoutsTableViewController.user = self.currentUser
         manageLayoutsTableViewController.wellbore = self.currentWellbore
         

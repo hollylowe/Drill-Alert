@@ -11,10 +11,10 @@ import UIKit
 
 class LayoutTableViewCell: UITableViewCell {
     
-    @IBOutlet weak var layoutTitleLabel: UILabel!
-    
     func setupWithLayout(layout: Layout) {
-        self.layoutTitleLabel.text = "\(layout.name)"
+        if let label = self.textLabel {
+            label.text = "\(layout.name)"
+        }
     }
     
     class func cellIdentifier() -> String! {

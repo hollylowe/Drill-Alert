@@ -20,6 +20,7 @@ class ManageAlertsTableViewController: UITableViewController {
     var wellboreDetailViewController: WellboreDetailViewController!
     var alerts = Array<Alert>()
     var currentUser: User!
+    var wellbore: Wellbore! 
     
     var shouldLoadFromNetwork = true
     var loadingIndicator: UIActivityIndicatorView?
@@ -56,7 +57,7 @@ class ManageAlertsTableViewController: UITableViewController {
     }
     
     func reloadAlerts() {
-        var (resultAlerts, resultError) = Alert.getAllAlertsForUser(currentUser)
+        var (resultAlerts, resultError) = Alert.getAlertsForUser(self.currentUser, andWellbore: self.wellboreDetailViewController.currentWellbore)
         
         self.alerts = resultAlerts
     }
@@ -84,17 +85,8 @@ class ManageAlertsTableViewController: UITableViewController {
             })
             
         } else {
-            /*
-            let well = Well(id: 0, name: "Test Well", location: "No Location")
-            well.wellbores.append(Wellbore(id: 0, name: "Test Bore", well: Well(id: 0, name: "Test Well", location: "Here")))
-            
-            self.wells.append(well)
-            */
             self.tableView.reloadData()
         }
-
-        
-        
     }
     
     func updateView() {
@@ -113,6 +105,8 @@ class ManageAlertsTableViewController: UITableViewController {
         let addEditAlertViewController = addEditAlertNavigationController.viewControllers[0] as! AddEditAlertTableViewController
         addEditAlertViewController.delegate = self
         addEditAlertViewController.currentUser = self.currentUser
+        addEditAlertViewController.wellbore = self.wellbore
+
         self.presentViewController(addEditAlertNavigationController, animated: true, completion: nil)
         
     }
@@ -133,6 +127,7 @@ class ManageAlertsTableViewController: UITableViewController {
                 addEditAlertTableViewController.alertToEdit = alert
                 addEditAlertTableViewController.delegate = self
                 addEditAlertTableViewController.currentUser = self.currentUser
+                addEditAlertTableViewController.wellbore = self.wellbore
             }
             
         }

@@ -52,9 +52,8 @@ class AlertInboxTableViewController: UITableViewController {
         // Let the app delegate know that we are on this view
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         appDelegate.alertInboxTableViewController = self
-        
-        println("View did appear")
     }
+    
     override func viewDidDisappear(animated: Bool) {
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         appDelegate.alertInboxTableViewController = nil
@@ -114,12 +113,6 @@ class AlertInboxTableViewController: UITableViewController {
             })
             
         } else {
-            /*
-            let well = Well(id: 0, name: "Test Well", location: "No Location")
-            well.wellbores.append(Wellbore(id: 0, name: "Test Bore", well: Well(id: 0, name: "Test Well", location: "Here")))
-            
-            self.wells.append(well)
-            */
             self.tableView.reloadData()
         }
 
@@ -187,8 +180,9 @@ extension AlertInboxTableViewController: UITableViewDataSource {
             // Show no alert notifications message
             numberOfSections = 0
 
+            let toolbarHeight: CGFloat = 39.0
             let textColor = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1.0)
-            var noAlertNotificationsLabel = UILabel(frame: CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height - 39.0))
+            var noAlertNotificationsLabel = UILabel(frame: CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height))
             noAlertNotificationsLabel.text = "No Alert Notifications"
             noAlertNotificationsLabel.textColor = textColor
             noAlertNotificationsLabel.numberOfLines = 0

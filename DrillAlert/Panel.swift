@@ -119,6 +119,7 @@ class Panel {
                                     if let type = panelJSON.getStringAtKey(APIPanelTypeKey) {
                                         if let visualizationsJSONArray = panelJSON.getJSONArrayAtKey(APIPanelVisualizationsKey) {
                                             let visualizations = Visualization.getVisualizationsFromJSONArray(visualizationsJSONArray)
+                                            
                                             let newPanel = Panel(
                                                 id: id,
                                                 name: name,

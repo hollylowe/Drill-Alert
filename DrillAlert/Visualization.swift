@@ -13,21 +13,19 @@ class Visualization {
     var xPosition: Int
     var yPosition: Int
     var jsFileName: String
-    var curveID: Int
+    var curveIDs: [Int]?
     
-    init(xPosition: Int, yPosition: Int, jsFileName: String, curveID: Int) {
+    init(xPosition: Int, yPosition: Int, jsFileName: String) {
         self.xPosition = xPosition
         self.yPosition = yPosition
         self.jsFileName = jsFileName
-        self.curveID = curveID
     }
     
-    init(id: Int, xPosition: Int, yPosition: Int, jsFileName: String, curveID: Int) {
+    init(id: Int, xPosition: Int, yPosition: Int, jsFileName: String) {
         self.id = id
         self.xPosition = xPosition
         self.yPosition = yPosition
         self.jsFileName = jsFileName
-        self.curveID = curveID
     }
     
     class func getVisualizationsFromJSONArray(jsonArray: JSONArray) -> Array<Visualization> {
@@ -39,15 +37,14 @@ class Visualization {
                     if let xPosition = visualizationJSON.getIntAtKey("XPos") {
                         if let yPosition = visualizationJSON.getIntAtKey("YPos") {
                             if let jsFileName = visualizationJSON.getStringAtKey("JsFile") {
-                                if let curveID = visualizationJSON.getIntAtKey("CurveId") {
+                                //if let curveID = visualizationJSON.getIntAtKey("CurveId") {
                                     let newVisualization = Visualization(
                                         id: id,
                                         xPosition: xPosition,
                                         yPosition: yPosition,
-                                        jsFileName: jsFileName,
-                                        curveID: curveID)
+                                        jsFileName: jsFileName)
                                     result.append(newVisualization)
-                                }
+                                //}
                             }
                         }
                     }
@@ -61,9 +58,9 @@ class Visualization {
     func toJSONString() -> String {
         var JSONString = "{"
         
-        JSONString = JSONString + "\"XPos\": 0,"
-        JSONString = JSONString + "\"YPos\": 0,"
-        JSONString = JSONString + "\"JsFile\": \"Uber.js\","
+        JSONString = JSONString + "\"XPos\": \(self.xPosition),"
+        JSONString = JSONString + "\"YPos\": \(self.yPosition),"
+        JSONString = JSONString + "\"JsFile\": \"\(self.jsFileName)\","
         JSONString = JSONString + "\"PanelId\": 0,"
         JSONString = JSONString + "\"CurveIds\": null"
         

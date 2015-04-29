@@ -22,7 +22,7 @@ class ManageLayoutsTableViewController: UITableViewController {
     // Implicit, set by the previous view controller
     var user: User!
     var wellbore: Wellbore!
-    var currentLayout: Layout?
+    var currentLayout: Layout? 
     var wellboreDetailViewController: WellboreDetailViewController!
     
     
@@ -38,7 +38,11 @@ class ManageLayoutsTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         self.title = "Layouts"
-        
+        if let layout = currentLayout {
+            if let label = self.currentLayoutTableViewCell.detailTextLabel {
+                label.text = layout.name
+            }
+        }
         super.viewDidLoad()
     }
     
@@ -71,12 +75,6 @@ class ManageLayoutsTableViewController: UITableViewController {
             destination.wellbore = self.wellbore
             destination.user = self.user
         }
-        
-        /*
-        let wellbore = sender as! Wellbore
-        let destinationViewController = segue.destinationViewController as! WellboreDetailViewController
-        destinationViewController.currentWellbore = wellbore
-        */
         
         super.prepareForSegue(segue, sender: sender)
     }

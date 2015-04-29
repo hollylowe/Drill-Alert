@@ -49,6 +49,7 @@ class AddEditAlertTableViewController: UITableViewController {
     // and set here upon that view controller's dismissal.
     // var selectedAlertType: AlertType?
     var currentUser: User!
+    var wellbore: Wellbore!
     
     // This will be set by the previous
     // view controller, Manage Alerts, if a 
@@ -196,7 +197,20 @@ class AddEditAlertTableViewController: UITableViewController {
                                 newAlert.threshold = newValue.doubleValue
                                 newAlert.rising = newRising
                                 newAlert.severity = newSeverity
-                                newAlert.save(self.currentUser)
+                                newAlert.save(self.currentUser, completion: { (error: NSError?) -> Void in
+                                    if let error = error {
+                                        let alertController = UIAlertController(title: "Error", message:
+                                            "Unable to save Alert (\(error.code)).", preferredStyle: UIAlertControllerStyle.Alert)
+                                        
+                                        let okayAction = UIAlertAction(title: "Okay", style: .Cancel) { (action) in
+                                            
+                                        }
+                                        alertController.addAction(okayAction)
+                                        self.presentViewController(alertController, animated: true, completion: nil)
+                                    } else {
+                                        self.dismissViewControllerAnimated(true, completion: nil)
+                                    }
+                                })
                             }
                         }
                     }
@@ -286,10 +300,22 @@ class AddEditAlertTableViewController: UITableViewController {
                     if let newRising = self.getAlertRisingValue() {
                         if let newSeverity = self.getAlertSeverityValue() {
                             
-                            // TODO: Curve ID and Wellbore ID
-                            let newAlert = Alert(curveID: 0, userID: currentUser.id, name: newName, rising: newRising, wellboreID: 0, severity: newSeverity, threshold: newValue.doubleValue)
+                            // TODO: Set Curve ID of New Alert
+                            let newAlert = Alert(curveID: 0, userID: currentUser.id, name: newName, rising: newRising, wellboreID: self.wellbore.id, severity: newSeverity, threshold: newValue.doubleValue)
                             
-                            newAlert.save(self.currentUser)
+                            newAlert.save(self.currentUser, completion: { (error) -> Void in
+                                if let error = error {
+                                    let alertController = UIAlertController(title: "Error", message: "Unable to save Alert (\(error.code)).", preferredStyle: UIAlertControllerStyle.Alert)
+                                    
+                                    let okayAction = UIAlertAction(title: "Okay", style: .Cancel) { (action) in
+                                        
+                                    }
+                                    alertController.addAction(okayAction)
+                                    self.presentViewController(alertController, animated: true, completion: nil)
+                                } else {
+                                    self.dismissViewControllerAnimated(true, completion: nil)
+                                }
+                            })
                         }
                     }
                 }

@@ -60,6 +60,6 @@ class Plot: Visualization {
         self.startRange = startRange
         self.endRange = endRange
         self.tracks = tracks
-        super.init(xPosition: xPosition, yPosition: yPosition, jsFileName: "Plot.js", curveID: curveID)
+        super.init(xPosition: xPosition, yPosition: yPosition, jsFileName: "Plot.js")
     }
 }

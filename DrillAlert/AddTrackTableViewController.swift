@@ -15,6 +15,7 @@ class AddTrackTableViewController: UITableViewController {
     class func storyboardIdentifier() -> String! {
         return "AddTrackTableViewController"
     }
+
     override func viewDidLoad() {
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Save, target: self, action: "rightBarButtonItemTapped:")

@@ -48,6 +48,6 @@ class Compass: Visualization {
         self.sensorType = sensorType
         self.dataSource = dataSource
         
-        super.init(xPosition: xPosition, yPosition: yPosition, jsFileName: sensorType.getTitle() + ".js", curveID: 0)
+        super.init(xPosition: xPosition, yPosition: yPosition, jsFileName: sensorType.getTitle() + ".js")
     }
 }
