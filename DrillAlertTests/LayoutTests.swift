@@ -49,6 +49,7 @@ class LayoutTests: XCTestCase {
     }
     
     func testGetLayoutJSONString() {
+        /*
         println("Testing Get Layout JSON String")
         var panels = Array<Panel>()
         var visualizations = Array<Visualization>()
@@ -68,6 +69,7 @@ class LayoutTests: XCTestCase {
         
         let otherLayout = Layout(name: "Test Layout 2", panels: panels, userID: 0, wellboreID: 0)
         println(otherLayout.toJSONString())
+        */
         /*
         if let session = self.optionalUserSession {
         if let user = self.optionalUser {

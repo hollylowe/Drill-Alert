@@ -9,109 +9,13 @@
 import Foundation
 import UIKit
 
-protocol JavaScriptVisualization {
-    func getInitializerJavaScriptString() -> String!
-    func getTickJavaScriptStringWithDataPoint(dataPoint: NSNumber) -> String!
-}
-
-class JavaScriptPlot: JavaScriptVisualization {
-    var id: Int
-    var yMax: Int
-    var xMax: Int
-    var initialData = Array<Int>()
-    var width: Int
-    var height: Int
-    
-    init(id: Int, yMax: Int, xMax: Int, initialData: Array<Int>, width: Int, height: Int) {
-        self.id = id
-        self.yMax = yMax
-        self.xMax = xMax
-        self.initialData = initialData
-        self.width = width
-        self.height = height
-    }
-    
-    private func getInitialDataString() -> String {
-        var dataString = "["
-        var dataCount = 0
-        if self.initialData.count > 0 {
-            for dataPoint in self.initialData {
-                dataString = dataString + "\(dataPoint)"
-                if dataCount != self.initialData.count - 1 {
-                    dataString = dataString + ", "
-                }
-                dataCount = dataCount + 1
-            }
-        }
-        
-        
-        dataString = dataString + "]"
-        return dataString
-    }
-    
-    func getInitializerJavaScriptString() -> String! {
-        var plotInitializer = "master.init("
-        var config = "{id: \(self.id), yMax: \(self.yMax), xMax: \(self.xMax), width: \(self.width), height: \(self.height), data: \(self.getInitialDataString())}"
-        
-        plotInitializer = plotInitializer + config + ")"
-        return plotInitializer
-    }
-    
-    func getTickJavaScriptStringWithDataPoint(dataPoint: NSNumber) -> String! {
-        let tickString = "master.tick(\(dataPoint.stringValue), \(self.id))"
-        return tickString
-    }
-    
-}
-
-class JavaScriptGauge: JavaScriptVisualization {
-    
-    var id: Int // id is required and is the identifier of the plot. (Should be unique)
-    var size: Int = 300 // size is the diameter of the whole gauge in px
-    var clipWidth: Int = 300 // the width of the div containing the gauge in px
-    var clipHeight: Int = 300 // the height of the div containing the gauge in px
-    var ringWidth: Int = 60 // how thick(wide) the color spectrum part of the gauge in px
-    var maxValue: Int = 10  // the maximum value the gauge can reach
-    var transitionMs: Int = 4000 // the time it takes to transition from one value to the next in milliseconds
-    
-    init(id: Int, size: Int, clipWidth: Int, clipHeight: Int, ringWidth: Int, maxValue: Int, transitionMs: Int) {
-        self.id = id
-        self.size = size
-        self.clipWidth = clipWidth
-        self.clipHeight = clipHeight
-        self.ringWidth = ringWidth
-        self.maxValue = maxValue
-        self.transitionMs = transitionMs
-    }
-    
-    init(id: Int) {
-        self.id = id
-    }
-    
-    func getInitializerJavaScriptString() -> String! {
-        var gaugeInitializer = "masterGauge.init("
-        let config = "{id: \(self.id), size: \(self.size), clipWidth: \(self.clipWidth), clipHeight: \(self.clipHeight), ringWidth: \(self.ringWidth), maxValue: \(self.maxValue), transitionMs: \(self.transitionMs)}"
-        
-        gaugeInitializer = gaugeInitializer + config + ")"
-        
-        return gaugeInitializer
-    }
-    
-    func getTickJavaScriptStringWithDataPoint(dataPoint: NSNumber) -> String! {
-        let tickString = "masterGauge.update(\(dataPoint.stringValue), \(self.id))"
-        return tickString
-    }
-    
-    
-}
-
-class PanelViewController: UIViewController, UIWebViewDelegate {
-    @IBOutlet weak var panelInformationLabel: UILabel!
+class PageViewController: UIViewController, UIWebViewDelegate {
+    @IBOutlet weak var pageInformationLabel: UILabel!
+    @IBOutlet weak var pageLastUpdatedLabel: UILabel!
+    @IBOutlet weak var pageHeaderView: UIView!
     @IBOutlet weak var webView: UIWebView!
-    @IBOutlet weak var panelLastUpdatedLabel: UILabel!
-    @IBOutlet weak var panelHeaderView: UIView!
-    
-    var panel: Panel!
+
+    var page: Page!
     var timer: NSTimer?
     var pageIndex: Int!
     var javaScriptVisualizations = Array<JavaScriptVisualization>()
@@ -119,17 +23,17 @@ class PanelViewController: UIViewController, UIWebViewDelegate {
     let htmlFileName = "index"
 
     class func getStoryboardIdentifier() -> String {
-        return "PanelViewController"
+        return "PageViewController"
     }
     
     override func viewDidLoad() {
         var bottomBorder = CALayer()
-        bottomBorder.frame = CGRectMake(0, self.panelHeaderView.frame.size.height, self.panelHeaderView.frame.size.width, 1.0)
+        bottomBorder.frame = CGRectMake(0, self.pageHeaderView.frame.size.height, self.pageHeaderView.frame.size.width, 1.0)
         bottomBorder.backgroundColor = UIColor(white: 0.8, alpha: 1.0).CGColor
-        self.panelHeaderView.layer.addSublayer(bottomBorder)
+        self.pageHeaderView.layer.addSublayer(bottomBorder)
         
-        self.panelInformationLabel.text = self.panel.name
-        self.panelLastUpdatedLabel.text = "Loading..."
+        self.pageInformationLabel.text = self.page.name
+        self.pageLastUpdatedLabel.text = "Loading..."
         
         super.viewDidLoad()
     }
@@ -178,7 +82,7 @@ class PanelViewController: UIViewController, UIWebViewDelegate {
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd 'at' h:mm a" 
         let stringDate = dateFormatter.stringFromDate(NSDate())
-        self.panelLastUpdatedLabel.text = "Updated \(stringDate)"
+        self.pageLastUpdatedLabel.text = "Updated \(stringDate)"
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -191,7 +95,7 @@ class PanelViewController: UIViewController, UIWebViewDelegate {
     }
 }
 
-extension PanelViewController: UIWebViewDelegate {
+extension PageViewController: UIWebViewDelegate {
     func webViewDidFinishLoad(webView: UIWebView) {
         let plotJSFileName = "Plot.js"
         let gaugeJSFileName = "Gauge.js"
@@ -201,10 +105,10 @@ extension PanelViewController: UIWebViewDelegate {
         
         var newJavaScriptVisualizations = Array<JavaScriptVisualization>()
         
-        for visualization in self.panel.visualizations {
+        for visualization in self.page.visualizations {
             // TODO: Remove, only for the demo
             println(visualization.jsFileName)
-            if self.panel.shouldShowDemoPlot {
+            if self.page.shouldShowDemoPlot {
                 if let id = visualization.id {
                     newJavaScriptVisualizations.append(JavaScriptPlot(
                         id: id,
@@ -246,8 +150,6 @@ extension PanelViewController: UIWebViewDelegate {
                     }
                 }
             }
-            
-            
         }
         
         self.javaScriptVisualizations = newJavaScriptVisualizations

@@ -317,16 +317,16 @@
             </objects>
             <point key="canvasLocation" x="3471" y="560"/>
         </scene>
-        <!--Layouts-->
+        <!--Dashboards-->
         <scene sceneID="WFu-EY-KFp">
             <objects>
-                <tableViewController storyboardIdentifier="ManageLayoutsTableViewController" id="SVK-fv-WVl" customClass="ManageLayoutsTableViewController" customModule="DrillAlert" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="ManageDashboardsTableViewController" id="SVK-fv-WVl" customClass="ManageDashboardsTableViewController" customModule="DrillAlert" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="d5q-f3-9jR">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <sections>
-                            <tableViewSection headerTitle="" footerTitle="Your layout is what determines what visuals are displayed for this wellbore. " id="1zs-eZ-Ik9">
+                            <tableViewSection headerTitle="" footerTitle="Your dashboard is what determines what visuals are displayed for this wellbore. " id="1zs-eZ-Ik9">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="YPU-K7-oH6" detailTextLabel="uSs-sy-Q2a" style="IBUITableViewCellStyleValue1" id="J6h-d8-QMM">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -334,7 +334,7 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="J6h-d8-QMM" id="Jps-w8-cw5">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Current Layout" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="YPU-K7-oH6">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Current Dashboard" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="YPU-K7-oH6">
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -349,7 +349,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="FQS-Mf-keI" kind="show" identifier="ChangeLayoutSegueIdentifier" id="mzb-FB-tvc"/>
+                                            <segue destination="FQS-Mf-keI" kind="show" identifier="ChangeDashboardSegueIdentifier" id="mzb-FB-tvc"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -362,7 +362,7 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Cju-pD-fc5" id="IDU-YM-Fhd">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Edit Layouts" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="XAg-Fx-udx">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Edit Dashboards" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="XAg-Fx-udx">
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -371,7 +371,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="mTH-OK-O3p" kind="show" identifier="EditLayoutsSegueIdentifier" id="15s-Yp-Uzu"/>
+                                            <segue destination="mTH-OK-O3p" kind="show" identifier="EditDashboardsSegueIdentifier" id="15s-Yp-Uzu"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="SnY-mx-qqP">
@@ -383,7 +383,7 @@
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VgB-17-2ZE">
                                                     <rect key="frame" x="8" y="7" width="584" height="30"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
-                                                    <state key="normal" title="Create New Layout...">
+                                                    <state key="normal" title="Create New Dashboard...">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                     <connections>
@@ -406,7 +406,7 @@
                             <outlet property="delegate" destination="SVK-fv-WVl" id="hUY-rZ-mbx"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Layouts" id="RSj-QU-ivo">
+                    <navigationItem key="navigationItem" title="Dashboards" id="RSj-QU-ivo">
                         <barButtonItem key="leftBarButtonItem" title="Done" id="ng9-AV-a9S">
                             <connections>
                                 <action selector="doneButtonTapped:" destination="SVK-fv-WVl" id="BWa-Dd-Eao"/>
@@ -419,23 +419,23 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="61f-1x-S5D" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6102" y="-3140"/>
+            <point key="canvasLocation" x="6054" y="-1128"/>
         </scene>
-        <!--Add or Edit Layout-->
+        <!--Add or Edit Dashboard-->
         <scene sceneID="2cQ-I4-g5s">
             <objects>
-                <tableViewController storyboardIdentifier="AddEditLayoutTableViewController" id="g1U-HT-vzb" customClass="AddEditLayoutTableViewController" customModule="DrillAlert" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="AddEditDashboardTableViewController" id="g1U-HT-vzb" customClass="AddEditDashboardTableViewController" customModule="DrillAlert" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="H9k-WB-h5Q">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LayoutNameInputTableViewCell" id="Wau-mz-nTg" customClass="LayoutNameInputTableViewCell" customModule="DrillAlert" customModuleProvider="target">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DashboardNameInputTableViewCell" id="Wau-mz-nTg" customClass="DashboardNameInputTableViewCell" customModule="DrillAlert" customModuleProvider="target">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Wau-mz-nTg" id="A8G-01-Inw">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Layout Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PUu-aq-Cno">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dashboard Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PUu-aq-Cno">
                                             <rect key="frame" x="8" y="6" width="139" height="30"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="30" id="Crz-rp-UIC"/>
@@ -451,7 +451,7 @@
                                                 </mask>
                                             </variation>
                                         </label>
-                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter layout name" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5X4-cp-EGx">
+                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter dashboard name" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5X4-cp-EGx">
                                             <rect key="frame" x="155" y="6" width="437" height="30"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="30" id="ec2-Wh-XC1"/>
@@ -491,7 +491,7 @@
                                     </variation>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="layoutNameTextField" destination="5X4-cp-EGx" id="Wt6-Lx-wM0"/>
+                                    <outlet property="dashboardNameTextField" destination="5X4-cp-EGx" id="Rkr-qc-Vsh"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="PanelTableViewCell" id="Qh2-dH-fDS" customClass="PanelTableViewCell" customModule="DrillAlert" customModuleProvider="target">
@@ -528,7 +528,7 @@
                                     <outlet property="panelNameLabel" destination="DVb-Bs-Zby" id="Ab2-7p-sFE"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DeleteLayoutTableViewCell" id="uBI-IT-czI" customClass="DeleteLayoutTableViewCell" customModule="DrillAlert" customModuleProvider="target">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DeleteDashboardTableViewCell" id="uBI-IT-czI" customClass="DeleteDashboardTableViewCell" customModule="DrillAlert" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uBI-IT-czI" id="J1H-U4-rT8">
@@ -539,7 +539,7 @@
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="30" id="qCj-DQ-MMn"/>
                                             </constraints>
-                                            <state key="normal" title="Delete Layout">
+                                            <state key="normal" title="Delete Dashboard">
                                                 <color key="titleColor" red="0.88235294119999996" green="0.29411764709999999" blue="0.22352941179999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
@@ -552,7 +552,7 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="deleteLayoutButton" destination="d21-J5-DCF" id="ek7-kU-wtF"/>
+                                    <outlet property="deleteDashboardButton" destination="d21-J5-DCF" id="kYN-B6-j6D"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AddNewPanelTableViewCell" id="MzR-90-4wu" customClass="AddNewPanelTableViewCell" customModule="DrillAlert" customModuleProvider="target">
@@ -584,11 +584,11 @@
                             <outlet property="delegate" destination="g1U-HT-vzb" id="T1j-U5-X0k"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Add or Edit Layout" id="0Wn-EX-9Fp"/>
+                    <navigationItem key="navigationItem" title="Add or Edit Dashboard" id="0Wn-EX-9Fp"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xHA-c0-Pwt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7662" y="-2945"/>
+            <point key="canvasLocation" x="7622" y="-738"/>
         </scene>
         <!--Table View Controller-->
         <scene sceneID="iXo-0U-uzI">
@@ -654,23 +654,23 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MqE-L8-jiw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7648" y="-1140"/>
+            <point key="canvasLocation" x="9920" y="-580"/>
         </scene>
-        <!--Change Layout-->
+        <!--Change Dashboard-->
         <scene sceneID="Mdq-qj-zwQ">
             <objects>
-                <tableViewController storyboardIdentifier="ChangeLayoutTableViewController" id="FQS-Mf-keI" customClass="ChangeLayoutTableViewController" customModule="DrillAlert" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="ChangeDashboardTableViewController" id="FQS-Mf-keI" customClass="ChangeDashboardTableViewController" customModule="DrillAlert" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="A1h-s7-CWQ">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="LayoutTableViewCell" textLabel="qb6-wj-J5j" rowHeight="44" style="IBUITableViewCellStyleDefault" id="Yzd-ab-7GQ" customClass="LayoutTableViewCell" customModule="DrillAlert" customModuleProvider="target">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="DashboardTableViewCell" textLabel="qb6-wj-J5j" rowHeight="44" style="IBUITableViewCellStyleDefault" id="Yzd-ab-7GQ" customClass="DashboardTableViewCell" customModule="DrillAlert" customModuleProvider="target">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Yzd-ab-7GQ" id="puC-SA-IrE">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Layout Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="qb6-wj-J5j">
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Dashboard Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="qb6-wj-J5j">
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -685,11 +685,11 @@
                             <outlet property="delegate" destination="FQS-Mf-keI" id="Nc6-s1-eig"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Change Layout" id="fpD-V8-6Ru"/>
+                    <navigationItem key="navigationItem" title="Change Dashboard" id="fpD-V8-6Ru"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BhB-3e-Zz9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6850" y="-3651"/>
+            <point key="canvasLocation" x="6834" y="-1923"/>
         </scene>
         <!--Add New Panel-->
         <scene sceneID="6Lj-1u-yAe">
@@ -1771,10 +1771,10 @@
             </objects>
             <point key="canvasLocation" x="12446" y="-4508"/>
         </scene>
-        <!--Manage Layouts Navigation Controller-->
+        <!--Manage Dashboards Navigation Controller-->
         <scene sceneID="1oH-C2-9Zq">
             <objects>
-                <navigationController storyboardIdentifier="ManageLayoutsNavigationController" id="gwU-Cf-i4z" customClass="ManageLayoutsNavigationController" customModule="DrillAlert" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="ManageDashboardsNavigationController" id="gwU-Cf-i4z" customClass="ManageDashboardsNavigationController" customModule="DrillAlert" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="hXw-QA-c2J">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1785,12 +1785,12 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0AV-nd-Bqe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6102" y="-3944"/>
+            <point key="canvasLocation" x="5242" y="-1128"/>
         </scene>
         <!--Visuals-->
         <scene sceneID="xbf-gY-MU8">
             <objects>
-                <viewController storyboardIdentifier="LayoutViewController" id="h0o-PB-yOo" customClass="LayoutViewController" customModule="DrillAlert" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DashboardViewController" id="h0o-PB-yOo" customClass="DashboardViewController" customModule="DrillAlert" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="XHa-q4-Az4"/>
                         <viewControllerLayoutGuide type="bottom" id="sGn-rZ-J8H"/>
@@ -1806,18 +1806,18 @@
             </objects>
             <point key="canvasLocation" x="3590" y="-1076"/>
         </scene>
-        <!--Layout Page View Controller-->
+        <!--Dashboard Main Page View Controller-->
         <scene sceneID="tyY-aY-8aR">
             <objects>
-                <pageViewController storyboardIdentifier="LayoutPageViewController" autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="d7Y-4r-G3Z" customClass="LayoutPageViewController" customModule="DrillAlert" customModuleProvider="target" sceneMemberID="viewController"/>
+                <pageViewController storyboardIdentifier="DashboardMainPageViewController" autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="d7Y-4r-G3Z" customClass="DashboardMainPageViewController" customModule="DrillAlert" customModuleProvider="target" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Kgm-LN-QIK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4386" y="-1554"/>
         </scene>
-        <!--Panel View Controller-->
+        <!--Page View Controller-->
         <scene sceneID="we4-94-4IZ">
             <objects>
-                <viewController storyboardIdentifier="PanelViewController" id="LdQ-QI-dwH" customClass="PanelViewController" customModule="DrillAlert" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PageViewController" id="LdQ-QI-dwH" customClass="PageViewController" customModule="DrillAlert" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="LzG-ri-8vJ"/>
                         <viewControllerLayoutGuide type="bottom" id="emb-M1-t5I"/>
@@ -1917,9 +1917,9 @@
                         </variation>
                     </view>
                     <connections>
-                        <outlet property="panelHeaderView" destination="wrC-Kt-Y1e" id="NK1-ak-GbE"/>
-                        <outlet property="panelInformationLabel" destination="UEd-rG-BPX" id="7iN-7b-MMG"/>
-                        <outlet property="panelLastUpdatedLabel" destination="0au-RY-uvP" id="zuZ-qb-VgH"/>
+                        <outlet property="pageHeaderView" destination="wrC-Kt-Y1e" id="3Ce-6t-nzR"/>
+                        <outlet property="pageInformationLabel" destination="UEd-rG-BPX" id="uo1-hJ-EKp"/>
+                        <outlet property="pageLastUpdatedLabel" destination="0au-RY-uvP" id="4c0-mD-i2Y"/>
                         <outlet property="webView" destination="c2p-4E-tqC" id="Vfv-hO-rgs"/>
                     </connections>
                 </viewController>
@@ -2092,14 +2092,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <sections>
-                            <tableViewSection headerTitle="Name" footerTitle="" id="nHo-Zx-Py2">
+                            <tableViewSection headerTitle="" footerTitle="" id="nHo-Zx-Py2">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="GOw-Wj-aaD">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="GOw-Wj-aaD" id="4VH-3F-fLQ">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YWq-LJ-4Id">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Alert Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YWq-LJ-4Id">
                                                     <rect key="frame" x="8" y="8" width="584" height="27"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
@@ -2626,10 +2626,10 @@
             </objects>
             <point key="canvasLocation" x="1645" y="-378"/>
         </scene>
-        <!--Add Edit Layout Navigation Controller-->
+        <!--Add Edit Dashboard Navigation Controller-->
         <scene sceneID="8Sn-NB-xb3">
             <objects>
-                <navigationController storyboardIdentifier="AddEditLayoutNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="XJd-vq-ldn" customClass="AddEditLayoutNavigationController" customModule="DrillAlert" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="AddEditDashboardNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="XJd-vq-ldn" customClass="AddEditDashboardNavigationController" customModule="DrillAlert" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="jSY-hZ-vVH">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -2642,23 +2642,23 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zoa-9C-hNf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6850" y="-2945"/>
+            <point key="canvasLocation" x="6834" y="-1128"/>
         </scene>
-        <!--Edit Layouts-->
+        <!--Edit-->
         <scene sceneID="gtc-et-bI6">
             <objects>
-                <tableViewController storyboardIdentifier="EditLayoutsTableViewController" id="mTH-OK-O3p" customClass="EditLayoutsTableViewController" customModule="DrillAlert" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="EditLayoutsTableViewController" id="mTH-OK-O3p" customClass="EditDashboardsTableViewController" customModule="DrillAlert" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="ZXD-ML-1aF">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="EditLayoutTableViewCell" textLabel="Kua-Ka-4Pn" style="IBUITableViewCellStyleDefault" id="rgP-oJ-juz" customClass="EditLayoutTableViewCell" customModule="DrillAlert" customModuleProvider="target">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="EditDashboardTableViewCell" textLabel="Kua-Ka-4Pn" style="IBUITableViewCellStyleDefault" id="rgP-oJ-juz" customClass="EditDashboardTableViewCell" customModule="DrillAlert" customModuleProvider="target">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="rgP-oJ-juz" id="xa7-3Y-hPT">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Layout Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Kua-Ka-4Pn">
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Dashboard Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Kua-Ka-4Pn">
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -2667,7 +2667,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="g1U-HT-vzb" kind="show" identifier="EditLayoutTableViewControllerSegue" id="Ywr-Za-Dhq"/>
+                                    <segue destination="g1U-HT-vzb" kind="show" identifier="EditDashboardTableViewControllerSegue" id="Ywr-Za-Dhq"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -2676,13 +2676,13 @@
                             <outlet property="delegate" destination="mTH-OK-O3p" id="uug-hg-h0H"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Edit Layouts" id="Xse-fU-3bM">
+                    <navigationItem key="navigationItem" title="Edit" id="Xse-fU-3bM">
                         <barButtonItem key="backBarButtonItem" title=" " id="hhH-PN-J1b"/>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f6v-g8-maV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6850" y="-2190"/>
+            <point key="canvasLocation" x="6834" y="-358"/>
         </scene>
         <!--Choose Panel Type Navigation Controller-->
         <scene sceneID="ny2-ah-ElB">
@@ -2700,7 +2700,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Y0l-G1-89U" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="8434" y="-2942"/>
+            <point key="canvasLocation" x="8378" y="-1662"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="hff-t9-tnI">
@@ -2726,7 +2726,7 @@
         <image name="background" width="1400" height="510"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Ywr-Za-Dhq"/>
+        <segue reference="AXA-gQ-WQz"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.41176470588235292" green="0.6705882352941176" blue="0.89803921568627454" alpha="1" colorSpace="calibratedRGB"/>
 </document>

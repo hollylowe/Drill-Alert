@@ -18,7 +18,7 @@ class ChoosePanelTypeNavigationController: UINavigationController {
 class ChoosePanelTypeTableViewController: UITableViewController {
     var user: User!
     var wellbore: Wellbore!
-    var delegate: AddEditLayoutTableViewController!
+    var delegate: AddEditDashboardTableViewController!
     
     @IBAction func cancelButtonTapped(sender: UIBarButtonItem) {
         self.dismissViewControllerAnimated(true, completion: nil)

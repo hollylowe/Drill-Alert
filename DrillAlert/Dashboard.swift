@@ -1,5 +1,5 @@
 //
-//  Layout.swift
+//  Dashboard.swift
 //  DrillAlert
 //
 //  Created by Lucas David on 4/21/15.
@@ -8,25 +8,24 @@
 
 import Foundation
 
-class Layout {
+class Dashboard {
     var id: Int?
     var name: String
-    var panels = Array<Panel>()
+    var pages = Array<Page>()
     var userID: Int
     var wellboreID: Int
 
-    init(id: Int, name: String, panels: Array<Panel>, userID: Int, wellboreID: Int) {
+    init(id: Int, name: String, pages: Array<Page>, userID: Int, wellboreID: Int) {
         self.id = id
         self.name = name
-        self.panels = panels
+        self.pages = pages
         self.userID = userID
         self.wellboreID = wellboreID
     }
     
-    // For creating a new Layout
-    init(name: String, panels: Array<Panel>, userID: Int, wellboreID: Int) {
+    init(name: String, pages: Array<Page>, userID: Int, wellboreID: Int) {
         self.name = name
-        self.panels = panels
+        self.pages = pages
         self.userID = userID
         self.wellboreID = wellboreID
     }
@@ -38,7 +37,7 @@ class Layout {
             JSONString = JSONString + " \"Id\": \(id),"
         }
         
-        JSONString = JSONString + " \"Panels\": \(self.getPanelsJSONString()),"
+        JSONString = JSONString + " \"Panels\": \(self.getPagesJSONString()),"
         JSONString = JSONString + " \"Name\": \"\(self.name)\","
         JSONString = JSONString + " \"WellboreId\": \(self.wellboreID),"
         JSONString = JSONString + " \"UserId\": \(self.userID)"
@@ -48,14 +47,14 @@ class Layout {
         return JSONString
     }
     
-    func getPanelsJSONString() -> String {
+    func getPagesJSONString() -> String {
         var JSONString = "["
         var index = 0
         
-        for panel in self.panels {
-            JSONString = JSONString + panel.toJSONString()
+        for page in self.pages {
+            JSONString = JSONString + page.toJSONString()
             
-            if index < self.panels.count - 1{
+            if index < self.pages.count - 1 {
                 JSONString = JSONString + ","
             }
             
@@ -67,40 +66,44 @@ class Layout {
         return JSONString
     }
     
-    class func layoutFromJSONObject(JSONObject: JSON) -> Layout? {
-        var layout: Layout?
+    class func dashboardFromJSONObject(JSONObject: JSON) -> Dashboard? {
+        var dashboard: Dashboard?
         
         if let id = JSONObject.getIntAtKey("Id") {
             if let name = JSONObject.getStringAtKey("Name") {
                 if let userID = JSONObject.getIntAtKey("UserId") {
                     if let wellboreID = JSONObject.getIntAtKey("WellboreId") {
-                        if let panelsJSONArray = JSONObject.getJSONArrayAtKey("Panels") {
-                            let panels = Panel.getPanelsFromJSONArray(panelsJSONArray)
-                            layout = Layout(id: id, name: name, panels: panels, userID: userID, wellboreID: wellboreID)
+                        if let pagesJSONArray = JSONObject.getJSONArrayAtKey("Panels") {
+                            let pages = Page.getPagesFromJSONArray(pagesJSONArray)
+                            dashboard = Dashboard(
+                                id: id,
+                                name: name,
+                                pages: pages,
+                                userID: userID,
+                                wellboreID: wellboreID)
                         }
                     }
                 }
             }
         }
         
-        return layout
+        return dashboard
     }
     
-    class func getLayoutsForUser(user: User, andWellbore wellbore: Wellbore) -> (Array<Layout>, String?) {
-        var result = Array<Layout>()
+    class func getDashboardsForUser(user: User, andWellbore wellbore: Wellbore) -> (Array<Dashboard>, String?) {
+        var result = Array<Dashboard>()
         var errorMessage: String?
-        
         let url = "https://drillalert.azurewebsites.net/api/views/\(wellbore.id)"
-        println(url)
         let session = user.session
-        let layoutsJSONArray = session.getJSONArrayAtURL(url)
-        errorMessage = layoutsJSONArray.getErrorMessage()
+        let dashboardsJSONArray = session.getJSONArrayAtURL(url)
+        
+        errorMessage = dashboardsJSONArray.getErrorMessage()
         
         if errorMessage == nil {
-            if let layoutJSONs = layoutsJSONArray.array {
-                for layoutJSONObject in layoutJSONs {
-                    if let layout = Layout.layoutFromJSONObject(layoutJSONObject) {
-                        result.append(layout)
+            if let dashboardJSONs = dashboardsJSONArray.array {
+                for dashboardJSONObject in dashboardJSONs {
+                    if let dashboard = Dashboard.dashboardFromJSONObject(dashboardJSONObject) {
+                        result.append(dashboard)
                     }
                 }
             }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum PanelType {
+enum PageType {
     case Plot, Canvas, Compass, None
     static let allValues = [Plot, Canvas, Compass, None]
     func getTitle() -> String {
@@ -30,9 +30,9 @@ enum PanelType {
     
 }
 
-class Panel {
+class Page {
     var id: Int?
-    var type = PanelType.None
+    var type = PageType.None
     var name: String
     var position: Int
     var xDimension: Int
@@ -56,9 +56,9 @@ class Panel {
         self.yDimension = yDimension
         self.visualizations = visualizations
         
-        for panelType in PanelType.allValues {
-            if panelType.getTitle() == type {
-                self.type = panelType
+        for pageType in PageType.allValues {
+            if pageType.getTitle() == type {
+                self.type = pageType
             }
         }
     }
@@ -98,44 +98,54 @@ class Panel {
         return JSONString
     }
     
-    class func getPanelsFromJSONArray(jsonArray: JSONArray) -> Array<Panel> {
-        var result = Array<Panel>()
+    class func pageFromJSON(pageJSON: JSON) -> Page? {
+        var result: Page?
         
         let APIPanelIDKey = "Id"
+        let APIPanelTypeKey = "Type"
         let APIPanelNameKey = "Name"
         let APIPanelPositionKey = "Pos"
         let APIPanelXDimensionKey = "XDim"
         let APIPanelYDimensionKey = "YDim"
         let APIPanelVisualizationsKey = "Visualizations"
-        let APIPanelTypeKey = "Type"
         
-        if let panelJSONs = jsonArray.array {
-            for panelJSON in panelJSONs {
-                if let id = panelJSON.getIntAtKey(APIPanelIDKey) {
-                    if let position = panelJSON.getIntAtKey(APIPanelPositionKey) {
-                        if let xDimension = panelJSON.getIntAtKey(APIPanelXDimensionKey) {
-                            if let yDimension = panelJSON.getIntAtKey(APIPanelYDimensionKey) {
-                                if let name = panelJSON.getStringAtKey(APIPanelNameKey) {
-                                    if let type = panelJSON.getStringAtKey(APIPanelTypeKey) {
-                                        if let visualizationsJSONArray = panelJSON.getJSONArrayAtKey(APIPanelVisualizationsKey) {
-                                            let visualizations = Visualization.getVisualizationsFromJSONArray(visualizationsJSONArray)
-                                            
-                                            let newPanel = Panel(
-                                                id: id,
-                                                name: name,
-                                                position: position,
-                                                xDimension: xDimension,
-                                                yDimension: yDimension,
-                                                visualizations: visualizations,
-                                                type: type
-                                            )
-                                            result.append(newPanel)
-                                        }
-                                    }
+        if let id = pageJSON.getIntAtKey(APIPanelIDKey) {
+            if let position = pageJSON.getIntAtKey(APIPanelPositionKey) {
+                if let xDimension = pageJSON.getIntAtKey(APIPanelXDimensionKey) {
+                    if let yDimension = pageJSON.getIntAtKey(APIPanelYDimensionKey) {
+                        if let name = pageJSON.getStringAtKey(APIPanelNameKey) {
+                            if let type = pageJSON.getStringAtKey(APIPanelTypeKey) {
+                                if let visualizationsJSONArray = pageJSON.getJSONArrayAtKey(APIPanelVisualizationsKey) {
+                                    let visualizations = Visualization.getVisualizationsFromJSONArray(visualizationsJSONArray)
+                                    
+                                    let newPage = Page(
+                                        id: id,
+                                        name: name,
+                                        position: position,
+                                        xDimension: xDimension,
+                                        yDimension: yDimension,
+                                        visualizations: visualizations,
+                                        type: type
+                                    )
+                                    result = newPage
                                 }
                             }
                         }
                     }
+                }
+            }
+        }
+        
+        return result
+    }
+    
+    class func getPagesFromJSONArray(jsonArray: JSONArray) -> Array<Page> {
+        var result = Array<Page>()
+        
+        if let pageJSONs = jsonArray.array {
+            for pageJSON in pageJSONs {
+                if let page = Page.pageFromJSON(pageJSON) {
+                    result.append(page)
                 }
             }
         }

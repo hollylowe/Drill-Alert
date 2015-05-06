@@ -10,11 +10,11 @@ import Foundation
 import UIKit
 
 class AddEditAlertNavigationController: UINavigationController {
-    class func getStoryboardIdentifier() -> String! {
+    class func storyboardIdentifier() -> String! {
         return "AddEditAlertNavigationController"
     }
     
-    class func getEntrySegueIdentifier() -> String! {
+    class func entrySegueIdentifier() -> String! {
         return "AddEditAlertSegue"
     }
 }
@@ -181,7 +181,7 @@ class AddEditAlertTableViewController: UITableViewController {
     
     func saveEditedAlert() {
         var alertMessage: String?
-        
+        self.view.endEditing(true)
         // if let newAlertType = selectedAlertType {
     
         if let newName = alertNameTextField.text {

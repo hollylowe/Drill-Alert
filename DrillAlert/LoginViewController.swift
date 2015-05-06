@@ -73,7 +73,22 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func loginButtonTapped(sender: AnyObject) {
-        self.performSegueWithIdentifier("LoginToLoginWebView", sender: nil)
+        if Reachability.isConnectedToNetwork() {
+            self.performSegueWithIdentifier("LoginToLoginWebView", sender: nil)
+        } else {
+            let alertController = UIAlertController(
+                title: "Error",
+                message: "There is no internet connection.",
+                preferredStyle: .Alert)
+            
+            let defaultAction = UIAlertAction(
+                title: "OK",
+                style: .Default,
+                handler: nil)
+            alertController.addAction(defaultAction)
+            
+            self.presentViewController(alertController, animated: true, completion: nil)
+        }
     }
     
     func showInvalidLogInAlert() {

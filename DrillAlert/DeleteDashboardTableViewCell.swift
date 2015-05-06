@@ -9,9 +9,9 @@
 import Foundation
 import UIKit
 
-class DeleteLayoutTableViewCell: UITableViewCell {
-    @IBOutlet weak var deleteLayoutButton: UIButton!
+class DeleteDashboardTableViewCell: UITableViewCell {
+    @IBOutlet weak var deleteDashboardButton: UIButton!
     class func cellIdentifier() -> String {
-        return "DeleteLayoutTableViewCell"
+        return "DeleteDashboardTableViewCell"
     }
 }

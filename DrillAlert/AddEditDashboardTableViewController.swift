@@ -9,32 +9,32 @@
 import Foundation
 import UIKit
 
-class AddEditLayoutNavigationController: UINavigationController {
+class AddEditDashboardNavigationController: UINavigationController {
     class func storyboardIdentifier() -> String {
-        return "AddEditLayoutNavigationController"
+        return "AddEditDashboardNavigationController"
     }
 }
 
-class AddEditLayoutTableViewController: UITableViewController {
+class AddEditDashboardTableViewController: UITableViewController {
     var user: User!
     var wellbore: Wellbore!
     
     // This is only set if we're editing a layout
-    var layoutToEdit: Layout?
+    var dashboardToEdit: Dashboard?
     
     // Table View Properties
-    let layoutNameSection = 0
-    let panelsSection = 1
-    let deleteLayoutSection = 2
+    let dashboardNameSection = 0
+    let pagesSection = 1
+    let deleteDashboardSection = 2
     
-    var panels = Array<Panel>()
+    var pages = Array<Page>()
     
     let validSaveStatusCode = 200
     var saveBarButtonItem: UIBarButtonItem!
     var activityBarButtonItem: UIBarButtonItem!
     
-    func addPanel(panel: Panel) {
-        self.panels.append(panel)
+    func addPage(page: Page) {
+        self.pages.append(page)
         self.tableView.reloadData()
     }
     
@@ -42,10 +42,10 @@ class AddEditLayoutTableViewController: UITableViewController {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    func saveLayout(newLayout: Layout) {
+    func saveDashboard(newDashboard: Dashboard) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
             if let URL = NSURL(string: "https://drillalert.azurewebsites.net/api/views") {
-                var jsonString = newLayout.toJSONString()
+                var jsonString = newDashboard.toJSONString()
                 println("Json: ")
                 println(jsonString)
                 if let postData = jsonString.dataUsingEncoding(NSASCIIStringEncoding) {
@@ -94,34 +94,34 @@ class AddEditLayoutTableViewController: UITableViewController {
     }
     
     func saveButtonTapped(sender: AnyObject) {
-        let layoutNameIndexPath = NSIndexPath(forRow: 0, inSection: self.layoutNameSection)
+        let dashboardNameIndexPath = NSIndexPath(forRow: 0, inSection: self.dashboardNameSection)
         self.showActivityBarButton()
         
-        if let cell = self.tableView.cellForRowAtIndexPath(layoutNameIndexPath) as? LayoutNameInputTableViewCell {
-            if let name = cell.layoutNameTextField.text {
-                if let newLayout = self.layoutToEdit {
-                    newLayout.name = name
-                    newLayout.panels = self.panels
+        if let cell = self.tableView.cellForRowAtIndexPath(dashboardNameIndexPath) as? DashboardNameInputTableViewCell {
+            if let name = cell.dashboardNameTextField.text {
+                if let newDashboard = self.dashboardToEdit {
+                    newDashboard.name = name
+                    newDashboard.pages = self.pages
                     
-                    self.saveLayout(newLayout)
+                    self.saveDashboard(newDashboard)
                 } else {
-                    let newLayout = Layout(
+                    let newDashboard = Dashboard(
                         name: name,
-                        panels: self.panels,
+                        pages: self.pages,
                         userID: self.user.id,
                         wellboreID: self.wellbore.id)
-                    self.saveLayout(newLayout)
+                    self.saveDashboard(newDashboard)
                 }
             }
         }
     }
     
     class func storyboardIdentifier() -> String {
-        return "AddEditLayoutTableViewController"
+        return "AddEditDashboardTableViewController"
     }
     
-    class func editLayoutSegueIdentifier() -> String {
-        return "EditLayoutTableViewControllerSegue"
+    class func editDashboardSegueIdentifier() -> String {
+        return "EditDashboardTableViewControllerSegue"
     }
     
     func showActivityBarButton() {
@@ -134,16 +134,23 @@ class AddEditLayoutTableViewController: UITableViewController {
     
     
     override func viewDidLoad() {
-        if let layout = layoutToEdit {
-            self.title = "Edit Layout"
-            self.panels = layout.panels
+        if let dashboard = dashboardToEdit {
+            self.title = "Edit Dashboard"
+            self.pages = dashboard.pages
             
         } else {
-            self.title = "Add Layout"
-            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.Plain, target: self, action: "cancelBarButtonItemTapped:")
+            self.title = "Add Dashboard"
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(
+                title: "Cancel",
+                style: .Plain,
+                target: self, action: "cancelBarButtonItemTapped:")
         }
         
-        self.saveBarButtonItem = UIBarButtonItem(title: "Save", style: UIBarButtonItemStyle.Done, target: self, action: "saveButtonTapped:")
+        self.saveBarButtonItem = UIBarButtonItem(
+            title: "Save",
+            style: .Done,
+            target: self,
+            action: "saveButtonTapped:")
         
         let activityView = UIActivityIndicatorView(frame: CGRectMake(0, 0, 25, 25))
         activityView.startAnimating()
@@ -164,8 +171,8 @@ class AddEditLayoutTableViewController: UITableViewController {
     }
     
     func deleteLayoutButtonTapped(sender: UIButton) {
-        if let layout = self.layoutToEdit {
-            if let id = layout.id {
+        if let dashboard = self.dashboardToEdit {
+            if let id = dashboard.id {
                 println("Deleting Layout #\(id)")
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
                     if let URL = NSURL(string: "https://drillalert.azurewebsites.net/api/views/\(id)") {
@@ -211,47 +218,47 @@ class AddEditLayoutTableViewController: UITableViewController {
         self.presentViewController(choosePanelTypeNavigationController, animated: true, completion: nil)
     }
     
-    func presentEditCanvasViewController(panel: Panel) {
+    func presentEditCanvasViewController(page: Page) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
         // Get the navigation controller
         if let navigationController = self.navigationController {
             let viewController = storyboard.instantiateViewControllerWithIdentifier(AddEditCanvasTableViewController.storyboardIdentifier()) as! AddEditCanvasTableViewController
-            viewController.canvasToEdit = panel
+            viewController.canvasToEdit = page
             navigationController.pushViewController(viewController, animated: true)
         }
     }
     
-    func presentEditPlotViewController(panel: Panel) {
+    func presentEditPlotViewController(page: Page) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
         // Get the navigation controller
         if let navigationController = self.navigationController {
             let viewController = storyboard.instantiateViewControllerWithIdentifier(AddEditPlotTableViewController.storyboardIdentifier()) as! AddEditPlotTableViewController
-            viewController.plotToEdit = panel
+            viewController.plotToEdit = page
             navigationController.pushViewController(viewController, animated: true)
         }
     }
     
-    func presentEditCompassViewController(panel: Panel) {
+    func presentEditCompassViewController(page: Page) {
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
         // Get the navigation controller
         if let navigationController = self.navigationController {
             let viewController = storyboard.instantiateViewControllerWithIdentifier(AddEditCompassTableViewController.storyboardIdentifier()) as! AddEditCompassTableViewController
-            viewController.compassToEdit = panel
+            viewController.compassToEdit = page
             navigationController.pushViewController(viewController, animated: true)
         }
         
     }
 }
 
-extension AddEditLayoutTableViewController: UITableViewDelegate {
+extension AddEditDashboardTableViewController: UITableViewDelegate {
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         var numberOfSections = 2
         
-        if self.layoutToEdit != nil {
+        if self.dashboardToEdit != nil {
             numberOfSections = numberOfSections + 1
         }
         
@@ -262,11 +269,11 @@ extension AddEditLayoutTableViewController: UITableViewDelegate {
         var numberOfRows = 0
         
         switch section {
-        case self.layoutNameSection:
+        case self.dashboardNameSection:
             numberOfRows = 1
-        case self.panelsSection:
-            numberOfRows = self.panels.count + 1
-        case self.deleteLayoutSection:
+        case self.pagesSection:
+            numberOfRows = self.pages.count + 1
+        case self.deleteDashboardSection:
             numberOfRows = 1
         default: break
         }
@@ -277,8 +284,8 @@ extension AddEditLayoutTableViewController: UITableViewDelegate {
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         var header = ""
         
-        if section == panelsSection {
-            header = "Panels"
+        if section == self.pagesSection {
+            header = "Pages"
         }
         
         return header
@@ -287,23 +294,23 @@ extension AddEditLayoutTableViewController: UITableViewDelegate {
     override func tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         var footer = ""
         
-        if section == self.panelsSection {
-            footer = "A panel is one of the pages you see when viewing a wellbore's visuals. A panel can contain multiple visualizations."
+        if section == self.pagesSection {
+            footer = ""
         }
         
         return footer
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if indexPath.section == self.panelsSection {
-            if indexPath.row < self.panels.count {
-                let panel = self.panels[indexPath.row]
+        if indexPath.section == self.pagesSection {
+            if indexPath.row < self.pages.count {
+                let panel = self.pages[indexPath.row]
                 
                 switch panel.type {
                 case .Canvas: self.presentEditCanvasViewController(panel)
                 case .Plot: self.presentEditPlotViewController(panel)
                 case .Compass: self.presentEditCompassViewController(panel)
-                default: println("Unknown panel type.")
+                default: println("Unknown page type.")
                 }
                 
             }
@@ -314,30 +321,30 @@ extension AddEditLayoutTableViewController: UITableViewDelegate {
         var cell: UITableViewCell!
         
         switch indexPath.section {
-            case layoutNameSection:
-                if let layout = self.layoutToEdit {
-                    let layoutNameCell = tableView.dequeueReusableCellWithIdentifier(LayoutNameInputTableViewCell.cellIdentifier()) as! LayoutNameInputTableViewCell
-                    layoutNameCell.layoutNameTextField.text = layout.name
-                    cell = layoutNameCell
+            case self.dashboardNameSection:
+                if let dashboard = self.dashboardToEdit {
+                    let dashboardNameCell = tableView.dequeueReusableCellWithIdentifier(DashboardNameInputTableViewCell.cellIdentifier()) as! DashboardNameInputTableViewCell
+                    dashboardNameCell.dashboardNameTextField.text = dashboard.name
+                    cell = dashboardNameCell
                 } else {
-                    cell = tableView.dequeueReusableCellWithIdentifier(LayoutNameInputTableViewCell.cellIdentifier()) as! LayoutNameInputTableViewCell
+                    cell = tableView.dequeueReusableCellWithIdentifier(DashboardNameInputTableViewCell.cellIdentifier()) as! DashboardNameInputTableViewCell
                 }
-            case panelsSection:
+            case pagesSection:
                 switch indexPath.row {
-                case self.panels.count:
+                case self.pages.count:
                     let addNewPanelCell = tableView.dequeueReusableCellWithIdentifier(AddNewPanelTableViewCell.cellIdentifier()) as! AddNewPanelTableViewCell
                     addNewPanelCell.addNewPanelButton.addTarget(self, action: "addNewPanelButtonTapped:", forControlEvents: .TouchUpInside)
                     cell = addNewPanelCell
                 default:
                     let panelCell = tableView.dequeueReusableCellWithIdentifier(PanelTableViewCell.cellIdentifier()) as! PanelTableViewCell
-                    let panel = self.panels[indexPath.row]
+                    let panel = self.pages[indexPath.row]
                     panelCell.panelNameLabel.text = panel.name
                     cell = panelCell
                 }
-            case self.deleteLayoutSection:
-                let deleteLayoutCell = tableView.dequeueReusableCellWithIdentifier(DeleteLayoutTableViewCell.cellIdentifier()) as! DeleteLayoutTableViewCell
-                deleteLayoutCell.deleteLayoutButton.addTarget(self, action: "deleteLayoutButtonTapped:", forControlEvents: .TouchUpInside)
-                cell = deleteLayoutCell
+            case self.deleteDashboardSection:
+                let deleteDashboardCell = tableView.dequeueReusableCellWithIdentifier(DeleteDashboardTableViewCell.cellIdentifier()) as! DeleteDashboardTableViewCell
+                deleteDashboardCell.deleteDashboardButton.addTarget(self, action: "deleteDashboardButtonTapped:", forControlEvents: .TouchUpInside)
+                cell = deleteDashboardCell
             default: break
         }
         

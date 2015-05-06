@@ -9,16 +9,16 @@
 import Foundation
 import UIKit
 
-class LayoutTableViewCell: UITableViewCell {
+class DashboardTableViewCell: UITableViewCell {
     
-    func setupWithLayout(layout: Layout) {
+    func setupWithDashboard(dashboard: Dashboard) {
         if let label = self.textLabel {
-            label.text = "\(layout.name)"
+            label.text = "\(dashboard.name)"
         }
     }
     
     class func cellIdentifier() -> String! {
-        return "LayoutTableViewCell"
+        return "DashboardTableViewCell"
     }
     
 }

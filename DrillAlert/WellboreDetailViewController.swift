@@ -21,11 +21,11 @@ class WellboreDetailViewController: UIViewController {
     
     // Segmented Control
     var segmentedControl: UISegmentedControl!
-    let segmentedControlItems = ["Visuals", "Alerts"]
+    let segmentedControlItems = ["Dashboard", "Alerts"]
     var segmentViewControllers: [UIViewController]!
     var segmentNavigationController: UINavigationController!
     var containerView: UIView!
-    var layoutViewController: LayoutViewController!
+    var dashboardViewController: DashboardViewController!
     
     var selectedSegmentIndex = 0
     let visualsIndex = 0
@@ -69,7 +69,7 @@ class WellboreDetailViewController: UIViewController {
             // Set up the Visuals view controller,
             // which is inside a container on this view controller
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            self.layoutViewController = storyboard.instantiateViewControllerWithIdentifier(LayoutViewController.storyboardIdentifier()) as! LayoutViewController
+            self.dashboardViewController = storyboard.instantiateViewControllerWithIdentifier(DashboardViewController.storyboardIdentifier()) as! DashboardViewController
             
             // Set up the Alert Inbox view controller,
             // which is inside a container on this view controller
@@ -78,12 +78,12 @@ class WellboreDetailViewController: UIViewController {
             
             
             //let viewControllers = [layoutViewController, alertInboxTableViewController]
-            self.layoutViewController.wellboreDetailViewController = self
-            self.layoutViewController.user = self.currentUser
-            self.layoutViewController.wellbore = self.currentWellbore
+            self.dashboardViewController.wellboreDetailViewController = self
+            self.dashboardViewController.user = self.currentUser
+            self.dashboardViewController.wellbore = self.currentWellbore
             alertInboxTableViewController.wellboreDetailViewController = self
             
-            self.segmentViewControllers = [layoutViewController, alertInboxTableViewController]
+            self.segmentViewControllers = [self.dashboardViewController, alertInboxTableViewController]
             self.segmentNavigationController = segmentedControlNavigationController
             self.segmentedControlAction(toolbar.segmentedControl)
             
@@ -110,7 +110,7 @@ class WellboreDetailViewController: UIViewController {
     @IBAction func rightBarButtonItemTapped(sender: AnyObject) {
         switch self.selectedSegmentIndex {
         case visualsIndex:
-            manageLayoutsBarButtonTapped(sender)
+            manageDashboardsBarButtonTapped(sender)
         case alertsIndex:
             manageAlertsBarButtonTapped(sender)
             // addAlertBarButtonTapped(sender)
@@ -131,24 +131,23 @@ class WellboreDetailViewController: UIViewController {
             ManageAlertsNavigationController.storyboardIdentifier()) as! ManageAlertsNavigationController
         let manageAlertsTableViewController = manageAlertsNavigationController.viewControllers[0] as! ManageAlertsTableViewController
 
-        manageAlertsTableViewController.wellboreDetailViewController = self
-        manageAlertsTableViewController.currentUser = self.currentUser
+        manageAlertsTableViewController.user = self.currentUser
         manageAlertsTableViewController.wellbore = self.currentWellbore
         self.presentViewController(manageAlertsNavigationController, animated: true, completion: nil)
     }
     
-    func manageLayoutsBarButtonTapped(sender: AnyObject) {
+    func manageDashboardsBarButtonTapped(sender: AnyObject) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let manageLayoutsNavigationController = storyboard.instantiateViewControllerWithIdentifier(
-            ManageLayoutsNavigationController.storyboardIdentifier()) as! ManageLayoutsNavigationController
-        let manageLayoutsTableViewController = manageLayoutsNavigationController.viewControllers[0] as! ManageLayoutsTableViewController
+        let manageDashboardsNavigationController = storyboard.instantiateViewControllerWithIdentifier(
+            ManageDashboardsNavigationController.storyboardIdentifier()) as! ManageDashboardsNavigationController
+        let manageDashboardsTableViewController = manageDashboardsNavigationController.viewControllers[0] as! ManageDashboardsTableViewController
 
-        manageLayoutsTableViewController.wellboreDetailViewController = self
-        manageLayoutsTableViewController.currentLayout = self.layoutViewController.currentLayout
-        manageLayoutsTableViewController.user = self.currentUser
-        manageLayoutsTableViewController.wellbore = self.currentWellbore
+        manageDashboardsTableViewController.wellboreDetailViewController = self
+        manageDashboardsTableViewController.currentDashboard = self.dashboardViewController.currentDashboard
+        manageDashboardsTableViewController.user = self.currentUser
+        manageDashboardsTableViewController.wellbore = self.currentWellbore
         
-        self.presentViewController(manageLayoutsNavigationController, animated: true, completion: nil)
+        self.presentViewController(manageDashboardsNavigationController, animated: true, completion: nil)
     }
 
     

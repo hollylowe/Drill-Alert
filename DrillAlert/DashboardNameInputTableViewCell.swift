@@ -9,9 +9,9 @@
 import Foundation
 import UIKit
 
-class LayoutNameInputTableViewCell: UITableViewCell {
-    @IBOutlet weak var layoutNameTextField: UITextField!
+class DashboardNameInputTableViewCell: UITableViewCell {
+    @IBOutlet weak var dashboardNameTextField: UITextField!
     class func cellIdentifier() -> String! {
-        return "LayoutNameInputTableViewCell"
+        return "DashboardNameInputTableViewCell"
     }
 }

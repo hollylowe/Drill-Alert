@@ -9,14 +9,14 @@
 import Foundation
 import UIKit
 
-class EditLayoutTableViewCell: UITableViewCell {
+class EditDashboardTableViewCell: UITableViewCell {
     class func cellIdentifier() -> String {
-        return "EditLayoutTableViewCell"
+        return "EditDashboardTableViewCell"
     }
     
-    func setupWithLayout(layout: Layout) {
+    func setupWithDashboard(dashboard: Dashboard) {
         if let label = self.textLabel {
-            label.text = layout.name
+            label.text = dashboard.name
         }
     }
 }

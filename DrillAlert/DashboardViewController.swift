@@ -9,21 +9,20 @@
 import Foundation
 import UIKit
 
-class LayoutViewController: UIViewController, UIPageViewControllerDataSource {
+class DashboardViewController: UIViewController, UIPageViewControllerDataSource {
     // Implicit, set by the previous view controller
     var wellboreDetailViewController: WellboreDetailViewController!
     var user: User!
     
     // Implicit, set in viewDidLoad
-    var layoutPageViewController: LayoutPageViewController!
+    var dashboardMainPageViewController: DashboardMainPageViewController!
     
-    
-    // This will be the user's currently selected Layout.
+    // This will be the user's currently selected dashboard.
     // If they haven't selected one (or the backend doesn't support
     // saving it yet), then this will just be set to the first 
-    // view that is in the layouts array.
-    var layouts = Array<Layout>()
-    var currentLayout: Layout?
+    // dashboard that is in the dashboards array.
+    var dashboards = Array<Dashboard>()
+    var currentDashboard: Dashboard?
     var wellbore: Wellbore!
     var curves = Array<Curve>()
     
@@ -38,37 +37,30 @@ class LayoutViewController: UIViewController, UIPageViewControllerDataSource {
         self.loadData()
         self.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.wellboreDetailViewController.topBarHeight)
         if let storyboard = self.storyboard {
-            self.layoutPageViewController = storyboard.instantiateViewControllerWithIdentifier(
-                LayoutPageViewController.storyboardIdentifier()) as! LayoutPageViewController
-            self.layoutPageViewController.dataSource = self
-            
-            self.layoutPageViewController.view.frame = CGRectMake(
+            self.dashboardMainPageViewController = storyboard.instantiateViewControllerWithIdentifier(
+                DashboardMainPageViewController.storyboardIdentifier()) as! DashboardMainPageViewController
+            self.dashboardMainPageViewController.dataSource = self
+            self.dashboardMainPageViewController.view.frame = CGRectMake(
                 0,
                 0,
                 self.view.frame.size.width,
                 self.view.frame.size.height)
             
-            self.addChildViewController(self.layoutPageViewController)
-            self.view.addSubview(self.layoutPageViewController.view)
-            self.layoutPageViewController.didMoveToParentViewController(self)
+            self.addChildViewController(self.dashboardMainPageViewController)
+            self.view.addSubview(self.dashboardMainPageViewController.view)
+            self.dashboardMainPageViewController.didMoveToParentViewController(self)
         }
-        /*
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .Add,
-            target: self,
-            action: "rightBarButtonItemTapped:")
-        */
         
         super.viewDidLoad()
     }
     
-    func reloadLayouts() {
-        let (newLayouts, error) = Layout.getLayoutsForUser(self.user, andWellbore: self.wellbore)
+    func reloadDashboards() {
+        let (newDashboards, error) = Dashboard.getDashboardsForUser(self.user, andWellbore: self.wellbore)
         
         if error == nil {
-            self.layouts = newLayouts
-            if self.layouts.count > 0 {
-                self.currentLayout = self.layouts[0]
+            self.dashboards = newDashboards
+            if self.dashboards.count > 0 {
+                self.currentDashboard = self.dashboards[0]
             }
         } else {
             // TODO: Show user error
@@ -76,26 +68,30 @@ class LayoutViewController: UIViewController, UIPageViewControllerDataSource {
         }
     }
     
-    func updateCurrentLayout(newCurrentLayout: Layout) {
-        self.currentLayout = newCurrentLayout
+    func updateCurrentDashboard(newCurrentDashboard: Dashboard) {
+        self.currentDashboard = newCurrentDashboard
         if let storyboard = self.storyboard {
             // Remove the current page view controller
-            self.layoutPageViewController.removeFromParentViewController()
-            self.layoutPageViewController.view.removeFromSuperview()
-            self.layoutPageViewController = nil
+            self.dashboardMainPageViewController.removeFromParentViewController()
+            self.dashboardMainPageViewController.view.removeFromSuperview()
+            self.dashboardMainPageViewController = nil
             
             // Create a new one with the new layout
-            self.layoutPageViewController = storyboard.instantiateViewControllerWithIdentifier(LayoutPageViewController.storyboardIdentifier()) as! LayoutPageViewController
-            self.layoutPageViewController.dataSource = self
+            self.dashboardMainPageViewController = storyboard.instantiateViewControllerWithIdentifier(DashboardMainPageViewController.storyboardIdentifier()) as! DashboardMainPageViewController
+            self.dashboardMainPageViewController.dataSource = self
             
-            self.layoutPageViewController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)
-            self.addChildViewController(self.layoutPageViewController)
-            self.view.addSubview(self.layoutPageViewController.view)
-            self.layoutPageViewController.didMoveToParentViewController(self)
+            self.dashboardMainPageViewController.view.frame = CGRectMake(
+                0, 0,
+                self.view.frame.size.width,
+                self.view.frame.size.height)
+            self.addChildViewController(self.dashboardMainPageViewController)
+            
+            self.view.addSubview(self.dashboardMainPageViewController.view)
+            self.dashboardMainPageViewController.didMoveToParentViewController(self)
             
             if let startViewController = self.viewControllerAtIndex(0) {
                 let viewControllers = [startViewController]
-                self.layoutPageViewController.setViewControllers(
+                self.dashboardMainPageViewController.setViewControllers(
                     viewControllers,
                     direction: .Forward,
                     animated: true,
@@ -106,23 +102,26 @@ class LayoutViewController: UIViewController, UIPageViewControllerDataSource {
     }
     
     class func storyboardIdentifier() -> String {
-        return "LayoutViewController"
+        return "DashboardViewController"
     }
     
     func addLoadingIndicator() {
         let indicatorWidth: CGFloat = 20
         let indicatorHeight: CGFloat = 20
-        // Display loading indicator
-        
         var backgroundView = UIView(frame: CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height / 2))
-        self.loadingIndicator = UIActivityIndicatorView(frame: CGRectMake((self.view.bounds.size.width - indicatorWidth) / 2, ((self.view.bounds.size.height / 2) - indicatorHeight) / 2, indicatorWidth, indicatorHeight))
+        let indicatorFrame = CGRectMake(
+            (self.view.bounds.size.width - indicatorWidth) / 2,
+            ((self.view.bounds.size.height / 2) - indicatorHeight) / 2,
+            indicatorWidth,
+            indicatorHeight)
         
-        self.loadingIndicator!.color = UIColor.grayColor()
-        self.loadingIndicator!.startAnimating()
-        backgroundView.addSubview(loadingIndicator!)
+        let newLoadingIndicator = UIActivityIndicatorView(frame: indicatorFrame)
+        newLoadingIndicator.color = UIColor.grayColor()
+        newLoadingIndicator.startAnimating()
+        self.loadingIndicator = newLoadingIndicator
+        backgroundView.addSubview(newLoadingIndicator)
         
         self.view.addSubview(backgroundView)
-        
     }
     
     func removeLoadingIndicator() {
@@ -134,18 +133,13 @@ class LayoutViewController: UIViewController, UIPageViewControllerDataSource {
         loadError = false
         loadingData = false
         
-        // Get the visuals this user has saved
         if shouldLoadFromNetwork {
             loadError = false
             loadingData = true
             
             self.addLoadingIndicator()
-            // TODO: This will need to change if we add a way to refresh this page, which we probably will.
-            // Instead, we could use the NSURLConnection asynchrounous call. This is because users could
-            // refresh the page faster than this call could load it, resulting in multiple threads doing
-            // the same operation and messing up the table view.
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
-                self.reloadLayouts()
+                self.reloadDashboards()
                 
                 var (newCurves, errorMessage) = self.wellbore.getCurves(self.user)
                 
@@ -160,7 +154,7 @@ class LayoutViewController: UIViewController, UIPageViewControllerDataSource {
                     
                     if let startViewController = self.viewControllerAtIndex(0) {
                         let viewControllers = [startViewController]
-                        self.layoutPageViewController.setViewControllers(
+                        self.dashboardMainPageViewController.setViewControllers(
                             viewControllers,
                             direction: .Forward,
                             animated: false,
@@ -171,26 +165,14 @@ class LayoutViewController: UIViewController, UIPageViewControllerDataSource {
             })
             
         } else {
-            /*
-            self.layouts = WellboreView.getFakeWellboreViews()
-            if self.wellboreViews.count > 0 {
-                self.currentWellboreView = self.wellboreViews[0]
-                // self.reloadVisuals()
-            }
-            */
+            // TODO: Load fake data
         }
-
-        
     }
-    
-    
-    
-    
     
     func rightBarButtonItemTapped(sender: UIBarButtonItem) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
-        let addEditAlertNavigationController = storyboard.instantiateViewControllerWithIdentifier(AddEditAlertNavigationController.getStoryboardIdentifier()) as! AddEditAlertNavigationController
+        let addEditAlertNavigationController = storyboard.instantiateViewControllerWithIdentifier(AddEditAlertNavigationController.storyboardIdentifier()) as! AddEditAlertNavigationController
         let addEditAlertViewController = addEditAlertNavigationController.viewControllers[0] as! AddEditAlertTableViewController
         //addParameterAlertViewController.delegate = self
         self.presentViewController(addEditAlertNavigationController, animated: true, completion: nil)
@@ -199,20 +181,20 @@ class LayoutViewController: UIViewController, UIPageViewControllerDataSource {
     
     func viewControllerAtIndex(index: Int) -> UIViewController? {
         var result: UIViewController?
-        if let layout = self.currentLayout {
-            let numberOfPanels = layout.panels.count
+        if let dashboard = self.currentDashboard {
+            let numberOfPages = dashboard.pages.count
             
-            if numberOfPanels == 0 || index >= numberOfPanels {
+            if numberOfPages == 0 || index >= numberOfPages {
                 // TODO: Return something that says "no panels, add one"
                 return nil
             } else if let storyboard = self.storyboard {
-                let panelViewController = storyboard.instantiateViewControllerWithIdentifier(PanelViewController.getStoryboardIdentifier()) as! PanelViewController
-                panelViewController.pageIndex = index
-                let panel = layout.panels[index]
+                let pageViewController = storyboard.instantiateViewControllerWithIdentifier(PageViewController.getStoryboardIdentifier()) as! PageViewController
+                pageViewController.pageIndex = index
+                let page = dashboard.pages[index]
                 
                 // Create the panel with each visualization
-                panelViewController.panel = panel
-                result = panelViewController
+                pageViewController.page = page
+                result = pageViewController
             }
         }
         
@@ -220,13 +202,13 @@ class LayoutViewController: UIViewController, UIPageViewControllerDataSource {
     }
 }
 
-extension LayoutViewController: UIPageViewControllerDataSource {
+extension DashboardViewController: UIPageViewControllerDataSource {
     func presentationCountForPageViewController(pageViewController: UIPageViewController) -> Int {
-        var numberOfPanels = 0
-        if let layout = self.currentLayout {
-            numberOfPanels = layout.panels.count
+        var numberOfPages = 0
+        if let dashboard = self.currentDashboard {
+            numberOfPages = dashboard.pages.count
         }
-        return numberOfPanels
+        return numberOfPages
     }
     
     func presentationIndexForPageViewController(pageViewController: UIPageViewController) -> Int {
@@ -234,8 +216,7 @@ extension LayoutViewController: UIPageViewControllerDataSource {
     }
     
     func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
-        var index = (viewController as! PanelViewController).pageIndex
-        println(" before View controller at index: \(index)")
+        var index = (viewController as! PageViewController).pageIndex
 
         if index == 0 || index == NSNotFound {
             return nil
@@ -246,16 +227,15 @@ extension LayoutViewController: UIPageViewControllerDataSource {
     }
     
     func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController? {
-        var index = (viewController as! PanelViewController).pageIndex
-        println("after View controller at index: \(index)")
+        var index = (viewController as! PageViewController).pageIndex
 
         if index == NSNotFound {
             return nil
         }
         
         index = index + 1
-        if let layout = self.currentLayout {
-            if index == layout.panels.count {
+        if let dashboard = self.currentDashboard {
+            if index == dashboard.pages.count {
                 return nil
             }
         }

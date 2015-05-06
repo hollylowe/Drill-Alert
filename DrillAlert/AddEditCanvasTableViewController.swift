@@ -18,7 +18,7 @@ class AddEditCanvasTableViewController: UITableViewController {
     let canvasItemsSection = 1
     
     var canvasItems = Array<CanvasItem>()
-    var canvasToEdit: Panel?
+    var canvasToEdit: Page?
     
     @IBAction func saveButtonTapped(sender: UIBarButtonItem) {
         if let canvas = self.canvasToEdit {

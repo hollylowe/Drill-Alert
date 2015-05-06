@@ -15,7 +15,7 @@ class AddEditCompassTableViewController: UITableViewController {
     let sensorTypeSection = 1
     let dataSourceSection = 2
     
-    var compassToEdit: Panel?
+    var compassToEdit: Page?
     
     override func viewDidLoad() {
         if let compass = self.compassToEdit {

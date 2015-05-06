@@ -17,9 +17,9 @@ class AddEditPlotTableViewController: UITableViewController {
     @IBOutlet weak var endRangeTextField: UITextField!
     
     // Implicit, set by the previous view controller
-    var delegate: AddEditLayoutTableViewController!
+    var delegate: AddEditDashboardTableViewController!
     var wellboreDetailViewController: WellboreDetailViewController!
-    var plotToEdit: Panel?
+    var plotToEdit: Page?
     
     //
     //  -------------------------
@@ -82,14 +82,14 @@ class AddEditPlotTableViewController: UITableViewController {
                                 visualizations.append(newPlot)
                                 
                                 // Create a new Panel
-                                let newPanel = Panel(
+                                let newPage = Page(
                                     name: name,
                                     position: 0,
                                     xDimension: 0,
                                     yDimension: 0,
                                     visualizations: visualizations)
-                                newPanel.type = .Plot
-                                self.delegate.addPanel(newPanel)
+                                newPage.type = .Plot
+                                self.delegate.addPage(newPage)
                                 self.dismissViewControllerAnimated(true, completion: nil)
                             }
                         }

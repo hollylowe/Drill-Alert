@@ -9,8 +9,8 @@
 import Foundation
 import UIKit
 
-class LayoutPageViewController: UIPageViewController {
+class DashboardMainPageViewController: UIPageViewController {
     class func storyboardIdentifier() -> String {
-        return "LayoutPageViewController"
+        return "DashboardMainPageViewController"
     }
 }
