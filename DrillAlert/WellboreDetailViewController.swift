@@ -15,17 +15,21 @@ class WellboreDetailViewController: UIViewController {
 
     var currentUser: User!
     var currentWellbore: Wellbore!
-    var toolbarHeight: CGFloat = 0
-    var topBarHeight: CGFloat = 0
+    var toolbarHeight: CGFloat = 39.0
     var navBarHairlineImageView: UIImageView!
     
     // Segmented Control
+    var segmentedControlToolbar: SegmentControlToolbar!
+    
     var segmentedControl: UISegmentedControl!
     let segmentedControlItems = ["Dashboard", "Alerts"]
-    var segmentViewControllers: [UIViewController]!
+    var segmentedControlViewControllers: [UIViewController]!
     var segmentNavigationController: UINavigationController!
     var containerView: UIView!
+    
+    // The two main view controllers for the segmented control
     var dashboardViewController: DashboardViewController!
+    var alertInboxTableViewController: AlertInboxTableViewController!
     
     var selectedSegmentIndex = 0
     let visualsIndex = 0
@@ -36,75 +40,96 @@ class WellboreDetailViewController: UIViewController {
         super.viewDidLoad()
     }
     
-    private func setupRightBarButtonItem() {
-        let imageSize = CGSizeMake(30, 30)
-        self.rightBarButtonItem.title = ""
-
-        if let manageDefaultIcon = UIImage(named: "settings_line.png") {
-            rightBarButtonItem.image = imageWithImage(manageDefaultIcon, scaledToSize: imageSize)
-        }
+    private func setViewControllers() {
+        // Instantiate the Dashboard View Controller
+        // and the Alert Inbox View Controller
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        self.dashboardViewController = storyboard.instantiateViewControllerWithIdentifier(DashboardViewController.storyboardIdentifier()) as! DashboardViewController
+        self.dashboardViewController.user = self.currentUser
+        self.dashboardViewController.wellbore = self.currentWellbore
+        self.dashboardViewController.wellboreDetailViewController = self
+        
+        self.alertInboxTableViewController = storyboard.instantiateViewControllerWithIdentifier(AlertInboxTableViewController.storyboardIdentifier()) as! AlertInboxTableViewController
+        self.alertInboxTableViewController.wellboreDetailViewController = self
+        
+        // Set them to the segmented control view controllers array,
+        // so we can switch between them
+        self.segmentedControlViewControllers = [self.dashboardViewController, self.alertInboxTableViewController]
     }
     
     private func setupView() {
         self.title = currentWellbore.name
-        setupRightBarButtonItem()
+        self.setupRightBarButtonItem()
+        self.setViewControllers()
         
         if let mainNavigationController = self.navigationController {
             mainNavigationController.navigationBar.hidden = false
             
-            self.toolbarHeight = 39.0
-            let yCoord = mainNavigationController.navigationBar.frame.size.height + UIApplication.sharedApplication().statusBarFrame.size.height
-            let toolbarFrame = CGRectMake(0, yCoord, self.view.frame.size.width, toolbarHeight)
-            // Set up Toolbar
-            let toolbar = SegmentControlToolbar(
+            // Create a segmented control inside a toolbar
+            let navigationBarHeight = mainNavigationController.navigationBar.frame.size.height
+            let statusBarHeight = UIApplication.sharedApplication().statusBarFrame.size.height
+            let toolbarYCoord = navigationBarHeight + statusBarHeight
+            let toolbarFrame = CGRectMake(0, toolbarYCoord, self.view.frame.size.width, self.toolbarHeight)
+            self.segmentedControlToolbar = SegmentControlToolbar(
                 frame: toolbarFrame,
                 items: segmentedControlItems,
                 delegate: self,
                 action: Selector("segmentedControlAction:"))
             
-            let segmentedControlNavigationController = UINavigationController()
-            segmentedControlNavigationController.navigationBarHidden = true
-            
-            
-            // Set up the Visuals view controller,
-            // which is inside a container on this view controller
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            self.dashboardViewController = storyboard.instantiateViewControllerWithIdentifier(DashboardViewController.storyboardIdentifier()) as! DashboardViewController
-            
-            // Set up the Alert Inbox view controller,
-            // which is inside a container on this view controller
-            
-            let alertInboxTableViewController = storyboard.instantiateViewControllerWithIdentifier(AlertInboxTableViewController.storyboardIdentifier()) as! AlertInboxTableViewController
-            
-            
-            //let viewControllers = [layoutViewController, alertInboxTableViewController]
-            self.dashboardViewController.wellboreDetailViewController = self
-            self.dashboardViewController.user = self.currentUser
-            self.dashboardViewController.wellbore = self.currentWellbore
-            alertInboxTableViewController.wellboreDetailViewController = self
-            
-            self.segmentViewControllers = [self.dashboardViewController, alertInboxTableViewController]
-            self.segmentNavigationController = segmentedControlNavigationController
-            self.segmentedControlAction(toolbar.segmentedControl)
-            
-            
-            // Container view
-            let containerViewFrame = CGRectMake(
-                0,
-                toolbarHeight,
+            // Create a new Navigation Controller right below the toolbar
+            // that is the height of the screen
+            self.segmentNavigationController = UINavigationController()
+            self.segmentNavigationController.navigationBarHidden = true
+            let navigationControllerFrame = CGRectMake(
+                0, toolbarYCoord,
                 self.view.frame.size.width,
-                self.view.frame.size.height - toolbarHeight - yCoord)
-            let navigationControllerFrame = CGRectMake(0, yCoord, self.view.frame.size.width, self.view.frame.size.height - toolbarHeight - yCoord)
-            segmentedControlNavigationController.view.frame = navigationControllerFrame
+                self.view.frame.size.height - self.toolbarHeight - toolbarYCoord)
+            self.segmentNavigationController.view.frame = navigationControllerFrame
             
+            
+            // Create a Container View right below the
+            // toolbar that is the height of the screen
+            let containerViewFrame = CGRectMake(
+                0, self.toolbarHeight,
+                self.view.frame.size.width,
+                self.view.frame.size.height - self.toolbarHeight - toolbarYCoord)
             self.containerView = UIView(frame: containerViewFrame)
-            self.containerView.addSubview(segmentedControlNavigationController.view)
-            self.topBarHeight = toolbarHeight
+
+            // Add the navigation controller to the container view
+            self.containerView.addSubview(self.segmentNavigationController.view)
+            
+            // Add the Toolbar and Container View
             self.view.addSubview(self.containerView)
-            self.view.addSubview(toolbar)
+            self.view.addSubview(self.segmentedControlToolbar)
 
         }
 
+        // Run the segmented control action once to set it up
+        self.segmentedControlAction(self.segmentedControlToolbar.segmentedControl)
+    }
+    
+    func segmentedControlAction(sender: UISegmentedControl) {
+        // Get the tapped index
+        let index = sender.selectedSegmentIndex
+        self.selectedSegmentIndex = index
+        
+        // Ge the new view controller
+        let incomingViewController = self.segmentedControlViewControllers[index] as UIViewController
+        
+        // Tell the navigation controller to set all of its view controllers
+        // to only the incoming view controller
+        self.segmentNavigationController.setViewControllers([incomingViewController], animated: true)
+    }
+    
+    
+    private func setupRightBarButtonItem() {
+        let imageSize = CGSizeMake(30, 30)
+        self.rightBarButtonItem.title = ""
+        
+        if let manageDefaultIcon = UIImage(named: "settings_line.png") {
+            rightBarButtonItem.image = imageWithImage(manageDefaultIcon, scaledToSize: imageSize)
+        }
     }
     
     @IBAction func rightBarButtonItemTapped(sender: AnyObject) {
@@ -151,13 +176,6 @@ class WellboreDetailViewController: UIViewController {
     }
 
     
-    func segmentedControlAction(sender: UISegmentedControl) {
-        let index = sender.selectedSegmentIndex
-        self.selectedSegmentIndex = index
-        let incomingViewController = self.segmentViewControllers[index] as UIViewController
-        self.segmentNavigationController.setViewControllers([incomingViewController], animated: false)
-        
-    }
     
     private func imageWithImage(image: UIImage, scaledToSize newSize: CGSize) -> UIImage {
         UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0)

@@ -14,37 +14,28 @@ class PageViewController: UIViewController, UIWebViewDelegate {
     @IBOutlet weak var pageLastUpdatedLabel: UILabel!
     @IBOutlet weak var pageHeaderView: UIView!
     @IBOutlet weak var webView: UIWebView!
-
+    let mainHTMLFileName = "index"
+    let plotJSFileName = "Plot.js"
+    let gaugeJSFileName = "Gauge.js"
     var page: Page!
     var timer: NSTimer?
     var pageIndex: Int!
     var javaScriptVisualizations = Array<JavaScriptVisualization>()
     
-    let htmlFileName = "index"
-
     class func getStoryboardIdentifier() -> String {
         return "PageViewController"
     }
     
     override func viewDidLoad() {
-        var bottomBorder = CALayer()
-        bottomBorder.frame = CGRectMake(0, self.pageHeaderView.frame.size.height, self.pageHeaderView.frame.size.width, 1.0)
-        bottomBorder.backgroundColor = UIColor(white: 0.8, alpha: 1.0).CGColor
-        self.pageHeaderView.layer.addSublayer(bottomBorder)
-        
         self.pageInformationLabel.text = self.page.name
         self.pageLastUpdatedLabel.text = "Loading..."
-        
+        self.addBottomBorder()
         super.viewDidLoad()
     }
     
-    override func viewDidAppear(animated: Bool) {
-        // Once the view has loaded,
-        // set up the web view.
-        if let htmlPath = NSBundle.mainBundle().pathForResource(htmlFileName, ofType: "html") {
-            var possibleContent = String(contentsOfFile:htmlPath, usedEncoding: nil, error: nil)
-            
-            if let content = possibleContent {
+    func initialHTMLLoad() {
+        if let htmlPath = NSBundle.mainBundle().pathForResource(self.mainHTMLFileName, ofType: "html") {
+            if let content = String(contentsOfFile: htmlPath, usedEncoding: nil, error: nil) {
                 self.webView.delegate = self
                 self.webView.loadHTMLString(content, baseURL: NSURL.fileURLWithPath(htmlPath.stringByDeletingLastPathComponent))
             }
@@ -52,11 +43,27 @@ class PageViewController: UIViewController, UIWebViewDelegate {
         }
     }
     
+    override func viewDidAppear(animated: Bool) {
+        self.initialHTMLLoad()
+        super.viewDidAppear(animated)
+    }
+    
+    private func addBottomBorder() {
+        var bottomBorder = CALayer()
+        bottomBorder.frame = CGRectMake(0,
+            self.pageHeaderView.frame.size.height,
+            self.pageHeaderView.frame.size.width,
+            1.0)
+        bottomBorder.backgroundColor = UIColor(white: 0.8, alpha: 1.0).CGColor
+        self.pageHeaderView.layer.addSublayer(bottomBorder)
+    }
+    
     func updateVisualizations() {
         var dataValue: Float = 2.0
         
         for javaScriptVisualization in javaScriptVisualizations {
             if javaScriptVisualization is JavaScriptPlot {
+                
                 let testCurve = Curve(id: 0, name: "test curve", tooltype: "test type", units: "test units", wellbore: Wellbore(id: 0, name: "Test Wellbore", well: Well(id: 0, name: "Test well", location: "test location")))
                 
                 let (optionalCurvePointCollection, error) = testCurve.getCurvePointCollectionBetweenStartDate(NSDate(), andEndDate: NSDate())
@@ -97,14 +104,29 @@ class PageViewController: UIViewController, UIWebViewDelegate {
 
 extension PageViewController: UIWebViewDelegate {
     func webViewDidFinishLoad(webView: UIWebView) {
-        let plotJSFileName = "Plot.js"
-        let gaugeJSFileName = "Gauge.js"
+        
         let defaultWidth = 400
         let defaultHeight = 300
         
-        
         var newJavaScriptVisualizations = Array<JavaScriptVisualization>()
         
+        if self.page.type == .Plot {
+            // Convert the visualizations to their JavaScript counterpart
+            for visualization in self.page.visualizations {
+                //newJavaScriptVisualizations.append()
+            }
+        }
+        
+        // Start the timer 
+        /*
+        self.timer = NSTimer.scheduledTimerWithTimeInterval(2.0,
+            target: self,
+            selector: "updateVisualizations",
+            userInfo: nil,
+            repeats: true)
+        */
+        
+        /*
         for visualization in self.page.visualizations {
             // TODO: Remove, only for the demo
             println(visualization.jsFileName)
@@ -161,6 +183,6 @@ extension PageViewController: UIWebViewDelegate {
         
 
         timer = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: "updateVisualizations", userInfo: nil, repeats: true)
-
+        */
     }
 }

@@ -85,7 +85,7 @@ class Page {
     
     func toJSONString() -> String {
         var JSONString = "{"
-        
+        // TODO: Use actual pos/xdim/ydim
         JSONString = JSONString + "\"Visualizations\": \(self.getVisualizationsJSONString()),"
         JSONString = JSONString + "\"Pos\": 0,"
         JSONString = JSONString + "\"XDim\": 0,"

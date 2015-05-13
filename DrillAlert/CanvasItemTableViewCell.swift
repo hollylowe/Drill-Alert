@@ -13,4 +13,10 @@ class CanvasItemTableViewCell: UITableViewCell {
     class func cellIdentifier() -> String {
         return "CanvasItemTableViewCell"
     }
+    
+    func setupWithCanvasItem(canvasItem: CanvasItem) {
+        if let label = self.textLabel {
+            label.text = canvasItem.name
+        }
+    }
 }

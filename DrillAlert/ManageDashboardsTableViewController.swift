@@ -24,11 +24,13 @@ class ManageDashboardsTableViewController: UITableViewController {
     var wellbore: Wellbore!
     var currentDashboard: Dashboard?
     var wellboreDetailViewController: WellboreDetailViewController!
+    let manageSection = 1
+    let createNewDashboardRow = 1
     
     
     @IBOutlet weak var currentLayoutTableViewCell: UITableViewCell!
     
-    @IBAction func createNewLayoutButtonTapped(sender: UIButton) {
+    @IBAction func createNewDashboardButtonTapped(sender: UIButton) {
         self.presentAddDashboardTableViewController()
     }
     
@@ -36,6 +38,13 @@ class ManageDashboardsTableViewController: UITableViewController {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if indexPath.section == self.manageSection {
+            if indexPath.row == createNewDashboardRow {
+                self.presentAddDashboardTableViewController()
+            }
+        }
+    }
     override func viewDidLoad() {
         self.title = "Dashboards"
         if let dashboard = self.currentDashboard {
@@ -53,16 +62,16 @@ class ManageDashboardsTableViewController: UITableViewController {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == ChangeDashboardTableViewController.entrySegueIdentifier() {
+            // Go to change dashboard view
             let destination = segue.destinationViewController as! ChangeDashboardTableViewController
             destination.wellbore = self.wellbore
             destination.user = self.user
-            println("Wellbore for manage: \(self.wellbore)")
-            println("User for manage: \(self.user)")
             
             destination.selectedDashboard = self.currentDashboard
             destination.manageDashboardsTableViewController = self
             
         } else if segue.identifier == EditDashboardsTableViewController.entrySegueIdentifier() {
+            // Go to edit dashboard view 
             let destination = segue.destinationViewController as! EditDashboardsTableViewController
             destination.wellbore = self.wellbore
             destination.user = self.user

@@ -8,7 +8,7 @@
 
 import Foundation
 import UIKit
-
+/*
 class ManagePlotTracksTableViewController: UITableViewController {
     var tracks = Array<PlotTrack>()
     //
@@ -82,3 +82,4 @@ extension ManagePlotTracksTableViewController: UITableViewDelegate {
     }
     
 }
+*/

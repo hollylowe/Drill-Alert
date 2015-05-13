@@ -118,6 +118,18 @@ class JSON {
         return result
     }
     
+    func getIntArrayAtKey(key: String) -> Array<Int>? {
+        var result: Array<Int>?
+        
+        if let implicitDictionary = dictionary {
+            if let object: AnyObject = implicitDictionary[key] {
+                // TODO: Implement
+            }
+        }
+        
+        return [1]
+    }
+    
     func getJSONArrayAtKey(key: String) -> JSONArray? {
         var result: JSONArray?
         

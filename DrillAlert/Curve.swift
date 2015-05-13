@@ -81,8 +81,6 @@ class CurvePoint {
             self.time = 0
         }
     }
-    
-    
 }
 
 class Curve {
@@ -121,6 +119,36 @@ class Curve {
             if let error = resultJSONArray.error {
                 errorMessage = error.description
                 println("Error while getting CurvePointCollection: ")
+                println(errorMessage)
+                println()
+            }
+        }
+        
+        return (result, errorMessage)
+    }
+    
+    class func getCurvesForUser(user: User, andWellbore wellbore: Wellbore) -> (Array<Curve>?, String?) {
+        var result: Array<Curve>?
+        var errorMessage: String?
+        
+        var endpointURL = "https://drillalert.azurewebsites.net/api/curves/\(wellbore.id)"
+        
+        println("Curves: " + endpointURL)
+        let resultJSONArray = JSONArray(url: endpointURL)
+        
+        if let resultJSONs = resultJSONArray.array {
+            var curveArray = Array<Curve>()
+            for resultJSON in resultJSONs {
+                if let curve = Curve.curveFromJSONObject(resultJSON, user: user, wellbore: wellbore) {
+                    curveArray.append(curve)
+                }
+            }
+            
+            result = curveArray
+        } else {
+            if let error = resultJSONArray.error {
+                errorMessage = error.description
+                println("Error while getting Curves: ")
                 println(errorMessage)
                 println()
             }

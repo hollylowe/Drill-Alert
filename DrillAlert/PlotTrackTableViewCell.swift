@@ -14,9 +14,9 @@ class PlotTrackTableViewCell: UITableViewCell {
         return "PlotTrackTableViewCell"
     }
     
-    func setupWithTrack(track: PlotTrack) {
+    func setupWithTrack(track: Track) {
         if let label = self.textLabel {
-            label.text = track.getTitle()
+            label.text = track.name
         }
     }
     

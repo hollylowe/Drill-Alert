@@ -28,7 +28,9 @@ class EditDashboardsTableViewController: LoadingTableViewController {
         if segue.identifier == AddEditDashboardTableViewController.editDashboardSegueIdentifier() {
             if let cell = sender as? UITableViewCell {
                 if let indexPath = self.tableView.indexPathForCell(cell) {
-                    let destination = segue.destinationViewController as! AddEditDashboardTableViewController
+                    let destinationNavigationController = segue.destinationViewController as! AddEditDashboardNavigationController
+                    let destination = destinationNavigationController.viewControllers[0] as! AddEditDashboardTableViewController
+                    
                     destination.dashboardToEdit = self.dashboards[indexPath.row]
                     destination.user = self.user
                     destination.wellbore = self.wellbore

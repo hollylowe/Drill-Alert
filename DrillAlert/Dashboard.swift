@@ -74,6 +74,7 @@ class Dashboard {
                 if let userID = JSONObject.getIntAtKey("UserId") {
                     if let wellboreID = JSONObject.getIntAtKey("WellboreId") {
                         if let pagesJSONArray = JSONObject.getJSONArrayAtKey("Panels") {
+                            // Now get the pages for this dashboard
                             let pages = Page.getPagesFromJSONArray(pagesJSONArray)
                             dashboard = Dashboard(
                                 id: id,

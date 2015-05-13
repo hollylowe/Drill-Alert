@@ -11,8 +11,6 @@ import UIKit
 
 class PanelTableViewCell: UITableViewCell {
     
-    @IBOutlet weak var panelNameLabel: UILabel!
-
     class func cellIdentifier() -> String! {
         return "PanelTableViewCell"
     }

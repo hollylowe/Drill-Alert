@@ -35,7 +35,7 @@ class DashboardViewController: UIViewController, UIPageViewControllerDataSource 
     
     override func viewDidLoad() {
         self.loadData()
-        self.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.wellboreDetailViewController.topBarHeight)
+        self.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.wellboreDetailViewController.toolbarHeight)
         if let storyboard = self.storyboard {
             self.dashboardMainPageViewController = storyboard.instantiateViewControllerWithIdentifier(
                 DashboardMainPageViewController.storyboardIdentifier()) as! DashboardMainPageViewController

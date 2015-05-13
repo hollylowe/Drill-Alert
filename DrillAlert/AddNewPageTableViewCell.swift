@@ -9,9 +9,8 @@
 import Foundation
 import UIKit
 
-class AddNewPanelTableViewCell: UITableViewCell {
-    @IBOutlet weak var addNewPanelButton: UIButton!
+class AddNewPageTableViewCell: UITableViewCell {
     class func cellIdentifier() -> String! {
-        return "AddNewPanelTableViewCell"
+        return "AddNewPageTableViewCell"
     }
 }

@@ -16,6 +16,7 @@ class AddEditCompassTableViewController: UITableViewController {
     let dataSourceSection = 2
     
     var compassToEdit: Page?
+    var compassNameTextField: UITextField!
     
     override func viewDidLoad() {
         if let compass = self.compassToEdit {
@@ -35,7 +36,10 @@ class AddEditCompassTableViewController: UITableViewController {
         var cell: UITableViewCell!
         
         switch indexPath.section {
-        case self.compassNameSection: cell = tableView.dequeueReusableCellWithIdentifier(CompassNameInputTableViewCell.cellIdentifier()) as! CompassNameInputTableViewCell
+        case self.compassNameSection:
+            let compassNameCell = tableView.dequeueReusableCellWithIdentifier(CompassNameInputTableViewCell.cellIdentifier()) as! CompassNameInputTableViewCell
+            self.compassNameTextField = compassNameCell.compassNameTextField
+            cell = compassNameCell
         case self.sensorTypeSection:
             let sensorTypeCell = tableView.dequeueReusableCellWithIdentifier(CompassSensorTypeCell.cellIdentifier()) as! CompassSensorTypeCell
             let sensorType = CompassSensorType.allValues[indexPath.row]
@@ -51,6 +55,12 @@ class AddEditCompassTableViewController: UITableViewController {
         
         
         return cell
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if indexPath.section == self.compassNameSection {
+            self.compassNameTextField.becomeFirstResponder()
+        }
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

@@ -44,15 +44,42 @@ enum PlotUnits {
     }
 }
 
+class Plot: Page {
+    var units: PlotUnits
+    var independentVariableType: PlotIndependentVariableType
+    var stepSize: Float
+    var startRange: Float
+    var endRange: Float
+    var tracks = Array<Track>()
+    
+    init(name: String, position: Int, xDimension: Int, yDimension: Int, curveID: Int, units: PlotUnits, independentVariableType: PlotIndependentVariableType, stepSize: String, startRange: String, endRange: String, tracks: Array<Track>) {
+        
+        self.units = units
+        self.independentVariableType = independentVariableType
+        self.stepSize = 0
+        self.startRange = 0
+        self.endRange = 0
+        // self.stepSize = stepSize
+        // self.startRange = startRange
+        // self.endRange = endRange
+        
+        self.tracks = tracks
+        super.init(name: name, position: position, xDimension: xDimension, yDimension: yDimension, visualizations: self.tracks)
+        self.type = .Plot
+
+    }
+}
+
+/*
 class Plot: Visualization {
     var units: PlotUnits
     var independentVariableType: PlotIndependentVariableType
     var stepSize: Float
     var startRange: Float
     var endRange: Float
-    var tracks = Array<PlotTrack>()
+    var tracks = Array<Track>()
     
-    init(xPosition: Int, yPosition: Int, curveID: Int, units: PlotUnits, independentVariableType: PlotIndependentVariableType, stepSize: Float, startRange: Float, endRange: Float, tracks: Array<PlotTrack>) {
+    init(xPosition: Int, yPosition: Int, curveID: Int, units: PlotUnits, independentVariableType: PlotIndependentVariableType, stepSize: Float, startRange: Float, endRange: Float, tracks: Array<Track>) {
 
         self.units = units
         self.independentVariableType = independentVariableType
@@ -63,3 +90,4 @@ class Plot: Visualization {
         super.init(xPosition: xPosition, yPosition: yPosition, jsFileName: "Plot.js")
     }
 }
+*/
