@@ -14,4 +14,6 @@ class AddEditPlotNavigationController: UINavigationController {
     class func editPlotEntrySegueIdentifier() -> String {
         return "EditPlotTableViewController"
     }
+    
+    
 }

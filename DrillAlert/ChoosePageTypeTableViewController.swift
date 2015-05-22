@@ -54,6 +54,10 @@ class ChoosePageTypeTableViewController: UITableViewController {
         } else if segue.identifier == AddEditCanvasTableViewController.addCanvasEntrySegueIdentifier() {
             let destination = segue.destinationViewController as! AddEditCanvasTableViewController
             destination.delegate = self.delegate
+        } else if segue.identifier == CreatePageFromExistingController.entrySegueIdentifier() {
+            let destination = segue.destinationViewController as! CreatePageFromExistingController
+            destination.user = self.user
+            destination.delegate = self.delegate
         }
     }
 }

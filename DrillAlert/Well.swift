@@ -10,12 +10,12 @@ import Foundation
 
 
 class Well {
-    var id: Int
+    var id: String
     var name: String
     var location: String
     var wellbores = Array<Wellbore>()
     
-    init(id: Int, name: String, location: String) {
+    init(id: String, name: String, location: String) {
         self.id = id
         self.name = name
         self.location = location
@@ -25,13 +25,13 @@ class Well {
         var result: Well?
         
         // Keys for the Well
-        let APINameKey = "name"
-        let APIWellIDKey = "id"
-        let APILocationKey = "location"
-        let APIWellboresKey = "wellBores"
+        let APINameKey = "Name"
+        let APIWellIDKey = "Id"
+        let APILocationKey = "Location"
+        let APIWellboresKey = "WellBores"
         
         // Get the values at the above keys from the JSON Object
-        if let id = JSONObject.getIntAtKey(APIWellIDKey) {
+        if let id = JSONObject.getStringAtKey(APIWellIDKey) {
             if let name = JSONObject.getStringAtKey(APINameKey) {
                 if let location = JSONObject.getStringAtKey(APILocationKey) {
                     // If we've recieved those values successfully, we can create a Well at least
@@ -59,7 +59,7 @@ class Well {
             for wellboreJSON in wellboreJSONs {
                 
                 // Get its ID and Name
-                if let wellboreID = wellboreJSON.getIntAtKey(APIWellboreIDKey) {
+                if let wellboreID = wellboreJSON.getStringAtKey(APIWellboreIDKey) {
                     if let wellboreName = wellboreJSON.getStringAtKey(APIWellboreNameKey) {
                         
                         // Create the Wellbore and add it to the Well
@@ -92,27 +92,13 @@ class Well {
         } else {
             // TODO: delete this, only for when the connection doesn't work
             if result.count == 0 {
-                let well = Well(id: 0, name: "Test", location: "Here")
-                well.wellbores.append(Wellbore(id: 0, name: "Test Wellbore", well: well))
+                let well = Well(id: "", name: "Test", location: "Here")
+                well.wellbores.append(Wellbore(id: "0", name: "Test Wellbore", well: well))
                 result.append(well)
             }
         }
         
         return (result, errorMessage)
-    }
-
-    
-    
-    /// Gets all of the users that have access to 
-    /// this well.
-    func getUsers() -> Array<User> {
-        var users = Array<User>()
-        /*
-        // Using canned data
-        users.append(User(firstName: "Lucas", lastName: "David", id: "123", guid: "00000000-0000-0000-0000-000000000000"))
-        users.append(User(firstName: "Another", lastName: "User", id: "117", guid: "00000000-0000-0000-0000-000000000000"))
-        */
-        return users
     }
 
 }

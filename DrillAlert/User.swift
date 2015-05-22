@@ -11,9 +11,9 @@ import Foundation
 class User {
     var id: Int
     var guid: String
-    var email: String
+    var email: String?
     var session: SDISession
-    var displayName: String
+    var displayName: String?
     
     func getWells() -> (Array<Well>, String?) {
         return Well.getWellsForUser(self)
@@ -31,22 +31,20 @@ class User {
             if let errorMessage = userJSON.getErrorMessage() {
                 println(errorMessage)
             } else {
-                user = User.userFromUserJSON(userJSON, andSession: session)
+                user = User.userFromUserJSON(userID, andUserJSON: userJSON, andSession: session)
             }
         }
         
         return user
     }
     
-    class func userFromUserJSON(userJSON: JSON, andSession session: SDISession) -> User? {
+    class func userFromUserJSON(userID: Int, andUserJSON userJSON: JSON, andSession session: SDISession) -> User? {
         var user: User?
         
-        if let userID = userJSON.getIntAtKey("Id") {
-            if let userGUID = userJSON.getStringAtKey("Guid") {
-                if let displayName = userJSON.getStringAtKey("DisplayName") {
-                    if let email = userJSON.getStringAtKey("Email") {
-                        user = User(id: userID, guid: userGUID, email: email, displayName: displayName, session: session)
-                    }
+        if let userGUID = userJSON.getStringAtKey("Guid") {
+            if let displayName = userJSON.getStringAtKey("DisplayName") {
+                if let email = userJSON.getStringAtKey("Email") {
+                    user = User(id: userID, guid: userGUID, email: email, displayName: displayName, session: session)
                 }
             }
         }
@@ -65,33 +63,6 @@ class User {
     func logout(callback: ((Bool) -> Void)) {
         self.session.logout(callback)
     }
-    
-    /*
-    var firstName: String?
-    var lastName: String?
-    
-    var id = "1"
-    var guid: String?
-    var isAdmin: Bool?
-    var userSession: UserSession?
-    
-    init(session: UserSession) {
-        self.userSession = session
-    }
-    
-    init(firstName: String, lastName: String, id: String, guid: String, isAdmin: Bool = false) {
-        self.firstName = firstName
-        self.lastName = lastName
-        self.id = id
-        self.isAdmin = isAdmin
-        self.guid = guid
-    }
- 
-    func logout() {
-        // TODO: Log out user of ADFS here
-    }
-
-    */
 }
 
     

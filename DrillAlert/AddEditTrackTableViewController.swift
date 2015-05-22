@@ -117,6 +117,7 @@ class AddEditTrackTableViewController: UITableViewController {
             
             viewController.wellbore = self.wellbore
             viewController.user = self.user
+            viewController.currentCurves = self.curves
             viewController.delegate = self
         }
         

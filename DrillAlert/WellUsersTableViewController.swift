@@ -17,7 +17,6 @@ class WellUsersTableViewController: UITableViewController {
     var users = Array<User>()
     
     override func viewDidLoad() {
-        users = currentWell.getUsers()
         self.title = currentWell.name + " Users"
         super.viewDidLoad()
     }

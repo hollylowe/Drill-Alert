@@ -29,7 +29,6 @@ class AddEditDashboardTableViewController: UITableViewController {
     
     var pages = Array<Page>()
     
-    let validSaveStatusCode = 200
     var saveBarButtonItem: UIBarButtonItem!
     var activityBarButtonItem: UIBarButtonItem!
     
@@ -49,50 +48,26 @@ class AddEditDashboardTableViewController: UITableViewController {
     }
     
     func saveDashboard(newDashboard: Dashboard) {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
-            if let URL = NSURL(string: "https://drillalert.azurewebsites.net/api/views") {
-                var jsonString = newDashboard.toJSONString()
-                println("Json: ")
-                println(jsonString)
+        Dashboard.createNewDashboard(newDashboard,
+            forUser: self.user,
+            andWellbore: self.wellbore) { (error) -> Void in
+            // If there is an error, show an alert.
+            // Otherwise, dismiss this view.
+            if let errorString = error {
+                let alertController = UIAlertController(
+                    title: "Error",
+                    message: errorString,
+                    preferredStyle: .Alert)
                 
-                if let postData = jsonString.dataUsingEncoding(NSASCIIStringEncoding) {
-                    let postLength = String(postData.length)
-                    
-                    let request = NSMutableURLRequest(URL: URL)
-                    request.HTTPMethod = "POST"
-                    request.HTTPBody = postData
-                    request.setValue(postLength, forHTTPHeaderField: "Content-Length")
-                    request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-                    request.setValue("application/json", forHTTPHeaderField: "Accept")
-                    
-                    let task = self.user.session.session!.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
-                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                            if let HTTPResponse = response as? NSHTTPURLResponse {
-                                let statusCode = HTTPResponse.statusCode
-                                if statusCode != self.validSaveStatusCode {
-                                    let alertController = UIAlertController(title: "Error", message: "Unable to save Layout (\(statusCode)).", preferredStyle: UIAlertControllerStyle.Alert)
-                                    
-                                    let okayAction = UIAlertAction(title: "Okay", style: .Cancel) { (action) in
-                                        
-                                    }
-                                    alertController.addAction(okayAction)
-                                    
-                                    self.hideActivityBarButton()
-                                    self.presentViewController(alertController, animated: true, completion: nil)
-                                } else {
-                                    self.hideActivityBarButton()
-                                    self.dismissViewControllerAnimated(true, completion: nil)
-                                }
-                            }
-                            
-                        })
-                    })
-                    
-                    task.resume()
-                }
-                
+                let okayAction = UIAlertAction(title: "Okay", style: .Cancel) { (action) in }
+                alertController.addAction(okayAction)
+                self.hideActivityBarButton()
+                self.presentViewController(alertController, animated: true, completion: nil)
+            } else {
+                self.hideActivityBarButton()
+                self.dismissViewControllerAnimated(true, completion: nil)
             }
-        })
+        }
     }
     
     func saveButtonTapped(sender: AnyObject) {

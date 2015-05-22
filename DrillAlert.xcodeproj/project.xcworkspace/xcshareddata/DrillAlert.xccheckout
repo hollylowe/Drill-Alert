@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>E2D1DD46-4482-4FE0-94D1-4850BA3ECC62</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>DrillAlert</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>3579404F79A28BCD7B002C1ACE14EAD5E0D8972E</key>
 		<string>https://github.com/hollylowe/Drill-Alert.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>DrillAlert.xcodeproj/project.xcworkspace</string>
+	<string>DrillAlert.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>3579404F79A28BCD7B002C1ACE14EAD5E0D8972E</key>

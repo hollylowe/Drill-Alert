@@ -100,10 +100,12 @@ class JSONArray {
                         
                         self.array = Array<JSON>()
                         
-                        for index in 0...json.count - 1 {
+                        var index = 0
+                        while index < json.count {
                             let object: AnyObject = json[index]
                             let objectDictionary = object as! Dictionary<String, AnyObject>
                             self.array!.append(JSON(dictionary: objectDictionary))
+                            index++
                         }
                         
                     } else {

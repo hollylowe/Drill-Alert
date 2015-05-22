@@ -16,7 +16,7 @@ class Alert {
     var curveID: Int
     var name: String
     var rising: Bool
-    var wellboreID: Int
+    var wellboreID: String
     var severity: Severity
     var threshold: Double
     
@@ -32,7 +32,7 @@ class Alert {
     let APIThresholdKey = "Threshold"
     let validSaveStatusCode = 200
 
-    init(curveID: Int, userID: Int, name: String, rising: Bool, wellboreID: Int, severity: Severity, threshold: Double) {
+    init(curveID: Int, userID: Int, name: String, rising: Bool, wellboreID: String, severity: Severity, threshold: Double) {
         self.userID = userID
         self.curveID = curveID
         self.name = name
@@ -42,7 +42,7 @@ class Alert {
         self.threshold = threshold
     }
     
-    init(id: Int, curveID: Int, userID: Int, name: String, rising: Bool, wellboreID: Int, severity: Int, threshold: Double) {
+    init(id: Int, curveID: Int, userID: Int, name: String, rising: Bool, wellboreID: String, severity: Int, threshold: Double) {
         self.id = id
         self.userID = userID
         self.curveID = curveID
@@ -142,7 +142,7 @@ class Alert {
             if let curveID = JSONObject.getIntAtKey(APICurveIDKey) {
                 if let name = JSONObject.getStringAtKey(APINameKey) {
                     if let rising = JSONObject.getBoolAtKey(APIRisingKey) {
-                        if let wellboreID = JSONObject.getIntAtKey(APIWellboreIDKey) {
+                        if let wellboreID = JSONObject.getStringAtKey(APIWellboreIDKey) {
                             if let severityInt = JSONObject.getIntAtKey(APISeverityKey) {
                                 if let threshold = JSONObject.getDoubleAtKey(APIThresholdKey) {
                                     let alert = Alert(

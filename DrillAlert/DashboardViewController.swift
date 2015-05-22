@@ -190,6 +190,7 @@ class DashboardViewController: UIViewController, UIPageViewControllerDataSource 
             } else if let storyboard = self.storyboard {
                 let pageViewController = storyboard.instantiateViewControllerWithIdentifier(PageViewController.getStoryboardIdentifier()) as! PageViewController
                 pageViewController.pageIndex = index
+                pageViewController.wellbore = self.wellbore
                 let page = dashboard.pages[index]
                 
                 // Create the panel with each visualization
@@ -216,14 +217,18 @@ extension DashboardViewController: UIPageViewControllerDataSource {
     }
     
     func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
-        var index = (viewController as! PageViewController).pageIndex
-
-        if index == 0 || index == NSNotFound {
+        
+        if let pageViewController = viewController as? PageViewController {
+            var index = pageViewController.pageIndex
+            if index == 0 || index == NSNotFound {
+                return nil
+            }
+            
+            index = index - 1
+            return self.viewControllerAtIndex(index)
+        } else {
             return nil
         }
-        
-        index = index - 1
-        return self.viewControllerAtIndex(index)
     }
     
     func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController? {

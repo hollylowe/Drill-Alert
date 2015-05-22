@@ -97,6 +97,32 @@ class Curve {
         self.wellbore = wellbore
     }
     
+    class func getCurvePointCollectionForCurveID(curveID: Int, andWellboreID wellboreID: String, andStartTime startTime: NSDate, andEndTime endTime: NSDate) -> (CurvePointCollection?, String?)  {
+        var result: CurvePointCollection?
+        var errorMessage: String?
+        
+        // TODO: Change this to real values
+        var endpointURL = "https://drillalert.azurewebsites.net/api/curvepoints/\(curveID)/\(wellboreID)/\(0)/\(0)"
+        let resultJSONArray = JSONArray(url: endpointURL)
+        
+        if let resultJSONs = resultJSONArray.array {
+            // There should only be one
+            if resultJSONs.count > 0 {
+                let curvePointCollectionJSON = resultJSONs[0]
+                result = CurvePointCollection.curvePointCollectionFromJSONObject(curvePointCollectionJSON)
+            }
+        } else {
+            if let error = resultJSONArray.error {
+                errorMessage = error.description
+                println("Error while getting CurvePointCollection: ")
+                println(errorMessage)
+                println()
+            }
+        }
+        
+        return (result, errorMessage)
+    }
+    
     func getCurvePointCollectionBetweenStartDate(startDate: NSDate, andEndDate endDate: NSDate) -> (CurvePointCollection?, String?) {
         var result: CurvePointCollection?
         var errorMessage: String?

@@ -43,8 +43,8 @@ class Page {
     init(name: String, position: Int, xDimension: Int, yDimension: Int, visualizations: Array<Visualization>) {
         self.name = name
         self.position = position
-        self.xDimension = xDimension
-        self.yDimension = yDimension
+        self.xDimension = 300
+        self.yDimension = 500
         self.visualizations = visualizations
     }
     
@@ -52,8 +52,8 @@ class Page {
         self.id = id
         self.name = name
         self.position = position
-        self.xDimension = xDimension
-        self.yDimension = yDimension
+        self.xDimension = 300
+        self.yDimension = 500
         self.visualizations = visualizations
         
         for pageType in PageType.allValues {

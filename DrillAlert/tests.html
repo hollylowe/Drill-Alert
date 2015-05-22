@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="http://code.jquery.com/qunit/qunit-1.17.1.css">
+    <style>
+  
+
+        svg {
+            font: 10px sans-serif;
+        }
+    
+        .line {
+            fill: none;
+            stroke: #000;
+            stroke-width: 1.5px;
+        }
+        
+        .axis path,
+        .axis line {
+            fill: none;
+            stroke: #000;
+            shape-rendering: crispEdges;
+        }
+
+        #power-gauge{
+            float: left;
+            margin-right: 15px;
+        }
+        
+        #power-gauge g.arc {
+            fill: steelblue;
+        }
+
+        #power-gauge g.pointer {
+            fill: #e85116;
+            stroke: #b64011;
+        }
+        
+        #power-gauge g.label text {
+            text-anchor: middle;
+            font-size: 14px;
+            font-weight: bold;
+            fill: #666;
+        }   
+    </style>
+</head>
+    <body>
+        <div id="qunit"></div>
+        <div id="qunit-fixture"></div>
+        <script src="d3.min.js"></script>
+        <script src="http://code.jquery.com/qunit/qunit-1.17.1.js"></script>
+        <script src="blanket.js"></script>
+        <script data-cover src="graph.js"></script>
+        <script src="plotTest.js"></script>
+        
+        <script data-cover src="gauge.js"></script>
+        <script src="gaugeTest.js"></script>
+    </body>
+</html>

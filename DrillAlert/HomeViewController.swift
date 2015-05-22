@@ -24,7 +24,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var navBarHairlineImageView: UIImageView!
     
     // Implicit since the user must be logged in to see the HomeViewController.
-    var currentUser: User!
+    var currentUser: User?
     
     // Data for the table view
     var wells = Array<Well>()
@@ -66,8 +66,8 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             })
 
         } else {
-            let well = Well(id: 0, name: "Test Well", location: "No Location")
-            well.wellbores.append(Wellbore(id: 0, name: "Test Bore", well: Well(id: 0, name: "Test Well", location: "Here")))
+            let well = Well(id: "0", name: "Test Well", location: "No Location")
+            well.wellbores.append(Wellbore(id: "0", name: "Test Bore", well: Well(id: "0", name: "Test Well", location: "Here")))
             
             self.wells.append(well)
             self.tableView.reloadData()
@@ -90,11 +90,12 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func logoutButtonTapped(sender: UIBarButtonItem) {
-        println("Logout tapped.")
-        self.currentUser.logout { (loggedOut) -> Void in
-            if loggedOut {
-                if let navigationController = self.navigationController {
-                    navigationController.popToRootViewControllerAnimated(true)
+        if let user = self.currentUser {
+            user.logout { (loggedOut) -> Void in
+                if loggedOut {
+                    if let navigationController = self.navigationController {
+                        navigationController.popToRootViewControllerAnimated(true)
+                    }
                 }
             }
         }
@@ -205,58 +206,65 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
 
     func reloadWells() {
-        // Only load the wells of the currently selected segment.
-        // TODO: Not sure if API is supporting this, we may remove it. For right now, just set both
-        // allWellbores.removeAll(keepCapacity: false)
-        // subscribedWellbores.removeAll(keepCapacity: false)
-        self.wells.removeAll(keepCapacity: false)
-        self.favoriteWells.removeAll(keepCapacity: false)
-        
-        let (newWells, error) = Well.getWellsForUser(currentUser)
-        
-        if error == nil {
+        if let user = self.currentUser {
+            // Only load the wells of the currently selected segment.
+            // TODO: Not sure if API is supporting this, we may remove it. For right now, just set both
+            // allWellbores.removeAll(keepCapacity: false)
+            // subscribedWellbores.removeAll(keepCapacity: false)
+            self.wells.removeAll(keepCapacity: false)
+            self.favoriteWells.removeAll(keepCapacity: false)
             
-            // Get all of the "favorite" wellbores this
-            // user has. 
+            let (newWells, error) = Well.getWellsForUser(user)
             
-            let localFavoriteWellbores = FavoriteWellbore.fetchAllInstances()
-            var favoriteWellboreIDs = Array<Int>()
-            
-            for favoriteWellbore in localFavoriteWellbores {
-                favoriteWellboreIDs.append(favoriteWellbore.wellboreID.integerValue)
-            }
-            
-            // Then go through every well, if that well's id 
-            // is the same as a "favorite" wells id, throw
-            // that well into the "favorite" wells array 
-            // so it shows in the favorites segment control.
-            for well in newWells {
-                var wellFavoriteWellbores = Array<Wellbore>()
+            if error == nil {
                 
-                for wellbore in well.wellbores {
-                    // IF this wellbore is favorited
-                    if contains(favoriteWellboreIDs, wellbore.id) {
-                        wellbore.isFavorite = true
-                        wellFavoriteWellbores.append(wellbore)
+                // Get all of the "favorite" wellbores this
+                // user has.
+                
+                let localFavoriteWellbores = FavoriteWellbore.fetchAllInstances()
+                var favoriteWellboreIDs = Array<String>()
+                
+                for favoriteWellbore in localFavoriteWellbores {
+                    favoriteWellboreIDs.append(favoriteWellbore.wellboreID)
+                }
+                
+                // Then go through every well, if that well's id
+                // is the same as a "favorite" wells id, throw
+                // that well into the "favorite" wells array
+                // so it shows in the favorites segment control.
+                for well in newWells {
+                    var wellFavoriteWellbores = Array<Wellbore>()
+                    
+                    for wellbore in well.wellbores {
+                        // IF this wellbore is favorited
+                        if contains(favoriteWellboreIDs, wellbore.id) {
+                            wellbore.isFavorite = true
+                            wellFavoriteWellbores.append(wellbore)
+                        }
+                    }
+                    
+                    if wellFavoriteWellbores.count > 0 {
+                        let favoriteWell = Well(id: well.id, name: well.name, location: well.location)
+                        favoriteWell.wellbores = wellFavoriteWellbores
+                        self.favoriteWells.append(favoriteWell)
                     }
                 }
                 
-                if wellFavoriteWellbores.count > 0 {
-                    let favoriteWell = Well(id: well.id, name: well.name, location: well.location)
-                    favoriteWell.wellbores = wellFavoriteWellbores
-                    self.favoriteWells.append(favoriteWell)
-                }
+                self.wells = newWells
+            } else {
+                self.loadError = true
+                
+                var alert = UIAlertController(title: "Error", message: error, preferredStyle: UIAlertControllerStyle.Alert)
+                alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil))
+                self.presentViewController(alert, animated: true, completion: nil)
             }
-            
-            self.wells = newWells
         } else {
             self.loadError = true
             
-            var alert = UIAlertController(title: "Error", message: error, preferredStyle: UIAlertControllerStyle.Alert)
+            var alert = UIAlertController(title: "Error", message: "No user found.", preferredStyle: UIAlertControllerStyle.Alert)
             alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil))
             self.presentViewController(alert, animated: true, completion: nil)
         }
-        
         
     }
     

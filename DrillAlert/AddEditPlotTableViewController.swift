@@ -7,7 +7,12 @@ class AddEditPlotTableViewController: UITableViewController {
     var delegate: AddEditDashboardTableViewController!
     var wellbore: Wellbore!
     var user: User!
+    
+    // Set if we're editing a plot
     var plotToEdit: Page?
+    
+    // Set if we're adding a plot from existing
+    var existingPlot: Page?
     
     //
     //  -------------------------
@@ -43,7 +48,7 @@ class AddEditPlotTableViewController: UITableViewController {
     //  -----------------------
     //
     // Sections
-    let numberOfSections = 3
+    let numberOfSections            = 3
     let plotNameSection             = 0
     let plotTracksSection           = 2
     let plotPropertiesSection       = 1
@@ -67,6 +72,9 @@ class AddEditPlotTableViewController: UITableViewController {
     var unitsCell: LabelDetailDisclosureCell?
     
     var tracks = Array<Track>()
+    class func addPlotFromExistingSegue() -> String {
+        return "AddPlotFromExistingSegue"
+    }
     
     @IBAction func saveButtonTapped(sender: UIBarButtonItem) {
         if let plotNameTextField = self.plotNameTextField {
@@ -254,13 +262,19 @@ extension AddEditPlotTableViewController: UITableViewDataSource {
 
             if let plot = self.plotToEdit {
                 textFieldCell.textField.text = plot.name
+            } else if let plot = self.existingPlot {
+                textFieldCell.textField.text = plot.name
             }
+            
             cell = textFieldCell
         case self.plotPropertiesSection:
             switch indexPath.row {
             case self.independentVariableTypeRow:
                 if let labelDetailDisclosureCell = tableView.dequeueReusableCellWithIdentifier(LabelDetailDisclosureCell.cellIdentifier()) as? LabelDetailDisclosureCell {
                     self.IVTCell = labelDetailDisclosureCell
+                    
+                    // TODO: Set the IVT from the edit / existing plots
+                    
                     cell = labelDetailDisclosureCell
                     if let label = cell.textLabel {
                         label.text = "IVT"
@@ -274,6 +288,10 @@ extension AddEditPlotTableViewController: UITableViewDataSource {
                 if let labelDetailDisclosureCell = tableView.dequeueReusableCellWithIdentifier(LabelDetailDisclosureCell.cellIdentifier()) as? LabelDetailDisclosureCell {
                     self.unitsCell = labelDetailDisclosureCell
                     cell = labelDetailDisclosureCell
+                    
+                    // TODO: Set the Units from the edit / existing plots
+
+                    
                     if let label = cell.textLabel {
                         label.text = "Units"
                     }
@@ -290,6 +308,8 @@ extension AddEditPlotTableViewController: UITableViewDataSource {
                 if let textField = textFieldDetailCell.textField {
                     textField.placeholder = "0.0"
                 }
+                // TODO: Set from the edit / existing plots
+
                 cell = textFieldDetailCell
             case self.startRangeRow:
                  let textFieldDetailCell = tableView.dequeueReusableCellWithIdentifier(TextFieldDetailCell.cellIdentifier()) as! TextFieldDetailCell!
@@ -298,6 +318,8 @@ extension AddEditPlotTableViewController: UITableViewDataSource {
                  if let textField = textFieldDetailCell.textField {
                     textField.placeholder = "0.0"
                  }
+                 // TODO: Set from the edit / existing plots
+
                  cell = textFieldDetailCell
             case self.endRangeRow:
                  let textFieldDetailCell = tableView.dequeueReusableCellWithIdentifier(TextFieldDetailCell.cellIdentifier()) as! TextFieldDetailCell!
@@ -307,6 +329,8 @@ extension AddEditPlotTableViewController: UITableViewDataSource {
                  if let textField = textFieldDetailCell.textField {
                     textField.placeholder = "0.0"
                  }
+                 // TODO: Set from the edit / existing plots
+
                  cell = textFieldDetailCell
             default: break
             }

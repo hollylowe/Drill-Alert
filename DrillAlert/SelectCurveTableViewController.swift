@@ -13,6 +13,7 @@ class SelectCurveTableViewController: LoadingTableViewController {
     var user: User!
     var wellbore: Wellbore!
     var delegate: AddEditTrackTableViewController!
+    var currentCurves = Array<Curve>()
     var curves = Array<Curve>()
     
     func canceBarButtonItemTapped(sender: UIBarButtonItem) {
@@ -40,11 +41,33 @@ class SelectCurveTableViewController: LoadingTableViewController {
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        var shouldAddCurve = true
         let curve = self.curves[indexPath.row]
         
-        self.delegate.addCurve(curve)
+        // Verify the curve hasn't been added yet
+        for currentCurve in self.currentCurves {
+            if curve.id == currentCurve.id {
+                shouldAddCurve = false
+                break
+            }
+        }
+        
+        if shouldAddCurve {
+            self.delegate.addCurve(curve)
+            tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            self.dismissViewControllerAnimated(true, completion: nil)
+        } else {
+            let alertController = UIAlertController(
+                title: "Duplicate Curve",
+                message: "This curve has already been added to the track.",
+                preferredStyle: .Alert)
+            let okayAction = UIAlertAction(title: "Okay", style: .Cancel) { (action) in }
+            
+            alertController.addAction(okayAction)
+            self.presentViewController(alertController, animated: true, completion: nil)
+        }
+        
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

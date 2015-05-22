@@ -16,6 +16,8 @@ class AddEditCompassTableViewController: UITableViewController {
     let dataSourceSection = 2
     
     var compassToEdit: Page?
+    var existingCompass: Page?
+    
     var compassNameTextField: UITextField!
     
     override func viewDidLoad() {
@@ -32,6 +34,10 @@ class AddEditCompassTableViewController: UITableViewController {
         return "AddEditCompassTableViewController"
     }
     
+    class func addCompassFromExistingSegue() -> String {
+        return "AddCompassFromExistingSegue"
+    }
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell: UITableViewCell!
         
@@ -39,16 +45,23 @@ class AddEditCompassTableViewController: UITableViewController {
         case self.compassNameSection:
             let compassNameCell = tableView.dequeueReusableCellWithIdentifier(CompassNameInputTableViewCell.cellIdentifier()) as! CompassNameInputTableViewCell
             self.compassNameTextField = compassNameCell.compassNameTextField
+            if let compass = self.existingCompass {
+                self.compassNameTextField.text = compass.name
+            } else if let compass = self.compassToEdit {
+                self.compassNameTextField.text = compass.name
+            }
             cell = compassNameCell
         case self.sensorTypeSection:
             let sensorTypeCell = tableView.dequeueReusableCellWithIdentifier(CompassSensorTypeCell.cellIdentifier()) as! CompassSensorTypeCell
             let sensorType = CompassSensorType.allValues[indexPath.row]
             sensorTypeCell.setupWithSensorType(sensorType)
+            // TODO: Set to compasses
             cell = sensorTypeCell
         case self.dataSourceSection:
             let dataSourceCell = tableView.dequeueReusableCellWithIdentifier(CompassDataSourceCell.cellIdentifier()) as! CompassDataSourceCell
             let dataSource = CompassDataSource.allValues[indexPath.row]
             dataSourceCell.setupWithDataSource(dataSource)
+            // TODO: Set to compasses
             cell = dataSourceCell
         default: break
         }

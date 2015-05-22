@@ -16,11 +16,14 @@ class PageViewController: UIViewController, UIWebViewDelegate {
     @IBOutlet weak var webView: UIWebView!
     let mainHTMLFileName = "index"
     let plotJSFileName = "Plot.js"
+    let plotUpdateTime = 2.0
     let gaugeJSFileName = "Gauge.js"
     var page: Page!
     var timer: NSTimer?
     var pageIndex: Int!
+    var wellbore: Wellbore! 
     var javaScriptVisualizations = Array<JavaScriptVisualization>()
+    var javaScriptPlot: JavaScriptPlot?
     
     class func getStoryboardIdentifier() -> String {
         return "PageViewController"
@@ -58,36 +61,39 @@ class PageViewController: UIViewController, UIWebViewDelegate {
         self.pageHeaderView.layer.addSublayer(bottomBorder)
     }
     
-    func updateVisualizations() {
-        var dataValue: Float = 2.0
+    func updatePlot() {
+        for track in self.page.visualizations {
+            // Update every track for the plot
+        }
         
-        for javaScriptVisualization in javaScriptVisualizations {
-            if javaScriptVisualization is JavaScriptPlot {
-                
-                let testCurve = Curve(id: 0, name: "test curve", tooltype: "test type", units: "test units", wellbore: Wellbore(id: 0, name: "Test Wellbore", well: Well(id: 0, name: "Test well", location: "test location")))
-                
-                let (optionalCurvePointCollection, error) = testCurve.getCurvePointCollectionBetweenStartDate(NSDate(), andEndDate: NSDate())
-                if error == nil {
-                    if let curvePointCollection = optionalCurvePointCollection {
-                        let curvePoints = curvePointCollection.curvePoints
-                        if curvePoints.count > 0 {
-                            dataValue = curvePoints[0].value
-                        }
+        
+        // TODO: Get the curve points for a specific curve ID.
+        // Feed those curve points to the tracks in the plot.
+        let (optionalCurvePointCollection, error) = Curve.getCurvePointCollectionForCurveID(
+            1,
+            andWellboreID: self.wellbore.id,
+            andStartTime: NSDate(),
+            andEndTime: NSDate())
+        if error == nil {
+            if let curvePointCollection = optionalCurvePointCollection {
+                // Add every curve point to the graph
+                let curvePoints = curvePointCollection.curvePoints
+                // TODO: Use real curve points
+                if curvePoints.count > 0 {
+                    if let plot = self.javaScriptPlot {
+                        let updateString = plot.getTickJavaScriptStringWithCurvePoint(curvePoints[0])
+                        self.webView.stringByEvaluatingJavaScriptFromString(updateString)
                     }
-                } else {
-                    // TODO: Show error to user
-                    println("Error Getting Curve Points: " + error!)
                 }
                 
             }
-            
-            let updateString = javaScriptVisualization.getTickJavaScriptStringWithDataPoint(dataValue)
-            self.webView.stringByEvaluatingJavaScriptFromString(updateString)
-            
+        } else {
+            // TODO: Show error to user
+            println("Error Getting Curve Points: " + error!)
         }
         
         let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd 'at' h:mm a" 
+        dateFormatter.dateFormat = "yyyy-MM-dd 'at' h:mm a"
         let stringDate = dateFormatter.stringFromDate(NSDate())
         self.pageLastUpdatedLabel.text = "Updated \(stringDate)"
     }
@@ -100,34 +106,70 @@ class PageViewController: UIViewController, UIWebViewDelegate {
         
         super.viewWillDisappear(animated)
     }
+    
+    func setupPageAsPlot() {
+        let defaultWidth = 400
+        let defaultHeight = 300
+        if let id = page.id {
+            // TODO: Replace with real initial data
+            var initialData = [1, 2]
+            
+            // Each visualization in a Plot
+            // is a track
+            for track in page.visualizations {
+                // TODO: Add the track to the Plot
+            }
+            
+            self.javaScriptPlot = JavaScriptPlot(
+                id: id,
+                yMax: page.yDimension,
+                xMax: page.xDimension,
+                initialData: initialData,
+                width: defaultWidth,
+                height: defaultHeight,
+                page: page)
+            
+            if let plot = self.javaScriptPlot {
+                // Initialize the plot
+                self.webView.stringByEvaluatingJavaScriptFromString(plot.getInitializerJavaScriptString())
+            }
+            
+            // Start the timer for the live update of a Plot
+            self.timer = NSTimer.scheduledTimerWithTimeInterval(
+                self.plotUpdateTime,
+                target: self,
+                selector: "updatePlot",
+                userInfo: nil,
+                repeats: true)
+            
+        }
+    }
+    
+    func setupPageAsCanvas() {
+        let defaultWidth = 400
+        let defaultHeight = 300
+        if let id = page.id {
+            for visualization in page.visualizations {
+                // For a canvas, visualizations can be either 
+                // gauges or number readouts.
+                switch visualization.jsFileName {
+                default: break
+                }
+            }
+        }
+    }
 }
 
 extension PageViewController: UIWebViewDelegate {
     func webViewDidFinishLoad(webView: UIWebView) {
-        
-        let defaultWidth = 400
-        let defaultHeight = 300
-        
-        var newJavaScriptVisualizations = Array<JavaScriptVisualization>()
-        
-        if self.page.type == .Plot {
-            // Convert the visualizations to their JavaScript counterpart
-            for visualization in self.page.visualizations {
-                //newJavaScriptVisualizations.append()
-            }
+        switch page.type {
+        case .Plot: self.setupPageAsPlot()
+        case .Canvas: self.setupPageAsCanvas()
+        default: println("Unknown page type, \(page.type.getTitle())")
         }
-        
-        // Start the timer 
-        /*
-        self.timer = NSTimer.scheduledTimerWithTimeInterval(2.0,
-            target: self,
-            selector: "updateVisualizations",
-            userInfo: nil,
-            repeats: true)
-        */
-        
-        /*
-        for visualization in self.page.visualizations {
+
+        //for visualization in self.page.visualizations {
+                        /*
             // TODO: Remove, only for the demo
             println(visualization.jsFileName)
             if self.page.shouldShowDemoPlot {
@@ -172,17 +214,8 @@ extension PageViewController: UIWebViewDelegate {
                     }
                 }
             }
-        }
-        
-        self.javaScriptVisualizations = newJavaScriptVisualizations
-        
-        // Initialize all the visualizations
-        for javaScriptVisualization in javaScriptVisualizations {
-            self.webView.stringByEvaluatingJavaScriptFromString(javaScriptVisualization.getInitializerJavaScriptString())
-        }
-        
+            */
+       // }
 
-        timer = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: "updateVisualizations", userInfo: nil, repeats: true)
-        */
     }
 }

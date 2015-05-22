@@ -21,7 +21,7 @@ class Point {
 }
 
 class Wellbore {
-    var id: Int
+    var id: String
     var name: String!
     var well: Well!
     var data = Array<Point>()
@@ -29,7 +29,7 @@ class Wellbore {
     var res: AnyObject!
     var isFavorite: Bool = false
     
-    init(id: Int, name: String, well: Well) {
+    init(id: String, name: String, well: Well) {
         self.id = id
         self.name = name
         self.well = well

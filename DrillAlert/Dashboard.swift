@@ -13,9 +13,9 @@ class Dashboard {
     var name: String
     var pages = Array<Page>()
     var userID: Int
-    var wellboreID: Int
+    var wellboreID: String
 
-    init(id: Int, name: String, pages: Array<Page>, userID: Int, wellboreID: Int) {
+    init(id: Int, name: String, pages: Array<Page>, userID: Int, wellboreID: String) {
         self.id = id
         self.name = name
         self.pages = pages
@@ -23,7 +23,7 @@ class Dashboard {
         self.wellboreID = wellboreID
     }
     
-    init(name: String, pages: Array<Page>, userID: Int, wellboreID: Int) {
+    init(name: String, pages: Array<Page>, userID: Int, wellboreID: String) {
         self.name = name
         self.pages = pages
         self.userID = userID
@@ -39,7 +39,7 @@ class Dashboard {
         
         JSONString = JSONString + " \"Panels\": \(self.getPagesJSONString()),"
         JSONString = JSONString + " \"Name\": \"\(self.name)\","
-        JSONString = JSONString + " \"WellboreId\": \(self.wellboreID),"
+        JSONString = JSONString + " \"WellboreId\": \"\(self.wellboreID)\","
         JSONString = JSONString + " \"UserId\": \(self.userID)"
 
         JSONString = JSONString + "}"
@@ -66,13 +66,47 @@ class Dashboard {
         return JSONString
     }
     
+    class func createNewDashboard(newDashboard: Dashboard, forUser user: User, andWellbore wellbore: Wellbore, withCallback callback: ((error: String?) -> Void)) {
+        let validSaveStatusCode = 200
+
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
+            if let URL = NSURL(string: "https://drillalert.azurewebsites.net/api/views") {
+                var jsonString = newDashboard.toJSONString()
+                if let postData = jsonString.dataUsingEncoding(NSASCIIStringEncoding) {
+                    let postLength = String(postData.length)
+                    
+                    let request = NSMutableURLRequest(URL: URL)
+                    request.HTTPMethod = "POST"
+                    request.HTTPBody = postData
+                    request.setValue(postLength, forHTTPHeaderField: "Content-Length")
+                    request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+                    request.setValue("application/json", forHTTPHeaderField: "Accept")
+                    
+                    let task = user.session.session!.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
+                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            if let HTTPResponse = response as? NSHTTPURLResponse {
+                                let statusCode = HTTPResponse.statusCode
+                                if statusCode != validSaveStatusCode {
+                                    callback(error: "Unable to save Dashboard (\(statusCode)).")
+                                } else {
+                                    callback(error: nil)
+                                }
+                            }
+                        })
+                    })
+                    task.resume()
+                }
+            }
+        })
+    }
+    
     class func dashboardFromJSONObject(JSONObject: JSON) -> Dashboard? {
         var dashboard: Dashboard?
         
         if let id = JSONObject.getIntAtKey("Id") {
             if let name = JSONObject.getStringAtKey("Name") {
                 if let userID = JSONObject.getIntAtKey("UserId") {
-                    if let wellboreID = JSONObject.getIntAtKey("WellboreId") {
+                    if let wellboreID = JSONObject.getStringAtKey("WellboreId") {
                         if let pagesJSONArray = JSONObject.getJSONArrayAtKey("Panels") {
                             // Now get the pages for this dashboard
                             let pages = Page.getPagesFromJSONArray(pagesJSONArray)
@@ -95,6 +129,28 @@ class Dashboard {
         var result = Array<Dashboard>()
         var errorMessage: String?
         let url = "https://drillalert.azurewebsites.net/api/views/\(wellbore.id)"
+        let session = user.session
+        let dashboardsJSONArray = session.getJSONArrayAtURL(url)
+        
+        errorMessage = dashboardsJSONArray.getErrorMessage()
+        
+        if errorMessage == nil {
+            if let dashboardJSONs = dashboardsJSONArray.array {
+                for dashboardJSONObject in dashboardJSONs {
+                    if let dashboard = Dashboard.dashboardFromJSONObject(dashboardJSONObject) {
+                        result.append(dashboard)
+                    }
+                }
+            }
+        }
+        
+        return (result, errorMessage)
+    }
+    
+    class func getAllDashboardsForUser(user: User) -> (Array<Dashboard>, String?) {
+        var result = Array<Dashboard>()
+        var errorMessage: String?
+        let url = "https://drillalert.azurewebsites.net/api/views"
         let session = user.session
         let dashboardsJSONArray = session.getJSONArrayAtURL(url)
         

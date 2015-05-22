@@ -1,43 +1,76 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
     <style>
-        
-        
+  
+
+        body {
+            height: 90%;
+        }
+
         svg {
             font: 10px sans-serif;
         }
     
-    .line {
-        fill: none;
-        stroke: #000;
-        stroke-width: 1.5px;
-    }
-    
-    .axis path,
-    .axis line {
-        fill: none;
-        stroke: #000;
-        shape-rendering: crispEdges;
-    }
-    
-    #power-gauge g.arc {
-        fill: steelblue;
-    }
-    
-    #power-gauge g.pointer {
-        fill: #e85116;
-        stroke: #b64011;
-    }
-    
-    #power-gauge g.label text {
-        text-anchor: middle;
-        font-size: 14px;
-        font-weight: bold;
-        fill: #666;
-    }
+        .line {
+            fill: none;
+            stroke: #000;
+            stroke-width: 1.5px;
+        }
+        
+        .axis path,
+        .axis line {
+            fill: none;
+            stroke: #000;
+            shape-rendering: crispEdges;
+        }
+
+        #power-gauge{
+            overflow: visible;
+            display: inline-block;
+
+        }
+        
+        #power-gauge svg.gauge {
+            overflow: visible;
+            display: inline-block;
+            margin: auto;
+        }
+
+        #power-gauge g.arc {
+            fill: steelblue;
+            overflow: visible;
+            display: inline-block;
+        }
+
+        #power-gauge g.pointer {
+            fill: #e85116;
+            stroke: #b64011;
+            overflow: visible;
+            display: inline-block;
+        }
+        
+        #power-gauge g.label text {
+            text-anchor: middle;
+            font-size: 48px;
+            font-weight: bold;
+            fill: #666;
+            overflow: visible;
+            display: inline-block;
+        }   
+        
+        #base {
+            fill: rgba(255, 255, 255, 0);
+        }
+
     </style>
+
     <body>
         <script src="d3.min.js"></script>
+            <script>
+        d3.select('body')
+            .append('div')
+            .text(screen.availHeight);
+    </script>
         <script src="graph.js" type="text/javascript"></script>
         <script src="gauge.js" type="text/javascript"></script>
         

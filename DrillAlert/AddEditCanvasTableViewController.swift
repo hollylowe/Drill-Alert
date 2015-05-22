@@ -18,9 +18,15 @@ class AddEditCanvasTableViewController: UITableViewController {
     
     var canvasItems = Array<CanvasItem>()
     var canvasToEdit: Page?
+    var existingCanvas: Page?
+    
     var canvasNameTextField: UITextField!
     
     var delegate: AddEditDashboardTableViewController! 
+    
+    class func addCanvasFromExistingSegue() -> String {
+        return "AddCanvasFromExistingSegue"
+    }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == AddEditCanvasItemNavigationController.entrySegueIdentifier() {
@@ -63,7 +69,15 @@ class AddEditCanvasTableViewController: UITableViewController {
                 var visualizations = Array<Visualization>()
                 
                 for canvasItem in self.canvasItems {
-                    visualizations.append(canvasItem)
+                    var jsFileName = ""
+                    switch canvasItem.type {
+                    case .Gauge: jsFileName = "Gauge.js"
+                    case .NumberReadout: jsFileName = "NumberReadout.js"
+                    default: break
+                    }
+                    
+                    var newVisualization = Visualization(xPosition: 0, yPosition: 0, jsFileName: jsFileName)
+                    visualizations.append(newVisualization)
                 }
 
                 canvas.name = canvasName
@@ -82,13 +96,19 @@ class AddEditCanvasTableViewController: UITableViewController {
             
             let canvasNameCell = self.tableView.cellForRowAtIndexPath(canvasNameIndexPath) as! CanvasNameInputTableViewCell
             if let canvasName = canvasNameCell.canvasNameTextField.text {
-                
-                
                 // Create a visualization array with all the canvas items
                 var visualizations = Array<Visualization>()
                 
                 for canvasItem in self.canvasItems {
-                    visualizations.append(canvasItem)
+                    var jsFileName = ""
+                    switch canvasItem.type {
+                    case .Gauge: jsFileName = "Gauge.js"
+                    case .NumberReadout: jsFileName = "NumberReadout.js"
+                    default: break
+                    }
+                    
+                    var newVisualization = Visualization(xPosition: 0, yPosition: 0, jsFileName: jsFileName)
+                    visualizations.append(newVisualization)
                 }
                 
                 let newCanvas = Page(
@@ -105,8 +125,6 @@ class AddEditCanvasTableViewController: UITableViewController {
             
         }
         self.dismissViewControllerAnimated(true, completion: nil)
-
-        
     }
     
     override func viewDidLoad() {
@@ -124,6 +142,14 @@ class AddEditCanvasTableViewController: UITableViewController {
                 action: "cancelBarButtonItemTapped:")
         } else {
             self.title = "Add Canvas"
+            
+            if let canvas = self.existingCanvas {
+                for visualization in canvas.visualizations {
+                    if let canvasItem = visualization as? CanvasItem {
+                        self.canvasItems.append(canvasItem)
+                    }
+                }
+            }
         }
         
         super.viewDidLoad()
@@ -188,7 +214,10 @@ class AddEditCanvasTableViewController: UITableViewController {
             self.canvasNameTextField = canvasNameInputCell.canvasNameTextField
             if let canvas = self.canvasToEdit {
                 canvasNameInputCell.canvasNameTextField.text = canvas.name
+            } else if let canvas = self.existingCanvas {
+                canvasNameInputCell.canvasNameTextField.text = canvas.name
             }
+            
             cell = canvasNameInputCell
             
         case self.canvasItemsSection:

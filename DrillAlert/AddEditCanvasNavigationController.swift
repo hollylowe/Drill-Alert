@@ -14,4 +14,6 @@ class AddEditCanvasNavigationController: UINavigationController {
     class func editCanvasEntrySegueIdentifier() -> String {
         return "EditCanvasTableViewControllerSegue"
     }
+    
+
 }

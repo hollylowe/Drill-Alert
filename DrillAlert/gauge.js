@@ -73,7 +73,7 @@ var gauge = function(container, configuration) {
         ticks = scale.ticks(config.majorTicks);
         tickData = d3.range(config.majorTicks).map(function() {return 1/config.majorTicks;});
         
-        
+
         // r = config.size / 2
         arc = d3.svg.arc()
         .innerRadius(r - config.ringWidth - config.ringInset)
@@ -82,21 +82,21 @@ var gauge = function(container, configuration) {
                     var ratio = d * i;
                     return deg2rad(config.minAngle + (ratio * range));
                     })
-        .endAngle(function(d, i) {
-                  var ratio = d * (i+1);
-                  return deg2rad(config.minAngle + (ratio * range));
-                  });
+                    .endAngle(function(d, i) {
+                              var ratio = d * (i+1);
+                              return deg2rad(config.minAngle + (ratio * range));
+                              });
     }
     that.configure = configure;
     
     function centerTranslation() {
         return 'translate('+r +','+ r +')';
     }
-    
+ 
     function notcenterTranslation() {
         return 'translate('+  r +','+ (4 / 3) * r +')';
     }
-    
+
     function isRendered() {
         return (svg !== undefined);
     }
@@ -107,13 +107,13 @@ var gauge = function(container, configuration) {
         .append('div')
         .attr('id', container)
         .attr('width', config.clipWidth)
-        .attr('height', config.clipHeight)
+        .attr('height', config.clipHeight)       
         .append('svg:svg')
         .attr('class', 'gauge')
         .attr('width', config.clipWidth)
         .attr('height', config.clipHeight);
         
-        
+
         var centerTx = centerTranslation();
         
         var arcs = svg.append('g')
@@ -126,42 +126,42 @@ var gauge = function(container, configuration) {
         .attr('fill', function(d, i) {
               return config.arcColorFn(d * i);
               })
-        .attr('d', arc);
-        
-        var lg = svg.append('g')
-        .attr('class', 'label')
-        .attr('transform', centerTx);
-        lg.selectAll('text')
-        .data(ticks)
-        .enter().append('text')
-        .attr('transform', function(d) {
-              var ratio = scale(d);
-              var newAngle = config.minAngle + (ratio * range);
-              return 'rotate(' +newAngle +') translate(0,' +(config.labelInset - r) +')';
-              })
-        .text(config.labelFormat);
-        
-        var lineData = [ [config.pointerWidth / 2, 0],
-                        [0, -pointerHeadLength],
-                        [-(config.pointerWidth / 2), 0],
-                        [0, config.pointerTailLength],
-                        [config.pointerWidth / 2, 0] ];
-        var pointerLine = d3.svg.line().interpolate('monotone');
-        var pg = svg.append('g').data([lineData])
-        .attr('class', 'pointer')
-        .attr('transform', centerTx);
-        
-        pointer = pg.append('path')
-        .attr('d', pointerLine/*function(d) { return pointerLine(d) +'Z';}*/ )
-        .attr('transform', 'rotate(' +config.minAngle +')');
-        
-        update(newValue === undefined ? 0 : newValue);
-        
-        readout = svg.append('g')
-        .attr('class', 'label')
-        .attr('transform', notcenterTranslation())
-        .append('text');
-        
+              .attr('d', arc);
+              
+              var lg = svg.append('g')
+              .attr('class', 'label')
+              .attr('transform', centerTx);
+              lg.selectAll('text')
+              .data(ticks)
+              .enter().append('text')
+              .attr('transform', function(d) {
+                    var ratio = scale(d);
+                    var newAngle = config.minAngle + (ratio * range);
+                    return 'rotate(' +newAngle +') translate(0,' +(config.labelInset - r) +')';
+                    })
+                    .text(config.labelFormat);
+                    
+                    var lineData = [ [config.pointerWidth / 2, 0], 
+                                    [0, -pointerHeadLength],
+                                    [-(config.pointerWidth / 2), 0],
+                                    [0, config.pointerTailLength],
+                                    [config.pointerWidth / 2, 0] ];
+                                    var pointerLine = d3.svg.line().interpolate('monotone');
+                                    var pg = svg.append('g').data([lineData])
+                                    .attr('class', 'pointer')
+                                    .attr('transform', centerTx);
+                                    
+                                    pointer = pg.append('path')
+                                    .attr('d', pointerLine/*function(d) { return pointerLine(d) +'Z';}*/ )
+                                    .attr('transform', 'rotate(' +config.minAngle +')');
+                                    
+                                    update(newValue === undefined ? 0 : newValue);
+
+                    readout = svg.append('g')
+                    .attr('class', 'label')
+                    .attr('transform', notcenterTranslation())
+                    .append('text');
+
     }
     that.render = render;
     
@@ -171,11 +171,17 @@ var gauge = function(container, configuration) {
         }
         var ratio = scale(newValue);
         var newAngle = config.minAngle + (ratio * range);
+        if (newAngle > config.maxAngle) {
+            newAngle = config.maxAngle;
+        }
+        else if (newAngle < config.minAngle) {
+            newAngle = config.minAngle;
+        }
         pointer.transition()
         .duration(config.transitionMs)
         .ease('elastic')
         .attr('transform', 'rotate(' +newAngle +')');
-        
+
         if (readout !== undefined)
             readout.text(newValue.toFixed(numPrecision));
     }
@@ -187,47 +193,47 @@ var gauge = function(container, configuration) {
 }
 
 /*
- Sample config object:
- {
- size: 300,
- clipWidth: 300,
- clipHeight: 300,
- ringWidth: 60,
- maxValue: 10,
- transitionMs: 4000,
- id: 0
- }
- 
- */
+Sample config object:
+{
+size: 300,
+clipWidth: 300,
+clipHeight: 300,
+ringWidth: 60,
+maxValue: 10,
+transitionMs: 4000,
+id: 0
+}
+
+*/
 masterGauge.init = function (config) {
     if (config == undefined) {
         config = {
-        size: 300,
-        clipWidth: 300,
-        clipHeight: 300,
-        ringWidth: 60,
-        maxValue: 10,
-        transitionMs: 4000,
-        };
+                   size: 300,
+                   clipWidth: 300,
+                   clipHeight: 300,
+                   ringWidth: 60,
+                   maxValue: 10,
+                   transitionMs: 4000,
+                   };
     }
-    
+
     if (config.id == undefined) {
         alert("No id defined in config object!");
     }
     var id = config.id;
     masterGauge[id] = gauge('power-gauge', config);
-    masterGauge[id].render();
-    
-    // masterGauge[id].updateReadings = function () {
-    //     // just pump in random data here...
-    //     masterGauge[id].update(Math.random() * 10);
-    // }
-    
-    // every few seconds update reading values
-    // masterGauge[id].updateReadings();
-    // setInterval(function() {
-    //             masterGauge[id].updateReadings();
-    //             }, 5 * 1000);
+                           masterGauge[id].render();
+                           
+                           // masterGauge[id].updateReadings = function () {
+                           //     // just pump in random data here...
+                           //     masterGauge[id].update(Math.random() * 10);
+                           // }
+                           
+                           // every few seconds update reading values
+                           // masterGauge[id].updateReadings();
+                           // setInterval(function() {
+                           //             masterGauge[id].updateReadings();
+                           //             }, 5 * 1000);
 }
 
 // if ( !window.isLoaded ) {
@@ -241,5 +247,5 @@ masterGauge.init = function (config) {
 // }
 
 masterGauge.update = function (val, id) {
-    masterGauge[id].update(val);
+    masterGauge[id].update(val);   
 }
