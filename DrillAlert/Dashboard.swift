@@ -128,7 +128,7 @@ class Dashboard {
     class func getDashboardsForUser(user: User, andWellbore wellbore: Wellbore) -> (Array<Dashboard>, String?) {
         var result = Array<Dashboard>()
         var errorMessage: String?
-        let url = "https://drillalert.azurewebsites.net/api/views/\(wellbore.id)"
+        let url = "https://drillalert.azurewebsites.net/api/dashboards/\(wellbore.id)"
         let session = user.session
         let dashboardsJSONArray = session.getJSONArrayAtURL(url)
         

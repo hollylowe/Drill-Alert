@@ -126,7 +126,7 @@ class AddEditAlertTableViewController: UITableViewController {
         }
         
         // Set the alert severity cell
-        switch alert.severity {
+        switch alert.priority {
             case .Critical: alertCriticalPriorityCell.accessoryType = .Checkmark
             case .Warning:  alertWarningPriorityCell.accessoryType = .Checkmark
             case .Information: alertInformationPriorityCell.accessoryType = .Checkmark
@@ -148,9 +148,8 @@ class AddEditAlertTableViewController: UITableViewController {
         return result
     }
     
-    func getAlertSeverityValue() -> Severity? {
-        var result: Severity?
-        
+    func getAlertPriorityValue() -> Priority? {
+        var result: Priority?
         
         if alertCriticalPriorityCell.accessoryType == .Checkmark {
             result = .Critical
@@ -159,7 +158,6 @@ class AddEditAlertTableViewController: UITableViewController {
         } else if alertInformationPriorityCell.accessoryType == .Checkmark {
             result = .Information
         }
-        
         
         return result
     }
@@ -172,12 +170,9 @@ class AddEditAlertTableViewController: UITableViewController {
     
     @IBAction func rightBarButtonTapped(sender: AnyObject) {
         if let alert = alertToEdit {
-            // TODO: Save the changes made
-            // to the alert
-            saveEditedAlert()
+            self.saveEditedAlert()
         } else {
-            // TODO: Add a new Alert
-            createNewAlert()
+            self.createNewAlert()
         }
         
     }
@@ -185,7 +180,6 @@ class AddEditAlertTableViewController: UITableViewController {
     func saveEditedAlert() {
         var alertMessage: String?
         self.view.endEditing(true)
-        // if let newAlertType = selectedAlertType {
     
         if let newName = alertNameTextField.text {
             if let newValueText = alertValueTextField.text {
@@ -194,12 +188,13 @@ class AddEditAlertTableViewController: UITableViewController {
                 
                 if let newValue = numberFormatter.numberFromString(newValueText) {
                     if let newRising = self.getAlertRisingValue() {
-                        if let newSeverity = self.getAlertSeverityValue() {
+                        if let newPriority = self.getAlertPriorityValue() {
                             if let newAlert = alertToEdit {
+                                
                                 newAlert.name = newName
-                                newAlert.threshold = newValue.doubleValue
                                 newAlert.rising = newRising
-                                newAlert.severity = newSeverity
+                                newAlert.priority = newPriority
+                                newAlert.threshold = newValue.doubleValue
                                 newAlert.save(self.currentUser, completion: { (error: NSError?) -> Void in
                                     if let error = error {
                                         let alertController = UIAlertController(title: "Error", message:
@@ -235,8 +230,6 @@ class AddEditAlertTableViewController: UITableViewController {
         
     }
     
-    // Creates a new alert, by saving it (in a way 
-    // yet to be determined)
     func createNewAlert() {
          var alertMessage: String?
         
@@ -247,7 +240,7 @@ class AddEditAlertTableViewController: UITableViewController {
                 
                 if let newValue = numberFormatter.numberFromString(newValueText) {
                     if let newRising = self.getAlertRisingValue() {
-                        if let newSeverity = self.getAlertSeverityValue() {
+                        if let newPriority = self.getAlertPriorityValue() {
                             
                             // TODO: Set Curve ID of New Alert
                             let newAlert = Alert(
@@ -255,8 +248,7 @@ class AddEditAlertTableViewController: UITableViewController {
                                 userID: currentUser.id,
                                 name: newName,
                                 rising: newRising,
-                                wellboreID: self.wellbore.id,
-                                severity: newSeverity,
+                                priority: newPriority,
                                 threshold: newValue.doubleValue)
                             
                             newAlert.save(self.currentUser, completion: { (error) -> Void in

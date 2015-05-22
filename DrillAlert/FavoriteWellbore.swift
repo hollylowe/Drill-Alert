@@ -13,7 +13,7 @@ import UIKit
 @objc(FavoriteWellbore)
 class FavoriteWellbore : NSManagedObject {
     
-    @NSManaged var wellboreID: NSNumber
+    @NSManaged var wellboreID: NSString
     
     func delete() {
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
@@ -49,14 +49,14 @@ class FavoriteWellbore : NSManagedObject {
         return allFavoriteWellbores
     }
     
-    class func createNewInstance(wellboreID: Int) -> FavoriteWellbore? {
+    class func createNewInstance(wellboreID: String) -> FavoriteWellbore? {
         var newFavoriteWellbore: FavoriteWellbore?
         
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         if let context = appDelegate.managedObjectContext {
             var favoriteWellbore = NSEntityDescription.insertNewObjectForEntityForName(FavoriteWellbore.entityName(), inManagedObjectContext: context) as! FavoriteWellbore
             
-            favoriteWellbore.wellboreID = NSNumber(integer: wellboreID)
+            favoriteWellbore.wellboreID = wellboreID
             
             var error: NSError?
             
@@ -73,14 +73,15 @@ class FavoriteWellbore : NSManagedObject {
         return newFavoriteWellbore
     }
 
-    class func fetchFavoriteWellboreWithWellboreID(wellboreID: Int) -> FavoriteWellbore? {
+    class func fetchFavoriteWellboreWithWellboreID(wellboreID: String) -> FavoriteWellbore? {
         var favoriteWellbore: FavoriteWellbore?
         
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         if let context = appDelegate.managedObjectContext {
             
             let favoriteWellboreFetchRequest = NSFetchRequest(entityName: FavoriteWellbore.entityName())
-            let favoriteWellborePredicate = NSPredicate(format: "wellboreID == %@", argumentArray: [NSNumber(integer: wellboreID)])
+            let favoriteWellborePredicate = NSPredicate(format: "wellboreID == %@", argumentArray:
+                [wellboreID])
             
             favoriteWellboreFetchRequest.predicate = favoriteWellborePredicate
             

@@ -16,46 +16,45 @@ class Alert {
     var curveID: Int
     var name: String
     var rising: Bool
-    var wellboreID: String
-    var severity: Severity
+    var priority: Priority
     var threshold: Double
     
-    // Keys for the Alert
-    let APIUserIDKey = "UserId"
-    let APIAlertIDKey = "Id"
-    let APICurveIDKey = "CurveId"
-    let APINameKey = "Name"
-    let APIRisingKey = "Rising"
-    
-    let APIWellboreIDKey = "WellBoreId"
-    let APISeverityKey = "Priority"
-    let APIThresholdKey = "Threshold"
+    let APINameKey       = "Name"
+    let APIUserIDKey     = "UserId"
+    let APIRisingKey     = "Rising"
+    let APIAlertIDKey    = "Id"
+    let APICurveIDKey    = "CurveId"
+    let APIPriorityKey   = "Priority"
+    let APIThresholdKey  = "Threshold"
     let validSaveStatusCode = 200
 
-    init(curveID: Int, userID: Int, name: String, rising: Bool, wellboreID: String, severity: Severity, threshold: Double) {
+    init(curveID: Int,
+        userID: Int,
+        name: String,
+        rising: Bool,
+        priority: Priority,
+        threshold: Double) {
         self.userID = userID
         self.curveID = curveID
         self.name = name
         self.rising = rising
-        self.wellboreID = wellboreID
-        self.severity = severity
+        self.priority = priority
         self.threshold = threshold
     }
     
-    init(id: Int, curveID: Int, userID: Int, name: String, rising: Bool, wellboreID: String, severity: Int, threshold: Double) {
+    init(id: Int,
+        curveID: Int,
+        userID: Int,
+        name: String,
+        rising: Bool,
+        priority: Priority,
+        threshold: Double) {
         self.id = id
         self.userID = userID
         self.curveID = curveID
         self.name = name
         self.rising = rising
-        self.wellboreID = wellboreID
-        
-        if let newSeverity = Severity(rawValue: severity) {
-            self.severity = newSeverity
-        } else {
-            self.severity = Severity.None
-        }
-        
+        self.priority = priority
         self.threshold = threshold
     }
     
@@ -75,8 +74,7 @@ class Alert {
                     "\"\(self.APIRisingKey)\":\(self.rising)," +
                     "\"\(self.APIThresholdKey)\":\(self.threshold)," +
                     "\"\(self.APICurveIDKey)\":\(self.curveID)," +
-                    "\"\(self.APISeverityKey)\":\(self.severity.rawValue)," +
-                    "\"\(self.APIWellboreIDKey)\":\(self.wellboreID)" +
+                    "\"\(self.APIPriorityKey)\":\(self.priority)" +
                 "}"
             } else {
                 jsonString = "{" +
@@ -85,8 +83,7 @@ class Alert {
                     "\"\(self.APIRisingKey)\":\(self.rising)," +
                     "\"\(self.APIThresholdKey)\":\(self.threshold)," +
                     "\"\(self.APICurveIDKey)\":\(self.curveID)," +
-                    "\"\(self.APISeverityKey)\":\(self.severity.rawValue)," +
-                    "\"\(self.APIWellboreIDKey)\":\(self.wellboreID)" +
+                    "\"\(self.APIPriorityKey)\":\(self.priority)" +
                 "}"
             }
             
@@ -125,49 +122,65 @@ class Alert {
     
     class func alertFromJSONObject(JSONObject: JSON, user: User) -> Alert? {
         var result: Alert?
-        // Keys for the Alert
-        let APIAlertIDKey = "Id"
-        let APICurveIDKey = "CurveId"
-        let APINameKey = "Name"
-        let APIRisingKey = "Rising"
-        let APIUserIDKey = "UserId"
+        var error: String?
         
-        let APIWellboreIDKey = "WellBoreId"
-        let APISeverityKey = "Priority"
+        let APIAlertIDKey   = "Id"
+        let APIUserIDKey    = "UserId"
+        let APICurveIDKey   = "CurveId"
+        let APINameKey      = "Name"
+        let APIRisingKey    = "Rising"
+        let APIPriorityKey  = "Priority"
         let APIThresholdKey = "Threshold"
-        
         
         // Get the values at the above keys from the JSON Object
         if let id = JSONObject.getIntAtKey(APIAlertIDKey) {
             if let curveID = JSONObject.getIntAtKey(APICurveIDKey) {
                 if let name = JSONObject.getStringAtKey(APINameKey) {
                     if let rising = JSONObject.getBoolAtKey(APIRisingKey) {
-                        if let wellboreID = JSONObject.getStringAtKey(APIWellboreIDKey) {
-                            if let severityInt = JSONObject.getIntAtKey(APISeverityKey) {
+                        if let priorityString = JSONObject.getStringAtKey(APIPriorityKey) {
+                            if let priority = Priority.getPriorityForString(priorityString) {
                                 if let threshold = JSONObject.getDoubleAtKey(APIThresholdKey) {
-                                    let alert = Alert(
-                                        id: id,
-                                        curveID: curveID,
-                                        userID: user.id,
-                                        name: name,
-                                        rising: rising,
-                                        wellboreID: wellboreID,
-                                        severity: severityInt,
-                                        threshold: threshold)
-                                    
-                                    result = alert
+                                    if let userID = JSONObject.getIntAtKey(APIUserIDKey) {
+                                        let alert = Alert(
+                                            curveID: curveID,
+                                            userID: userID,
+                                            name: name,
+                                            rising: rising,
+                                            priority: priority,
+                                            threshold: threshold)
+                                        result = alert
+                                    } else {
+                                        error = "Error: Could not create alert - No User ID found for alert."
+                                    }
+                                } else {
+                                    error = "Error: Could not create alert - No Threshold found for alert."
                                 }
+                            } else {
+                                error = "Error: Could not create alert - Invalid priority found."
                             }
+                        } else {
+                            error = "Error: Could not create alert - No Priority found for alert."
                         }
+                    } else {
+                        error = "Error: Could not create alert - No Rising field found for alert."
                     }
+                } else {
+                    error = "Error: Could not create alert: No Name field found for alert."
                 }
+            } else {
+                error = "Error: Could not create alert: No Curve ID found for alert."
             }
+        } else {
+            error = "Error: Could not create alert: No ID found for alert."
+        }
+        
+        if (error != nil) {
+            println(error)
         }
         
         return result
     }
     
-    // GET api/Alerts
     class func getAllAlertsForUser(user: User) -> (Array<Alert>, String?) {
         var result = Array<Alert>()
         var errorMessage: String?
@@ -210,9 +223,12 @@ class Alert {
                     if let alert = Alert.alertFromJSONObject(alertJSONObject, user: user) {
                         // TODO: Get an actual endpoint for this,
                         // instead of retrieving all alerts and filtering
+                        
+                        /*
                         if alert.wellboreID == wellbore.id {
                             result.append(alert)
                         }
+                        */
                     }
                 }
             }
@@ -226,129 +242,3 @@ class Alert {
     }
 }
 
-/*
-@objc(Alert)
-class Alert: NSManagedObject {
-
-    @NSManaged var value: NSNumber
-    @NSManaged var isActive: NSNumber
-    @NSManaged var alertOnRise: NSNumber
-    @NSManaged var alertType: NSNumber
-    @NSManaged var alertPriority: NSNumber
-    @NSManaged var guid: String
-    
-    func getAlertType() -> AlertType? {
-        var result: AlertType?
-        
-        for alertType in AlertType.allValues {
-            if alertType.rawValue == self.alertType.integerValue {
-                result = alertType
-                break
-            }
-        }
-        
-        return result
-    }
-    
-    func getAlertPriority() -> AlertPriority? {
-        var result: AlertPriority?
-        
-        for alertPriority in AlertPriority.allValues {
-            if alertPriority.rawValue == self.alertPriority.integerValue {
-                result = alertPriority
-                break
-            }
-        }
-        
-        return result
-    }
-    
-    func setAlertType(alertType: AlertType) {
-        self.alertType = NSNumber(integer: Int(alertType.rawValue))
-    }
-    
-    func setAlertPriority(alertPriority: AlertPriority) {
-        self.alertPriority = NSNumber(integer: Int(alertPriority.rawValue))
-    }
-    
-    func save() -> Bool {
-        var success = false
-        
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        if let context = appDelegate.managedObjectContext {
-            var error: NSError?
-            context.save(&error)
-            if error != nil {
-                println("Core Data Error: ")
-                println(error)
-            } else {
-                success = true
-            }
-        }
-        
-        return success
-    }
-    
-    class func entityName() -> String {
-        return "Alert"
-    }
-    
-    class func createNewInstance(value: Float, isActive: Bool, alertOnRise: Bool, type: AlertType, priority: AlertPriority) -> Alert? {
-        var newAlert: Alert?
-        
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        if let context = appDelegate.managedObjectContext {
-            var alert = NSEntityDescription.insertNewObjectForEntityForName(Alert.entityName(), inManagedObjectContext: context) as! Alert
-            alert.alertType = NSNumber(integer: Int(type.rawValue))
-            alert.value = NSNumber(float: value)
-            alert.isActive = NSNumber(bool: isActive)
-            alert.alertPriority = NSNumber(integer: Int(priority.rawValue))
-            alert.alertOnRise = NSNumber(bool: alertOnRise)
-            
-            // Create a UUID
-            var uuidObject = CFUUIDCreate(nil)
-            var uuidString = CFUUIDCreateString(nil, uuidObject)
-            
-            // TODO: Change this
-            // alert.guid = uuidString;
-            
-            var error: NSError?
-            
-            context.save(&error)
-            
-            if error != nil {
-                println("Core Data Error: ")
-                println(error)
-            } else {
-                newAlert = alert
-            }
-        }
-        
-        return newAlert
-    }
-    
-    
-    class func fetchAllInstances() -> Array<Alert> {
-        var allAlerts = Array<Alert>()
-        
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        if let context = appDelegate.managedObjectContext {
-            var request = NSFetchRequest(entityName: Alert.entityName())
-            var error: NSError?
-            var results = context.executeFetchRequest(request, error: &error)
-            if error != nil {
-                println("Core Data Error: ")
-                println(error)
-            } else {
-                allAlerts = results as! [Alert]
-                
-                for alert in allAlerts {
-                    println(alert.guid)
-                }
-            }
-        }
-        
-        return allAlerts
-    }
-}
-*/

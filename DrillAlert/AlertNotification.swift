@@ -9,79 +9,88 @@
 import Foundation
 import UIKit
 
-enum Severity: Int {
-    case Information = 0
-    case Warning = 1
-    case Critical = 2
-    case None = 9
-    
-    func toString() -> String {
-        var result: String!
-        
-        switch self {
-        case Information:
-            result = "Information"
-        case Warning:
-            result = "Warning"
-        case Critical:
-            result = "Critical"
-        case None:
-            result = "None"
-            
-        }
-        
-        return result
-    }
-}
-
-class AlertNotification {
+class AlertHistoryItem {
     var message: String?
-    var severity: Severity?
+    var priority: Priority?
     var date: NSDate?
     var alertID: Int?
     var acknowledged: Bool?
     
-    init(JSONObject: JSON) {
-        self.message = JSONObject.getStringAtKey("Message")
-        
-        if let severityInt = JSONObject.getIntAtKey("NotificationSeverity") {
-             self.severity = Severity(rawValue: severityInt)
-        }
-       
-        self.date = JSONObject.getDateAtKey("NotificationDate")
-        self.alertID = JSONObject.getIntAtKey("TriggeringAlert")
-        self.acknowledged = JSONObject.getBoolAtKey("Acknowledged")
-        
-    }
-    
-    init(message: String, severity: Severity, date: NSDate, alertID: Int, acknowledged: Bool) {
+    init(message: String, priority: Priority, date: NSDate, alertID: Int, acknowledged: Bool) {
         self.message = message;
-        self.severity = severity;
+        self.priority = priority;
         self.date = date
         self.alertID = alertID
         self.acknowledged = acknowledged
     }
     
-    class func getAlertHistory() -> [AlertNotification] {
-        var result = Array<AlertNotification>()
+    class func alertHistoryItemFromJSONObject(JSONObject: JSON) -> AlertHistoryItem? {
+        var error: String?
+        var result: AlertHistoryItem?
+        let APIDateKey              = "NotificationDate"
+        let APIMessageKey           = "Message"
+        let APIPriorityKey          = "NotificationSeverity"
+        let APIAcknowledgedKey      = "Acknowledged"
+        let APITriggeringAlertKey   = "TriggeringAlert"
+        
+        if let message = JSONObject.getStringAtKey(APIMessageKey) {
+            if let priorityInt = JSONObject.getIntAtKey(APIPriorityKey) {
+                if let priority = Priority(rawValue: priorityInt) {
+                    if let date = JSONObject.getDateAtKey(APIDateKey) {
+                        if let alertID = JSONObject.getIntAtKey(APITriggeringAlertKey) {
+                            if let acknowledged = JSONObject.getBoolAtKey(APIAcknowledgedKey) {
+                                result = AlertHistoryItem(
+                                    message: message,
+                                    priority: priority,
+                                    date: date,
+                                    alertID: alertID,
+                                    acknowledged: acknowledged)
+                            } else {
+                                error = "Error: Could not create Alert History Item - Nothing found for \(APIAcknowledgedKey) key."
+                            }
+                        } else {
+                            error = "Error: Could not create Alert History Item - Nothing found for \(APITriggeringAlertKey) key."
+                        }
+                    } else {
+                        error = "Error: Could not create Alert History Item - Nothing found for \(APIDateKey) key."
+                    }
+                } else {
+                    error = "Error: Could not create Alert History Item - Invalid priority integer."
+                }
+            } else {
+                error = "Error: Could not create Alert History Item - Nothing found for \(APIPriorityKey) key."
+            }
+        } else {
+            error = "Error: Could not create Alert History Item - No message found."
+        }
+        
+        if (error != nil) {
+            println(error)
+        }
+        
+        return result
+    }
+    
+    // Return an array on success, or an error on fail.
+    class func getAlertsHistory() -> ([AlertHistoryItem], String?) {
+        var result = Array<AlertHistoryItem>()
+        var error: String?
         
         let url = "https://drillalert.azurewebsites.net/api/alertshistory/"
         let alertNotificationJSONArray = JSONArray(url: url)
-        if let error = alertNotificationJSONArray.error {
-            // TODO: Show error message to user
-
-            println(error.description)
+        if let networkError = alertNotificationJSONArray.error {
+            error = networkError.description
         } else {
             if let array = alertNotificationJSONArray.array {
                 for JSONObject in array {
-                    result.append(AlertNotification(JSONObject: JSONObject))
+                    if let alertHistoryItem = AlertHistoryItem.alertHistoryItemFromJSONObject(JSONObject) {
+                        result.append(alertHistoryItem)
+                    }
                 }
             }
-            
         }
         
-        
-        return result;
+        return (result, error)
     }
     
     func getNotificationBody() -> String! {
@@ -89,192 +98,3 @@ class AlertNotification {
     }
     
 }
-/*
-@objc(CDAlertNotification)
-class CDAlertNotification: NSManagedObject {
-
-    @NSManaged var timeRecieved: NSDate
-    @NSManaged var read: NSNumber
-    @NSManaged var alert: Alert
-
-    func delete() {
-        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
-        if let context = appDelegate.managedObjectContext {
-            context.deleteObject(self)
-            var error: NSError?
-            
-            context.save(&error)
-            
-            if error != nil {
-                println("Core Data Error: ")
-                println(error)
-            }
-        }
-    }
-    
-    func getNotificationBody() -> String {
-        var body = ""
-        
-        if let alertType = self.alert.getAlertType() {
-            if let alertPriority = self.alert.getAlertPriority() {
-                body = body + alertType.name
-                
-                if self.alert.alertOnRise.boolValue {
-                    body = body + " has risen to "
-                } else {
-                    body = body + " has fallen to "
-                }
-                
-                body = body + self.alert.value.stringValue + " \(alertType.units)"
-                
-            }
-        }
-        
-        return body
-    }
-    
-    
-    class func entityName() -> String {
-        return "AlertNotification"
-    }
-    
-    class func createNewInstance(alertGUID: String, timeRecieved: NSDate) -> AlertNotification? {
-        var newAlertNotification: AlertNotification?
-        
-        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
-        if let context = appDelegate.managedObjectContext {
-            var alertNotification = NSEntityDescription.insertNewObjectForEntityForName(AlertNotification.entityName(), inManagedObjectContext: context) as AlertNotification
-            
-            alertNotification.read = NSNumber(bool: false)
-            alertNotification.timeRecieved = timeRecieved
-            
-            let alertFetchRequest = NSFetchRequest(entityName: Alert.entityName())
-            let alertPredicate = NSPredicate(format: "guid == %@", argumentArray: [alertGUID])
-            
-            alertFetchRequest.predicate = alertPredicate
-            
-            if let alertFetchResults = context.executeFetchRequest(alertFetchRequest, error: nil) as? [Alert] {
-                if alertFetchResults.count > 0 {
-                    alertNotification.alert = alertFetchResults[0]
-                }
-            }
-            
-            var error: NSError?
-            
-            context.save(&error)
-            
-            if error != nil {
-                println("Core Data Error: ")
-                println(error)
-            } else {
-                newAlertNotification = alertNotification
-                println(newAlertNotification)
-            }
-        }
-        
-        return newAlertNotification
-    }
-    
-    class func fetchAllInstances() -> Array<AlertNotification> {
-        var allAlertNotifications = Array<AlertNotification>()
-        
-        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
-        if let context = appDelegate.managedObjectContext {
-            var request = NSFetchRequest(entityName: AlertNotification.entityName())
-            var error: NSError?
-            var results = context.executeFetchRequest(request, error: &error)
-            if error != nil {
-                println("Core Data Error: ")
-                println(error)
-            } else {
-                allAlertNotifications = results as [AlertNotification]
-            }
-        }
-        
-        return allAlertNotifications
-    }
-    
-    class func fetchAllReadAlertNotifications() -> Array<AlertNotification> {
-        var result = Array<AlertNotification>()
-        
-        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
-        if let context = appDelegate.managedObjectContext {
-            var request = NSFetchRequest(entityName: AlertNotification.entityName())
-            var predicate = NSPredicate(format: "read == %@", argumentArray: [NSNumber(bool: true)])
-            request.predicate = predicate
-            
-            var error: NSError?
-            var results = context.executeFetchRequest(request, error: &error)
-            if error != nil {
-                println("Core Data Error: ")
-                println(error)
-            } else {
-                result = results as [AlertNotification]
-            }
-        }
-        
-        return result
-    }
-    
-    class func fetchAllAlertNotificationsWithPriority(alertPriority: AlertPriority) -> Array<AlertNotification> {
-        var result = Array<AlertNotification>()
-        
-        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
-        if let context = appDelegate.managedObjectContext {
-            var request = NSFetchRequest(entityName: AlertNotification.entityName())
-            var predicate = NSPredicate(format: "(alert.alertPriority == %@) AND (read == %@)", argumentArray: [NSNumber(integer: Int(alertPriority.rawValue)), NSNumber(bool: false)])
-            request.predicate = predicate
-            
-            var error: NSError?
-            var results = context.executeFetchRequest(request, error: &error)
-            if error != nil {
-                println("Core Data Error: ")
-                println(error)
-            } else {
-                result = results as [AlertNotification]
-            }
-        }
-        
-        return result
-    }
-    
-    class func fetchAllCriticalAlertNotifications() -> Array<AlertNotification> {
-        return AlertNotification.fetchAllAlertNotificationsWithPriority(AlertPriority.Critical)
-    }
-    
-    class func fetchAllWarningAlertNotifications() -> Array<AlertNotification> {
-        return AlertNotification.fetchAllAlertNotificationsWithPriority(AlertPriority.Warning)
-    }
-    
-    class func fetchAllInformationAlertNotifications() -> Array<AlertNotification> {
-        return AlertNotification.fetchAllAlertNotificationsWithPriority(AlertPriority.Information)
-    }
-    
-    func markAsRead() {
-        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
-        if let context = appDelegate.managedObjectContext {
-            self.read = NSNumber(bool: true)
-            var error: NSError?
-            context.save(&error)
-            if error != nil {
-                println("Core Data Error: ")
-                println(error)
-            }
-        }
-    }
-    
-    func unmarkAsRead() {
-        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
-        if let context = appDelegate.managedObjectContext {
-            self.read = NSNumber(bool: false)
-            var error: NSError?
-            context.save(&error)
-            if error != nil {
-                println("Core Data Error: ")
-                println(error)
-            }
-        }
-    }
-    
-}
-*/

@@ -49,6 +49,7 @@ class DashboardTests: XCTestCase {
     }
     
     func testSaveDashboard() {
+        /*
         let testWellID = 1
         let testWellboreID = 1
         
@@ -92,6 +93,7 @@ class DashboardTests: XCTestCase {
             // for the expectation to fulfill.
             self.waitForExpectationsWithTimeout(15.0, handler: nil)
         }
+        */
     }
     
 }

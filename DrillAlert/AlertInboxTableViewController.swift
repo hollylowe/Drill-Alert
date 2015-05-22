@@ -18,10 +18,10 @@ class AlertInboxTableViewController: UITableViewController {
     let informationSection = 2
     let readSection = 3
     
-    var criticalAlertNotifications: [AlertNotification]!
-    var warningAlertNotifications: [AlertNotification]!
-    var informationAlertNotifications: [AlertNotification]!
-    var readAlertNotifications: [AlertNotification]!
+    var readItems: [AlertHistoryItem]!
+    var warningItems: [AlertHistoryItem]!
+    var criticalItems: [AlertHistoryItem]!
+    var informationItems: [AlertHistoryItem]!
     
     var shouldLoadFromNetwork = true
     var loadingIndicator: UIActivityIndicatorView?
@@ -61,33 +61,45 @@ class AlertInboxTableViewController: UITableViewController {
     }
     
     func reloadAlertHistory() {
-        var alertNotifications = AlertNotification.getAlertHistory()
+        var (alertHistoryItems, optionalError) = AlertHistoryItem.getAlertsHistory()
         
-        self.criticalAlertNotifications = Array<AlertNotification>()
-        self.warningAlertNotifications = Array<AlertNotification>()
-        self.informationAlertNotifications = Array<AlertNotification>()
-        self.readAlertNotifications = Array<AlertNotification>()
-        
-        for alertNotification in alertNotifications {
-            if let acknowledged = alertNotification.acknowledged {
-                if acknowledged {
-                    readAlertNotifications.append(alertNotification)
-                } else {
-                    if let severity = alertNotification.severity {
-                        switch severity {
-                        case .Critical:
-                            criticalAlertNotifications.append(alertNotification)
-                        case .Warning:
-                            warningAlertNotifications.append(alertNotification)
-                        case .Information:
-                            informationAlertNotifications.append(alertNotification)
-                        default: break
+        if let error = optionalError {
+            let alertController = UIAlertController(
+                title: "Error",
+                message: "Unable to load Alert History.",
+                preferredStyle: UIAlertControllerStyle.Alert)
+            
+            let okayAction = UIAlertAction(title: "Okay", style: .Default, handler: nil)
+            alertController.addAction(okayAction)
+            self.presentViewController(alertController, animated: true, completion: nil)
+        } else {
+            self.criticalItems = Array<AlertHistoryItem>()
+            self.warningItems = Array<AlertHistoryItem>()
+            self.informationItems = Array<AlertHistoryItem>()
+            self.readItems = Array<AlertHistoryItem>()
+            
+            for alertHistoryItem in alertHistoryItems {
+                if let acknowledged = alertHistoryItem.acknowledged {
+                    if acknowledged {
+                        readItems.append(alertHistoryItem)
+                    } else {
+                        if let priority = alertHistoryItem.priority {
+                            switch priority {
+                            case .Critical:
+                                criticalItems.append(alertHistoryItem)
+                            case .Warning:
+                                warningItems.append(alertHistoryItem)
+                            case .Information:
+                                informationItems.append(alertHistoryItem)
+                            default: break
+                            }
                         }
+                        
                     }
-                    
                 }
             }
         }
+        
     }
     
     func loadData() {
@@ -99,10 +111,6 @@ class AlertInboxTableViewController: UITableViewController {
             loadingData = true
             self.tableView.reloadData()
             
-            // TODO: This will need to change if we add a way to refresh this page, which we probably will.
-            // Instead, we could use the NSURLConnection asynchrounous call. This is because users could
-            // refresh the page faster than this call could load it, resulting in multiple threads doing
-            // the same operation and messing up the table view.
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
                 self.reloadAlertHistory()
                 
@@ -115,8 +123,6 @@ class AlertInboxTableViewController: UITableViewController {
         } else {
             self.tableView.reloadData()
         }
-
-        
         
     }
     
@@ -136,22 +142,21 @@ extension AlertInboxTableViewController: UITableViewDataSource {
         cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
             let cell = tableView.dequeueReusableCellWithIdentifier(
                 AlertInboxCell.cellIdentifier()) as! AlertInboxCell
-            var alertNotification: AlertNotification!
-            
+            var alertHistoryItem: AlertHistoryItem!
             
             switch indexPath.section {
             case criticalSection:
-                alertNotification = criticalAlertNotifications[indexPath.row]
+                alertHistoryItem = criticalItems[indexPath.row]
             case warningSection:
-                alertNotification = warningAlertNotifications[indexPath.row]
+                alertHistoryItem = warningItems[indexPath.row]
             case informationSection:
-                alertNotification = informationAlertNotifications[indexPath.row]
+                alertHistoryItem = informationItems[indexPath.row]
             case readSection:
-                alertNotification = readAlertNotifications[indexPath.row]
-            default: alertNotification = nil
+                alertHistoryItem = readItems[indexPath.row]
+            default: alertHistoryItem = nil
             }
             
-            cell.setupWithAlertNotification(alertNotification)
+            cell.setupWithAlertHistoryItem(alertHistoryItem)
             
             return cell
     }
@@ -173,10 +178,10 @@ extension AlertInboxTableViewController: UITableViewDataSource {
             self.tableView.backgroundView = backgroundView
             self.tableView.separatorStyle = .None
             
-        } else if criticalAlertNotifications.count == 0 &&
-            warningAlertNotifications.count == 0 &&
-            informationAlertNotifications.count == 0 &&
-            readAlertNotifications.count == 0 {
+        } else if criticalItems.count == 0 &&
+            warningItems.count == 0 &&
+            informationItems.count == 0 &&
+            readItems.count == 0 {
             // Show no alert notifications message
             numberOfSections = 0
 
@@ -207,13 +212,13 @@ extension AlertInboxTableViewController: UITableViewDataSource {
             
             switch section {
             case criticalSection:
-                numberOfRows = criticalAlertNotifications.count
+                numberOfRows = criticalItems.count
             case warningSection:
-                numberOfRows = warningAlertNotifications.count
+                numberOfRows = warningItems.count
             case informationSection:
-                numberOfRows = informationAlertNotifications.count
+                numberOfRows = informationItems.count
             case readSection:
-                numberOfRows = readAlertNotifications.count
+                numberOfRows = readItems.count
             default:
                 numberOfRows = 0
             }

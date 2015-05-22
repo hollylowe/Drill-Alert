@@ -174,8 +174,6 @@ class WellboreDetailViewController: UIViewController {
         
         self.presentViewController(manageDashboardsNavigationController, animated: true, completion: nil)
     }
-
-    
     
     private func imageWithImage(image: UIImage, scaledToSize newSize: CGSize) -> UIImage {
         UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0)
@@ -186,31 +184,4 @@ class WellboreDetailViewController: UIViewController {
         return newImage
     }
     
-    func findHairlineImageViewUnder(view: UIView) -> UIImageView? {
-        if view.isKindOfClass(UIImageView) && view.bounds.size.height <= 1.0 {
-            return view as? UIImageView
-        } else {
-            for subview in view.subviews {
-                var imageView = self.findHairlineImageViewUnder(subview as! UIView)
-                if imageView != nil {
-                    return imageView
-                }
-            }
-            return nil
-        }
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        // Hiding the navigation bar line
-        if let navigationController = self.navigationController {
-           // navBarHairlineImageView = self.findHairlineImageViewUnder(navigationController.navigationBar)
-           // navBarHairlineImageView.hidden = true
-        }
-    }
-    
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-        //navBarHairlineImageView.hidden = false
-    }
 }

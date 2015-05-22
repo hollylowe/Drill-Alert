@@ -90,8 +90,6 @@
 		A06E9A181AFA86990083A500 /* JavaScriptPlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06E9A131AFA86430083A500 /* JavaScriptPlot.swift */; };
 		A06E9A1A1AFABFAE0083A500 /* ChoosePageTypeNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06E9A191AFABFAE0083A500 /* ChoosePageTypeNavigationController.swift */; };
 		A06E9A1B1AFAC0840083A500 /* ChoosePageTypeNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06E9A191AFABFAE0083A500 /* ChoosePageTypeNavigationController.swift */; };
-		A06E9A1D1AFAC7860083A500 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06E9A1C1AFAC7860083A500 /* Enums.swift */; };
-		A06E9A1E1AFAC79C0083A500 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06E9A1C1AFAC7860083A500 /* Enums.swift */; };
 		A06E9A201AFACA7B0083A500 /* AddEditCanvasItemNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06E9A1F1AFACA7B0083A500 /* AddEditCanvasItemNavigationController.swift */; };
 		A06E9A211AFACB8B0083A500 /* AddEditCanvasItemNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06E9A1F1AFACA7B0083A500 /* AddEditCanvasItemNavigationController.swift */; };
 		A06E9A241AFB04AA0083A500 /* AddEditCanvasNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06E9A231AFB04AA0083A500 /* AddEditCanvasNavigationController.swift */; };
@@ -263,6 +261,14 @@
 		A0F5D6451A95906400B68548 /* AlertNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F5D6441A95906400B68548 /* AlertNotification.swift */; };
 		A0F9D6831AAEA324001B03F1 /* WellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F9D6821AAEA324001B03F1 /* WellTableViewCell.swift */; };
 		A0F9D6841AAEA6D3001B03F1 /* WellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F9D6821AAEA324001B03F1 /* WellTableViewCell.swift */; };
+		A0FD949B1B0FE66A0052BE52 /* PriorityEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FD949A1B0FE66A0052BE52 /* PriorityEnum.swift */; };
+		A0FD949C1B0FE66A0052BE52 /* PriorityEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FD949A1B0FE66A0052BE52 /* PriorityEnum.swift */; };
+		A0FD949E1B0FE67F0052BE52 /* CanvasItemTypeEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FD949D1B0FE67F0052BE52 /* CanvasItemTypeEnum.swift */; };
+		A0FD949F1B0FE67F0052BE52 /* CanvasItemTypeEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FD949D1B0FE67F0052BE52 /* CanvasItemTypeEnum.swift */; };
+		A0FD94A11B0FE6A20052BE52 /* CanvasItemDataSourceEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FD94A01B0FE6A20052BE52 /* CanvasItemDataSourceEnum.swift */; };
+		A0FD94A21B0FE6A20052BE52 /* CanvasItemDataSourceEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FD94A01B0FE6A20052BE52 /* CanvasItemDataSourceEnum.swift */; };
+		A0FD94A41B0FE6B90052BE52 /* PlotTrackScaleTypeEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FD94A31B0FE6B90052BE52 /* PlotTrackScaleTypeEnum.swift */; };
+		A0FD94A51B0FE6B90052BE52 /* PlotTrackScaleTypeEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FD94A31B0FE6B90052BE52 /* PlotTrackScaleTypeEnum.swift */; };
 		CF0224E51A95A8B100115B0B /* EditVisualTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0224E41A95A8B100115B0B /* EditVisualTableViewCell.swift */; };
 		CF08A77A1A9DCFCD00A33AFE /* SelectUnitsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF08A7791A9DCFCD00A33AFE /* SelectUnitsTableViewController.swift */; };
 		CF08A77C1A9DD02600A33AFE /* AddTrackTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF08A77B1A9DD02600A33AFE /* AddTrackTableViewController.swift */; };
@@ -342,7 +348,6 @@
 		A06E9A131AFA86430083A500 /* JavaScriptPlot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JavaScriptPlot.swift; sourceTree = "<group>"; };
 		A06E9A151AFA866C0083A500 /* JavaScriptGauge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JavaScriptGauge.swift; sourceTree = "<group>"; };
 		A06E9A191AFABFAE0083A500 /* ChoosePageTypeNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChoosePageTypeNavigationController.swift; sourceTree = "<group>"; };
-		A06E9A1C1AFAC7860083A500 /* Enums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		A06E9A1F1AFACA7B0083A500 /* AddEditCanvasItemNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEditCanvasItemNavigationController.swift; sourceTree = "<group>"; };
 		A06E9A231AFB04AA0083A500 /* AddEditCanvasNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEditCanvasNavigationController.swift; sourceTree = "<group>"; };
 		A06FFD5E1A06AA08001B3FF8 /* DrillAlert.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DrillAlert.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -429,6 +434,10 @@
 		A0F1B5801A901BE400306DB7 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		A0F5D6441A95906400B68548 /* AlertNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertNotification.swift; sourceTree = "<group>"; };
 		A0F9D6821AAEA324001B03F1 /* WellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WellTableViewCell.swift; sourceTree = "<group>"; };
+		A0FD949A1B0FE66A0052BE52 /* PriorityEnum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PriorityEnum.swift; sourceTree = "<group>"; };
+		A0FD949D1B0FE67F0052BE52 /* CanvasItemTypeEnum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanvasItemTypeEnum.swift; sourceTree = "<group>"; };
+		A0FD94A01B0FE6A20052BE52 /* CanvasItemDataSourceEnum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanvasItemDataSourceEnum.swift; sourceTree = "<group>"; };
+		A0FD94A31B0FE6B90052BE52 /* PlotTrackScaleTypeEnum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlotTrackScaleTypeEnum.swift; sourceTree = "<group>"; };
 		CF0224E41A95A8B100115B0B /* EditVisualTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditVisualTableViewCell.swift; sourceTree = "<group>"; };
 		CF08A7791A9DCFCD00A33AFE /* SelectUnitsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectUnitsTableViewController.swift; sourceTree = "<group>"; };
 		CF08A77B1A9DD02600A33AFE /* AddTrackTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTrackTableViewController.swift; sourceTree = "<group>"; };
@@ -572,7 +581,7 @@
 		A05A35D01A0837DD008EA386 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				A06E9A1C1AFAC7860083A500 /* Enums.swift */,
+				A0FD94991B0FE6560052BE52 /* Enums */,
 				A0C9493B1AEC2C0300B7143B /* Dashboard */,
 				A0772F1E1A928E2700DE37B1 /* CoreData */,
 				A018E4081A2B011D001EF20E /* Alerts */,
@@ -920,6 +929,17 @@
 			name = Views;
 			sourceTree = "<group>";
 		};
+		A0FD94991B0FE6560052BE52 /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+				A0FD949A1B0FE66A0052BE52 /* PriorityEnum.swift */,
+				A0FD949D1B0FE67F0052BE52 /* CanvasItemTypeEnum.swift */,
+				A0FD94A01B0FE6A20052BE52 /* CanvasItemDataSourceEnum.swift */,
+				A0FD94A31B0FE6B90052BE52 /* PlotTrackScaleTypeEnum.swift */,
+			);
+			name = Enums;
+			sourceTree = "<group>";
+		};
 		CF4007661A78C44C008E9C1F /* Visuals */ = {
 			isa = PBXGroup;
 			children = (
@@ -1101,6 +1121,7 @@
 				A0343D331A2AB66100FA0464 /* WellboreTableViewCell.swift in Sources */,
 				A02679FB1A742A4900ED8FFB /* APIHelper.swift in Sources */,
 				A033918C1A92DC120018F2B6 /* SDISession.swift in Sources */,
+				A0FD949B1B0FE66A0052BE52 /* PriorityEnum.swift in Sources */,
 				A0772F201A928EBD00DE37B1 /* Alert.swift in Sources */,
 				A06E9A201AFACA7B0083A500 /* AddEditCanvasItemNavigationController.swift in Sources */,
 				A01E74FA1AF18A790083ED93 /* Reachability.swift in Sources */,
@@ -1123,6 +1144,7 @@
 				A0699A9E1A809102004F9C97 /* SegmentControlToolbar.swift in Sources */,
 				A0C9494E1AEEA6E100B7143B /* CompassSensorTypeCell.swift in Sources */,
 				A0CE032C1A0ED67C0076EE3E /* DashboardViewController.swift in Sources */,
+				A0FD94A41B0FE6B90052BE52 /* PlotTrackScaleTypeEnum.swift in Sources */,
 				CF4007681A78C789008E9C1F /* ManageVisualsTableViewCell.swift in Sources */,
 				A04B3E141B01BAE2005D8AE1 /* TextFieldDetailCell.swift in Sources */,
 				A01F2AE71AE72A3D000A7957 /* DashboardNameInputTableViewCell.swift in Sources */,
@@ -1137,10 +1159,11 @@
 				A0C949171AE9F64400B7143B /* AddCanvasItemTableViewCell.swift in Sources */,
 				A06E9A1A1AFABFAE0083A500 /* ChoosePageTypeNavigationController.swift in Sources */,
 				A0F9D6831AAEA324001B03F1 /* WellTableViewCell.swift in Sources */,
+				A0FD949E1B0FE67F0052BE52 /* CanvasItemTypeEnum.swift in Sources */,
 				A01F2AFF1AE85571000A7957 /* PlotIndependentVariableTypeCell.swift in Sources */,
 				A0F0BEED1AB1294C003C3CCB /* FavoriteWellbore.swift in Sources */,
-				A06E9A1D1AFAC7860083A500 /* Enums.swift in Sources */,
 				A04B3E171B01BF65005D8AE1 /* LabelDisclosureCell.swift in Sources */,
+				A0FD94A11B0FE6A20052BE52 /* CanvasItemDataSourceEnum.swift in Sources */,
 				A018E40A1A2B0733001EF20E /* ManageAlertsTableViewController.swift in Sources */,
 				A018E4061A2B010A001EF20E /* Parameter.swift in Sources */,
 				A0CEDBA21A0C3ADF0051BDB8 /* User.swift in Sources */,
@@ -1259,7 +1282,6 @@
 				A01F2AF01AE7392F000A7957 /* PanelTableViewCell.swift in Sources */,
 				A08025DD1AAA383D00C8BE99 /* HomeViewController.swift in Sources */,
 				A080260B1AAA389E00C8BE99 /* UIViewExtension.swift in Sources */,
-				A06E9A1E1AFAC79C0083A500 /* Enums.swift in Sources */,
 				A06E9A181AFA86990083A500 /* JavaScriptPlot.swift in Sources */,
 				A0C9491D1AE9F8AA00B7143B /* AddEditCanvasTableViewController.swift in Sources */,
 				A08025C61AAA380F00C8BE99 /* AlertNotification.swift in Sources */,
@@ -1275,6 +1297,7 @@
 				A0C949491AEC311400B7143B /* Plot.swift in Sources */,
 				A08025D51AAA382900C8BE99 /* User.swift in Sources */,
 				A08025E21AAA384300C8BE99 /* SelectAlertTypeTableViewController.swift in Sources */,
+				A0FD94A21B0FE6A20052BE52 /* CanvasItemDataSourceEnum.swift in Sources */,
 				A01F2AEF1AE73892000A7957 /* DashboardNameInputTableViewCell.swift in Sources */,
 				A0993B661B02A2D300C78519 /* AddEditTrackTableViewController.swift in Sources */,
 				A06FFD7D1A06AA08001B3FF8 /* DrillAlertTests.swift in Sources */,
@@ -1285,6 +1308,7 @@
 				A0D7007D1ADB4C56008A1B97 /* WellTests.swift in Sources */,
 				A08026031AAA388400C8BE99 /* AlertTableViewCell.swift in Sources */,
 				A04B3E121B01B930005D8AE1 /* TextFieldCell.swift in Sources */,
+				A0FD949C1B0FE66A0052BE52 /* PriorityEnum.swift in Sources */,
 				A01F2AF61AE808EA000A7957 /* ChoosePageTypeTableViewController.swift in Sources */,
 				A0C949471AEC2F3900B7143B /* Page.swift in Sources */,
 				A0F9D6841AAEA6D3001B03F1 /* WellTableViewCell.swift in Sources */,
@@ -1300,8 +1324,10 @@
 				A01E74FE1AF1990D0083ED93 /* LoadingTableViewController.swift in Sources */,
 				A08025FC1AAA388000C8BE99 /* ParameterAlertTableViewCell.swift in Sources */,
 				A08025ED1AAA386100C8BE99 /* AddTrackTableViewController.swift in Sources */,
+				A0FD949F1B0FE67F0052BE52 /* CanvasItemTypeEnum.swift in Sources */,
 				A08025C51AAA380500C8BE99 /* AppDelegate.swift in Sources */,
 				A0C9492C1AEA13BB00B7143B /* CanvasItemNameInputTableViewCell.swift in Sources */,
+				A0FD94A51B0FE6B90052BE52 /* PlotTrackScaleTypeEnum.swift in Sources */,
 				A0C9492B1AEA13B800B7143B /* CanvasItemTypeTableViewCell.swift in Sources */,
 				A0087D881B05392A009762C3 /* SectionHeaderCell.swift in Sources */,
 				A08025D91AAA382900C8BE99 /* Curve.swift in Sources */,

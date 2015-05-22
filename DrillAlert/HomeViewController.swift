@@ -65,28 +65,8 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 })
             })
 
-        } else {
-            let well = Well(id: "0", name: "Test Well", location: "No Location")
-            well.wellbores.append(Wellbore(id: "0", name: "Test Bore", well: Well(id: "0", name: "Test Well", location: "Here")))
-            
-            self.wells.append(well)
-            self.tableView.reloadData()
         }
         
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        // Hiding the navigation bar line
-        if let navigationController = self.navigationController {
-           // navBarHairlineImageView = self.findHairlineImageViewUnder(navigationController.navigationBar)
-           // navBarHairlineImageView.hidden = true
-        }
-    }
-    
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-       // navBarHairlineImageView.hidden = false
     }
     
     func logoutButtonTapped(sender: UIBarButtonItem) {
@@ -207,10 +187,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
     func reloadWells() {
         if let user = self.currentUser {
-            // Only load the wells of the currently selected segment.
-            // TODO: Not sure if API is supporting this, we may remove it. For right now, just set both
-            // allWellbores.removeAll(keepCapacity: false)
-            // subscribedWellbores.removeAll(keepCapacity: false)
+            
             self.wells.removeAll(keepCapacity: false)
             self.favoriteWells.removeAll(keepCapacity: false)
             
@@ -225,7 +202,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 var favoriteWellboreIDs = Array<String>()
                 
                 for favoriteWellbore in localFavoriteWellbores {
-                    favoriteWellboreIDs.append(favoriteWellbore.wellboreID)
+                    favoriteWellboreIDs.append(favoriteWellbore.wellboreID as String)
                 }
                 
                 // Then go through every well, if that well's id

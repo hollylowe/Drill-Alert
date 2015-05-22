@@ -18,19 +18,15 @@ class AlertInboxCell: UITableViewCell {
         return "AlertInboxCell"
     }
     
-    func setupWithAlertNotification(alertNotification: AlertNotification!) {
-        /*
-        if let alertType = alertNotification.alert.getAlertType() {
-            self.alertTitleLabel.text = alertType.name
-        }
-        */
-        if let severity = alertNotification.severity {
-            self.alertTitleLabel.text = severity.toString()
+    func setupWithAlertHistoryItem(alertHistoryItem: AlertHistoryItem!) {
+        
+        if let priority = alertHistoryItem.priority {
+            self.alertTitleLabel.text = priority.toString()
         }
         
-        self.alertInformationLabel.text = alertNotification.getNotificationBody()
+        self.alertInformationLabel.text = alertHistoryItem.getNotificationBody()
         
-        if let date = alertNotification.date {
+        if let date = alertHistoryItem.date {
             self.alertTimeLabel.text = self.getDateString(date)
         }
         self.selectionStyle = .None

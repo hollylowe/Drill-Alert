@@ -23,7 +23,7 @@ class AlertTableViewCell: UITableViewCell {
         */
         self.alertOnSwitch.onTintColor = UIColor(red: 0.604, green: 0.792, blue: 1.0, alpha: 1.0)
 
-        self.alertTitleLabel.text = "\(alert.name), \(alert.severity.toString())"
+        self.alertTitleLabel.text = "\(alert.name), \(alert.priority.toString())"
         if alert.rising.boolValue {
             self.alertDetailLabel.text = "Alert on rise to \(alert.threshold)"
         } else {
