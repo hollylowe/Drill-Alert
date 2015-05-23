@@ -230,7 +230,7 @@ class SDISession: NSObject, NSURLSessionDelegate, NSURLSessionTaskDelegate {
                     // The JSON has been successfully serialized,
                     // which means it (should) be an Array of AnyObject,
                     // as long as the server didn't run into an error.
-                    if let json = result {
+                    if let json: AnyObject = result {
                         let objectDictionary = json as! Dictionary<String, AnyObject>
                         resultJSON = JSON(dictionary: objectDictionary)
                         
