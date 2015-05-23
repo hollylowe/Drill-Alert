@@ -40,7 +40,7 @@ enum CompassDataSource {
     }
 }
 
-class Compass: Visualization {
+class Compass: Item {
     var sensorType: CompassSensorType
     var dataSource: CompassDataSource
     

@@ -64,7 +64,7 @@ class Plot: Page {
         // self.endRange = endRange
         
         self.tracks = tracks
-        super.init(name: name, position: position, xDimension: xDimension, yDimension: yDimension, visualizations: self.tracks)
+        super.init(name: name, position: position, xDimension: xDimension, yDimension: yDimension, items: self.tracks)
         self.type = .Plot
 
     }

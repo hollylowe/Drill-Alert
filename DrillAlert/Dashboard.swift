@@ -103,11 +103,17 @@ class Dashboard {
     class func dashboardFromJSONObject(JSONObject: JSON) -> Dashboard? {
         var dashboard: Dashboard?
         
-        if let id = JSONObject.getIntAtKey("Id") {
-            if let name = JSONObject.getStringAtKey("Name") {
-                if let userID = JSONObject.getIntAtKey("UserId") {
-                    if let wellboreID = JSONObject.getStringAtKey("WellboreId") {
-                        if let pagesJSONArray = JSONObject.getJSONArrayAtKey("Panels") {
+        let APIDashboardIDKey = "Id"
+        let APINameKey = "Name"
+        let APIUserIDKey = "UserId"
+        let APIWellboreIDKey = "WellboreId"
+        let APIPagesKey = "Pages"
+        
+        if let id = JSONObject.getIntAtKey(APIDashboardIDKey) {
+            if let name = JSONObject.getStringAtKey(APINameKey) {
+                if let userID = JSONObject.getIntAtKey(APIUserIDKey) {
+                    if let wellboreID = JSONObject.getStringAtKey(APIWellboreIDKey) {
+                        if let pagesJSONArray = JSONObject.getJSONArrayAtKey(APIPagesKey) {
                             // Now get the pages for this dashboard
                             let pages = Page.getPagesFromJSONArray(pagesJSONArray)
                             dashboard = Dashboard(

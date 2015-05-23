@@ -7,7 +7,7 @@
 //
 
 import Foundation
-class Track: Visualization {
+class Track: Item {
     var name: String
     var scaleType: PlotTrackScaleType
     var curves: Array<Curve>
@@ -24,11 +24,5 @@ class Track: Visualization {
             yPosition: yPosition,
             jsFileName: "Track.js")
         
-        var newCurveIDs = Array<Int>()
-        for curve in curves {
-            newCurveIDs.append(curve.id)
-        }
-        
-        super.curveIDs = newCurveIDs
     }
 }

@@ -219,8 +219,8 @@
 		A0C949371AEB42C600B7143B /* EditDashboardsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C949321AEB40D400B7143B /* EditDashboardsTableViewController.swift */; };
 		A0C949391AEC193200B7143B /* DeleteDashboardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C949381AEC193200B7143B /* DeleteDashboardTableViewCell.swift */; };
 		A0C9493A1AEC1AA300B7143B /* DeleteDashboardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C949381AEC193200B7143B /* DeleteDashboardTableViewCell.swift */; };
-		A0C9493F1AEC2C6C00B7143B /* Visualization.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C9493E1AEC2C6C00B7143B /* Visualization.swift */; };
-		A0C949401AEC2C7C00B7143B /* Visualization.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C9493E1AEC2C6C00B7143B /* Visualization.swift */; };
+		A0C9493F1AEC2C6C00B7143B /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C9493E1AEC2C6C00B7143B /* Item.swift */; };
+		A0C949401AEC2C7C00B7143B /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C9493E1AEC2C6C00B7143B /* Item.swift */; };
 		A0C949421AEC2D0600B7143B /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C949411AEC2D0600B7143B /* Page.swift */; };
 		A0C949441AEC2D2200B7143B /* Plot.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C949431AEC2D2200B7143B /* Plot.swift */; };
 		A0C949461AEC2D3400B7143B /* Compass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C949451AEC2D3400B7143B /* Compass.swift */; };
@@ -269,6 +269,10 @@
 		A0FD94A21B0FE6A20052BE52 /* CanvasItemDataSourceEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FD94A01B0FE6A20052BE52 /* CanvasItemDataSourceEnum.swift */; };
 		A0FD94A41B0FE6B90052BE52 /* PlotTrackScaleTypeEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FD94A31B0FE6B90052BE52 /* PlotTrackScaleTypeEnum.swift */; };
 		A0FD94A51B0FE6B90052BE52 /* PlotTrackScaleTypeEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FD94A31B0FE6B90052BE52 /* PlotTrackScaleTypeEnum.swift */; };
+		A0FD94A71B0FF6650052BE52 /* ItemSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FD94A61B0FF6650052BE52 /* ItemSettings.swift */; };
+		A0FD94A81B0FF6650052BE52 /* ItemSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FD94A61B0FF6650052BE52 /* ItemSettings.swift */; };
+		A0FD94AA1B0FFEA60052BE52 /* PageTypeEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FD94A91B0FFEA60052BE52 /* PageTypeEnum.swift */; };
+		A0FD94AB1B0FFEA60052BE52 /* PageTypeEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FD94A91B0FFEA60052BE52 /* PageTypeEnum.swift */; };
 		CF0224E51A95A8B100115B0B /* EditVisualTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0224E41A95A8B100115B0B /* EditVisualTableViewCell.swift */; };
 		CF08A77A1A9DCFCD00A33AFE /* SelectUnitsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF08A7791A9DCFCD00A33AFE /* SelectUnitsTableViewController.swift */; };
 		CF08A77C1A9DD02600A33AFE /* AddTrackTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF08A77B1A9DD02600A33AFE /* AddTrackTableViewController.swift */; };
@@ -405,7 +409,7 @@
 		A0C949321AEB40D400B7143B /* EditDashboardsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditDashboardsTableViewController.swift; sourceTree = "<group>"; };
 		A0C949341AEB419400B7143B /* EditDashboardTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditDashboardTableViewCell.swift; sourceTree = "<group>"; };
 		A0C949381AEC193200B7143B /* DeleteDashboardTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteDashboardTableViewCell.swift; sourceTree = "<group>"; };
-		A0C9493E1AEC2C6C00B7143B /* Visualization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Visualization.swift; sourceTree = "<group>"; };
+		A0C9493E1AEC2C6C00B7143B /* Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		A0C949411AEC2D0600B7143B /* Page.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
 		A0C949431AEC2D2200B7143B /* Plot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Plot.swift; sourceTree = "<group>"; };
 		A0C949451AEC2D3400B7143B /* Compass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Compass.swift; sourceTree = "<group>"; };
@@ -438,6 +442,8 @@
 		A0FD949D1B0FE67F0052BE52 /* CanvasItemTypeEnum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanvasItemTypeEnum.swift; sourceTree = "<group>"; };
 		A0FD94A01B0FE6A20052BE52 /* CanvasItemDataSourceEnum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanvasItemDataSourceEnum.swift; sourceTree = "<group>"; };
 		A0FD94A31B0FE6B90052BE52 /* PlotTrackScaleTypeEnum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlotTrackScaleTypeEnum.swift; sourceTree = "<group>"; };
+		A0FD94A61B0FF6650052BE52 /* ItemSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemSettings.swift; sourceTree = "<group>"; };
+		A0FD94A91B0FFEA60052BE52 /* PageTypeEnum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageTypeEnum.swift; sourceTree = "<group>"; };
 		CF0224E41A95A8B100115B0B /* EditVisualTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditVisualTableViewCell.swift; sourceTree = "<group>"; };
 		CF08A7791A9DCFCD00A33AFE /* SelectUnitsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectUnitsTableViewController.swift; sourceTree = "<group>"; };
 		CF08A77B1A9DD02600A33AFE /* AddTrackTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTrackTableViewController.swift; sourceTree = "<group>"; };
@@ -809,10 +815,11 @@
 		A0C9493D1AEC2C6000B7143B /* Item */ = {
 			isa = PBXGroup;
 			children = (
-				A0C9493E1AEC2C6C00B7143B /* Visualization.swift */,
+				A0C9493E1AEC2C6C00B7143B /* Item.swift */,
 				A0C9491A1AE9F7F400B7143B /* CanvasItem.swift */,
 				A0C949451AEC2D3400B7143B /* Compass.swift */,
 				A04B3E191B01C0A3005D8AE1 /* Track.swift */,
+				A0FD94A61B0FF6650052BE52 /* ItemSettings.swift */,
 			);
 			name = Item;
 			sourceTree = "<group>";
@@ -936,6 +943,7 @@
 				A0FD949D1B0FE67F0052BE52 /* CanvasItemTypeEnum.swift */,
 				A0FD94A01B0FE6A20052BE52 /* CanvasItemDataSourceEnum.swift */,
 				A0FD94A31B0FE6B90052BE52 /* PlotTrackScaleTypeEnum.swift */,
+				A0FD94A91B0FFEA60052BE52 /* PageTypeEnum.swift */,
 			);
 			name = Enums;
 			sourceTree = "<group>";
@@ -1122,6 +1130,7 @@
 				A02679FB1A742A4900ED8FFB /* APIHelper.swift in Sources */,
 				A033918C1A92DC120018F2B6 /* SDISession.swift in Sources */,
 				A0FD949B1B0FE66A0052BE52 /* PriorityEnum.swift in Sources */,
+				A0FD94AA1B0FFEA60052BE52 /* PageTypeEnum.swift in Sources */,
 				A0772F201A928EBD00DE37B1 /* Alert.swift in Sources */,
 				A06E9A201AFACA7B0083A500 /* AddEditCanvasItemNavigationController.swift in Sources */,
 				A01E74FA1AF18A790083ED93 /* Reachability.swift in Sources */,
@@ -1183,7 +1192,7 @@
 				A095D57F1A78A3FA000889CB /* JSON.swift in Sources */,
 				A0343D391A2AC85400FA0464 /* WellboreDetailViewController.swift in Sources */,
 				A0C949221AEA0E5000B7143B /* AddEditCanvasItemTableViewController.swift in Sources */,
-				A0C9493F1AEC2C6C00B7143B /* Visualization.swift in Sources */,
+				A0C9493F1AEC2C6C00B7143B /* Item.swift in Sources */,
 				A01F2AED1AE72CE5000A7957 /* AddEditDashboardTableViewController.swift in Sources */,
 				A06E9A161AFA866C0083A500 /* JavaScriptGauge.swift in Sources */,
 				A0772F221A92921300DE37B1 /* AlertType.swift in Sources */,
@@ -1204,6 +1213,7 @@
 				CFC8DBE61A92B21100727A97 /* EditViewTableViewCell.swift in Sources */,
 				A0993B681B02A85900C78519 /* AddEditTrackNavigationController.swift in Sources */,
 				A01F2AE91AE72B25000A7957 /* PanelTableViewCell.swift in Sources */,
+				A0FD94A71B0FF6650052BE52 /* ItemSettings.swift in Sources */,
 				A095FB8F1A2FC38C00B15D39 /* AlertWhenCell.swift in Sources */,
 				A0C949391AEC193200B7143B /* DeleteDashboardTableViewCell.swift in Sources */,
 				A095D5811A78A403000889CB /* JSONArray.swift in Sources */,
@@ -1311,8 +1321,9 @@
 				A0FD949C1B0FE66A0052BE52 /* PriorityEnum.swift in Sources */,
 				A01F2AF61AE808EA000A7957 /* ChoosePageTypeTableViewController.swift in Sources */,
 				A0C949471AEC2F3900B7143B /* Page.swift in Sources */,
+				A0FD94A81B0FF6650052BE52 /* ItemSettings.swift in Sources */,
 				A0F9D6841AAEA6D3001B03F1 /* WellTableViewCell.swift in Sources */,
-				A0C949401AEC2C7C00B7143B /* Visualization.swift in Sources */,
+				A0C949401AEC2C7C00B7143B /* Item.swift in Sources */,
 				A01E74FB1AF18A950083ED93 /* Reachability.swift in Sources */,
 				A08025CD1AAA382200C8BE99 /* AlertTypeStandard.swift in Sources */,
 				A0CA28481ADB486200192F38 /* HTMLParser.swift in Sources */,
@@ -1328,6 +1339,7 @@
 				A08025C51AAA380500C8BE99 /* AppDelegate.swift in Sources */,
 				A0C9492C1AEA13BB00B7143B /* CanvasItemNameInputTableViewCell.swift in Sources */,
 				A0FD94A51B0FE6B90052BE52 /* PlotTrackScaleTypeEnum.swift in Sources */,
+				A0FD94AB1B0FFEA60052BE52 /* PageTypeEnum.swift in Sources */,
 				A0C9492B1AEA13B800B7143B /* CanvasItemTypeTableViewCell.swift in Sources */,
 				A0087D881B05392A009762C3 /* SectionHeaderCell.swift in Sources */,
 				A08025D91AAA382900C8BE99 /* Curve.swift in Sources */,

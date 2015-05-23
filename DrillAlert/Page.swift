@@ -8,27 +8,7 @@
 
 import Foundation
 
-enum PageType {
-    case Plot, Canvas, Compass, None
-    static let allValues = [Plot, Canvas, Compass, None]
-    func getTitle() -> String {
-        var result = ""
-        switch self {
-        case Plot:
-            result = "Plot"
-        case Canvas:
-            result = "Canvas"
-        case Compass:
-            result = "Compass"
-        case None:
-            result = "None"
-        default: result = ""
-        }
-        
-        return result
-    }
-    
-}
+
 
 class Page {
     var id: Int?
@@ -37,41 +17,39 @@ class Page {
     var position: Int
     var xDimension: Int
     var yDimension: Int
-    var visualizations: Array<Visualization>
+    var items: [Item]
     var shouldShowDemoPlot = false
     
-    init(name: String, position: Int, xDimension: Int, yDimension: Int, visualizations: Array<Visualization>) {
+    init(name: String, position: Int, xDimension: Int, yDimension: Int, items: [Item]) {
         self.name = name
         self.position = position
         self.xDimension = 300
         self.yDimension = 500
-        self.visualizations = visualizations
+        self.items = items
     }
     
-    init(id: Int, name: String, position: Int, xDimension: Int, yDimension: Int, visualizations: Array<Visualization>, type: String) {
+    init(id: Int, name: String, position: Int, xDimension: Int, yDimension: Int, items: [Item], type: Int) {
         self.id = id
         self.name = name
         self.position = position
         self.xDimension = 300
         self.yDimension = 500
-        self.visualizations = visualizations
+        self.items = items
         
-        for pageType in PageType.allValues {
-            if pageType.getTitle() == type {
-                self.type = pageType
-            }
+        if let newType = PageType.pageTypeFromInt(type) {
+            self.type = newType
         }
     }
     
-    func getVisualizationsJSONString() -> String {
+    func getItemsJSONString() -> String {
         var JSONString = "["
         
         var index = 0
         
-        for visualization in self.visualizations {
-            JSONString = JSONString + visualization.toJSONString()
+        for item in self.items {
+            JSONString = JSONString + item.toJSONString()
             
-            if index < self.visualizations.count - 1{
+            if index < self.items.count - 1{
                 JSONString = JSONString + ","
             }
             
@@ -86,7 +64,7 @@ class Page {
     func toJSONString() -> String {
         var JSONString = "{"
         // TODO: Use actual pos/xdim/ydim
-        JSONString = JSONString + "\"Visualizations\": \(self.getVisualizationsJSONString()),"
+        JSONString = JSONString + "\"Items\": \(self.getItemsJSONString()),"
         JSONString = JSONString + "\"Pos\": 0,"
         JSONString = JSONString + "\"XDim\": 0,"
         JSONString = JSONString + "\"YDim\": 0,"
@@ -101,22 +79,23 @@ class Page {
     class func pageFromJSON(pageJSON: JSON) -> Page? {
         var result: Page?
         
-        let APIPanelIDKey = "Id"
-        let APIPanelTypeKey = "Type"
-        let APIPanelNameKey = "Name"
-        let APIPanelPositionKey = "Pos"
-        let APIPanelXDimensionKey = "XDim"
-        let APIPanelYDimensionKey = "YDim"
-        let APIPanelVisualizationsKey = "Visualizations"
+        let APIPageIDKey = "Id"
+        let APIPositionKey = "Pos"
+        let APIXDimensionKey = "XDim"
+        let APIYDimensionKey = "YDim"
         
-        if let id = pageJSON.getIntAtKey(APIPanelIDKey) {
-            if let position = pageJSON.getIntAtKey(APIPanelPositionKey) {
-                if let xDimension = pageJSON.getIntAtKey(APIPanelXDimensionKey) {
-                    if let yDimension = pageJSON.getIntAtKey(APIPanelYDimensionKey) {
-                        if let name = pageJSON.getStringAtKey(APIPanelNameKey) {
-                            if let type = pageJSON.getStringAtKey(APIPanelTypeKey) {
-                                if let visualizationsJSONArray = pageJSON.getJSONArrayAtKey(APIPanelVisualizationsKey) {
-                                    let visualizations = Visualization.getVisualizationsFromJSONArray(visualizationsJSONArray)
+        let APINameKey = "Name"
+        let APITypeKey = "Type"
+        let APIItemsKey = "Items"
+        
+        if let id = pageJSON.getIntAtKey(APIPageIDKey) {
+            if let position = pageJSON.getIntAtKey(APIPositionKey) {
+                if let xDimension = pageJSON.getIntAtKey(APIXDimensionKey) {
+                    if let yDimension = pageJSON.getIntAtKey(APIYDimensionKey) {
+                        if let name = pageJSON.getStringAtKey(APINameKey) {
+                            if let type = pageJSON.getIntAtKey(APITypeKey) {
+                                if let itemsJSONArray = pageJSON.getJSONArrayAtKey(APIItemsKey) {
+                                    let items = Item.getItemsFromJSONArray(itemsJSONArray)
                                     
                                     let newPage = Page(
                                         id: id,
@@ -124,7 +103,7 @@ class Page {
                                         position: position,
                                         xDimension: xDimension,
                                         yDimension: yDimension,
-                                        visualizations: visualizations,
+                                        items: items,
                                         type: type
                                     )
                                     result = newPage

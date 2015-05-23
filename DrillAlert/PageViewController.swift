@@ -62,10 +62,6 @@ class PageViewController: UIViewController, UIWebViewDelegate {
     }
     
     func updatePlot() {
-        for track in self.page.visualizations {
-            // Update every track for the plot
-        }
-        
         
         // TODO: Get the curve points for a specific curve ID.
         // Feed those curve points to the tracks in the plot.
@@ -116,7 +112,7 @@ class PageViewController: UIViewController, UIWebViewDelegate {
             
             // Each visualization in a Plot
             // is a track
-            for track in page.visualizations {
+            for track in page.items {
                 // TODO: Add the track to the Plot
             }
             
@@ -149,10 +145,10 @@ class PageViewController: UIViewController, UIWebViewDelegate {
         let defaultWidth = 400
         let defaultHeight = 300
         if let id = page.id {
-            for visualization in page.visualizations {
+            for item in page.items {
                 // For a canvas, visualizations can be either 
                 // gauges or number readouts.
-                switch visualization.jsFileName {
+                switch item.jsFileName {
                 default: break
                 }
             }

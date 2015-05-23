@@ -66,7 +66,7 @@ class AddEditCanvasTableViewController: UITableViewController {
             
             let canvasNameCell = self.tableView.cellForRowAtIndexPath(canvasNameIndexPath) as! CanvasNameInputTableViewCell
             if let canvasName = canvasNameCell.canvasNameTextField.text {
-                var visualizations = Array<Visualization>()
+                var items = Array<Item>()
                 
                 for canvasItem in self.canvasItems {
                     var jsFileName = ""
@@ -76,15 +76,15 @@ class AddEditCanvasTableViewController: UITableViewController {
                     default: break
                     }
                     
-                    var newVisualization = Visualization(xPosition: 0, yPosition: 0, jsFileName: jsFileName)
-                    visualizations.append(newVisualization)
+                    var newItem = Item(xPosition: 0, yPosition: 0, jsFileName: jsFileName)
+                    items.append(newItem)
                 }
 
                 canvas.name = canvasName
                 canvas.position = 0
                 canvas.xDimension = 0
                 canvas.yDimension = 0
-                canvas.visualizations = visualizations
+                canvas.items = items
                 
                 self.delegate.refreshPages()
             }
@@ -97,7 +97,7 @@ class AddEditCanvasTableViewController: UITableViewController {
             let canvasNameCell = self.tableView.cellForRowAtIndexPath(canvasNameIndexPath) as! CanvasNameInputTableViewCell
             if let canvasName = canvasNameCell.canvasNameTextField.text {
                 // Create a visualization array with all the canvas items
-                var visualizations = Array<Visualization>()
+                var items = Array<Item>()
                 
                 for canvasItem in self.canvasItems {
                     var jsFileName = ""
@@ -107,8 +107,8 @@ class AddEditCanvasTableViewController: UITableViewController {
                     default: break
                     }
                     
-                    var newVisualization = Visualization(xPosition: 0, yPosition: 0, jsFileName: jsFileName)
-                    visualizations.append(newVisualization)
+                    var newItem = Item(xPosition: 0, yPosition: 0, jsFileName: jsFileName)
+                    items.append(newItem)
                 }
                 
                 let newCanvas = Page(
@@ -116,7 +116,7 @@ class AddEditCanvasTableViewController: UITableViewController {
                     position: 0,
                     xDimension: 0,
                     yDimension: 0,
-                    visualizations: visualizations)
+                    items: items)
                 newCanvas.type = .Canvas
 
                 self.delegate.addPage(newCanvas)
@@ -130,8 +130,8 @@ class AddEditCanvasTableViewController: UITableViewController {
     override func viewDidLoad() {
         if let canvas = self.canvasToEdit {
             self.title = "Edit Canvas"
-            for visualization in canvas.visualizations {
-                if let canvasItem = visualization as? CanvasItem {
+            for item in canvas.items {
+                if let canvasItem = item as? CanvasItem {
                     self.canvasItems.append(canvasItem)
                 }
             }
@@ -144,8 +144,8 @@ class AddEditCanvasTableViewController: UITableViewController {
             self.title = "Add Canvas"
             
             if let canvas = self.existingCanvas {
-                for visualization in canvas.visualizations {
-                    if let canvasItem = visualization as? CanvasItem {
+                for item in canvas.items {
+                    if let canvasItem = item as? CanvasItem {
                         self.canvasItems.append(canvasItem)
                     }
                 }

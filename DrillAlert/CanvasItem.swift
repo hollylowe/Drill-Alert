@@ -8,7 +8,7 @@
 
 import Foundation
 
-class CanvasItem: Visualization {
+class CanvasItem: Item {
     var name: String
     var type: CanvasItemType
     var dataSource: CanvasItemDataSource

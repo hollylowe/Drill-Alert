@@ -38,7 +38,6 @@ class AddEditCanvasItemTableViewController: UITableViewController {
                 if let canvasItem = self.canvasItemToEdit {
                     canvasItem.xPosition = 0
                     canvasItem.yPosition = 0
-                    canvasItem.curveIDs = [0]
                     canvasItem.type = type
                     canvasItem.dataSource = dataSource
                     canvasItem.name = name
