@@ -802,8 +802,8 @@
 		A0C9493C1AEC2C1500B7143B /* Page */ = {
 			isa = PBXGroup;
 			children = (
-				A0C949431AEC2D2200B7143B /* Plot.swift */,
 				A0C949411AEC2D0600B7143B /* Page.swift */,
+				A0C949431AEC2D2200B7143B /* Plot.swift */,
 				A0C9493D1AEC2C6000B7143B /* Item */,
 				A06E9A101AFA86240083A500 /* JavaScriptVisualization.swift */,
 				A06E9A131AFA86430083A500 /* JavaScriptPlot.swift */,

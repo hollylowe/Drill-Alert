@@ -53,7 +53,7 @@ class SelectCurveTableViewController: LoadingTableViewController {
         }
         
         if shouldAddCurve {
-            self.delegate.addCurve(curve)
+            // self.delegate.addCurve(curve)
             tableView.deselectRowAtIndexPath(indexPath, animated: true)
             self.dismissViewControllerAnimated(true, completion: nil)
         } else {

@@ -35,8 +35,8 @@ class ItemSettingsCollection {
 }
 
 class ItemSettings {
-    var itemID: Int
-    var id: Int
+    var itemID: Int?
+    var id: Int?
     var stepSize: Int
     var startRange: Int
     var endRange: Int
@@ -46,6 +46,14 @@ class ItemSettings {
     init(itemID: Int, id: Int, stepSize: Int, startRange: Int, endRange: Int, divisionSize: Int, scaleType: Int) {
         self.itemID = itemID
         self.id = id
+        self.stepSize = stepSize
+        self.startRange = startRange
+        self.endRange = endRange
+        self.divisionSize = divisionSize
+        self.scaleType = scaleType
+    }
+    
+    init(stepSize: Int, startRange: Int, endRange: Int, divisionSize: Int, scaleType: Int) {
         self.stepSize = stepSize
         self.startRange = startRange
         self.endRange = endRange
@@ -107,6 +115,28 @@ class ItemSettings {
         }
         
         return result
+    }
+    
+    func toJSONString() -> String {
+        var JSONString = "{"
+        
+        if let id = self.id {
+            JSONString = JSONString + "\"Id\": \(id),"
+        }
+        
+        if let itemID = self.itemID {
+            JSONString = JSONString + "\"ItemId\": \(itemID),"
+        }
+        
+        JSONString = JSONString + "\"StepSize\": \(self.stepSize),"
+        JSONString = JSONString + "\"StartRange\": \(self.startRange),"
+        JSONString = JSONString + "\"EndRange\": \(self.endRange),"
+        JSONString = JSONString + "\"DivisionSize\": \(self.divisionSize),"
+        JSONString = JSONString + "\"ScaleType\": \(self.scaleType)"
+        JSONString = JSONString + "}"
+        
+        return JSONString
+
     }
     
 }

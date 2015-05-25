@@ -21,6 +21,20 @@ class Item {
         self.jsFileName = jsFileName
     }
     
+    init(xPosition: Int, yPosition: Int, jsFileName: String, itemSettingsCollection: ItemSettingsCollection?) {
+        self.xPosition = xPosition
+        self.yPosition = yPosition
+        self.jsFileName = jsFileName
+        self.itemSettingsCollection = itemSettingsCollection
+    }
+    
+    init(id: Int, xPosition: Int, yPosition: Int, jsFileName: String) {
+        self.id = id
+        self.xPosition = xPosition
+        self.yPosition = yPosition
+        self.jsFileName = jsFileName
+    }
+    
     init(id: Int, xPosition: Int, yPosition: Int, jsFileName: String, itemSettingsCollection: ItemSettingsCollection?) {
         self.id = id
         self.xPosition = xPosition
@@ -58,7 +72,15 @@ class Item {
                             result = newItem
                             
                         } else {
-                            error = "Error creating Item: Nothing found at \(APIItemSettingsKey) key."
+                            let newItem = Item(
+                                id: id,
+                                xPosition: xPosition,
+                                yPosition: yPosition,
+                                jsFileName: jsFileName)
+                            
+                            result = newItem
+                            
+                            error = "Warning: Nothing found at \(APIItemSettingsKey) key for item \(id)."
                         }
                     } else {
                         error = "Error creating Item: Nothing found at \(APIItemJSFileKey) key."
@@ -74,7 +96,7 @@ class Item {
         }
         
         if (error != nil) {
-            println(error)
+            println(error!)
         }
         
         return result
@@ -97,30 +119,23 @@ class Item {
     func toJSONString() -> String {
         var JSONString = "{"
         
+        if let id = self.id {
+            JSONString = JSONString + "\"Id\": \(id),"
+        }
+        
         JSONString = JSONString + "\"XPos\": \(self.xPosition),"
         JSONString = JSONString + "\"YPos\": \(self.yPosition),"
         JSONString = JSONString + "\"JsFile\": \"\(self.jsFileName)\","
-        JSONString = JSONString + "\"PanelId\": 0,"
-        
-        /*
-        if let curveIDs = self.curveIDs {
-            JSONString = JSONString + "\"CurveIds\": ["
-            var curveIDIndex = 1
-            for curveID in curveIDs {
-                JSONString = JSONString + "\(curveID)"
-                
-                if curveIDIndex < curveIDs.count {
-                    JSONString = JSONString + ","
-                }
-                
-                curveIDIndex = curveIDIndex + 1
+        JSONString = JSONString + "\"ItemSettings\": ["
+
+        if let itemSettingsCollection = self.itemSettingsCollection {
+            
+            for itemSettings in itemSettingsCollection.array {
+                JSONString = JSONString + itemSettings.toJSONString()
             }
-            JSONString = JSONString + "]"
-        } else {
-            JSONString = JSONString + "\"CurveIds\": null"
         }
-        */
-        JSONString = JSONString + "}"
+        
+        JSONString = JSONString + "]}"
         
         return JSONString
     }

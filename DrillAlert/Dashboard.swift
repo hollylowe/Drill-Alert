@@ -32,16 +32,23 @@ class Dashboard {
     
     func toJSONString() -> String {
         var JSONString = "{"
-
+        
+        // If this page has an ID, we are updating it.
         if let id = self.id {
             JSONString = JSONString + " \"Id\": \(id),"
         }
         
-        JSONString = JSONString + " \"Panels\": \(self.getPagesJSONString()),"
+        JSONString = JSONString + " \"Pages\": \(self.getPagesJSONString()),"
         JSONString = JSONString + " \"Name\": \"\(self.name)\","
+        // JSONString = JSONString + " \"WellboreId\": \"\(self.wellboreID)\""
         JSONString = JSONString + " \"WellboreId\": \"\(self.wellboreID)\","
         JSONString = JSONString + " \"UserId\": \(self.userID)"
-
+        /*
+        // With USER ID if needed
+        JSONString = JSONString + " \"WellboreId\": \"\(self.wellboreID)\","
+        JSONString = JSONString + " \"UserId\": \(self.userID)"
+        */
+        
         JSONString = JSONString + "}"
         
         return JSONString
@@ -66,17 +73,28 @@ class Dashboard {
         return JSONString
     }
     
-    class func createNewDashboard(newDashboard: Dashboard, forUser user: User, andWellbore wellbore: Wellbore, withCallback callback: ((error: String?) -> Void)) {
-        let validSaveStatusCode = 200
-
+    class func saveDashboard(dashboardToSave: Dashboard, forUser user: User, andWellbore wellbore: Wellbore, withCallback callback: ((error: String?) -> Void)) {
+        var URLString = "https://drillalert.azurewebsites.net/api/dashboards"
+        
+        if let id = dashboardToSave.id {
+            // Updating a dashboard
+            URLString = URLString + "/\(id)"
+        }
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
-            if let URL = NSURL(string: "https://drillalert.azurewebsites.net/api/views") {
-                var jsonString = newDashboard.toJSONString()
+            
+            if let URL = NSURL(string: URLString) {
+                var jsonString = dashboardToSave.toJSONString()
+                println("The JSON: " )
+                println(jsonString)
                 if let postData = jsonString.dataUsingEncoding(NSASCIIStringEncoding) {
                     let postLength = String(postData.length)
                     
                     let request = NSMutableURLRequest(URL: URL)
-                    request.HTTPMethod = "POST"
+                    if dashboardToSave.id != nil {
+                        request.HTTPMethod = "PUT"
+                    } else {
+                        request.HTTPMethod = "POST"
+                    }
                     request.HTTPBody = postData
                     request.setValue(postLength, forHTTPHeaderField: "Content-Length")
                     request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
@@ -86,7 +104,8 @@ class Dashboard {
                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
                             if let HTTPResponse = response as? NSHTTPURLResponse {
                                 let statusCode = HTTPResponse.statusCode
-                                if statusCode != validSaveStatusCode {
+                                if error != nil {
+                                    println("Error when saving dashboard: \(error.description)")
                                     callback(error: "Unable to save Dashboard (\(statusCode)).")
                                 } else {
                                     callback(error: nil)
@@ -134,6 +153,15 @@ class Dashboard {
     class func getDashboardsForUser(user: User, andWellbore wellbore: Wellbore) -> (Array<Dashboard>, String?) {
         var result = Array<Dashboard>()
         var errorMessage: String?
+        
+        /*
+        
+        TODO: Change Implementation of retrieving dashboards to the 
+                api/dashboards/{wellboreID} endpoint. This endpoint 
+                is returning null for ItemSettings as of 5/24/2015, however
+                the api/dashboards endpoint returns the correct field.
+        
+        
         let url = "https://drillalert.azurewebsites.net/api/dashboards/\(wellbore.id)"
         let session = user.session
         let dashboardsJSONArray = session.getJSONArrayAtURL(url)
@@ -145,6 +173,24 @@ class Dashboard {
                 for dashboardJSONObject in dashboardJSONs {
                     if let dashboard = Dashboard.dashboardFromJSONObject(dashboardJSONObject) {
                         result.append(dashboard)
+                    }
+                }
+            }
+        }
+        */
+        let url = "https://drillalert.azurewebsites.net/api/dashboards/"
+        let session = user.session
+        let dashboardsJSONArray = session.getJSONArrayAtURL(url)
+        
+        errorMessage = dashboardsJSONArray.getErrorMessage()
+        
+        if errorMessage == nil {
+            if let dashboardJSONs = dashboardsJSONArray.array {
+                for dashboardJSONObject in dashboardJSONs {
+                    if let dashboard = Dashboard.dashboardFromJSONObject(dashboardJSONObject) {
+                        if dashboard.wellboreID == wellbore.id {
+                            result.append(dashboard)
+                        }
                     }
                 }
             }

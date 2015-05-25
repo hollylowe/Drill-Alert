@@ -28,6 +28,21 @@ enum PageType {
         return result
     }
     
+    func getInt() -> Int {
+        var result = -1
+        switch self {
+        case Canvas:
+            result = 0
+        case Plot:
+            result = 1
+        case Compass:
+            result = 2
+        default: result = -1
+        }
+        
+        return result
+    }
+    
     // https://drillalert.azurewebsites.net/Help/ResourceModel?modelName=PanelType
     static func pageTypeFromInt(pageTypeInt: Int) -> PageType? {
         var result: PageType?

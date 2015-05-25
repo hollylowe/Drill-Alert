@@ -67,13 +67,13 @@ extension SelectIVTTableViewController: UITableViewDelegate {
         let cell = tableView.dequeueReusableCellWithIdentifier(PlotIndependentVariableTypeCell.cellIdentifier()) as! PlotIndependentVariableTypeCell
         let type = PlotIndependentVariableType.allValues[indexPath.row]
         cell.setupWithType(type)
-
+        /*
         if let selectedIVT = self.delegate.selectedIVT {
             if selectedIVT == type {
                 cell.accessoryType = .Checkmark
             }
         }
-        
+        */
         return cell
     }
     
@@ -89,7 +89,7 @@ extension SelectIVTTableViewController: UITableViewDelegate {
             }
             
             let type = PlotIndependentVariableType.allValues[indexPath.row]
-            self.delegate.selectedIVT = type
+            // self.delegate.selectedIVT = type
             if let navigationController = self.navigationController {
                 navigationController.popViewControllerAnimated(true)
             }

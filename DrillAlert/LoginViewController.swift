@@ -26,7 +26,7 @@ class LoginViewController: UIViewController {
         activityIndicator.hidden = false
         loginButton.hidden = true
         
-        let session = SDISession(username: "capstone2015\\testuser", password: "StartUp!")
+        let session = SDISession(username: "ldavid@calpoly.edu", password: "StartUp!")
         session.login { (loggedIn) -> Void in
             if loggedIn {
                 self.currentUser = User.getCurrentUser()
@@ -144,7 +144,6 @@ class LoginViewController: UIViewController {
                         
                         self.currentUser = user
                         
-                        println(user.displayName)
                         self.activityIndicator.hidden = true
                         self.activityIndicator.stopAnimating()
                         self.performSegueWithIdentifier(self.loginToHomeSegueIdentifier, sender: self)

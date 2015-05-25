@@ -39,6 +39,8 @@ class AddEditDashboardTableViewController: UITableViewController {
     }
     
     func addPage(page: Page) {
+        // Set the position to the latest one
+        page.position = self.pages.count
         self.pages.append(page)
         self.tableView.reloadData()
     }
@@ -48,7 +50,7 @@ class AddEditDashboardTableViewController: UITableViewController {
     }
     
     func saveDashboard(newDashboard: Dashboard) {
-        Dashboard.createNewDashboard(newDashboard,
+        Dashboard.saveDashboard(newDashboard,
             forUser: self.user,
             andWellbore: self.wellbore) { (error) -> Void in
             // If there is an error, show an alert.
@@ -82,6 +84,7 @@ class AddEditDashboardTableViewController: UITableViewController {
                     
                     self.saveDashboard(newDashboard)
                 } else {
+                    var newPages = self.pages
                     let newDashboard = Dashboard(
                         name: name,
                         pages: self.pages,
@@ -113,8 +116,9 @@ class AddEditDashboardTableViewController: UITableViewController {
     override func viewDidLoad() {
         if let dashboard = dashboardToEdit {
             self.title = "Edit Dashboard"
-            self.pages = dashboard.pages
-            
+            self.pages = dashboard.pages.sorted({ (page1, page2) -> Bool in
+                return page1.position < page2.position
+            })
         } else {
             self.title = "Add Dashboard"
             

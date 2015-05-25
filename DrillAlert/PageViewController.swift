@@ -112,9 +112,11 @@ class PageViewController: UIViewController, UIWebViewDelegate {
             
             // Each visualization in a Plot
             // is a track
+            /*
             for track in page.items {
                 // TODO: Add the track to the Plot
             }
+            */
             
             self.javaScriptPlot = JavaScriptPlot(
                 id: id,
@@ -145,6 +147,7 @@ class PageViewController: UIViewController, UIWebViewDelegate {
         let defaultWidth = 400
         let defaultHeight = 300
         if let id = page.id {
+            /*
             for item in page.items {
                 // For a canvas, visualizations can be either 
                 // gauges or number readouts.
@@ -152,6 +155,7 @@ class PageViewController: UIViewController, UIWebViewDelegate {
                 default: break
                 }
             }
+            */
         }
     }
 }

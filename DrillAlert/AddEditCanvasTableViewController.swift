@@ -84,7 +84,7 @@ class AddEditCanvasTableViewController: UITableViewController {
                 canvas.position = 0
                 canvas.xDimension = 0
                 canvas.yDimension = 0
-                canvas.items = items
+                // canvas.items = items
                 
                 self.delegate.refreshPages()
             }
@@ -110,7 +110,7 @@ class AddEditCanvasTableViewController: UITableViewController {
                     var newItem = Item(xPosition: 0, yPosition: 0, jsFileName: jsFileName)
                     items.append(newItem)
                 }
-                
+                /*
                 let newCanvas = Page(
                     name: canvasName,
                     position: 0,
@@ -118,8 +118,8 @@ class AddEditCanvasTableViewController: UITableViewController {
                     yDimension: 0,
                     items: items)
                 newCanvas.type = .Canvas
-
-                self.delegate.addPage(newCanvas)
+                */
+                // self.delegate.addPage(newCanvas)
                 
             }
             
@@ -130,11 +130,13 @@ class AddEditCanvasTableViewController: UITableViewController {
     override func viewDidLoad() {
         if let canvas = self.canvasToEdit {
             self.title = "Edit Canvas"
+            /*
             for item in canvas.items {
                 if let canvasItem = item as? CanvasItem {
                     self.canvasItems.append(canvasItem)
                 }
             }
+            */
             
             self.navigationItem.leftBarButtonItem = UIBarButtonItem(
                 barButtonSystemItem: .Cancel,
@@ -142,7 +144,7 @@ class AddEditCanvasTableViewController: UITableViewController {
                 action: "cancelBarButtonItemTapped:")
         } else {
             self.title = "Add Canvas"
-            
+            /*
             if let canvas = self.existingCanvas {
                 for item in canvas.items {
                     if let canvasItem = item as? CanvasItem {
@@ -150,6 +152,7 @@ class AddEditCanvasTableViewController: UITableViewController {
                     }
                 }
             }
+            */
         }
         
         super.viewDidLoad()

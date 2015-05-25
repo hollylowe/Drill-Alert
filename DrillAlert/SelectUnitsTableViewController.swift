@@ -68,13 +68,13 @@ extension SelectUnitsTableViewController: UITableViewDelegate {
 
         let units = PlotUnits.allValues[indexPath.row]
         cell.setupWithUnits(units)
-        
+        /*
         if let selectedUnits = self.delegate.selectedUnits {
             if selectedUnits == units {
                 cell.accessoryType = .Checkmark
             }
         }
-        
+        */
         return cell
     }
     
@@ -90,7 +90,7 @@ extension SelectUnitsTableViewController: UITableViewDelegate {
             }
             
             let type = PlotUnits.allValues[indexPath.row]
-            self.delegate.selectedUnits = type
+            // self.delegate.selectedUnits = type
             if let navigationController = self.navigationController {
                 navigationController.popViewControllerAnimated(true)
             }
