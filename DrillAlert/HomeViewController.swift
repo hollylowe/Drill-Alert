@@ -84,7 +84,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     private func setupView() {
         self.title = "Wells"
         let footerView = UIView()
-        self.tableView.backgroundColor = UIColor(red: 0.937, green: 0.937, blue: 0.937, alpha: 1.0)
+        self.tableView.backgroundColor = UIColor.blackColor()
         self.tableView.tableFooterView = UIView()
         
         let toolbarWidth = self.view.frame.size.width
@@ -97,6 +97,8 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         if let navigationController = self.navigationController {
             navigationController.navigationBar.hidden = false
+            navigationController.navigationBar.barStyle = UIBarStyle.Black
+            self.tableView.separatorStyle = .None
             
             // Disable the back button
             self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
@@ -120,6 +122,8 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             // Set up Toolbar
             let toolbarRect = CGRectMake(0, yCoord, toolbarWidth, toolbarHeight)
             let toolbar = UIToolbar(frame: toolbarRect)
+            // toolbar.backgroundColor = UIColor(red: 0.112, green: 0.112, blue: 0.112, alpha: 1.0)
+            toolbar.barTintColor = UIColor(red: 0.112, green: 0.112, blue: 0.112, alpha: 1.0)
             //  toolbar.backgroundColor = toolbarColor
             // toolbar.translucent = false
             // toolbar.barTintColor =  UIColor(red: 0.122, green: 0.122, blue: 0.122, alpha: 1.0)

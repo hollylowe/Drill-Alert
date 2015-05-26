@@ -55,6 +55,7 @@ class Page {
         self.position = position
         self.xDimension = xDimension
         self.yDimension = yDimension
+        
         // TODO: Implement item convert to whichever the type is
         // self.items = items
         if let newType = PageType.pageTypeFromInt(type) {
@@ -64,31 +65,56 @@ class Page {
                 self.tracks = [Track]()
                 for item in items {
                     // Convert each item into a track
-                    var track = Track(
-                        id: item.id!,
-                        xPosition: item.xPosition,
-                        yPosition: item.yPosition,
-                        name: "Track \(item.id!)")
-                    
-                    // Warning: If this is null, it is an error. The user
-                    // will not be able to see these track settings for
-                    // edit and they will not be loaded into the JavaScript graphs.
-                    //
-                    // It is currently null on the backend as of 5/24/15
-                    if let itemSettingsCollection = item.itemSettingsCollection {
-                        track.itemSettingsCollection = item.itemSettingsCollection
-                        if itemSettingsCollection.array.count > 0 {
-                            // Tracks only have one ItemSettings in the ItemSettingsCollection
-                            let newTrackSettings = itemSettingsCollection.array[0]
-                            newTrackSettings.itemID = item.id
-                            track.trackSettings = newTrackSettings
+                    if let id = item.id {
+                        var track = Track(
+                            id: id,
+                            xPosition: item.xPosition,
+                            yPosition: item.yPosition,
+                            name: "Track \(id)")
+                        
+                        // Warning: If this is null, it is an error. The user
+                        // will not be able to see these track settings for
+                        // edit and they will not be loaded into the JavaScript graphs.
+                        //
+                        // It is currently null on the backend as of 5/24/15
+                        if let itemSettingsCollection = item.itemSettingsCollection {
+                            track.itemSettingsCollection = item.itemSettingsCollection
+                            if itemSettingsCollection.array.count > 0 {
+                                // Tracks only have one ItemSettings in the ItemSettingsCollection
+                                let newTrackSettings = itemSettingsCollection.array[0]
+                                newTrackSettings.itemID = item.id
+                                track.trackSettings = newTrackSettings
+                            }
                         }
+                        
+                        self.tracks!.append(track)
+                    } else {
+                        println("Warning: Track Item did not have an ID, not creating.")
+                    }
+                }
+            case .Canvas:
+                self.canvasItems = [CanvasItem]()
+                // Convert each item into a Canvas Item
+                for item in items {
+                    if let id = item.id {
+                        if let type = CanvasItemType.canvasItemTypeFromJSFileName(item.jsFileName) {
+                            var canvasItem = CanvasItem(
+                                id: id,
+                                xPosition: item.xPosition,
+                                yPosition: item.yPosition,
+                                type: type,
+                                name: "Canvas Item \(id)")
+                            
+                            // Implicit since we just instantiated it above.
+                            self.canvasItems!.append(canvasItem)
+                        } else {
+                            println("Warning: Canvas Item had no Type field for JS File Name '\(item.jsFileName)', not creating.")
+                        }
+                    } else {
+                        println("Warning: Canvas Item had no ID field, not creating.")
                     }
                     
-                    self.tracks!.append(track)
                 }
-            case .Canvas: // TODO: Canvas implementation 
-                println("Not implemented.")
             case .Compass: // TODO: Compass implementation
                 println("Compass is not implemented.")
             default: break

@@ -105,7 +105,7 @@ class AddEditPlotTableViewController: UITableViewController {
                         oldPlot.xDimension = xDimension
                         oldPlot.yDimension = yDimension
                         oldPlot.tracks = self.tracks
-                        self.delegate.tableView.reloadData()
+                        self.delegate.refreshPages()
                     } else {
                         let newPlot = Plot(
                             name: name,

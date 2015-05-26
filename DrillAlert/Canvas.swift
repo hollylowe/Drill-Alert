@@ -1,13 +1,13 @@
 //
-//  Plot.swift
+//  Canvas.swift
 //  DrillAlert
 //
-//  Created by Lucas David on 4/25/15.
+//  Created by Lucas David on 5/25/15.
 //  Copyright (c) 2015 Drillionaires. All rights reserved.
 //
 
 import Foundation
 
-class Plot: Page {
+class Canvas: Page {
     
 }

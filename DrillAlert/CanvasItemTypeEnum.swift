@@ -22,4 +22,27 @@ enum CanvasItemType {
         
         return result
     }
+    
+    func getJSFileName() -> String {
+        var result = ""
+        
+        switch self {
+        case NumberReadout: result = "NumberReadout.js"
+        case Gauge: result = "Gauge.js"
+        default: result = ""
+        }
+        
+        return result
+    }
+    static func canvasItemTypeFromJSFileName(JSFileName: String) -> CanvasItemType? {
+        var result: CanvasItemType?
+        
+        switch JSFileName {
+            case CanvasItemType.NumberReadout.getJSFileName(): result = CanvasItemType.NumberReadout
+            case CanvasItemType.Gauge.getJSFileName(): result = CanvasItemType.Gauge
+            default: break
+        }
+        
+        return result
+    }
 }

@@ -114,6 +114,10 @@ class AddEditDashboardTableViewController: UITableViewController {
     
     
     override func viewDidLoad() {
+        self.navigationController?.navigationBar.barStyle = UIBarStyle.Black
+        self.tableView.separatorStyle = .None
+        self.tableView.tableHeaderView = UIView(frame: CGRectMake(0, 0, tableView.frame.size.width, 50.0))
+        
         if let dashboard = dashboardToEdit {
             self.title = "Edit Dashboard"
             self.pages = dashboard.pages.sorted({ (page1, page2) -> Bool in
@@ -147,8 +151,12 @@ class AddEditDashboardTableViewController: UITableViewController {
         super.viewDidLoad()
     }
     
-    func addNewPageButtonTapped(sender: UIButton) {
+    func addNewPageButtonTapped(sender: AnyObject) {
         self.presentChoosePanelTypeTableViewController()
+    }
+    
+    func sortPagesButtonTapped(sender: AnyObject) {
+        println("Should edit.")
     }
     
     func deleteDashboardButtonTapped(sender: UIButton) {
@@ -263,7 +271,7 @@ extension AddEditDashboardTableViewController: UITableViewDelegate {
         case self.dashboardNameSection:
             numberOfRows = 1
         case self.pagesSection:
-            numberOfRows = self.pages.count + 1
+            numberOfRows = self.pages.count
         case self.deleteDashboardSection:
             numberOfRows = 1
         default: break
@@ -272,21 +280,11 @@ extension AddEditDashboardTableViewController: UITableViewDelegate {
         return numberOfRows
     }
     
-    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        var header = ""
-        
-        if section == self.pagesSection {
-            header = "Pages"
-        }
-        
-        return header
-    }
-    
     override func tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         var footer = ""
         
         if section == self.pagesSection {
-            footer = "A page can display a Plot, Compass, or Canvas."
+            footer = ""
         }
         
         return footer
@@ -304,6 +302,72 @@ extension AddEditDashboardTableViewController: UITableViewDelegate {
         return newImage
     }
     
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        var rowHeight: CGFloat = 44.0
+        if indexPath.section == self.pagesSection {
+            rowHeight = 56.0
+        }
+        
+        return rowHeight
+    }
+    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        var rowHeight: CGFloat = 0
+        
+        if section == self.pagesSection {
+            rowHeight = 80.0
+        } else if section == self.dashboardNameSection || section == self.deleteDashboardSection {
+            rowHeight = 34.0
+        }
+        
+        return rowHeight
+    }
+    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        var result: UIView?
+        
+        if section == self.pagesSection {
+            result = UIView(frame: CGRectMake(0, 0, tableView.frame.size.width, 80.0))
+            result!.backgroundColor = UIColor(red: 0.122, green: 0.122, blue: 0.122, alpha: 1.0)
+            let addEditToolbarCell = tableView.dequeueReusableCellWithIdentifier(AddEditToolbarCell.cellIdentifier()) as! AddEditToolbarCell
+            addEditToolbarCell.addButton.addTarget(self, action: "addNewPageButtonTapped:", forControlEvents: .TouchUpInside)
+            addEditToolbarCell.editButton.addTarget(self, action: "sortPagesButtonTapped:", forControlEvents: .TouchUpInside)
+            addEditToolbarCell.editButton.titleLabel?.text = "Sort"
+            addEditToolbarCell.sectionLabel.text = "Pages"
+            addEditToolbarCell.frame = CGRectMake(0, 0, tableView.frame.width, 80.0)
+            addEditToolbarCell.backgroundColor = UIColor(red: 0.122, green: 0.122, blue: 0.122, alpha: 1.0)
+            addEditToolbarCell.sectionLabelBackground.backgroundColor = UIColor(red: 0.122, green: 0.122, blue: 0.122, alpha: 1.0)
+            result!.addSubview(addEditToolbarCell)
+        } else if section == self.dashboardNameSection {
+            result = UIView(frame: CGRectMake(0, 0, tableView.frame.size.width, 34.0))
+            let formSectionHeaderCell = tableView.dequeueReusableCellWithIdentifier(FormSectionHeaderCell.cellIdentifier()) as! FormSectionHeaderCell
+            formSectionHeaderCell.sectionLabel.text = "Name"
+            formSectionHeaderCell.sectionLabelBackground.backgroundColor = UIColor(red: 0.122, green: 0.122, blue: 0.122, alpha: 1.0)
+            formSectionHeaderCell.frame = CGRectMake(0, 0, tableView.frame.width, 34.0)
+            result!.addSubview(formSectionHeaderCell)
+        } else if section == self.deleteDashboardSection {
+            result = UIView(frame: CGRectMake(0, 0, tableView.frame.size.width, 34.0))
+            let formSectionHeaderCell = tableView.dequeueReusableCellWithIdentifier(FormSectionHeaderCell.cellIdentifier()) as! FormSectionHeaderCell
+            formSectionHeaderCell.sectionLabel.text = "Options"
+            formSectionHeaderCell.sectionLabelBackground.backgroundColor = UIColor(red: 0.122, green: 0.122, blue: 0.122, alpha: 1.0)
+            formSectionHeaderCell.frame = CGRectMake(0, 0, tableView.frame.width, 34.0)
+            result!.addSubview(formSectionHeaderCell)
+        }
+        
+        return result
+    }
+    
+    override func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        var result: UIView?
+        
+        result = UIView(frame: CGRectMake(0, 0, tableView.frame.size.width, 22.0))
+        //result!.backgroundColor = UIColor(red: 0.122, green: 0.122, blue: 0.122, alpha: 1.0)
+        
+        return result
+    }
+    
+    override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        var result: CGFloat = 22.0
+        return result
+    }
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.section == self.pagesSection {
             if indexPath.row < self.pages.count {
@@ -316,10 +380,13 @@ extension AddEditDashboardTableViewController: UITableViewDelegate {
                 default: println("Unknown page type.")
                 }
                 
-            } else if indexPath.row == self.pages.count {
+            }
+            /*
+            else if indexPath.row == self.pages.count {
                 // Add page row tapped
                 self.presentChoosePanelTypeTableViewController()
             }
+            */
             
         } else if indexPath.section == self.dashboardNameSection {
             self.dashboardNameTextField.becomeFirstResponder()
@@ -333,6 +400,10 @@ extension AddEditDashboardTableViewController: UITableViewDelegate {
             case self.dashboardNameSection:
                 let dashboardNameCell = tableView.dequeueReusableCellWithIdentifier(DashboardNameInputTableViewCell.cellIdentifier()) as! DashboardNameInputTableViewCell
                 self.dashboardNameTextField = dashboardNameCell.dashboardNameTextField
+                if let placeholder = self.dashboardNameTextField.placeholder {
+                    self.dashboardNameTextField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSForegroundColorAttributeName: UIColor.whiteColor()])
+                }
+                
 
                 if let dashboard = self.dashboardToEdit {
                     // Set the textfield text to the name
@@ -341,54 +412,58 @@ extension AddEditDashboardTableViewController: UITableViewDelegate {
                 
                 cell = dashboardNameCell
             case pagesSection:
+                let pageCell = tableView.dequeueReusableCellWithIdentifier(PanelTableViewCell.cellIdentifier()) as! PanelTableViewCell
+                let page = self.pages[indexPath.row]
+                
+                if let label = pageCell.textLabel {
+                    label.text = page.name
+                }
+                if let imageView = pageCell.imageView {
+                    // Set the image
+                    let imageSize = CGSize(width: 22.0, height: 22.0)
+                    switch page.type {
+                    case .Canvas:
+                        if let image = UIImage(named: "canvas-icon-color") {
+                            imageView.image = self.imageWithImage(image, scaledToSize: imageSize)
+                        }
+                    case .Plot:
+                        if let image = UIImage(named: "plot-icon-color") {
+                            imageView.image = self.imageWithImage(image, scaledToSize: imageSize)
+                        }
+                    case .Compass:
+                        if let image = UIImage(named: "compass-icon-color") {
+                            imageView.image = self.imageWithImage(image, scaledToSize: imageSize)
+                        }
+                        
+                    default: break
+                    }
+                    
+                    
+                }
+                
+                cell = pageCell
+                /*
                 switch indexPath.row {
+            
                 case self.pages.count:
-                    let addNewPanelCell = tableView.dequeueReusableCellWithIdentifier(AddNewPageTableViewCell.cellIdentifier()) as! AddNewPageTableViewCell
+                    let addNewPageCell = tableView.dequeueReusableCellWithIdentifier(AddNewPageTableViewCell.cellIdentifier()) as! AddNewPageTableViewCell
                     var itemSize = CGSizeMake(22, 22);
                     
                     UIGraphicsBeginImageContextWithOptions(itemSize, false, 0.0)
 
                     var imageRect = CGRectMake(0.0, 0.0, itemSize.width, itemSize.height);
-                    if let imageView = addNewPanelCell.imageView {
-                        // imageView.image.drawInRect(imageRect)
+                    if let imageView = addNewPageCell.imageView {
                         imageView.image = UIGraphicsGetImageFromCurrentImageContext()
                     }
                     
                     UIGraphicsEndImageContext()
 
-                    cell = addNewPanelCell
+                    cell = addNewPageCell
+            
                 default:
-                    let pageCell = tableView.dequeueReusableCellWithIdentifier(PanelTableViewCell.cellIdentifier()) as! PanelTableViewCell
-                    let page = self.pages[indexPath.row]
                     
-                    if let label = pageCell.textLabel {
-                        label.text = page.name
-                    }
-                    if let imageView = pageCell.imageView {
-                        // Set the image
-                        let imageSize = CGSize(width: 22.0, height: 22.0)
-                        switch page.type {
-                        case .Canvas:
-                            if let image = UIImage(named: "canvas-icon-color") {
-                                imageView.image = self.imageWithImage(image, scaledToSize: imageSize)
-                            }
-                        case .Plot:
-                            if let image = UIImage(named: "plot-icon-color") {
-                                imageView.image = self.imageWithImage(image, scaledToSize: imageSize)
-                            }
-                        case .Compass:
-                            if let image = UIImage(named: "compass-icon-color") {
-                                imageView.image = self.imageWithImage(image, scaledToSize: imageSize)
-                            }
-
-                        default: break
-                        }
-                        
-                        
-                    }
-                    
-                    cell = pageCell
                 }
+                */
             case self.deleteDashboardSection:
                 let deleteDashboardCell = tableView.dequeueReusableCellWithIdentifier(DeleteDashboardTableViewCell.cellIdentifier()) as! DeleteDashboardTableViewCell
                 deleteDashboardCell.deleteDashboardButton.addTarget(self, action: "deleteDashboardButtonTapped:", forControlEvents: .TouchUpInside)

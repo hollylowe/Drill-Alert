@@ -53,6 +53,18 @@
 		A042B2DD1A195ED600660AB7 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A042B2DC1A195ED600660AB7 /* PageViewController.swift */; };
 		A042B2DF1A19645F00660AB7 /* old-index.html in Resources */ = {isa = PBXBuildFile; fileRef = A042B2DE1A19645F00660AB7 /* old-index.html */; };
 		A042B2E11A19669E00660AB7 /* d3.min.js in Resources */ = {isa = PBXBuildFile; fileRef = A042B2E01A19669E00660AB7 /* d3.min.js */; };
+		A0450DEB1B13D20A0034AB3B /* PlotUnitsEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0450DEA1B13D20A0034AB3B /* PlotUnitsEnum.swift */; };
+		A0450DED1B13D21B0034AB3B /* PlotIVTEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0450DEC1B13D21B0034AB3B /* PlotIVTEnum.swift */; };
+		A0450DEF1B13D22E0034AB3B /* Canvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0450DEE1B13D22E0034AB3B /* Canvas.swift */; };
+		A0450DF01B13D2440034AB3B /* Canvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0450DEE1B13D22E0034AB3B /* Canvas.swift */; };
+		A0450DF11B13DA010034AB3B /* PlotUnitsEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0450DEA1B13D20A0034AB3B /* PlotUnitsEnum.swift */; };
+		A0450DF21B13DA040034AB3B /* PlotIVTEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0450DEC1B13D21B0034AB3B /* PlotIVTEnum.swift */; };
+		A0450DF41B13ED430034AB3B /* AddEditToolbarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0450DF31B13ED430034AB3B /* AddEditToolbarCell.swift */; };
+		A0450DF51B13F1AD0034AB3B /* AddEditToolbarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0450DF31B13ED430034AB3B /* AddEditToolbarCell.swift */; };
+		A0450DF71B1403130034AB3B /* SectionFooterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0450DF61B1403130034AB3B /* SectionFooterCell.swift */; };
+		A0450DF81B1403FB0034AB3B /* SectionFooterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0450DF61B1403130034AB3B /* SectionFooterCell.swift */; };
+		A0450DFA1B1408C30034AB3B /* FormSectionHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0450DF91B1408C30034AB3B /* FormSectionHeaderCell.swift */; };
+		A0450DFB1B1408C30034AB3B /* FormSectionHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0450DF91B1408C30034AB3B /* FormSectionHeaderCell.swift */; };
 		A04AB1F31A81C9AD003704CC /* d3.js in Resources */ = {isa = PBXBuildFile; fileRef = A04AB1F21A81C9AD003704CC /* d3.js */; };
 		A04B3E111B01B930005D8AE1 /* TextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A04B3E101B01B930005D8AE1 /* TextFieldCell.swift */; };
 		A04B3E121B01B930005D8AE1 /* TextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A04B3E101B01B930005D8AE1 /* TextFieldCell.swift */; };
@@ -325,6 +337,12 @@
 		A042B2DC1A195ED600660AB7 /* PageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
 		A042B2DE1A19645F00660AB7 /* old-index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "old-index.html"; sourceTree = "<group>"; };
 		A042B2E01A19669E00660AB7 /* d3.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = d3.min.js; sourceTree = "<group>"; };
+		A0450DEA1B13D20A0034AB3B /* PlotUnitsEnum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlotUnitsEnum.swift; sourceTree = "<group>"; };
+		A0450DEC1B13D21B0034AB3B /* PlotIVTEnum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlotIVTEnum.swift; sourceTree = "<group>"; };
+		A0450DEE1B13D22E0034AB3B /* Canvas.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Canvas.swift; sourceTree = "<group>"; };
+		A0450DF31B13ED430034AB3B /* AddEditToolbarCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEditToolbarCell.swift; sourceTree = "<group>"; };
+		A0450DF61B1403130034AB3B /* SectionFooterCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionFooterCell.swift; sourceTree = "<group>"; };
+		A0450DF91B1408C30034AB3B /* FormSectionHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormSectionHeaderCell.swift; sourceTree = "<group>"; };
 		A04AB1F21A81C9AD003704CC /* d3.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = d3.js; sourceTree = "<group>"; };
 		A04B3E101B01B930005D8AE1 /* TextFieldCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldCell.swift; sourceTree = "<group>"; };
 		A04B3E131B01BAE2005D8AE1 /* TextFieldDetailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldDetailCell.swift; sourceTree = "<group>"; };
@@ -559,6 +577,9 @@
 				A04B3E1C1B01C10F005D8AE1 /* LabelCell.swift */,
 				A04B3E1F1B01C15B005D8AE1 /* LabelDetailDisclosureCell.swift */,
 				A0087D861B05392A009762C3 /* SectionHeaderCell.swift */,
+				A0450DF31B13ED430034AB3B /* AddEditToolbarCell.swift */,
+				A0450DF61B1403130034AB3B /* SectionFooterCell.swift */,
+				A0450DF91B1408C30034AB3B /* FormSectionHeaderCell.swift */,
 			);
 			name = "Table View Cells";
 			sourceTree = "<group>";
@@ -808,6 +829,7 @@
 				A06E9A101AFA86240083A500 /* JavaScriptVisualization.swift */,
 				A06E9A131AFA86430083A500 /* JavaScriptPlot.swift */,
 				A06E9A151AFA866C0083A500 /* JavaScriptGauge.swift */,
+				A0450DEE1B13D22E0034AB3B /* Canvas.swift */,
 			);
 			name = Page;
 			sourceTree = "<group>";
@@ -944,6 +966,8 @@
 				A0FD94A01B0FE6A20052BE52 /* CanvasItemDataSourceEnum.swift */,
 				A0FD94A31B0FE6B90052BE52 /* PlotTrackScaleTypeEnum.swift */,
 				A0FD94A91B0FFEA60052BE52 /* PageTypeEnum.swift */,
+				A0450DEA1B13D20A0034AB3B /* PlotUnitsEnum.swift */,
+				A0450DEC1B13D21B0034AB3B /* PlotIVTEnum.swift */,
 			);
 			name = Enums;
 			sourceTree = "<group>";
@@ -1135,12 +1159,14 @@
 				A06E9A201AFACA7B0083A500 /* AddEditCanvasItemNavigationController.swift in Sources */,
 				A01E74FA1AF18A790083ED93 /* Reachability.swift in Sources */,
 				A0C949151AE9F62300B7143B /* CanvasItemTableViewCell.swift in Sources */,
+				A0450DEB1B13D20A0034AB3B /* PlotUnitsEnum.swift in Sources */,
 				A095FB911A2FC39800B15D39 /* AlertPriorityCell.swift in Sources */,
 				A04B3E111B01B930005D8AE1 /* TextFieldCell.swift in Sources */,
 				A0772F241A92921300DE37B1 /* AlertPriority.swift in Sources */,
 				A01F2AF31AE8042B000A7957 /* PanelNameInputTableViewCell.swift in Sources */,
 				A0A783DC1A78BD1000C3B20A /* AlertTypeStandard.swift in Sources */,
 				A0EE29021A08AB7200B50700 /* UIViewExtension.swift in Sources */,
+				A0450DED1B13D21B0034AB3B /* PlotIVTEnum.swift in Sources */,
 				A02D86431A6D953A00D22A38 /* AlertInboxTableViewController.swift in Sources */,
 				A0F5D6451A95906400B68548 /* AlertNotification.swift in Sources */,
 				A0DB7DBF1A2FB96E00C8C9A2 /* SelectAlertTypeTableViewController.swift in Sources */,
@@ -1172,6 +1198,7 @@
 				A01F2AFF1AE85571000A7957 /* PlotIndependentVariableTypeCell.swift in Sources */,
 				A0F0BEED1AB1294C003C3CCB /* FavoriteWellbore.swift in Sources */,
 				A04B3E171B01BF65005D8AE1 /* LabelDisclosureCell.swift in Sources */,
+				A0450DF71B1403130034AB3B /* SectionFooterCell.swift in Sources */,
 				A0FD94A11B0FE6A20052BE52 /* CanvasItemDataSourceEnum.swift in Sources */,
 				A018E40A1A2B0733001EF20E /* ManageAlertsTableViewController.swift in Sources */,
 				A018E4061A2B010A001EF20E /* Parameter.swift in Sources */,
@@ -1198,6 +1225,7 @@
 				A0772F221A92921300DE37B1 /* AlertType.swift in Sources */,
 				A06FFD671A06AA08001B3FF8 /* DrillAlert.xcdatamodeld in Sources */,
 				A0C9491B1AE9F7F400B7143B /* CanvasItem.swift in Sources */,
+				A0450DF41B13ED430034AB3B /* AddEditToolbarCell.swift in Sources */,
 				A066D5D21A2EBD4B00E16E58 /* PaddedUITextField.swift in Sources */,
 				A0B1E5B41B0469DE005448F3 /* PlotNameCell.swift in Sources */,
 				A00B17301AFEEC6300A4656E /* AddEditPlotNavigationController.swift in Sources */,
@@ -1224,8 +1252,10 @@
 				A02D86451A6D97BF00D22A38 /* AlertInboxCell.swift in Sources */,
 				A0C949111AE9F27A00B7143B /* AddEditCanvasTableViewController.swift in Sources */,
 				A0C949191AE9F68D00B7143B /* CanvasNameInputTableViewCell.swift in Sources */,
+				A0450DEF1B13D22E0034AB3B /* Canvas.swift in Sources */,
 				A0C949331AEB40D400B7143B /* EditDashboardsTableViewController.swift in Sources */,
 				A0C949351AEB419400B7143B /* EditDashboardTableViewCell.swift in Sources */,
+				A0450DFA1B1408C30034AB3B /* FormSectionHeaderCell.swift in Sources */,
 				CF8E9A9D1A91BF49008F8AF8 /* DashboardTableViewCell.swift in Sources */,
 				A01F2AE11AE6D6B1000A7957 /* Dashboard.swift in Sources */,
 				CF08A77A1A9DCFCD00A33AFE /* SelectUnitsTableViewController.swift in Sources */,
@@ -1259,6 +1289,7 @@
 				A0B1E5B21B0469D2005448F3 /* CompassNameCell.swift in Sources */,
 				A0C949561AEEAF2700B7143B /* CompassSensorTypeCell.swift in Sources */,
 				A06E9A211AFACB8B0083A500 /* AddEditCanvasItemNavigationController.swift in Sources */,
+				A0450DF21B13DA040034AB3B /* PlotIVTEnum.swift in Sources */,
 				A0C949201AEA0A7500B7143B /* CanvasNameInputTableViewCell.swift in Sources */,
 				A0C9490D1AE9F00100B7143B /* AddPlotTrackTableViewCell.swift in Sources */,
 				A0B1E5B51B0469DE005448F3 /* PlotNameCell.swift in Sources */,
@@ -1270,6 +1301,7 @@
 				A08025DC1AAA383B00C8BE99 /* LoginWebViewController.swift in Sources */,
 				A06E9A1B1AFAC0840083A500 /* ChoosePageTypeNavigationController.swift in Sources */,
 				A0C949361AEB41CD00B7143B /* EditDashboardTableViewCell.swift in Sources */,
+				A0450DF11B13DA010034AB3B /* PlotUnitsEnum.swift in Sources */,
 				A08025DE1AAA384000C8BE99 /* WellboreDetailViewController.swift in Sources */,
 				A0B1E5B81B0469EB005448F3 /* CanvasNameCell.swift in Sources */,
 				A0B1E5AF1B0467D2005448F3 /* CreatePageFromExistingController.swift in Sources */,
@@ -1301,6 +1333,8 @@
 				A08026051AAA388800C8BE99 /* EditVisualTableViewCell.swift in Sources */,
 				A08025E01AAA384300C8BE99 /* AddEditAlertTableViewController.swift in Sources */,
 				A01F2AEE1AE72DA1000A7957 /* AddEditDashboardTableViewController.swift in Sources */,
+				A0450DFB1B1408C30034AB3B /* FormSectionHeaderCell.swift in Sources */,
+				A0450DF51B13F1AD0034AB3B /* AddEditToolbarCell.swift in Sources */,
 				A08025FF1AAA388400C8BE99 /* AlertValueCell.swift in Sources */,
 				A08025B91AAA344100C8BE99 /* LoginViewController.swift in Sources */,
 				A08025F91AAA387B00C8BE99 /* AdminTableViewController.swift in Sources */,
@@ -1317,6 +1351,7 @@
 				A0C949011AE97A4300B7143B /* PlotUnitsCell.swift in Sources */,
 				A0D7007D1ADB4C56008A1B97 /* WellTests.swift in Sources */,
 				A08026031AAA388400C8BE99 /* AlertTableViewCell.swift in Sources */,
+				A0450DF01B13D2440034AB3B /* Canvas.swift in Sources */,
 				A04B3E121B01B930005D8AE1 /* TextFieldCell.swift in Sources */,
 				A0FD949C1B0FE66A0052BE52 /* PriorityEnum.swift in Sources */,
 				A01F2AF61AE808EA000A7957 /* ChoosePageTypeTableViewController.swift in Sources */,
@@ -1340,6 +1375,7 @@
 				A0C9492C1AEA13BB00B7143B /* CanvasItemNameInputTableViewCell.swift in Sources */,
 				A0FD94A51B0FE6B90052BE52 /* PlotTrackScaleTypeEnum.swift in Sources */,
 				A0FD94AB1B0FFEA60052BE52 /* PageTypeEnum.swift in Sources */,
+				A0450DF81B1403FB0034AB3B /* SectionFooterCell.swift in Sources */,
 				A0C9492B1AEA13B800B7143B /* CanvasItemTypeTableViewCell.swift in Sources */,
 				A0087D881B05392A009762C3 /* SectionHeaderCell.swift in Sources */,
 				A08025D91AAA382900C8BE99 /* Curve.swift in Sources */,
@@ -1542,7 +1578,6 @@
 		A06FFD841A06AA08001B3FF8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1569,7 +1604,6 @@
 		A06FFD851A06AA08001B3FF8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (

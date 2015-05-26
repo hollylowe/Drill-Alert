@@ -16,9 +16,20 @@ class ChoosePageTypeTableViewController: UITableViewController {
     
     let newPlotSection = 0
     let newCanvasSection = 1
-    let newCompassSection = 2
-    let newFromExistingSection = 3
+    // let newCompassSection = 2
+    let newFromExistingSection = 2
     
+    override func viewDidLoad() {
+        self.navigationController?.navigationBar.barStyle = UIBarStyle.Black
+        self.tableView.separatorStyle = .None
+        // self.tableView.tableHeaderView = UIView(frame: CGRectMake(0, 0, tableView.frame.size.width, 50.0))
+        super.viewDidLoad()
+    }
+    override func tableView(tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
+        if let footer = view as? UITableViewHeaderFooterView {
+            footer.textLabel.textColor = UIColor.whiteColor()
+        }
+    }
     @IBAction func cancelButtonTapped(sender: UIBarButtonItem) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
@@ -34,10 +45,12 @@ class ChoosePageTypeTableViewController: UITableViewController {
             footer = "Plot data vs. depth or time."
         } else if section == self.newCanvasSection {
             footer = "Show a combination of number readouts and gauges."
-        } else if section == self.newCompassSection {
+        }
+        /*
+        else if section == self.newCompassSection {
             footer = "Create a compass from a toolface and data source."
         }
-        
+        */
         return footer
     }
     

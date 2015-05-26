@@ -133,7 +133,6 @@ class Dashboard {
                 if let userID = JSONObject.getIntAtKey(APIUserIDKey) {
                     if let wellboreID = JSONObject.getStringAtKey(APIWellboreIDKey) {
                         if let pagesJSONArray = JSONObject.getJSONArrayAtKey(APIPagesKey) {
-                            // Now get the pages for this dashboard
                             let pages = Page.getPagesFromJSONArray(pagesJSONArray)
                             dashboard = Dashboard(
                                 id: id,

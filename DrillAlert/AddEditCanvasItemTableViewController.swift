@@ -10,57 +10,93 @@ import Foundation
 import UIKit
 
 class AddEditCanvasItemTableViewController: UITableViewController {
-    
+    //
+    //  ----------------
+    // | Previously Set |
+    //  ----------------
+    //
     var delegate: AddEditCanvasTableViewController!
-    
+    var canvasItemToEdit: CanvasItem?
+
     //  -----------------------
     // | Table View Properties |
     //  -----------------------
-    var canvasItemNameCell: CanvasItemNameInputTableViewCell?
-    let numberOfSections = 3
-    let canvasItemNameSection = 0
-    let canvasItemTypeSection = 1
-    let canvasItemDataSourceSection = 2
+    var canvasItemNameTextField: UITextField?
+    var xPositionTextField: UITextField?
+    var yPositionTextField: UITextField?
     
-    var selectedTypeIndex = 0;
-    var selectedDataSourceIndex = 0;
-    var canvasItemToEdit: CanvasItem?
+    let numberOfSections            = 3
+    let canvasItemNameSection       = 0
+    let canvasItemPositionSection   = 1
+    let xPositionRow = 0
+    let yPositionRow = 1
+    let canvasItemTypeSection       = 2
+    
+    var selectedTypeIndex           = -1;
     
     @IBAction func saveButtonTapped(sender: UIBarButtonItem) {
+        var error: String?
+        var opName: String?
+        var opXPosition: Int?
+        var opYPosition: Int?
+        var opType: CanvasItemType?
         
-        if let cell = self.canvasItemNameCell {
-            if let name = cell.canvasItemNameTextField.text {
-                
-                // TODO: Replace with real values from server
-                let type = CanvasItemType.allValues[self.selectedTypeIndex]
-                let dataSource = CanvasItemDataSource.allValues[self.selectedDataSourceIndex]
-                
-                if let canvasItem = self.canvasItemToEdit {
-                    canvasItem.xPosition = 0
-                    canvasItem.yPosition = 0
-                    canvasItem.type = type
-                    canvasItem.dataSource = dataSource
-                    canvasItem.name = name
-                    
-                    self.delegate.refreshCanvasItems()
-                } else {
-                    // TODO: Canvas Item xPostion, yPosition, and Curve ID
-                    let newCanvasItem = CanvasItem(
-                        xPosition: 0,
-                        yPosition: 0,
-                        curveID: 0,
-                        type: type,
-                        dataSource: dataSource,
-                        name: name)
-                    
-                    self.delegate.addCanvasItem(newCanvasItem)
-                }
-                self.dismissViewControllerAnimated(true, completion: nil)
-
-            }
+        if self.selectedTypeIndex >= 0 && self.selectedTypeIndex < CanvasItemType.allValues.count {
+            opType = CanvasItemType.allValues[self.selectedTypeIndex]
         }
         
-       
+        opName = self.canvasItemNameTextField?.text
+        opXPosition = self.xPositionTextField?.integerValue()
+        opYPosition = self.yPositionTextField?.integerValue()
+        
+        if let name = opName {
+            if let xPosition = opXPosition {
+                if let yPosition = opYPosition {
+                    if let type = opType {
+                        if let canvasItem = self.canvasItemToEdit {
+                            canvasItem.xPosition = xPosition
+                            canvasItem.yPosition = yPosition
+                            canvasItem.type = type
+                            canvasItem.name = name
+                            
+                            self.delegate.refreshCanvasItems()
+                        } else {
+                            let newCanvasItem = CanvasItem(
+                                xPosition: xPosition,
+                                yPosition: yPosition,
+                                type: type,
+                                name: name)
+                            
+                            self.delegate.addCanvasItem(newCanvasItem)
+                        }
+                        self.dismissViewControllerAnimated(true, completion: nil)
+
+                    } else {
+                        error = "Please choose a Type."
+                    }
+                } else {
+                    error = "Please enter a valid Y Position."
+                }
+            } else {
+                error = "Please enter a valid X Position."
+            }
+        } else {
+            error = "Please enter a name."
+        }
+        
+        if (error != nil) {
+            let alertController = UIAlertController(
+                title: "Error",
+                message: error!,
+                preferredStyle: .Alert)
+            
+            let okayAction = UIAlertAction(title: "Okay", style: .Cancel) { (action) in
+                
+            }
+            
+            alertController.addAction(okayAction)
+            self.presentViewController(alertController, animated: true, completion: nil)
+        }
     }
     
     @IBAction func cancelButtonTapped(sender: UIBarButtonItem) {
@@ -94,8 +130,8 @@ class AddEditCanvasItemTableViewController: UITableViewController {
         
         switch section {
         case self.canvasItemNameSection: numberOfRows = 1
+        case self.canvasItemPositionSection: numberOfRows = 2
         case self.canvasItemTypeSection: numberOfRows = CanvasItemType.allValues.count
-        case self.canvasItemDataSourceSection: numberOfRows = CanvasItemDataSource.allValues.count
         default: numberOfRows = 0
         }
         
@@ -107,8 +143,8 @@ class AddEditCanvasItemTableViewController: UITableViewController {
         
         switch section {
         case self.canvasItemNameSection: title = ""
+        case self.canvasItemPositionSection: title = "Position"
         case self.canvasItemTypeSection: title = "Type"
-        case self.canvasItemDataSourceSection: title = "Data Source"
         default: title = ""
         }
         
@@ -120,37 +156,54 @@ class AddEditCanvasItemTableViewController: UITableViewController {
         
         switch indexPath.section {
         case self.canvasItemNameSection:
-            self.canvasItemNameCell = tableView.dequeueReusableCellWithIdentifier(CanvasItemNameInputTableViewCell.cellIdentifier()) as? CanvasItemNameInputTableViewCell
+            let textFieldCell = tableView.dequeueReusableCellWithIdentifier(TextFieldCell.cellIdentifier()) as! TextFieldCell
+            self.canvasItemNameTextField = textFieldCell.textField
+            textFieldCell.textField.placeholder = "Canvas Item Name"
             
-            if let canvas = self.canvasItemToEdit {
-                self.canvasItemNameCell!.canvasItemNameTextField.text = canvas.name
+            if let canvasItem = self.canvasItemToEdit {
+                textFieldCell.textField.text = canvasItem.name
             }
             
-            cell = self.canvasItemNameCell
-
+            cell = textFieldCell
+        case self.canvasItemPositionSection:
+            switch indexPath.row {
+            case self.xPositionRow:
+                let textFieldDetailCell = tableView.dequeueReusableCellWithIdentifier(TextFieldDetailCell.cellIdentifier()) as! TextFieldDetailCell
+                textFieldDetailCell.textFieldLabel.text = "X Position"
+                textFieldDetailCell.textField.placeholder = "0"
+                
+                if let canvasItem = self.canvasItemToEdit {
+                    textFieldDetailCell.textField.text = "\(canvasItem.xPosition)"
+                }
+                
+                
+                self.xPositionTextField = textFieldDetailCell.textField
+                cell = textFieldDetailCell
+            case self.yPositionRow:
+                let textFieldDetailCell = tableView.dequeueReusableCellWithIdentifier(TextFieldDetailCell.cellIdentifier()) as! TextFieldDetailCell
+                textFieldDetailCell.textFieldLabel.text = "Y Position"
+                textFieldDetailCell.textField.placeholder = "0"
+                if let canvasItem = self.canvasItemToEdit {
+                    textFieldDetailCell.textField.text = "\(canvasItem.yPosition)"
+                }
+                self.yPositionTextField = textFieldDetailCell.textField
+                cell = textFieldDetailCell
+            default: break
+            }
         case self.canvasItemTypeSection:
             let canvasItemType = CanvasItemType.allValues[indexPath.row]
             let canvasItemTypeCell = tableView.dequeueReusableCellWithIdentifier(CanvasItemTypeTableViewCell.cellIdentifier()) as! CanvasItemTypeTableViewCell
             
             if let canvasItem = self.canvasItemToEdit {
                 if canvasItemType == canvasItem.type {
+                    self.selectedTypeIndex = indexPath.row
                     canvasItemTypeCell.accessoryType = .Checkmark
                 }
             }
             
             canvasItemTypeCell.setupWithCanvasItemType(canvasItemType)
             cell = canvasItemTypeCell
-        case self.canvasItemDataSourceSection:
-            let canvasItemDataSource = CanvasItemDataSource.allValues[indexPath.row]
-            let canvasItemDataSourceCell = tableView.dequeueReusableCellWithIdentifier(CanvasItemDataSourceTableViewCell.cellIdentifier()) as! CanvasItemDataSourceTableViewCell
-            if let canvasItem = self.canvasItemToEdit {
-                if canvasItemDataSource == canvasItem.dataSource {
-                    canvasItemDataSourceCell.accessoryType = .Checkmark
-                }
-            }
-            
-            canvasItemDataSourceCell.setupWithCanvasItemDataSource(canvasItemDataSource)
-            cell = canvasItemDataSourceCell
+        
         default: break
         }
         
@@ -170,23 +223,24 @@ class AddEditCanvasItemTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
-        if (indexPath.section != self.canvasItemNameSection) {
+        switch indexPath.section {
+        case self.canvasItemNameSection: self.canvasItemNameTextField?.becomeFirstResponder()
+        case self.canvasItemPositionSection:
+            switch indexPath.row {
+            case self.xPositionRow: self.xPositionTextField?.becomeFirstResponder()
+            case self.yPositionRow: self.yPositionTextField?.becomeFirstResponder()
+            default: break
+            }
+        case self.canvasItemTypeSection:
             // Add a check mark to the row
             if let cell = tableView.cellForRowAtIndexPath(indexPath) {
                 self.resetAccessoryTypesForSection(indexPath.section)
                 cell.accessoryType = .Checkmark
+                if indexPath.row < CanvasItemType.allValues.count {
+                    self.selectedTypeIndex = indexPath.row
+                }
             }
-            
-            if indexPath.section == self.canvasItemTypeSection {
-                self.selectedTypeIndex = indexPath.row
-            } else if indexPath.section == self.canvasItemDataSourceSection {
-                self.selectedDataSourceIndex = indexPath.row
-            }
-        } else {
-            if let nameCell = self.canvasItemNameCell {
-                nameCell.becomeFirstResponder()
-            }
+        default: break
         }
-        
     }
 }

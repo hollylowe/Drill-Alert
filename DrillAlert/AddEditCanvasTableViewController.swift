@@ -9,23 +9,54 @@
 import Foundation
 import UIKit
 
+
 class AddEditCanvasTableViewController: UITableViewController {
-    let numberOfSections = 2
-    
-    let canvasNameSection = 0
-    let canvasNameRow = 0
-    let canvasItemsSection = 1
-    
-    var canvasItems = Array<CanvasItem>()
-    var canvasToEdit: Page?
+    //
+    //  ----------------
+    // | Previously Set |
+    //  ----------------
+    //
+    var delegate:       AddEditDashboardTableViewController!
+    var canvasToEdit:   Page?
     var existingCanvas: Page?
     
-    var canvasNameTextField: UITextField!
+    //
+    //  -----------------------
+    // | Table View Properties |
+    //  -----------------------
+    //
+    // Sections
+    let numberOfSections   = 3
+    let canvasNameSection  = 0
+    let canvasSizeSection  = 1
+    let canvasItemsSection = 2
     
-    var delegate: AddEditDashboardTableViewController! 
+    // Rows
+    let canvasNameRow = 0
+    let xDimensionRow = 0
+    let yDimensionRow = 1
     
+    // Data for Canvas Items Section
+    var canvasItems = Array<CanvasItem>()
+    var canvasNameTextField: UITextField?
+    var xDimensionTextField: UITextField?
+    var yDimensionTextField: UITextField?
+    
+    //
+    //  -----------------
+    // | Class Functions |
+    //  -----------------
+    //
     class func addCanvasFromExistingSegue() -> String {
         return "AddCanvasFromExistingSegue"
+    }
+    
+    class func storyboardIdentifier() -> String {
+        return "AddEditCanvasTableViewController"
+    }
+    
+    class func addCanvasEntrySegueIdentifier() -> String {
+        return "AddCanvasTableViewControllerSegue"
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -44,6 +75,85 @@ class AddEditCanvasTableViewController: UITableViewController {
         super.prepareForSegue(segue, sender: sender)
     }
     
+    override func viewDidLoad() {
+        if let oldCanvas = self.canvasToEdit {
+            self.title = "Edit Canvas"
+            if let oldCanvasItems = oldCanvas.canvasItems {
+                self.canvasItems = oldCanvasItems
+            }
+            
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(
+                barButtonSystemItem: .Cancel,
+                target: self,
+                action: "cancelBarButtonItemTapped:")
+        } else {
+            self.title = "Add Canvas"
+            if let oldCanvas = self.existingCanvas {
+                if let oldCanvasItems = oldCanvas.canvasItems {
+                    self.canvasItems = oldCanvasItems
+                }
+            }
+        }
+        
+        super.viewDidLoad()
+    }
+    
+    @IBAction func saveButtonTapped(sender: UIBarButtonItem) {
+        var error: String?
+        var opName: String?
+        var opXDimension: Int?
+        var opYDimension: Int?
+        
+        opName = self.canvasNameTextField?.text
+        opXDimension = self.xDimensionTextField?.integerValue()
+        opYDimension = self.yDimensionTextField?.integerValue()
+        
+        if let name = opName {
+            if let xDimension = opXDimension {
+                if let yDimension = opYDimension {
+                    if let oldCanvas = self.canvasToEdit {
+                        oldCanvas.name = name
+                        oldCanvas.xDimension = xDimension
+                        oldCanvas.yDimension = yDimension
+                        oldCanvas.canvasItems = self.canvasItems
+                        
+                        self.delegate.refreshPages()
+                    } else {
+                        let newCanvas = Canvas(
+                            name: name,
+                            xDimension: xDimension,
+                            yDimension: yDimension,
+                            canvasItems: self.canvasItems)
+                        
+                        self.delegate.addPage(newCanvas)
+                    }
+                    self.dismissViewControllerAnimated(true, completion: nil)
+
+                } else {
+                    error = "Please enter a valid Y Dimension."
+                }
+            } else {
+                error = "Please enter a valid X Dimension."
+            }
+        } else {
+            error = "Please enter a name."
+        }
+        
+        if (error != nil) {
+            let alertController = UIAlertController(
+                title: "Error",
+                message: error!,
+                preferredStyle: .Alert)
+            
+            let okayAction = UIAlertAction(title: "Okay", style: .Cancel) { (action) in
+                
+            }
+            
+            alertController.addAction(okayAction)
+            self.presentViewController(alertController, animated: true, completion: nil)
+        }
+    }
+    
     func addCanvasItem(canvasItem: CanvasItem) {
         self.canvasItems.append(canvasItem)
         self.tableView.reloadData()
@@ -56,108 +166,38 @@ class AddEditCanvasTableViewController: UITableViewController {
     func cancelBarButtonItemTapped(sender: UIBarButtonItem) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
-    
-    @IBAction func saveButtonTapped(sender: UIBarButtonItem) {
-        if let canvas = self.canvasToEdit {
-            // Save already created Canvas
-            let canvasNameIndexPath = NSIndexPath(
-                forRow: self.canvasNameRow,
-                inSection: self.canvasNameSection)
-            
-            let canvasNameCell = self.tableView.cellForRowAtIndexPath(canvasNameIndexPath) as! CanvasNameInputTableViewCell
-            if let canvasName = canvasNameCell.canvasNameTextField.text {
-                var items = Array<Item>()
-                
-                for canvasItem in self.canvasItems {
-                    var jsFileName = ""
-                    switch canvasItem.type {
-                    case .Gauge: jsFileName = "Gauge.js"
-                    case .NumberReadout: jsFileName = "NumberReadout.js"
-                    default: break
-                    }
-                    
-                    var newItem = Item(xPosition: 0, yPosition: 0, jsFileName: jsFileName)
-                    items.append(newItem)
-                }
+}
 
-                canvas.name = canvasName
-                canvas.position = 0
-                canvas.xDimension = 0
-                canvas.yDimension = 0
-                // canvas.items = items
+extension AddEditCanvasTableViewController: UITableViewDelegate {
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        switch indexPath.section {
+        case self.canvasItemsSection:
+            if indexPath.row < self.canvasItems.count {
+                // Show the edit canvas item view
+                let canvasItem = self.canvasItems[indexPath.row]
                 
-                self.delegate.refreshPages()
+                self.performSegueWithIdentifier(
+                    AddEditCanvasItemNavigationController.entrySegueIdentifier(),
+                    sender: canvasItem)
+            } else if indexPath.row == self.canvasItems.count {
+                self.performSegueWithIdentifier(
+                    AddEditCanvasItemNavigationController.entrySegueIdentifier(),
+                    sender: nil)
             }
-        } else {
-            // Create new canvas
-            let canvasNameIndexPath = NSIndexPath(
-                forRow: self.canvasNameRow,
-                inSection: self.canvasNameSection)
-            
-            let canvasNameCell = self.tableView.cellForRowAtIndexPath(canvasNameIndexPath) as! CanvasNameInputTableViewCell
-            if let canvasName = canvasNameCell.canvasNameTextField.text {
-                // Create a visualization array with all the canvas items
-                var items = Array<Item>()
-                
-                for canvasItem in self.canvasItems {
-                    var jsFileName = ""
-                    switch canvasItem.type {
-                    case .Gauge: jsFileName = "Gauge.js"
-                    case .NumberReadout: jsFileName = "NumberReadout.js"
-                    default: break
-                    }
-                    
-                    var newItem = Item(xPosition: 0, yPosition: 0, jsFileName: jsFileName)
-                    items.append(newItem)
-                }
-                /*
-                let newCanvas = Page(
-                    name: canvasName,
-                    position: 0,
-                    xDimension: 0,
-                    yDimension: 0,
-                    items: items)
-                newCanvas.type = .Canvas
-                */
-                // self.delegate.addPage(newCanvas)
-                
+        case self.canvasSizeSection:
+            switch indexPath.row {
+            case self.xDimensionRow: self.xDimensionTextField?.becomeFirstResponder()
+            case self.yDimensionRow: self.yDimensionTextField?.becomeFirstResponder()
+            default: break
             }
-            
+        case self.canvasNameSection: self.canvasNameTextField?.becomeFirstResponder()
+        default: break
         }
-        self.dismissViewControllerAnimated(true, completion: nil)
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
-    
-    override func viewDidLoad() {
-        if let canvas = self.canvasToEdit {
-            self.title = "Edit Canvas"
-            /*
-            for item in canvas.items {
-                if let canvasItem = item as? CanvasItem {
-                    self.canvasItems.append(canvasItem)
-                }
-            }
-            */
-            
-            self.navigationItem.leftBarButtonItem = UIBarButtonItem(
-                barButtonSystemItem: .Cancel,
-                target: self,
-                action: "cancelBarButtonItemTapped:")
-        } else {
-            self.title = "Add Canvas"
-            /*
-            if let canvas = self.existingCanvas {
-                for item in canvas.items {
-                    if let canvasItem = item as? CanvasItem {
-                        self.canvasItems.append(canvasItem)
-                    }
-                }
-            }
-            */
-        }
-        
-        super.viewDidLoad()
-    }
-    
+}
+
+extension AddEditCanvasTableViewController: UITableViewDataSource {
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return self.numberOfSections
     }
@@ -166,10 +206,9 @@ class AddEditCanvasTableViewController: UITableViewController {
         var header = ""
         
         switch section {
-        case self.canvasNameSection:
-            header = ""
-        case self.canvasItemsSection:
-            header = "Canvas Items"
+        case self.canvasNameSection: header = ""
+        case self.canvasSizeSection: header = "Size"
+        case self.canvasItemsSection: header = "Canvas Items"
         default: break
         }
         
@@ -180,33 +219,13 @@ class AddEditCanvasTableViewController: UITableViewController {
         var numberOfRows = 0
         
         switch section {
-        case self.canvasNameSection:
-            numberOfRows = 1
-        case self.canvasItemsSection:
-            // Add one for the "Add Canvas Item" row
-            numberOfRows = self.canvasItems.count + 1
+        case self.canvasNameSection: numberOfRows  = 1
+        case self.canvasSizeSection: numberOfRows  = 2
+        case self.canvasItemsSection: numberOfRows = self.canvasItems.count + 1
         default: numberOfRows = 0
         }
         
         return numberOfRows
-    }
-    
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if indexPath.section == self.canvasItemsSection {
-            if indexPath.row < self.canvasItems.count {
-                // Show the edit canvas item view 
-                let canvasItem = self.canvasItems[indexPath.row]
-                
-                self.performSegueWithIdentifier(AddEditCanvasItemNavigationController.entrySegueIdentifier(), sender: canvasItem)
-            } else if indexPath.row == self.canvasItems.count {
-                self.performSegueWithIdentifier(AddEditCanvasItemNavigationController.entrySegueIdentifier(), sender: nil)
-            }
-        } else if indexPath.section == self.canvasNameSection {
-            if indexPath.row == self.canvasNameRow {
-                self.canvasNameTextField.becomeFirstResponder()
-            }
-        }
-        
     }
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell: UITableViewCell!
@@ -222,7 +241,42 @@ class AddEditCanvasTableViewController: UITableViewController {
             }
             
             cell = canvasNameInputCell
-            
+        case self.canvasSizeSection:
+            switch indexPath.row {
+            case self.xDimensionRow:
+                let textFieldDetailCell = tableView.dequeueReusableCellWithIdentifier(TextFieldDetailCell.cellIdentifier()) as! TextFieldDetailCell!
+                self.xDimensionTextField = textFieldDetailCell.textField
+                textFieldDetailCell.textFieldLabel.text = "X Dimension"
+                if let textField = textFieldDetailCell.textField {
+                    textField.placeholder = "0"
+                    
+                    if let canvas = self.canvasToEdit {
+                        textField.text = "\(canvas.xDimension)"
+                    } else if let canvas = self.existingCanvas {
+                        textField.text = "\(canvas.xDimension)"
+                    }
+                    self.xDimensionTextField = textField
+                }
+                
+                cell = textFieldDetailCell
+            case self.yDimensionRow:
+                let textFieldDetailCell = tableView.dequeueReusableCellWithIdentifier(TextFieldDetailCell.cellIdentifier()) as! TextFieldDetailCell!
+                self.yDimensionTextField = textFieldDetailCell.textField
+                textFieldDetailCell.textFieldLabel.text = "Y Dimension"
+                if let textField = textFieldDetailCell.textField {
+                    textField.placeholder = "0"
+                    if let canvas = self.canvasToEdit {
+                        textField.text = "\(canvas.yDimension)"
+                    } else if let canvas = self.existingCanvas {
+                        textField.text = "\(canvas.yDimension)"
+                    }
+                    self.yDimensionTextField = textField
+                }
+                
+                
+                cell = textFieldDetailCell
+            default: break
+            }
         case self.canvasItemsSection:
             if indexPath.row == self.canvasItems.count {
                 // This cell is the last row
@@ -238,14 +292,5 @@ class AddEditCanvasTableViewController: UITableViewController {
         }
         
         return cell
-    }
-    
-    class func storyboardIdentifier() -> String {
-        return "AddEditCanvasTableViewController"
-    }
-    
-    
-    class func addCanvasEntrySegueIdentifier() -> String {
-        return "AddCanvasTableViewControllerSegue"
     }
 }

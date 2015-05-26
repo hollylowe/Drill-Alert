@@ -10,14 +10,29 @@ import Foundation
 
 class CanvasItem: Item {
     var name: String
-    var type: CanvasItemType
-    var dataSource: CanvasItemDataSource
+    var type: CanvasItemType {
+        didSet {
+            self.jsFileName = self.type.getJSFileName()
+        }
+    }
     
-    init(xPosition: Int, yPosition: Int, curveID: Int, type: CanvasItemType, dataSource: CanvasItemDataSource, name: String) {
+    init(id: Int, xPosition: Int, yPosition: Int, type: CanvasItemType, name: String) {
         self.type = type
         self.name = name
-        self.dataSource = dataSource
-        super.init(xPosition: xPosition, yPosition: yPosition, jsFileName: type.getTitle() + ".js")
+        super.init(
+            id: id,
+            xPosition: xPosition,
+            yPosition: yPosition,
+            jsFileName: type.getJSFileName())
+    }
+    
+    init(xPosition: Int, yPosition: Int, type: CanvasItemType, name: String) {
+        self.type = type
+        self.name = name
+        super.init(
+            xPosition: xPosition,
+            yPosition: yPosition,
+            jsFileName: type.getJSFileName())
     }
     
 }
