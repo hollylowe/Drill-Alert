@@ -11,10 +11,8 @@ import UIKit
 
 class AddEditToolbarCell: UITableViewCell {
     
-    @IBOutlet weak var sectionLabelBackground: UIView!
     @IBOutlet weak var editButton: UIButton!
     @IBOutlet weak var addButton: UIButton!
-    @IBOutlet weak var sectionLabel: UILabel!
     
     class func cellIdentifier() -> String {
         return "AddEditToolbarCell"

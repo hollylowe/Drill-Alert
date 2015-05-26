@@ -22,7 +22,16 @@ class DashboardViewController: UIViewController, UIPageViewControllerDataSource 
     // saving it yet), then this will just be set to the first 
     // dashboard that is in the dashboards array.
     var dashboards = Array<Dashboard>()
-    var currentDashboard: Dashboard?
+    var currentDashboard: Dashboard? {
+        didSet {
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                if let dashboard = self.currentDashboard {
+                    println("Setting label to: " + dashboard.name)
+                    self.wellboreDetailViewController.updateCurrentDashboardLabelWithString(dashboard.name)
+                }
+            })
+        }
+    }
     var wellbore: Wellbore!
     var curves = Array<Curve>()
     
@@ -35,7 +44,7 @@ class DashboardViewController: UIViewController, UIPageViewControllerDataSource 
     
     override func viewDidLoad() {
         self.loadData()
-        self.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.wellboreDetailViewController.toolbarHeight)
+        // self.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.wellboreDetailViewController.toolbarHeight)
         if let storyboard = self.storyboard {
             self.dashboardMainPageViewController = storyboard.instantiateViewControllerWithIdentifier(
                 DashboardMainPageViewController.storyboardIdentifier()) as! DashboardMainPageViewController
@@ -44,7 +53,7 @@ class DashboardViewController: UIViewController, UIPageViewControllerDataSource 
                 0,
                 0,
                 self.view.frame.size.width,
-                self.view.frame.size.height)
+                self.view.frame.size.height - self.wellboreDetailViewController.dashboardNameViewHeight)
             
             self.addChildViewController(self.dashboardMainPageViewController)
             self.view.addSubview(self.dashboardMainPageViewController.view)
@@ -83,7 +92,7 @@ class DashboardViewController: UIViewController, UIPageViewControllerDataSource 
             self.dashboardMainPageViewController.view.frame = CGRectMake(
                 0, 0,
                 self.view.frame.size.width,
-                self.view.frame.size.height)
+                self.view.frame.size.height - self.wellboreDetailViewController.dashboardNameViewHeight)
             self.addChildViewController(self.dashboardMainPageViewController)
             
             self.view.addSubview(self.dashboardMainPageViewController.view)

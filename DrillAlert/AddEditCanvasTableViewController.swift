@@ -76,6 +76,9 @@ class AddEditCanvasTableViewController: UITableViewController {
     }
     
     override func viewDidLoad() {
+        self.tableView.separatorColor = UIColor.blackColor()
+        self.navigationController?.navigationBar.barStyle = UIBarStyle.Black
+
         if let oldCanvas = self.canvasToEdit {
             self.title = "Edit Canvas"
             if let oldCanvasItems = oldCanvas.canvasItems {
@@ -94,10 +97,23 @@ class AddEditCanvasTableViewController: UITableViewController {
                 }
             }
         }
-        
+        if let saveButton = self.navigationItem.rightBarButtonItem {
+            saveButton.tintColor = UIColor(red: 0.490, green: 0.733, blue: 0.910, alpha: 1.0)
+            
+        }
         super.viewDidLoad()
     }
-    
+    override func tableView(tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
+        if let footer = view as? UITableViewHeaderFooterView {
+            footer.textLabel.textColor = UIColor(red: 0.624, green: 0.627, blue: 0.643, alpha: 1.0)
+            
+        }
+    }
+    override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        if let header = view as? UITableViewHeaderFooterView {
+            header.textLabel.textColor = UIColor(red: 0.624, green: 0.627, blue: 0.643, alpha: 1.0)
+        }
+    }
     @IBAction func saveButtonTapped(sender: UIBarButtonItem) {
         var error: String?
         var opName: String?
@@ -206,7 +222,7 @@ extension AddEditCanvasTableViewController: UITableViewDataSource {
         var header = ""
         
         switch section {
-        case self.canvasNameSection: header = ""
+        case self.canvasNameSection: header = "Name"
         case self.canvasSizeSection: header = "Size"
         case self.canvasItemsSection: header = "Canvas Items"
         default: break
@@ -233,13 +249,16 @@ extension AddEditCanvasTableViewController: UITableViewDataSource {
         switch indexPath.section {
         case self.canvasNameSection:
             let canvasNameInputCell = tableView.dequeueReusableCellWithIdentifier(CanvasNameInputTableViewCell.cellIdentifier()) as! CanvasNameInputTableViewCell
-            self.canvasNameTextField = canvasNameInputCell.canvasNameTextField
+            
             if let canvas = self.canvasToEdit {
                 canvasNameInputCell.canvasNameTextField.text = canvas.name
             } else if let canvas = self.existingCanvas {
                 canvasNameInputCell.canvasNameTextField.text = canvas.name
             }
-            
+            if let placeholder = canvasNameInputCell.canvasNameTextField.placeholder {
+                canvasNameInputCell.canvasNameTextField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSForegroundColorAttributeName: UIColor(white: 0.52, alpha: 1.0)])
+            }
+            self.canvasNameTextField = canvasNameInputCell.canvasNameTextField
             cell = canvasNameInputCell
         case self.canvasSizeSection:
             switch indexPath.row {
@@ -249,7 +268,9 @@ extension AddEditCanvasTableViewController: UITableViewDataSource {
                 textFieldDetailCell.textFieldLabel.text = "X Dimension"
                 if let textField = textFieldDetailCell.textField {
                     textField.placeholder = "0"
-                    
+                    if let placeholder = textField.placeholder {
+                        textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSForegroundColorAttributeName: UIColor(white: 0.52, alpha: 1.0)])
+                    }
                     if let canvas = self.canvasToEdit {
                         textField.text = "\(canvas.xDimension)"
                     } else if let canvas = self.existingCanvas {
@@ -265,6 +286,9 @@ extension AddEditCanvasTableViewController: UITableViewDataSource {
                 textFieldDetailCell.textFieldLabel.text = "Y Dimension"
                 if let textField = textFieldDetailCell.textField {
                     textField.placeholder = "0"
+                    if let placeholder = textField.placeholder {
+                        textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSForegroundColorAttributeName: UIColor(white: 0.52, alpha: 1.0)])
+                    }
                     if let canvas = self.canvasToEdit {
                         textField.text = "\(canvas.yDimension)"
                     } else if let canvas = self.existingCanvas {

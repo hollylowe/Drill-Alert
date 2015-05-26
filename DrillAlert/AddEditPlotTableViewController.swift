@@ -188,6 +188,8 @@ class AddEditPlotTableViewController: UITableViewController {
     }
     
     override func viewDidLoad() {
+        self.navigationController?.navigationBar.barStyle = UIBarStyle.Black
+        self.tableView.separatorColor = UIColor.blackColor()
         if let plot = self.plotToEdit {
             self.title = "Edit Plot"
             
@@ -201,11 +203,29 @@ class AddEditPlotTableViewController: UITableViewController {
                 action: "cancelBarButtonItemTapped:")
         } else {
             self.title = "Add Plot"
+            if let plot = self.existingPlot {
+                if let tracks = plot.tracks {
+                    self.tracks = tracks
+                }
+            }
         }
-        
+        if let saveButton = self.navigationItem.rightBarButtonItem {
+            saveButton.tintColor = UIColor(red: 0.490, green: 0.733, blue: 0.910, alpha: 1.0)
+            
+        }
         super.viewDidLoad()
     }
-    
+    override func tableView(tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
+        if let footer = view as? UITableViewHeaderFooterView {
+            footer.textLabel.textColor = UIColor(red: 0.624, green: 0.627, blue: 0.643, alpha: 1.0)
+            
+        }
+    }
+    override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        if let header = view as? UITableViewHeaderFooterView {
+            header.textLabel.textColor = UIColor(red: 0.624, green: 0.627, blue: 0.643, alpha: 1.0)
+        }
+    }
     
 }
 
@@ -258,7 +278,7 @@ extension AddEditPlotTableViewController: UITableViewDataSource {
         var result = ""
         
         switch section {
-        case self.plotNameSection: result = ""
+        case self.plotNameSection: result = "Name"
         case self.plotPropertiesSection: result = "Properties"
         case self.plotTracksSection: result = "Tracks"
         default: result = ""
@@ -290,7 +310,6 @@ extension AddEditPlotTableViewController: UITableViewDataSource {
         switch indexPath.section {
         case self.plotNameSection:
             let textFieldCell = tableView.dequeueReusableCellWithIdentifier(TextFieldCell.cellIdentifier()) as! TextFieldCell
-            self.plotNameTextField = textFieldCell.textField
             textFieldCell.textField.placeholder = "Plot Name"
 
             if let plot = self.plotToEdit {
@@ -298,7 +317,10 @@ extension AddEditPlotTableViewController: UITableViewDataSource {
             } else if let plot = self.existingPlot {
                 textFieldCell.textField.text = plot.name
             }
-            
+            if let placeholder = textFieldCell.textField.placeholder {
+                textFieldCell.textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSForegroundColorAttributeName: UIColor(white: 0.52, alpha: 1.0)])
+            }
+            self.plotNameTextField = textFieldCell.textField
             cell = textFieldCell
         case self.plotPropertiesSection:
             switch indexPath.row {
@@ -314,6 +336,9 @@ extension AddEditPlotTableViewController: UITableViewDataSource {
                     } else if let plot = self.existingPlot {
                         textField.text = "\(plot.xDimension)"
                     }
+                    if let placeholder = textField.placeholder {
+                        textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSForegroundColorAttributeName: UIColor(white: 0.52, alpha: 1.0)])
+                    }
                 }
                 
                 cell = textFieldDetailCell
@@ -327,6 +352,9 @@ extension AddEditPlotTableViewController: UITableViewDataSource {
                         textField.text = "\(plot.yDimension)"
                     } else if let plot = self.existingPlot {
                         textField.text = "\(plot.yDimension)"
+                    }
+                    if let placeholder = textField.placeholder {
+                        textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSForegroundColorAttributeName: UIColor(white: 0.52, alpha: 1.0)])
                     }
                  }
                  

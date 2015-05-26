@@ -16,14 +16,18 @@ class EditDashboardsTableViewController: LoadingTableViewController {
     
     override func viewDidLoad() {
         self.dataSource = self
+        //self.tableView.separatorStyle = .None
         super.viewDidLoad()
     }
     
     override func viewDidAppear(animated: Bool) {
         self.loadData()
+        self.tableView.tableFooterView = UIView()
         super.viewDidAppear(animated)
     }
-    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 66.0
+    }
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == AddEditDashboardTableViewController.editDashboardSegueIdentifier() {
             if let cell = sender as? UITableViewCell {
@@ -42,7 +46,7 @@ class EditDashboardsTableViewController: LoadingTableViewController {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(EditDashboardTableViewCell.cellIdentifier()) as! EditDashboardTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(DashboardPreviewTableViewCell.cellIdentifier()) as! DashboardPreviewTableViewCell
         let dashboard = self.dashboards[indexPath.row]
         cell.setupWithDashboard(dashboard)
         return cell

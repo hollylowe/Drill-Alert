@@ -88,7 +88,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         self.tableView.tableFooterView = UIView()
         
         let toolbarWidth = self.view.frame.size.width
-        let toolbarHeight: CGFloat = 39.0
+        let toolbarHeight: CGFloat = 44.0
 
         // Setup refresh control
         // self.tableView.addSubview(UIRefreshControl())
@@ -99,6 +99,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             navigationController.navigationBar.hidden = false
             navigationController.navigationBar.barStyle = UIBarStyle.Black
             self.tableView.separatorStyle = .None
+            self.navBarHairlineImageView = self.findHairlineImageViewUnder(navigationController.navigationBar)
             
             // Disable the back button
             self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
@@ -117,21 +118,13 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             // Add the segmented control at the (navigation bar height + status bar height) y coordinate
             let yCoord = navigationController.navigationBar.frame.size.height + UIApplication.sharedApplication().statusBarFrame.size.height
             
-            // let yCoord: CGFloat = 0
-            // let toolbarColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1.0)
-            // Set up Toolbar
-            let toolbarRect = CGRectMake(0, yCoord, toolbarWidth, toolbarHeight)
+            let toolbarRect = CGRectMake(0, yCoord, toolbarWidth, toolbarHeight + 5.0)
             let toolbar = UIToolbar(frame: toolbarRect)
-            // toolbar.backgroundColor = UIColor(red: 0.112, green: 0.112, blue: 0.112, alpha: 1.0)
-            toolbar.barTintColor = UIColor(red: 0.112, green: 0.112, blue: 0.112, alpha: 1.0)
-            //  toolbar.backgroundColor = toolbarColor
-            // toolbar.translucent = false
-            // toolbar.barTintColor =  UIColor(red: 0.122, green: 0.122, blue: 0.122, alpha: 1.0)
-            
+            toolbar.barTintColor = UIColor(red: 0.096, green: 0.096, blue: 0.096, alpha: 1.0)
             // Set up Segmented Control
-            let segmentedControlHeight: CGFloat = 24.0
-            let segmentedControlWidth: CGFloat = toolbarWidth / 2
-            let segmentedControlXCoord: CGFloat = toolbarWidth / 4
+            let segmentedControlHeight: CGFloat = 30.0
+            let segmentedControlWidth: CGFloat = toolbarWidth - (toolbarWidth / 4)
+            let segmentedControlXCoord: CGFloat = toolbarWidth / 8
             let segmentedControlYCoord: CGFloat = (toolbarHeight - segmentedControlHeight) / 2
             
             let segmentedControlRect = CGRectMake(
@@ -142,6 +135,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             
             
             let segmentedControl = UISegmentedControl(items: segmentedControlItems)
+            segmentedControl.tintColor = UIColor.whiteColor()
             segmentedControl.frame = segmentedControlRect
             segmentedControl.selectedSegmentIndex = 0
             segmentedControl.addTarget(
@@ -149,27 +143,17 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 action: Selector("segmentedControlAction:"),
                 forControlEvents: .ValueChanged)
             toolbar.addSubview(segmentedControl)
-            toolbar.addBottomBorder()
+            //toolbar.addBottomBorder()
             
             self.view.addSubview(toolbar)
             
             // Sets the tableview y coordinate to the toolbarheight
             let headerViewRect = CGRectMake(0, 0, self.tableView.frame.width, toolbarHeight)
             // self.tableView.tableHeaderView = UIView(frame: headerViewRect)
-            self.tableView.contentInset = UIEdgeInsets(top: toolbarHeight, left: 0, bottom: 0, right: 0)
+            self.tableView.contentInset = UIEdgeInsets(top: toolbarHeight + 5.0, left: 0, bottom: 0, right: 0)
         }
        
     }
-    
-    func imageWithImage(image: UIImage, scaledToSize newSize: CGSize) -> UIImage {
-        UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0)
-        image.drawInRect(CGRectMake(0, 0, newSize.width, newSize.height))
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        
-        UIGraphicsEndImageContext()
-        return newImage
-    }
-    
     func findHairlineImageViewUnder(view: UIView) -> UIImageView? {
         if view.isKindOfClass(UIImageView) && view.bounds.size.height <= 1.0 {
             return view as? UIImageView
@@ -183,6 +167,26 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             return nil
         }
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        navBarHairlineImageView.hidden = true
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        navBarHairlineImageView.hidden = false
+    }
+    
+    func imageWithImage(image: UIImage, scaledToSize newSize: CGSize) -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0)
+        image.drawInRect(CGRectMake(0, 0, newSize.width, newSize.height))
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        
+        UIGraphicsEndImageContext()
+        return newImage
+    }
+    
     
     func segmentedControlAction(sender: UISegmentedControl) {
         self.selectedSegmentIndex = sender.selectedSegmentIndex
@@ -284,25 +288,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
 extension HomeViewController: UITableViewDataSource {
     
     
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let cell = tableView.dequeueReusableCellWithIdentifier("WellTableViewCell") as! WellTableViewCell
-        var view = UIView(frame: CGRectMake(0, 0, self.tableView.frame.size.width, 84.0))
-        
-        if selectedSegmentIndex == favoriteWellsIndex {
-
-            let well = self.favoriteWells[section]
-            cell.setupWithWell(well, andWidth: self.tableView.frame.size.width)
-
-        } else {
-            let well = self.wells[section]
-            cell.setupWithWell(well, andWidth: self.tableView.frame.size.width)
-
-        }
-        
-        view.addSubview(cell)
-        return view
-        
-    }
+    
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(WellboreTableViewCell.getCellIdentifier()) as! WellboreTableViewCell
@@ -327,14 +313,7 @@ extension HomeViewController: UITableViewDataSource {
         return count
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 57.0
-    }
-    
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 84.0
-    }
-    
+  
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         var sections = 1
         
@@ -350,7 +329,6 @@ extension HomeViewController: UITableViewDataSource {
             loadingIndicator.startAnimating()
             backgroundView.addSubview(loadingIndicator)
             self.tableView.backgroundView = backgroundView
-            self.tableView.separatorStyle = .None
 
         } else {
             
@@ -377,7 +355,6 @@ extension HomeViewController: UITableViewDataSource {
                 noWellsLabel.sizeToFit()
                 
                 self.tableView.backgroundView = noWellsLabel
-                self.tableView.separatorStyle = .None
             } else {
                 if selectedSegmentIndex == favoriteWellsIndex {
                     sections = self.favoriteWells.count
@@ -386,7 +363,6 @@ extension HomeViewController: UITableViewDataSource {
                 }
                 
                 self.tableView.backgroundView = nil
-                self.tableView.separatorStyle = .SingleLine
             }
 
         }
@@ -396,6 +372,45 @@ extension HomeViewController: UITableViewDataSource {
 }
 
 extension HomeViewController: UITableViewDelegate {
+    func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        var view = UIView(frame: CGRectMake(0, 61.0, self.tableView.frame.size.width, 1.0))
+        view.backgroundColor = UIColor(red: 0.221, green: 0.221, blue: 0.221, alpha: 1.0)
+        return view
+    }
+    
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let cell = tableView.dequeueReusableCellWithIdentifier("WellTableViewCell") as! WellTableViewCell
+        var view = UIView(frame: CGRectMake(0, 0, self.tableView.frame.size.width, 62.0))
+        
+        if selectedSegmentIndex == favoriteWellsIndex {
+            
+            let well = self.favoriteWells[section]
+            cell.setupWithWell(well)
+            cell.frame = CGRectMake(0, 0, self.tableView.frame.size.width, 62.0)
+            
+        } else {
+            let well = self.wells[section]
+            cell.setupWithWell(well)
+            cell.frame = CGRectMake(0, 0, self.tableView.frame.size.width, 62.0)
+        }
+        
+        view.addSubview(cell)
+        return view
+        
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 57.0
+    }
+    
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 62.0
+    }
+    
+    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 1.0
+    }
+    
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let wellbore = wellboreAtIndexPath(indexPath)
         

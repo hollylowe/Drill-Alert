@@ -38,6 +38,17 @@ class ManageDashboardsTableViewController: UITableViewController {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
+    override func tableView(tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
+        if let footer = view as? UITableViewHeaderFooterView {
+            footer.textLabel.textColor = UIColor(red: 0.624, green: 0.627, blue: 0.643, alpha: 1.0)
+            
+        }
+    }
+    override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        if let header = view as? UITableViewHeaderFooterView {
+            header.textLabel.textColor = UIColor(red: 0.624, green: 0.627, blue: 0.643, alpha: 1.0)
+        }
+    }
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.section == self.manageSection {
             if indexPath.row == createNewDashboardRow {
@@ -47,6 +58,9 @@ class ManageDashboardsTableViewController: UITableViewController {
     }
     override func viewDidLoad() {
         self.title = "Dashboards"
+        self.navigationController?.navigationBar.barStyle = UIBarStyle.Black
+        self.tableView.separatorStyle = .None
+        
         if let dashboard = self.currentDashboard {
             if let label = self.currentLayoutTableViewCell.detailTextLabel {
                 label.text = dashboard.name

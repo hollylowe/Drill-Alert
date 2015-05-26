@@ -15,11 +15,14 @@ class WellboreDetailViewController: UIViewController {
 
     var currentUser: User!
     var currentWellbore: Wellbore!
-    var toolbarHeight: CGFloat = 39.0
+    var toolbarHeight: CGFloat = 44.0
+    var dashboardNameViewHeight: CGFloat = 24.0
     var navBarHairlineImageView: UIImageView!
     
     // Segmented Control
     var segmentedControlToolbar: SegmentControlToolbar!
+    var dashboardNameView: UIView!
+    var dashboardNameLabel: UILabel!
     
     var segmentedControl: UISegmentedControl!
     let segmentedControlItems = ["Dashboard", "Alerts"]
@@ -40,6 +43,29 @@ class WellboreDetailViewController: UIViewController {
         super.viewDidLoad()
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        navBarHairlineImageView.hidden = true
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        navBarHairlineImageView.hidden = false
+    }
+    
+    func updateCurrentDashboard(newDashboard: Dashboard) {
+        self.dashboardViewController.updateCurrentDashboard(newDashboard)
+        if let dashboard = self.dashboardViewController.currentDashboard {
+            self.dashboardNameLabel.text = dashboard.name
+        } else {
+            self.dashboardNameLabel.text = "No Dashboard Selected"
+        }
+    }
+    
+    func updateCurrentDashboardLabelWithString(string: String) {
+        self.dashboardNameLabel.text = string
+    }
+    
     private func setViewControllers() {
         // Instantiate the Dashboard View Controller
         // and the Alert Inbox View Controller
@@ -58,6 +84,20 @@ class WellboreDetailViewController: UIViewController {
         self.segmentedControlViewControllers = [self.dashboardViewController, self.alertInboxTableViewController]
     }
     
+    func findHairlineImageViewUnder(view: UIView) -> UIImageView? {
+        if view.isKindOfClass(UIImageView) && view.bounds.size.height <= 1.0 {
+            return view as? UIImageView
+        } else {
+            for subview in view.subviews {
+                var imageView = self.findHairlineImageViewUnder(subview as! UIView)
+                if imageView != nil {
+                    return imageView
+                }
+            }
+            return nil
+        }
+    }
+    
     private func setupView() {
         self.title = currentWellbore.name
         self.setupRightBarButtonItem()
@@ -65,7 +105,7 @@ class WellboreDetailViewController: UIViewController {
         
         if let mainNavigationController = self.navigationController {
             mainNavigationController.navigationBar.hidden = false
-            
+            self.navBarHairlineImageView = self.findHairlineImageViewUnder(mainNavigationController.navigationBar)
             // Create a segmented control inside a toolbar
             let navigationBarHeight = mainNavigationController.navigationBar.frame.size.height
             let statusBarHeight = UIApplication.sharedApplication().statusBarFrame.size.height
@@ -77,6 +117,23 @@ class WellboreDetailViewController: UIViewController {
                 delegate: self,
                 action: Selector("segmentedControlAction:"))
             
+            let dashboardNameRect = CGRectMake(0, toolbarYCoord + self.toolbarHeight, self.view.frame.size.width, self.dashboardNameViewHeight)
+            let dashboardNameLabelRect = CGRectMake(0, 0, self.view.frame.size.width, self.dashboardNameViewHeight)
+            let newDashboardNameView = UIView(frame: dashboardNameRect)
+            let newDashboardNameLabel = UILabel(frame: dashboardNameLabelRect)
+            newDashboardNameLabel.font = UIFont(name: "HelveticaNeue", size: 12.0)
+            
+            if let dashboard = self.dashboardViewController.currentDashboard {
+                newDashboardNameLabel.text = dashboard.name
+            } else {
+                newDashboardNameLabel.text = "No Dashboard Selected"
+            }
+            newDashboardNameLabel.textColor = UIColor.whiteColor()
+            newDashboardNameLabel.textAlignment = NSTextAlignment.Center
+            self.dashboardNameLabel = newDashboardNameLabel
+            newDashboardNameView.addSubview(self.dashboardNameLabel)
+            newDashboardNameView.backgroundColor = UIColor(red: 0.224, green: 0.224, blue: 0.224, alpha: 1.0)
+            self.dashboardNameView = newDashboardNameView
             // Create a new Navigation Controller right below the toolbar
             // that is the height of the screen
             self.segmentNavigationController = UINavigationController()
@@ -91,7 +148,7 @@ class WellboreDetailViewController: UIViewController {
             // Create a Container View right below the
             // toolbar that is the height of the screen
             let containerViewFrame = CGRectMake(
-                0, self.toolbarHeight,
+                0, self.toolbarHeight + self.dashboardNameViewHeight,
                 self.view.frame.size.width,
                 self.view.frame.size.height - self.toolbarHeight - toolbarYCoord)
             self.containerView = UIView(frame: containerViewFrame)
@@ -102,6 +159,7 @@ class WellboreDetailViewController: UIViewController {
             // Add the Toolbar and Container View
             self.view.addSubview(self.containerView)
             self.view.addSubview(self.segmentedControlToolbar)
+            self.view.addSubview(self.dashboardNameView)
 
         }
 

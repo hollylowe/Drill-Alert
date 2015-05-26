@@ -27,7 +27,13 @@ class ChoosePageTypeTableViewController: UITableViewController {
     }
     override func tableView(tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
         if let footer = view as? UITableViewHeaderFooterView {
-            footer.textLabel.textColor = UIColor.whiteColor()
+            footer.textLabel.textColor = UIColor(red: 0.624, green: 0.627, blue: 0.643, alpha: 1.0)
+            
+        }
+    }
+    override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        if let header = view as? UITableViewHeaderFooterView {
+            header.textLabel.textColor = UIColor(red: 0.624, green: 0.627, blue: 0.643, alpha: 1.0)
         }
     }
     @IBAction func cancelButtonTapped(sender: UIBarButtonItem) {

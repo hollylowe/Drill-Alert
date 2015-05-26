@@ -30,7 +30,7 @@ class CreatePageFromExistingController: LoadingTableViewController, UISearchBarD
     
     override func viewDidLoad() {
         self.dataSource = self
-        
+        self.tableView.separatorColor = UIColor.blackColor()
         super.viewDidLoad()
     }
     
@@ -270,7 +270,11 @@ class CreatePageFromExistingController: LoadingTableViewController, UISearchBarD
         
         return numberOfRows
     }
-    
+    override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        if let header = view as? UITableViewHeaderFooterView {
+            header.textLabel.textColor = UIColor(white: 0.9, alpha: 1.0)
+        }
+    }
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return self.numberOfSections
     }

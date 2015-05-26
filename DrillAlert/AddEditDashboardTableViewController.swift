@@ -25,6 +25,7 @@ class AddEditDashboardTableViewController: UITableViewController {
     // Table View Properties
     let dashboardNameSection = 0
     let pagesSection = 1
+    let pagesToolbarRow = 0
     let deleteDashboardSection = 2
     
     var pages = Array<Page>()
@@ -115,7 +116,7 @@ class AddEditDashboardTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         self.navigationController?.navigationBar.barStyle = UIBarStyle.Black
-        self.tableView.separatorStyle = .None
+        self.tableView.separatorColor = UIColor(red: 0.112, green: 0.112, blue: 0.112, alpha: 1.0)
         self.tableView.tableHeaderView = UIView(frame: CGRectMake(0, 0, tableView.frame.size.width, 50.0))
         
         if let dashboard = dashboardToEdit {
@@ -136,7 +137,10 @@ class AddEditDashboardTableViewController: UITableViewController {
             style: .Done,
             target: self,
             action: "saveButtonTapped:")
-        
+        if let saveButton = self.saveBarButtonItem {
+            saveButton.tintColor = UIColor(red: 0.490, green: 0.733, blue: 0.910, alpha: 1.0)
+            
+        }
         let activityView = UIActivityIndicatorView(frame: CGRectMake(0, 0, 25, 25))
         activityView.startAnimating()
         activityView.hidden = false
@@ -164,7 +168,7 @@ class AddEditDashboardTableViewController: UITableViewController {
             if let id = dashboard.id {
                 println("Deleting Layout #\(id)")
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
-                    if let URL = NSURL(string: "https://drillalert.azurewebsites.net/api/views/\(id)") {
+                    if let URL = NSURL(string: "https://drillalert.azurewebsites.net/api/dashboards/\(id)") {
                         let request = NSMutableURLRequest(URL: URL)
                         request.HTTPMethod = "DELETE"
                         
@@ -271,7 +275,7 @@ extension AddEditDashboardTableViewController: UITableViewDelegate {
         case self.dashboardNameSection:
             numberOfRows = 1
         case self.pagesSection:
-            numberOfRows = self.pages.count
+            numberOfRows = self.pages.count + 1
         case self.deleteDashboardSection:
             numberOfRows = 1
         default: break
@@ -280,6 +284,18 @@ extension AddEditDashboardTableViewController: UITableViewDelegate {
         return numberOfRows
     }
     
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        var result: String?
+        if section == self.pagesSection {
+            result = "Pages"
+        } else if section == self.dashboardNameSection {
+            result = "Name"
+        } else if section == self.deleteDashboardSection {
+            result = "Options"
+        }
+        
+        return result
+    }
     override func tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         var footer = ""
         
@@ -305,7 +321,11 @@ extension AddEditDashboardTableViewController: UITableViewDelegate {
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         var rowHeight: CGFloat = 44.0
         if indexPath.section == self.pagesSection {
-            rowHeight = 56.0
+            if indexPath.row == self.pagesToolbarRow {
+                rowHeight = 48.0
+            } else {
+                rowHeight = 56.0
+            }
         }
         
         return rowHeight
@@ -313,10 +333,10 @@ extension AddEditDashboardTableViewController: UITableViewDelegate {
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         var rowHeight: CGFloat = 0
         
-        if section == self.pagesSection {
-            rowHeight = 80.0
-        } else if section == self.dashboardNameSection || section == self.deleteDashboardSection {
-            rowHeight = 34.0
+        if section == self.pagesSection || section == self.deleteDashboardSection {
+            rowHeight = 40.0
+        } else {
+            rowHeight = 22.0
         }
         
         return rowHeight
@@ -325,31 +345,25 @@ extension AddEditDashboardTableViewController: UITableViewDelegate {
         var result: UIView?
         
         if section == self.pagesSection {
-            result = UIView(frame: CGRectMake(0, 0, tableView.frame.size.width, 80.0))
-            result!.backgroundColor = UIColor(red: 0.122, green: 0.122, blue: 0.122, alpha: 1.0)
-            let addEditToolbarCell = tableView.dequeueReusableCellWithIdentifier(AddEditToolbarCell.cellIdentifier()) as! AddEditToolbarCell
-            addEditToolbarCell.addButton.addTarget(self, action: "addNewPageButtonTapped:", forControlEvents: .TouchUpInside)
-            addEditToolbarCell.editButton.addTarget(self, action: "sortPagesButtonTapped:", forControlEvents: .TouchUpInside)
-            addEditToolbarCell.editButton.titleLabel?.text = "Sort"
-            addEditToolbarCell.sectionLabel.text = "Pages"
-            addEditToolbarCell.frame = CGRectMake(0, 0, tableView.frame.width, 80.0)
-            addEditToolbarCell.backgroundColor = UIColor(red: 0.122, green: 0.122, blue: 0.122, alpha: 1.0)
-            addEditToolbarCell.sectionLabelBackground.backgroundColor = UIColor(red: 0.122, green: 0.122, blue: 0.122, alpha: 1.0)
-            result!.addSubview(addEditToolbarCell)
+            
         } else if section == self.dashboardNameSection {
+            /*
             result = UIView(frame: CGRectMake(0, 0, tableView.frame.size.width, 34.0))
             let formSectionHeaderCell = tableView.dequeueReusableCellWithIdentifier(FormSectionHeaderCell.cellIdentifier()) as! FormSectionHeaderCell
             formSectionHeaderCell.sectionLabel.text = "Name"
             formSectionHeaderCell.sectionLabelBackground.backgroundColor = UIColor(red: 0.122, green: 0.122, blue: 0.122, alpha: 1.0)
             formSectionHeaderCell.frame = CGRectMake(0, 0, tableView.frame.width, 34.0)
             result!.addSubview(formSectionHeaderCell)
+            */
         } else if section == self.deleteDashboardSection {
+            /*
             result = UIView(frame: CGRectMake(0, 0, tableView.frame.size.width, 34.0))
             let formSectionHeaderCell = tableView.dequeueReusableCellWithIdentifier(FormSectionHeaderCell.cellIdentifier()) as! FormSectionHeaderCell
             formSectionHeaderCell.sectionLabel.text = "Options"
             formSectionHeaderCell.sectionLabelBackground.backgroundColor = UIColor(red: 0.122, green: 0.122, blue: 0.122, alpha: 1.0)
             formSectionHeaderCell.frame = CGRectMake(0, 0, tableView.frame.width, 34.0)
             result!.addSubview(formSectionHeaderCell)
+            */
         }
         
         return result
@@ -359,19 +373,38 @@ extension AddEditDashboardTableViewController: UITableViewDelegate {
         var result: UIView?
         
         result = UIView(frame: CGRectMake(0, 0, tableView.frame.size.width, 22.0))
-        //result!.backgroundColor = UIColor(red: 0.122, green: 0.122, blue: 0.122, alpha: 1.0)
+        if section == self.pagesSection {
+            var borderView = UIView(frame: CGRectMake(0, 0, tableView.frame.size.width, 2.0))
+            
+            borderView.backgroundColor = UIColor(red: 0.221, green: 0.221, blue: 0.221, alpha: 1.0)
+            result!.addSubview(borderView)
+        }
         
         return result
     }
-    
+    override func tableView(tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
+        if let footer = view as? UITableViewHeaderFooterView {
+            footer.textLabel.textColor = UIColor(red: 0.624, green: 0.627, blue: 0.643, alpha: 1.0)
+            
+        }
+    }
+    override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        if let header = view as? UITableViewHeaderFooterView {
+            header.textLabel.textColor = UIColor(red: 0.624, green: 0.627, blue: 0.643, alpha: 1.0)
+        }
+    }
     override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         var result: CGFloat = 22.0
         return result
     }
+    
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
         if indexPath.section == self.pagesSection {
-            if indexPath.row < self.pages.count {
-                let panel = self.pages[indexPath.row]
+            if indexPath.row == self.pagesToolbarRow {
+                
+            } else if indexPath.row <= self.pages.count {
+                let panel = self.pages[indexPath.row - 1]
                 
                 switch panel.type {
                 case .Canvas: self.presentEditCanvasViewController(panel)
@@ -401,7 +434,7 @@ extension AddEditDashboardTableViewController: UITableViewDelegate {
                 let dashboardNameCell = tableView.dequeueReusableCellWithIdentifier(DashboardNameInputTableViewCell.cellIdentifier()) as! DashboardNameInputTableViewCell
                 self.dashboardNameTextField = dashboardNameCell.dashboardNameTextField
                 if let placeholder = self.dashboardNameTextField.placeholder {
-                    self.dashboardNameTextField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSForegroundColorAttributeName: UIColor.whiteColor()])
+                    self.dashboardNameTextField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSForegroundColorAttributeName: UIColor(white: 0.52, alpha: 1.0)])
                 }
                 
 
@@ -412,36 +445,46 @@ extension AddEditDashboardTableViewController: UITableViewDelegate {
                 
                 cell = dashboardNameCell
             case pagesSection:
-                let pageCell = tableView.dequeueReusableCellWithIdentifier(PanelTableViewCell.cellIdentifier()) as! PanelTableViewCell
-                let page = self.pages[indexPath.row]
-                
-                if let label = pageCell.textLabel {
-                    label.text = page.name
-                }
-                if let imageView = pageCell.imageView {
-                    // Set the image
-                    let imageSize = CGSize(width: 22.0, height: 22.0)
-                    switch page.type {
-                    case .Canvas:
-                        if let image = UIImage(named: "canvas-icon-color") {
-                            imageView.image = self.imageWithImage(image, scaledToSize: imageSize)
-                        }
-                    case .Plot:
-                        if let image = UIImage(named: "plot-icon-color") {
-                            imageView.image = self.imageWithImage(image, scaledToSize: imageSize)
-                        }
-                    case .Compass:
-                        if let image = UIImage(named: "compass-icon-color") {
-                            imageView.image = self.imageWithImage(image, scaledToSize: imageSize)
+                if indexPath.row == self.pagesToolbarRow {
+                    let addEditToolbarCell = tableView.dequeueReusableCellWithIdentifier(AddEditToolbarCell.cellIdentifier()) as! AddEditToolbarCell
+                    addEditToolbarCell.addButton.addTarget(self, action: "addNewPageButtonTapped:", forControlEvents: .TouchUpInside)
+                    addEditToolbarCell.editButton.addTarget(self, action: "sortPagesButtonTapped:", forControlEvents: .TouchUpInside)
+                    addEditToolbarCell.frame = CGRectMake(0, 0, tableView.frame.width, 80.0)
+                    addEditToolbarCell.backgroundColor = UIColor(red: 0.122, green: 0.122, blue: 0.122, alpha: 1.0)
+                    cell = addEditToolbarCell
+                } else if indexPath.row <= self.pages.count {
+                    let pageCell = tableView.dequeueReusableCellWithIdentifier(PanelTableViewCell.cellIdentifier()) as! PanelTableViewCell
+                    let page = self.pages[indexPath.row - 1]
+                    
+                    if let label = pageCell.textLabel {
+                        label.text = page.name
+                    }
+                    if let imageView = pageCell.imageView {
+                        // Set the image
+                        let imageSize = CGSize(width: 22.0, height: 22.0)
+                        switch page.type {
+                        case .Canvas:
+                            if let image = UIImage(named: "canvas-icon-color") {
+                                imageView.image = self.imageWithImage(image, scaledToSize: imageSize)
+                            }
+                        case .Plot:
+                            if let image = UIImage(named: "plot-icon-color") {
+                                imageView.image = self.imageWithImage(image, scaledToSize: imageSize)
+                            }
+                        case .Compass:
+                            if let image = UIImage(named: "compass-icon-color") {
+                                imageView.image = self.imageWithImage(image, scaledToSize: imageSize)
+                            }
+                            
+                        default: break
                         }
                         
-                    default: break
+                        
                     }
                     
-                    
+                    cell = pageCell
                 }
-                
-                cell = pageCell
+            
                 /*
                 switch indexPath.row {
             

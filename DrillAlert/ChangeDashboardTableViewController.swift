@@ -19,11 +19,16 @@ class ChangeDashboardTableViewController: LoadingTableViewController {
     
     override func viewDidLoad() {
         self.dataSource = self
+        // self.tableView.separatorStyle = .None
+        self.tableView.tableFooterView = UIView()
+
         super.viewDidLoad()
     }
-    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 66.0
+    }
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(DashboardTableViewCell.cellIdentifier()) as! DashboardTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(DashboardPreviewTableViewCell.cellIdentifier()) as! DashboardPreviewTableViewCell
         let dashboard = self.dashboards[indexPath.row]
         cell.setupWithDashboard(dashboard)
         return cell
@@ -35,7 +40,8 @@ class ChangeDashboardTableViewController: LoadingTableViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let dashboard = self.dashboards[indexPath.row]
-        self.manageDashboardsTableViewController.wellboreDetailViewController.dashboardViewController.updateCurrentDashboard(dashboard)
+        self.manageDashboardsTableViewController.wellboreDetailViewController.updateCurrentDashboard(dashboard)
+        
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -55,10 +61,6 @@ extension ChangeDashboardTableViewController: LoadingTableViewControllerDataSour
     }
     
     func dataLoadOperation() {
-        println("data load")
-        println("Wellbore: \(self.wellbore)")
-        println("User: \(self.user)")
-        
         let (newDashboards, error) = Dashboard.getDashboardsForUser(self.user, andWellbore: self.wellbore)
         println("done")
         if error == nil {

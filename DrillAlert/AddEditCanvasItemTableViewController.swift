@@ -104,15 +104,31 @@ class AddEditCanvasItemTableViewController: UITableViewController {
     }
     
     override func viewDidLoad() {
+        self.tableView.separatorColor = UIColor.blackColor()
+        self.navigationController?.navigationBar.barStyle = UIBarStyle.Black
+
         if let canvasItem = self.canvasItemToEdit {
             self.title = "Edit Canvas Item"
         } else {
             self.title = "Add Canvas Item"
         }
-        
+        if let saveButton = self.navigationItem.rightBarButtonItem {
+            saveButton.tintColor = UIColor(red: 0.490, green: 0.733, blue: 0.910, alpha: 1.0)
+            
+        }
         super.viewDidLoad()
     }
-    
+    override func tableView(tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
+        if let footer = view as? UITableViewHeaderFooterView {
+            footer.textLabel.textColor = UIColor(red: 0.624, green: 0.627, blue: 0.643, alpha: 1.0)
+            
+        }
+    }
+    override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        if let header = view as? UITableViewHeaderFooterView {
+            header.textLabel.textColor = UIColor(red: 0.624, green: 0.627, blue: 0.643, alpha: 1.0)
+        }
+    }
     class func storyboardIdentifier() -> String {
         return "AddEditCanvasItemTableViewController"
     }
@@ -142,7 +158,7 @@ class AddEditCanvasItemTableViewController: UITableViewController {
         var title = ""
         
         switch section {
-        case self.canvasItemNameSection: title = ""
+        case self.canvasItemNameSection: title = "Name"
         case self.canvasItemPositionSection: title = "Position"
         case self.canvasItemTypeSection: title = "Type"
         default: title = ""
@@ -158,8 +174,10 @@ class AddEditCanvasItemTableViewController: UITableViewController {
         case self.canvasItemNameSection:
             let textFieldCell = tableView.dequeueReusableCellWithIdentifier(TextFieldCell.cellIdentifier()) as! TextFieldCell
             self.canvasItemNameTextField = textFieldCell.textField
-            textFieldCell.textField.placeholder = "Canvas Item Name"
-            
+            textFieldCell.textField.placeholder = "Enter a name"
+            if let placeholder = textFieldCell.textField.placeholder {
+                textFieldCell.textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSForegroundColorAttributeName: UIColor(white: 0.52, alpha: 1.0)])
+            }
             if let canvasItem = self.canvasItemToEdit {
                 textFieldCell.textField.text = canvasItem.name
             }
@@ -171,7 +189,9 @@ class AddEditCanvasItemTableViewController: UITableViewController {
                 let textFieldDetailCell = tableView.dequeueReusableCellWithIdentifier(TextFieldDetailCell.cellIdentifier()) as! TextFieldDetailCell
                 textFieldDetailCell.textFieldLabel.text = "X Position"
                 textFieldDetailCell.textField.placeholder = "0"
-                
+                if let placeholder = textFieldDetailCell.textField.placeholder {
+                    textFieldDetailCell.textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSForegroundColorAttributeName: UIColor(white: 0.52, alpha: 1.0)])
+                }
                 if let canvasItem = self.canvasItemToEdit {
                     textFieldDetailCell.textField.text = "\(canvasItem.xPosition)"
                 }
@@ -183,6 +203,9 @@ class AddEditCanvasItemTableViewController: UITableViewController {
                 let textFieldDetailCell = tableView.dequeueReusableCellWithIdentifier(TextFieldDetailCell.cellIdentifier()) as! TextFieldDetailCell
                 textFieldDetailCell.textFieldLabel.text = "Y Position"
                 textFieldDetailCell.textField.placeholder = "0"
+                if let placeholder = textFieldDetailCell.textField.placeholder {
+                    textFieldDetailCell.textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSForegroundColorAttributeName: UIColor(white: 0.52, alpha: 1.0)])
+                }
                 if let canvasItem = self.canvasItemToEdit {
                     textFieldDetailCell.textField.text = "\(canvasItem.yPosition)"
                 }

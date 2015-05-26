@@ -83,6 +83,8 @@ class AddEditTrackTableViewController: UITableViewController {
 
     
     override func viewDidLoad() {
+        self.navigationController?.navigationBar.barStyle = UIBarStyle.Black
+        self.tableView.separatorColor = UIColor.blackColor()
         if let track = self.trackToEdit {
             self.title = "Edit Track"
             self.navigationItem.leftBarButtonItem = UIBarButtonItem(
@@ -98,9 +100,25 @@ class AddEditTrackTableViewController: UITableViewController {
                 target: self,
                 action: "cancelBarButtonTapped:")
         }
+        
+        if let saveButton = self.navigationItem.rightBarButtonItem {
+            saveButton.tintColor = UIColor(red: 0.490, green: 0.733, blue: 0.910, alpha: 1.0)
+            
+        }
+        
         super.viewDidLoad()
     }
-    
+    override func tableView(tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
+        if let footer = view as? UITableViewHeaderFooterView {
+            footer.textLabel.textColor = UIColor(red: 0.624, green: 0.627, blue: 0.643, alpha: 1.0)
+            
+        }
+    }
+    override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        if let header = view as? UITableViewHeaderFooterView {
+            header.textLabel.textColor = UIColor(red: 0.624, green: 0.627, blue: 0.643, alpha: 1.0)
+        }
+    }
     /*
     func addCurve(curve: Curve) {
         self.curves.append(curve)
@@ -283,7 +301,7 @@ extension AddEditTrackTableViewController: UITableViewDataSource {
         var result = ""
         
         switch section {
-        case self.trackNameSection: result = ""
+        case self.trackNameSection: result = "Name"
         case self.trackSizeSection: result = "Size"
         case self.trackPropertiesSection: result = "Properties"
         default: result = ""
@@ -318,10 +336,15 @@ extension AddEditTrackTableViewController: UITableViewDataSource {
         switch indexPath.section {
         case self.trackNameSection:
             let textFieldCell = tableView.dequeueReusableCellWithIdentifier(TextFieldCell.cellIdentifier()) as! TextFieldCell
-            textFieldCell.textField.placeholder = "Track Name"
+            textFieldCell.textField.placeholder = "Enter a name"
             if let track = self.trackToEdit {
                 textFieldCell.textField.text = track.name
             }
+            if let placeholder = textFieldCell.textField.placeholder {
+                textFieldCell.textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSForegroundColorAttributeName: UIColor(white: 0.52, alpha: 1.0)])
+            }
+            
+            
             self.trackNameTextField = textFieldCell.textField
             cell = textFieldCell
         case self.trackSizeSection:
@@ -334,7 +357,9 @@ extension AddEditTrackTableViewController: UITableViewDataSource {
                 if let track = self.trackToEdit {
                     textFieldDetailCell.textField.text = "\(track.xPosition)"
                 }
-                
+                if let placeholder = textFieldDetailCell.textField.placeholder {
+                    textFieldDetailCell.textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSForegroundColorAttributeName: UIColor(white: 0.52, alpha: 1.0)])
+                }
                 
                 self.xPositionTextField = textFieldDetailCell.textField
                 cell = textFieldDetailCell
@@ -342,6 +367,9 @@ extension AddEditTrackTableViewController: UITableViewDataSource {
                 let textFieldDetailCell = tableView.dequeueReusableCellWithIdentifier(TextFieldDetailCell.cellIdentifier()) as! TextFieldDetailCell
                 textFieldDetailCell.textFieldLabel.text = "Y Position"
                 textFieldDetailCell.textField.placeholder = "0"
+                if let placeholder = textFieldDetailCell.textField.placeholder {
+                    textFieldDetailCell.textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSForegroundColorAttributeName: UIColor(white: 0.52, alpha: 1.0)])
+                }
                 if let track = self.trackToEdit {
                     textFieldDetailCell.textField.text = "\(track.yPosition)"
                 }
@@ -355,6 +383,9 @@ extension AddEditTrackTableViewController: UITableViewDataSource {
                 let textFieldDetailCell = tableView.dequeueReusableCellWithIdentifier(TextFieldDetailCell.cellIdentifier()) as! TextFieldDetailCell
                 textFieldDetailCell.textFieldLabel.text = "Step Size"
                 textFieldDetailCell.textField.placeholder = "0"
+                if let placeholder = textFieldDetailCell.textField.placeholder {
+                    textFieldDetailCell.textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSForegroundColorAttributeName: UIColor(white: 0.52, alpha: 1.0)])
+                }
                 if let track = self.trackToEdit {
                     if let trackSettings = track.trackSettings {
                         textFieldDetailCell.textField.text = "\(trackSettings.stepSize)"
@@ -366,6 +397,9 @@ extension AddEditTrackTableViewController: UITableViewDataSource {
                 let textFieldDetailCell = tableView.dequeueReusableCellWithIdentifier(TextFieldDetailCell.cellIdentifier()) as! TextFieldDetailCell
                 textFieldDetailCell.textFieldLabel.text = "Start Range"
                 textFieldDetailCell.textField.placeholder = "0"
+                if let placeholder = textFieldDetailCell.textField.placeholder {
+                    textFieldDetailCell.textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSForegroundColorAttributeName: UIColor(white: 0.52, alpha: 1.0)])
+                }
                 if let track = self.trackToEdit {
                     if let trackSettings = track.trackSettings {
                         textFieldDetailCell.textField.text = "\(trackSettings.startRange)"
@@ -377,6 +411,9 @@ extension AddEditTrackTableViewController: UITableViewDataSource {
                 let textFieldDetailCell = tableView.dequeueReusableCellWithIdentifier(TextFieldDetailCell.cellIdentifier()) as! TextFieldDetailCell
                 textFieldDetailCell.textFieldLabel.text = "End Range"
                 textFieldDetailCell.textField.placeholder = "0"
+                if let placeholder = textFieldDetailCell.textField.placeholder {
+                    textFieldDetailCell.textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSForegroundColorAttributeName: UIColor(white: 0.52, alpha: 1.0)])
+                }
                 if let track = self.trackToEdit {
                     if let trackSettings = track.trackSettings {
                         textFieldDetailCell.textField.text = "\(trackSettings.endRange)"
@@ -388,6 +425,9 @@ extension AddEditTrackTableViewController: UITableViewDataSource {
                 let textFieldDetailCell = tableView.dequeueReusableCellWithIdentifier(TextFieldDetailCell.cellIdentifier()) as! TextFieldDetailCell
                 textFieldDetailCell.textFieldLabel.text = "Division Size"
                 textFieldDetailCell.textField.placeholder = "0"
+                if let placeholder = textFieldDetailCell.textField.placeholder {
+                    textFieldDetailCell.textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSForegroundColorAttributeName: UIColor(white: 0.52, alpha: 1.0)])
+                }
                 if let track = self.trackToEdit {
                     if let trackSettings = track.trackSettings {
                         textFieldDetailCell.textField.text = "\(trackSettings.divisionSize)"
@@ -399,6 +439,9 @@ extension AddEditTrackTableViewController: UITableViewDataSource {
                 let textFieldDetailCell = tableView.dequeueReusableCellWithIdentifier(TextFieldDetailCell.cellIdentifier()) as! TextFieldDetailCell
                 textFieldDetailCell.textFieldLabel.text = "Scale Type"
                 textFieldDetailCell.textField.placeholder = "0"
+                if let placeholder = textFieldDetailCell.textField.placeholder {
+                    textFieldDetailCell.textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSForegroundColorAttributeName: UIColor(white: 0.52, alpha: 1.0)])
+                }
                 if let track = self.trackToEdit {
                     if let trackSettings = track.trackSettings {
                         textFieldDetailCell.textField.text = "\(trackSettings.scaleType)"

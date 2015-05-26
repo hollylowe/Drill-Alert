@@ -30,6 +30,8 @@ class LoadingTableViewController: UITableViewController {
     var shouldLoadFromNetwork = true
     
     override func viewDidLoad() {
+        self.tableView.separatorColor = UIColor.blackColor()
+
         self.loadData()
         super.viewDidLoad()
     }
@@ -86,7 +88,6 @@ extension LoadingTableViewController: UITableViewDataSource {
             backgroundView.addSubview(loadingIndicator)
             
             self.tableView.backgroundView = backgroundView
-            self.tableView.separatorStyle = .None
             
         } else if self.dataSource.shouldShowNoDataMessage() {
             // Show no alerts message
@@ -102,11 +103,9 @@ extension LoadingTableViewController: UITableViewDataSource {
             noDataLabel.sizeToFit()
             
             self.tableView.backgroundView = noDataLabel
-            self.tableView.separatorStyle = .None
             
         } else {
             self.tableView.backgroundView = nil
-            self.tableView.separatorStyle = .SingleLine
         }
         
         return numberOfSections

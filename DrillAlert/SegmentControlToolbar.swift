@@ -14,9 +14,9 @@ class SegmentControlToolbar: UIToolbar {
     var segmentedControlItems: [AnyObject]!
     
     init(frame: CGRect, items: [AnyObject]!, delegate: UIViewController, action: Selector) {
-        let segmentedControlHeight: CGFloat = 24.0
-        let segmentedControlWidth: CGFloat = frame.size.width / 2
-        let segmentedControlXCoord: CGFloat = frame.size.width / 4
+        let segmentedControlHeight: CGFloat = 26.0
+        let segmentedControlWidth: CGFloat = frame.size.width - (frame.size.width / 4)
+        let segmentedControlXCoord: CGFloat = frame.size.width / 8
         let segmentedControlYCoord: CGFloat = (frame.size.height - segmentedControlHeight) / 2
         
         let segmentedControlRect = CGRectMake(
@@ -28,6 +28,8 @@ class SegmentControlToolbar: UIToolbar {
         self.segmentedControl = UISegmentedControl(items: items)
         self.segmentedControl.frame = segmentedControlRect
         self.segmentedControl.selectedSegmentIndex = 0
+        self.segmentedControl.tintColor = UIColor.whiteColor()
+
         self.segmentedControl.addTarget(
             delegate,
             action: action,
@@ -40,9 +42,9 @@ class SegmentControlToolbar: UIToolbar {
         self.translucent = false
         self.barTintColor =  UIColor(red: 0.122, green: 0.122, blue: 0.122, alpha: 1.0)
         */
-        
+        self.barTintColor = UIColor(red: 0.096, green: 0.096, blue: 0.096, alpha: 1.0)
         self.addSubview(segmentedControl)
-        self.addBottomBorder()
+        //self.addBottomBorder()
     }
 
     required init(coder aDecoder: NSCoder) {
