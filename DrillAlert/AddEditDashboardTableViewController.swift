@@ -179,6 +179,8 @@ class AddEditDashboardTableViewController: UITableViewController {
             saveButton.tintColor = UIColor(red: 0.490, green: 0.733, blue: 0.910, alpha: 1.0)
             
         }
+        
+        
         let activityView = UIActivityIndicatorView(frame: CGRectMake(0, 0, 25, 25))
         activityView.startAnimating()
         activityView.hidden = false

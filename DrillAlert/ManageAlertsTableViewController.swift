@@ -107,6 +107,15 @@ extension ManageAlertsTableViewController: UITableViewDataSource {
         let destination = destinationNavigationController.viewControllers[0] as! AddEditAlertTableViewController
         destination.delegate = self
         destination.alertToEdit = alert
+        
+        // TODO: Use faster filter method
+        for curve in self.curves {
+            if curve.id == alert.curveID {
+                destination.selectedCurve = curve
+                break
+            }
+        }
+        
         destination.wellbore = self.wellbore
         destination.currentUser = self.user
         

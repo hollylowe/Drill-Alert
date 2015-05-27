@@ -2288,11 +2288,13 @@
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="y7G-fw-OAT" firstAttribute="leading" secondItem="T8c-sX-dqg" secondAttribute="trailing" constant="13" id="87L-QW-klc"/>
+                                        <constraint firstItem="y7G-fw-OAT" firstAttribute="leading" secondItem="Oo8-Fn-gWv" secondAttribute="leadingMargin" constant="43" id="9gG-IH-rNr"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="9Jo-7u-v1F" secondAttribute="bottom" constant="6" id="AQo-HR-8zw"/>
                                         <constraint firstItem="oLs-5J-QyC" firstAttribute="trailing" secondItem="Oo8-Fn-gWv" secondAttribute="trailingMargin" id="Lyn-YO-Lin"/>
                                         <constraint firstAttribute="centerY" secondItem="T8c-sX-dqg" secondAttribute="centerY" id="PSo-Fj-5iY"/>
                                         <constraint firstItem="oLs-5J-QyC" firstAttribute="leading" secondItem="y7G-fw-OAT" secondAttribute="trailing" id="Rqp-FC-6V9"/>
                                         <constraint firstItem="9Jo-7u-v1F" firstAttribute="top" secondItem="oLs-5J-QyC" secondAttribute="bottom" constant="8.5" id="Yvu-7t-RFm"/>
+                                        <constraint firstItem="9Jo-7u-v1F" firstAttribute="leading" secondItem="Oo8-Fn-gWv" secondAttribute="leadingMargin" constant="43" id="atc-Z7-Zaa"/>
                                         <constraint firstItem="y7G-fw-OAT" firstAttribute="leading" secondItem="Oo8-Fn-gWv" secondAttribute="leadingMargin" constant="25" id="bgL-QU-raJ"/>
                                         <constraint firstItem="oLs-5J-QyC" firstAttribute="leading" secondItem="y7G-fw-OAT" secondAttribute="trailing" constant="8" id="bqS-dI-8cN"/>
                                         <constraint firstItem="9Jo-7u-v1F" firstAttribute="top" secondItem="y7G-fw-OAT" secondAttribute="bottom" constant="8.5" id="cmQ-LB-nqv"/>
@@ -2305,9 +2307,11 @@
                                     </constraints>
                                     <variation key="default">
                                         <mask key="constraints">
+                                            <exclude reference="87L-QW-klc"/>
                                             <exclude reference="bgL-QU-raJ"/>
                                             <exclude reference="Yvu-7t-RFm"/>
                                             <exclude reference="cmQ-LB-nqv"/>
+                                            <exclude reference="jPG-ha-qp4"/>
                                             <exclude reference="Rqp-FC-6V9"/>
                                             <exclude reference="iT1-nE-LCu"/>
                                         </mask>
@@ -2690,9 +2694,12 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="Iew-Ri-bDe" firstAttribute="top" secondItem="WRh-Si-RG3" secondAttribute="topMargin" constant="2" id="2mz-vy-MLw"/>
+                                                <constraint firstItem="HPK-Og-72k" firstAttribute="leading" secondItem="WRh-Si-RG3" secondAttribute="leadingMargin" constant="43" id="5m3-S1-PdT"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="HPK-Og-72k" secondAttribute="bottom" constant="3.5" id="ITz-oh-R9Q"/>
                                                 <constraint firstItem="HPK-Og-72k" firstAttribute="trailing" secondItem="WRh-Si-RG3" secondAttribute="trailingMargin" id="Kor-55-vUo"/>
+                                                <constraint firstAttribute="centerY" secondItem="HPK-Og-72k" secondAttribute="centerY" id="NQM-73-KHy"/>
                                                 <constraint firstItem="HPK-Og-72k" firstAttribute="trailing" secondItem="WRh-Si-RG3" secondAttribute="trailingMargin" id="SCe-42-ukv"/>
+                                                <constraint firstAttribute="centerY" secondItem="Iew-Ri-bDe" secondAttribute="centerY" id="SPr-eb-j9W"/>
                                                 <constraint firstAttribute="centerY" secondItem="HPK-Og-72k" secondAttribute="centerY" id="VXO-Ay-BP4"/>
                                                 <constraint firstItem="HPK-Og-72k" firstAttribute="leading" secondItem="Iew-Ri-bDe" secondAttribute="trailing" constant="11" id="bxI-mo-gdV"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="Iew-Ri-bDe" secondAttribute="bottom" constant="2" id="kQw-yZ-RKd"/>
@@ -2702,9 +2709,14 @@
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
+                                                    <exclude reference="2mz-vy-MLw"/>
+                                                    <exclude reference="kQw-yZ-RKd"/>
+                                                    <exclude reference="ITz-oh-R9Q"/>
                                                     <exclude reference="Kor-55-vUo"/>
                                                     <exclude reference="VXO-Ay-BP4"/>
+                                                    <exclude reference="bxI-mo-gdV"/>
                                                     <exclude reference="z1G-Fr-Vox"/>
+                                                    <exclude reference="zhw-Qe-AQ9"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
@@ -2742,22 +2754,30 @@
                                                 </imageView>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="LfX-zr-ulS" firstAttribute="leading" secondItem="797-C2-HVl" secondAttribute="leadingMargin" constant="43" id="03P-0j-DLn"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="c6g-Mx-vGN" secondAttribute="bottom" constant="2" id="5AI-6r-qNw"/>
                                                 <constraint firstItem="c6g-Mx-vGN" firstAttribute="top" secondItem="797-C2-HVl" secondAttribute="topMargin" constant="2" id="6Jp-RO-SbA"/>
                                                 <constraint firstItem="LfX-zr-ulS" firstAttribute="leading" secondItem="c6g-Mx-vGN" secondAttribute="trailing" constant="11" id="6Ps-P5-cu7"/>
                                                 <constraint firstItem="LfX-zr-ulS" firstAttribute="trailing" secondItem="797-C2-HVl" secondAttribute="trailingMargin" id="B1T-GJ-8Gh"/>
+                                                <constraint firstAttribute="centerY" secondItem="LfX-zr-ulS" secondAttribute="centerY" id="DSs-Gu-NiQ"/>
                                                 <constraint firstAttribute="centerY" secondItem="LfX-zr-ulS" secondAttribute="centerY" id="Q0X-V1-sFu"/>
                                                 <constraint firstItem="LfX-zr-ulS" firstAttribute="leading" secondItem="797-C2-HVl" secondAttribute="leadingMargin" constant="10" id="Sux-Bo-wV1"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="LfX-zr-ulS" secondAttribute="bottom" constant="3.5" id="a4y-Fz-WYo"/>
+                                                <constraint firstAttribute="centerY" secondItem="c6g-Mx-vGN" secondAttribute="centerY" id="aUr-L6-AyV"/>
                                                 <constraint firstItem="LfX-zr-ulS" firstAttribute="trailing" secondItem="797-C2-HVl" secondAttribute="trailingMargin" id="m0g-ZQ-UYk"/>
                                                 <constraint firstItem="c6g-Mx-vGN" firstAttribute="leading" secondItem="797-C2-HVl" secondAttribute="leadingMargin" constant="8" id="pUR-Z9-U8T"/>
                                                 <constraint firstItem="LfX-zr-ulS" firstAttribute="top" secondItem="797-C2-HVl" secondAttribute="topMargin" constant="3" id="uie-zw-Qyh"/>
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
+                                                    <exclude reference="5AI-6r-qNw"/>
+                                                    <exclude reference="6Jp-RO-SbA"/>
+                                                    <exclude reference="6Ps-P5-cu7"/>
                                                     <exclude reference="B1T-GJ-8Gh"/>
                                                     <exclude reference="Q0X-V1-sFu"/>
                                                     <exclude reference="Sux-Bo-wV1"/>
+                                                    <exclude reference="a4y-Fz-WYo"/>
+                                                    <exclude reference="uie-zw-Qyh"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
@@ -2797,10 +2817,13 @@
                                             <constraints>
                                                 <constraint firstItem="gl9-UR-2F7" firstAttribute="trailing" secondItem="Hk2-Ew-WNi" secondAttribute="trailingMargin" id="42m-Tn-TSk"/>
                                                 <constraint firstAttribute="centerY" secondItem="gl9-UR-2F7" secondAttribute="centerY" id="91o-9H-KnC"/>
+                                                <constraint firstItem="gl9-UR-2F7" firstAttribute="leading" secondItem="Hk2-Ew-WNi" secondAttribute="leadingMargin" constant="43" id="AwI-Ob-JjP"/>
                                                 <constraint firstItem="uge-gI-fAh" firstAttribute="top" secondItem="Hk2-Ew-WNi" secondAttribute="topMargin" constant="2" id="Io9-p9-GeB"/>
                                                 <constraint firstItem="gl9-UR-2F7" firstAttribute="top" secondItem="Hk2-Ew-WNi" secondAttribute="topMargin" constant="3" id="Tad-34-OJT"/>
                                                 <constraint firstItem="gl9-UR-2F7" firstAttribute="trailing" secondItem="Hk2-Ew-WNi" secondAttribute="trailingMargin" id="UDw-bX-ZCT"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="uge-gI-fAh" secondAttribute="bottom" constant="2" id="Waa-Kr-pgu"/>
+                                                <constraint firstAttribute="centerY" secondItem="gl9-UR-2F7" secondAttribute="centerY" id="eaY-67-LBo"/>
+                                                <constraint firstAttribute="centerY" secondItem="uge-gI-fAh" secondAttribute="centerY" id="hsD-oF-9W3"/>
                                                 <constraint firstItem="gl9-UR-2F7" firstAttribute="leading" secondItem="Hk2-Ew-WNi" secondAttribute="leadingMargin" constant="10" id="mBa-gr-d00"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="gl9-UR-2F7" secondAttribute="bottom" constant="3.5" id="mlk-dC-9Qn"/>
                                                 <constraint firstItem="gl9-UR-2F7" firstAttribute="leading" secondItem="uge-gI-fAh" secondAttribute="trailing" constant="11" id="nvA-rc-yxL"/>
@@ -2808,9 +2831,14 @@
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
-                                                    <exclude reference="UDw-bX-ZCT"/>
+                                                    <exclude reference="Io9-p9-GeB"/>
+                                                    <exclude reference="Waa-Kr-pgu"/>
                                                     <exclude reference="91o-9H-KnC"/>
+                                                    <exclude reference="Tad-34-OJT"/>
+                                                    <exclude reference="UDw-bX-ZCT"/>
                                                     <exclude reference="mBa-gr-d00"/>
+                                                    <exclude reference="mlk-dC-9Qn"/>
+                                                    <exclude reference="nvA-rc-yxL"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
@@ -2863,12 +2891,6 @@
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="9ks-6b-FiY">
                             <connections>
                                 <action selector="leftBarButtonTapped:" destination="qQM-W2-bZd" id="7JJ-s9-l9f"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="6Gj-AD-16n">
-                            <color key="tintColor" red="0.49019607840000001" green="0.73333333329999995" blue="0.90980392160000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <connections>
-                                <action selector="rightBarButtonTapped:" destination="qQM-W2-bZd" id="7br-iw-TdU"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

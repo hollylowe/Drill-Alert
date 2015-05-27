@@ -62,14 +62,13 @@ class Alert {
         let URLString = "https://drillalert.azurewebsites.net/api/Alerts/PostAlert"
         if let URL = NSURL(string: URLString) {
             var newRequest = NSMutableURLRequest(URL: URL)
-            
+            newRequest.HTTPMethod = "POST"
+
             var jsonString = ""
             jsonString = "{"
             if let id = self.id {
-                newRequest.HTTPMethod = "PUT"
-                jsonString = jsonString + "\"\(self.APIAlertIDKey)\":\(self.id),"
+                jsonString = jsonString + "\"\(self.APIAlertIDKey)\":\(id),"
             } else {
-                newRequest.HTTPMethod = "POST"
             }
             jsonString = jsonString + "\"\(self.APINameKey)\":\"\(self.name)\"," +
                 "\"\(self.APIUserIDKey)\":\(self.userID)," +
@@ -133,6 +132,7 @@ class Alert {
                                 if let threshold = JSONObject.getDoubleAtKey(APIThresholdKey) {
                                     if let userID = JSONObject.getIntAtKey(APIUserIDKey) {
                                         let alert = Alert(
+                                            id: id,
                                             curveID: curveID,
                                             userID: userID,
                                             name: name,

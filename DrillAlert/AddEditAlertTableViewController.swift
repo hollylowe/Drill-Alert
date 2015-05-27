@@ -90,24 +90,30 @@ class AddEditAlertTableViewController: UITableViewController {
     // we dismiss this view.
     var delegate: ManageAlertsTableViewController!
     var selectedCurve: Curve?
+    var activityBarButtonItem: UIBarButtonItem!
+    var saveBarButtonItem: UIBarButtonItem!
+    
+    func updateSelectedCurveLabels() {
+        if let curve = self.selectedCurve {
+            self.curveIVTLabel.text = curve.IVT.toString()
+            self.curveNameLabel.text = curve.name
+            self.curveNameLabel.hidden = false
+            self.curveIVTLabel.hidden = false
+            self.noCurveSelectedLabel.hidden = true
+            
+        } else {
+            self.curveIVTLabel.text = ""
+            self.curveNameLabel.text = ""
+            self.curveNameLabel.hidden = true
+            self.curveIVTLabel.hidden = true
+            self.noCurveSelectedLabel.hidden = false
+        }
+    }
     
     func setSelectedCurve(curve: Curve) {
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             self.selectedCurve = curve
-            if let curve = self.selectedCurve {
-                self.curveIVTLabel.text = curve.IVT.toString()
-                self.curveNameLabel.text = curve.name
-                self.curveNameLabel.hidden = false
-                self.curveIVTLabel.hidden = false
-                self.noCurveSelectedLabel.hidden = true
-
-            } else {
-                self.curveIVTLabel.text = ""
-                self.curveNameLabel.text = ""
-                self.curveNameLabel.hidden = true
-                self.curveIVTLabel.hidden = true
-                self.noCurveSelectedLabel.hidden = false
-            }
+            self.updateSelectedCurveLabels()
         })
     }
     
@@ -127,24 +133,47 @@ class AddEditAlertTableViewController: UITableViewController {
             // Set up the Edit view
             self.title = "Edit Alert"
             self.setupViewWithAlert(alert)
-            self.curveNameLabel.hidden = false
-            self.curveIVTLabel.hidden = false
-            self.noCurveSelectedLabel.hidden = true
         } else {
             // Set up the Add view
             self.title = "Add Alert"
-            self.curveNameLabel.hidden = true
-            self.curveIVTLabel.hidden = true
-            self.noCurveSelectedLabel.hidden = false
         }
-        
+        self.updateSelectedCurveLabels()
+
         // Dismiss keyboard on anywhere tap
         let tapRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         tapRecognizer.cancelsTouchesInView = false
         self.tableView.addGestureRecognizer(tapRecognizer)
         self.tableView.separatorColor = UIColor.blackColor()
+      
+        let activityView = UIActivityIndicatorView(frame: CGRectMake(0, 0, 25, 25))
+        activityView.startAnimating()
+        activityView.hidden = false
+        activityView.color = UIColor.grayColor()
+        activityView.sizeToFit()
+        activityView.autoresizingMask = (UIViewAutoresizing.FlexibleLeftMargin | UIViewAutoresizing.FlexibleRightMargin | UIViewAutoresizing.FlexibleTopMargin | UIViewAutoresizing.FlexibleBottomMargin)
+        
+        self.activityBarButtonItem = UIBarButtonItem(customView: activityView)
+        self.saveBarButtonItem = UIBarButtonItem(
+            title: "Save",
+            style: .Done,
+            target: self,
+            action: "rightBarButtonTapped:")
+        if let saveButton = self.saveBarButtonItem {
+            saveButton.tintColor = UIColor(red: 0.490, green: 0.733, blue: 0.910, alpha: 1.0)
+            
+        }
+        self.navigationItem.setRightBarButtonItem(self.saveBarButtonItem, animated: true)
         super.viewDidLoad()
     }
+    
+    func showActivityBarButton() {
+        self.navigationItem.setRightBarButtonItem(self.activityBarButtonItem, animated: true)
+    }
+    
+    func hideActivityBarButton() {
+        self.navigationItem.setRightBarButtonItem(self.saveBarButtonItem, animated: true)
+    }
+    
     
     func dismissKeyboard() {
         alertValueTextField.resignFirstResponder()
@@ -206,7 +235,7 @@ class AddEditAlertTableViewController: UITableViewController {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    @IBAction func rightBarButtonTapped(sender: AnyObject) {
+    func rightBarButtonTapped(sender: AnyObject) {
         if let alert = alertToEdit {
             self.saveEditedAlert()
         } else {
@@ -218,7 +247,8 @@ class AddEditAlertTableViewController: UITableViewController {
     func saveEditedAlert() {
         var alertMessage: String?
         self.view.endEditing(true)
-    
+        self.showActivityBarButton()
+        
         if let newName = alertNameTextField.text {
             if let newValueText = alertValueTextField.text {
                 let numberFormatter = NSNumberFormatter()
@@ -227,31 +257,42 @@ class AddEditAlertTableViewController: UITableViewController {
                 if let newValue = numberFormatter.numberFromString(newValueText) {
                     if let newRising = self.getAlertRisingValue() {
                         if let newPriority = self.getAlertPriorityValue() {
-                            if let newAlert = alertToEdit {
-                                
-                                newAlert.name = newName
-                                newAlert.rising = newRising
-                                newAlert.priority = newPriority
-                                newAlert.threshold = newValue.doubleValue
-                                newAlert.save(self.currentUser, completion: { (error: NSError?) -> Void in
-                                    if let error = error {
-                                        let alertController = UIAlertController(title: "Error", message:
-                                            "Unable to save Alert (\(error.code)).", preferredStyle: UIAlertControllerStyle.Alert)
-                                        
-                                        let okayAction = UIAlertAction(title: "Okay", style: .Cancel) { (action) in
+                            if let curve = self.selectedCurve {
+                                if let newAlert = alertToEdit {
+                                    // The ID of the alert to edit is already set,
+                                    // which makes this a put request
+                                    newAlert.curveID = curve.id
+                                    newAlert.name = newName
+                                    newAlert.rising = newRising
+                                    newAlert.priority = newPriority
+                                    newAlert.threshold = newValue.doubleValue
+                                    newAlert.save(self.currentUser, completion: { (error: NSError?) -> Void in
+                                        self.hideActivityBarButton()
+                                        if let error = error {
                                             
+                                            let alertController = UIAlertController(title: "Error", message:
+                                                "Unable to save Alert (\(error.code)).", preferredStyle: UIAlertControllerStyle.Alert)
+                                            
+                                            let okayAction = UIAlertAction(title: "Okay", style: .Cancel) { (action) in
+                                                
+                                            }
+                                            alertController.addAction(okayAction)
+                                            self.presentViewController(alertController, animated: true, completion: nil)
+                                        } else {
+                                            self.delegate.tableView.reloadData()
+                                            self.dismissViewControllerAnimated(true, completion: nil)
                                         }
-                                        alertController.addAction(okayAction)
-                                        self.presentViewController(alertController, animated: true, completion: nil)
-                                    } else {
-                                        self.dismissViewControllerAnimated(true, completion: nil)
-                                    }
-                                })
+                                    })
+                                } else {
+                                    alertMessage = "Error: Could not edit alert."
+                                    println("Error: Could not edit alert - no alert to edit found.")
+                                }
+
                             } else {
-                                alertMessage = "No alert to edit found."
+                                alertMessage = "Please select a curve."
                             }
                         } else {
-                            alertMessage = "Please select the severity value."
+                            alertMessage = "Please select the priority value."
                         }
                     } else {
                         alertMessage = "Please select the alert on rise value."
@@ -266,7 +307,28 @@ class AddEditAlertTableViewController: UITableViewController {
             alertMessage = "Please enter a name."
         }
         
+        if let error = alertMessage {
+            self.hideActivityBarButton()
+            self.presentAlertWithError(error)
+        }
     }
+    
+    func presentAlertWithError(error: String) {
+        let alertController = UIAlertController(
+            title: "Drill Alert",
+            message: error,
+            preferredStyle: .Alert)
+        
+        let defaultAction = UIAlertAction(
+            title: "OK",
+            style: .Default,
+            handler: nil)
+        
+        alertController.addAction(defaultAction)
+        
+        self.presentViewController(alertController, animated: true, completion: nil)
+    }
+    
     override func tableView(tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
         if let footer = view as? UITableViewHeaderFooterView {
             footer.textLabel.textColor = UIColor(red: 0.624, green: 0.627, blue: 0.643, alpha: 1.0)
@@ -279,8 +341,8 @@ class AddEditAlertTableViewController: UITableViewController {
         }
     }
     func createNewAlert() {
-         var alertMessage: String?
-        
+        var alertMessage: String?
+        self.showActivityBarButton()
         if let newName = alertNameTextField.text {
             if let newValueText = alertValueTextField.text {
                 let numberFormatter = NSNumberFormatter()
@@ -300,6 +362,7 @@ class AddEditAlertTableViewController: UITableViewController {
                                     threshold: newValue.doubleValue)
                                 
                                 newAlert.save(self.currentUser, completion: { (error) -> Void in
+                                    self.hideActivityBarButton()
                                     if let error = error {
                                         let alertController = UIAlertController(
                                             title: "Error",
@@ -313,9 +376,12 @@ class AddEditAlertTableViewController: UITableViewController {
                                         alertController.addAction(okayAction)
                                         self.presentViewController(alertController, animated: true, completion: nil)
                                     } else {
+                                        self.delegate.tableView.reloadData()
                                         self.dismissViewControllerAnimated(true, completion: nil)
                                     }
                                 })
+                            } else {
+                                alertMessage = "Please choose a curve."
                             }
                         } else {
                             alertMessage = "Please choose an alert priority."
@@ -334,6 +400,7 @@ class AddEditAlertTableViewController: UITableViewController {
         }
         
         if let message = alertMessage {
+            self.hideActivityBarButton()
             let alertController = UIAlertController(
                 title: "Drill Alert",
                 message: message,
