@@ -38,8 +38,9 @@ class Wellbore {
     func getCurves(user: User) -> (Array<Curve>, String?) {
         var result = Array<Curve>()
         var errorMessage: String?
-        let URLString = "https://drillalert.azurewebsites.net/api/curves/\(self.id)"
         
+        let URLString = "https://drillalert.azurewebsites.net/api/curves/\(self.id)"
+        println("Getting curves from : \(URLString)")
         let session = user.session
         let curvesJSONArray = session.getJSONArrayAtURL(URLString)
         errorMessage = curvesJSONArray.getErrorMessage()
@@ -47,7 +48,7 @@ class Wellbore {
         if errorMessage == nil {
             if let curveJSONs = curvesJSONArray.array {
                 for curveJSONObject in curveJSONs {
-                    if let curve = Curve.curveFromJSONObject(curveJSONObject, user: user, wellbore: self) {
+                    if let curve = Curve.curveFromJSONObject(curveJSONObject, wellbore: self) {
                         result.append(curve)
                     }
                 }

@@ -11,17 +11,17 @@ import UIKit
 
 class AlertInboxTableViewController: UITableViewController {
     // Implicit, set by the previous view controller
-    var wellboreDetailViewController: WellboreDetailViewController!
+    var wellboreDetailViewController: WellboreDetailViewController?
     
     let criticalSection = 0
     let warningSection = 1
     let informationSection = 2
     let readSection = 3
     
-    var readItems: [AlertHistoryItem]!
-    var warningItems: [AlertHistoryItem]!
-    var criticalItems: [AlertHistoryItem]!
-    var informationItems: [AlertHistoryItem]!
+    var readItems = [AlertHistoryItem]()
+    var warningItems = [AlertHistoryItem]()
+    var criticalItems = [AlertHistoryItem]()
+    var informationItems = [AlertHistoryItem]()
     
     var shouldLoadFromNetwork = true
     var loadingIndicator: UIActivityIndicatorView?
@@ -30,6 +30,9 @@ class AlertInboxTableViewController: UITableViewController {
     
     
     override func viewDidLoad() {
+        if let tabBarController = self.tabBarController {
+            tabBarController.title = "Alerts"
+        }
         self.refreshControl = UIRefreshControl()
         self.refreshControl!.attributedTitle = NSAttributedString(string: "Pull To Refresh")
         self.refreshControl!.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
@@ -73,10 +76,10 @@ class AlertInboxTableViewController: UITableViewController {
             alertController.addAction(okayAction)
             self.presentViewController(alertController, animated: true, completion: nil)
         } else {
-            self.criticalItems = Array<AlertHistoryItem>()
-            self.warningItems = Array<AlertHistoryItem>()
-            self.informationItems = Array<AlertHistoryItem>()
-            self.readItems = Array<AlertHistoryItem>()
+            self.criticalItems.removeAll(keepCapacity: false)
+            self.warningItems.removeAll(keepCapacity: false)
+            self.informationItems.removeAll(keepCapacity: false)
+            self.readItems.removeAll(keepCapacity: false)
             
             for alertHistoryItem in alertHistoryItems {
                 if let acknowledged = alertHistoryItem.acknowledged {

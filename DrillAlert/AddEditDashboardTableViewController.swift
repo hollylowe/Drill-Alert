@@ -18,7 +18,6 @@ class AddEditDashboardNavigationController: UINavigationController {
 class AddEditDashboardTableViewController: UITableViewController {
     var user: User!
     var wellbore: Wellbore!
-    
     // This is only set if we're editing a layout
     var dashboardToEdit: Dashboard?
     
@@ -32,6 +31,7 @@ class AddEditDashboardTableViewController: UITableViewController {
     
     var saveBarButtonItem: UIBarButtonItem!
     var activityBarButtonItem: UIBarButtonItem!
+    var pagesToolbarCell: AddEditToolbarCell!
     
     var dashboardNameTextField: UITextField!
     
@@ -44,6 +44,18 @@ class AddEditDashboardTableViewController: UITableViewController {
         page.position = self.pages.count
         self.pages.append(page)
         self.tableView.reloadData()
+    }
+    
+    override func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
+        var result: UITableViewCellEditingStyle = .None
+        
+        if indexPath.section == self.pagesSection {
+            if indexPath.row > 0 {
+                result = UITableViewCellEditingStyle.Delete
+            }
+        }
+        
+        return result
     }
     
     func cancelBarButtonItemTapped(sender: AnyObject) {
@@ -77,6 +89,9 @@ class AddEditDashboardTableViewController: UITableViewController {
         let dashboardNameIndexPath = NSIndexPath(forRow: 0, inSection: self.dashboardNameSection)
         self.showActivityBarButton()
         
+        for page in self.pages {
+            println("Page \(page.name), current position: \(page.position)")
+        }
         if let cell = self.tableView.cellForRowAtIndexPath(dashboardNameIndexPath) as? DashboardNameInputTableViewCell {
             if let name = cell.dashboardNameTextField.text {
                 if let newDashboard = self.dashboardToEdit {
@@ -112,8 +127,31 @@ class AddEditDashboardTableViewController: UITableViewController {
     func hideActivityBarButton() {
         self.navigationItem.setRightBarButtonItem(self.saveBarButtonItem, animated: true)
     }
-    
-    
+    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        var result = false
+        if indexPath.section == self.pagesSection {
+            if indexPath.row > 0 {
+                result = true
+            }
+        }
+        return result
+    }
+    override func tableView(tableView: UITableView, targetIndexPathForMoveFromRowAtIndexPath sourceIndexPath: NSIndexPath, toProposedIndexPath proposedDestinationIndexPath: NSIndexPath) -> NSIndexPath {
+        var result = proposedDestinationIndexPath
+        
+        if sourceIndexPath.section == self.pagesSection && proposedDestinationIndexPath.section == self.pagesSection {
+            if sourceIndexPath.row == 0 {
+                // keep the add / edit toolbar at the top
+                result = NSIndexPath(forRow: 0, inSection: self.pagesSection)
+            } else if proposedDestinationIndexPath.row == 0 {
+                result = NSIndexPath(forRow: 1, inSection: self.pagesSection)
+            }
+        } else if proposedDestinationIndexPath != self.pagesSection {
+            result = sourceIndexPath
+        }
+        
+        return result
+    }
     override func viewDidLoad() {
         self.navigationController?.navigationBar.barStyle = UIBarStyle.Black
         self.tableView.separatorColor = UIColor(red: 0.112, green: 0.112, blue: 0.112, alpha: 1.0)
@@ -159,8 +197,48 @@ class AddEditDashboardTableViewController: UITableViewController {
         self.presentChoosePanelTypeTableViewController()
     }
     
-    func sortPagesButtonTapped(sender: AnyObject) {
-        println("Should edit.")
+    func editPagesButtonTapped(sender: AnyObject) {
+        self.editing = !self.editing
+        if self.editing {
+            self.pagesToolbarCell.editButton.setTitle("Done", forState: UIControlState.Normal)
+        } else {
+            self.pagesToolbarCell.editButton.setTitle("Edit", forState: UIControlState.Normal)
+        }
+    }
+    
+    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        var result = false
+        
+        if indexPath.section == self.pagesSection {
+            if indexPath.row > 0 {
+                result = true
+            }
+        }
+        
+        return result
+    }
+    
+    override func tableView(tableView: UITableView, moveRowAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
+        if sourceIndexPath.section == self.pagesSection && destinationIndexPath.section == self.pagesSection {
+            if sourceIndexPath.row > 0 && destinationIndexPath.row > 0 {
+                // Subtract one for the Add / Edit row
+                
+                var sourceIndex = sourceIndexPath.row - 1
+                var toIndex = destinationIndexPath.row - 1
+                var sourcePage = self.pages[sourceIndex]
+                var toPage = self.pages[toIndex]
+                
+                println("Source: " + sourcePage.name)
+                println("Destination: " + toPage.name)
+                
+                var tempPosition = sourcePage.position
+                sourcePage.position = toPage.position
+                toPage.position = tempPosition
+                
+                self.pages.removeAtIndex(sourceIndex) // remove the source page
+                self.pages.insert(sourcePage, atIndex: toIndex) // add it again
+            }
+        }
     }
     
     func deleteDashboardButtonTapped(sender: UIButton) {
@@ -448,9 +526,10 @@ extension AddEditDashboardTableViewController: UITableViewDelegate {
                 if indexPath.row == self.pagesToolbarRow {
                     let addEditToolbarCell = tableView.dequeueReusableCellWithIdentifier(AddEditToolbarCell.cellIdentifier()) as! AddEditToolbarCell
                     addEditToolbarCell.addButton.addTarget(self, action: "addNewPageButtonTapped:", forControlEvents: .TouchUpInside)
-                    addEditToolbarCell.editButton.addTarget(self, action: "sortPagesButtonTapped:", forControlEvents: .TouchUpInside)
+                    addEditToolbarCell.editButton.addTarget(self, action: "editPagesButtonTapped:", forControlEvents: .TouchUpInside)
                     addEditToolbarCell.frame = CGRectMake(0, 0, tableView.frame.width, 80.0)
                     addEditToolbarCell.backgroundColor = UIColor(red: 0.122, green: 0.122, blue: 0.122, alpha: 1.0)
+                    self.pagesToolbarCell = addEditToolbarCell
                     cell = addEditToolbarCell
                 } else if indexPath.row <= self.pages.count {
                     let pageCell = tableView.dequeueReusableCellWithIdentifier(PanelTableViewCell.cellIdentifier()) as! PanelTableViewCell

@@ -139,6 +139,9 @@
 		A0D92D181B02E77E008D8023 /* SelectCurveNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D92D171B02E77E008D8023 /* SelectCurveNavigationController.swift */; };
 		A0D92D1A1B02E78B008D8023 /* SelectCurveTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D92D191B02E78B008D8023 /* SelectCurveTableViewController.swift */; };
 		A0DB7DBF1A2FB96E00C8C9A2 /* SelectAlertTypeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0DB7DBE1A2FB96E00C8C9A2 /* SelectAlertTypeTableViewController.swift */; };
+		A0E22CD31B157D900000CDD9 /* HomeTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E22CD21B157D900000CDD9 /* HomeTabBarController.swift */; };
+		A0E22CD51B15A1210000CDD9 /* CurveIVT.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E22CD41B15A1210000CDD9 /* CurveIVT.swift */; };
+		A0E22CD71B15A9650000CDD9 /* SelectCurveIVTTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E22CD61B15A9650000CDD9 /* SelectCurveIVTTableViewController.swift */; };
 		A0EE29021A08AB7200B50700 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EE29011A08AB7200B50700 /* UIViewExtension.swift */; };
 		A0F0BEED1AB1294C003C3CCB /* FavoriteWellbore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F0BEEC1AB1294C003C3CCB /* FavoriteWellbore.swift */; };
 		A0F0FBED1A103DC600ADBDF3 /* WellUsersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F0FBEC1A103DC600ADBDF3 /* WellUsersTableViewController.swift */; };
@@ -306,6 +309,9 @@
 		A0D92D171B02E77E008D8023 /* SelectCurveNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectCurveNavigationController.swift; sourceTree = "<group>"; };
 		A0D92D191B02E78B008D8023 /* SelectCurveTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectCurveTableViewController.swift; sourceTree = "<group>"; };
 		A0DB7DBE1A2FB96E00C8C9A2 /* SelectAlertTypeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectAlertTypeTableViewController.swift; sourceTree = "<group>"; };
+		A0E22CD21B157D900000CDD9 /* HomeTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeTabBarController.swift; sourceTree = "<group>"; };
+		A0E22CD41B15A1210000CDD9 /* CurveIVT.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurveIVT.swift; sourceTree = "<group>"; };
+		A0E22CD61B15A9650000CDD9 /* SelectCurveIVTTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectCurveIVTTableViewController.swift; sourceTree = "<group>"; };
 		A0EE29011A08AB7200B50700 /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		A0F0BEEC1AB1294C003C3CCB /* FavoriteWellbore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteWellbore.swift; sourceTree = "<group>"; };
 		A0F0FBEC1A103DC600ADBDF3 /* WellUsersTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WellUsersTableViewController.swift; sourceTree = "<group>"; };
@@ -569,6 +575,7 @@
 		A087EEDC1A06C0920073FDD0 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				A0E22CD21B157D900000CDD9 /* HomeTabBarController.swift */,
 				A087EEDD1A06C09D0073FDD0 /* HomeViewController.swift */,
 				A0C3C53D1A09D1900017BC9B /* WellboreDetail */,
 			);
@@ -604,7 +611,6 @@
 				A0C949021AE997A600B7143B /* ManagePlotTracksTableViewController.swift */,
 				A0993B641B02A2D300C78519 /* AddEditTrackTableViewController.swift */,
 				A0D92D171B02E77E008D8023 /* SelectCurveNavigationController.swift */,
-				A0D92D191B02E78B008D8023 /* SelectCurveTableViewController.swift */,
 			);
 			name = "Add or Edit Tracks";
 			sourceTree = "<group>";
@@ -780,9 +786,11 @@
 			children = (
 				A01E74FF1AF19E880083ED93 /* ManageAlertsNavigationController.swift */,
 				A018E4091A2B0733001EF20E /* ManageAlertsTableViewController.swift */,
+				A0D92D191B02E78B008D8023 /* SelectCurveTableViewController.swift */,
 				A018E40B1A2BB4E8001EF20E /* AddEditAlertTableViewController.swift */,
 				A0DB7DBE1A2FB96E00C8C9A2 /* SelectAlertTypeTableViewController.swift */,
 				A02D86421A6D953A00D22A38 /* AlertInboxTableViewController.swift */,
+				A0E22CD61B15A9650000CDD9 /* SelectCurveIVTTableViewController.swift */,
 			);
 			name = Alerts;
 			sourceTree = "<group>";
@@ -816,6 +824,7 @@
 				A0FD94A91B0FFEA60052BE52 /* PageTypeEnum.swift */,
 				A0450DEA1B13D20A0034AB3B /* PlotUnitsEnum.swift */,
 				A0450DEC1B13D21B0034AB3B /* PlotIVTEnum.swift */,
+				A0E22CD41B15A1210000CDD9 /* CurveIVT.swift */,
 			);
 			name = Enums;
 			sourceTree = "<group>";
@@ -954,6 +963,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A06E9A141AFA86430083A500 /* JavaScriptPlot.swift in Sources */,
+				A0E22CD71B15A9650000CDD9 /* SelectCurveIVTTableViewController.swift in Sources */,
 				A0C949001AE97A0000B7143B /* PlotUnitsCell.swift in Sources */,
 				CF4007651A78BDF4008E9C1F /* ManageDashboardsTableViewController.swift in Sources */,
 				A018E4041A2B005A001EF20E /* ParameterAlert.swift in Sources */,
@@ -996,6 +1006,7 @@
 				A0CE032C1A0ED67C0076EE3E /* DashboardViewController.swift in Sources */,
 				A0FD94A41B0FE6B90052BE52 /* PlotTrackScaleTypeEnum.swift in Sources */,
 				CF4007681A78C789008E9C1F /* ManageVisualsTableViewCell.swift in Sources */,
+				A0E22CD51B15A1210000CDD9 /* CurveIVT.swift in Sources */,
 				A04B3E141B01BAE2005D8AE1 /* TextFieldDetailCell.swift in Sources */,
 				A01F2AE71AE72A3D000A7957 /* DashboardNameInputTableViewCell.swift in Sources */,
 				A0D92D1A1B02E78B008D8023 /* SelectCurveTableViewController.swift in Sources */,
@@ -1039,6 +1050,7 @@
 				A06E9A161AFA866C0083A500 /* JavaScriptGauge.swift in Sources */,
 				A0772F221A92921300DE37B1 /* AlertType.swift in Sources */,
 				A06FFD671A06AA08001B3FF8 /* DrillAlert.xcdatamodeld in Sources */,
+				A0E22CD31B157D900000CDD9 /* HomeTabBarController.swift in Sources */,
 				A0C9491B1AE9F7F400B7143B /* CanvasItem.swift in Sources */,
 				A0450DF41B13ED430034AB3B /* AddEditToolbarCell.swift in Sources */,
 				A066D5D21A2EBD4B00E16E58 /* PaddedUITextField.swift in Sources */,

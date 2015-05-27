@@ -24,22 +24,27 @@ class AddEditAlertNavigationController: UINavigationController {
 class AddEditAlertTableViewController: UITableViewController {
     
     let alertNameSection = 0
+    let alertCurveSection = 1
+    let alertCurveRow = 0
     
-    let alertValueSection = 1
+    let alertValueSection = 2
     let alertValueCellRow = 0
     
-    let alertWhenSection = 2
+    let alertWhenSection = 3
     let alertOnRiseCellRow = 0
     let alertOnFallCellRow = 1
     
-    let alertPrioritySection = 3
+    let alertPrioritySection = 4
     let alertCriticalPriorityCellRow = 0
     let alertWarningPriorityCellRow = 1
     let alertInformationPriorityCellRow = 2
     
-    let alertDebugSection = 4
+    let alertDebugSection = 5
     let sendAlertNotificationCellRow = 0
     
+    @IBOutlet weak var noCurveSelectedLabel: UILabel!
+    @IBOutlet weak var curveIVTLabel: UILabel!
+    @IBOutlet weak var curveNameLabel: UILabel!
     // Static UI elements on the Add or Edit view
     // @IBOutlet weak var alertTypeLabel: UILabel!
     @IBOutlet weak var alertValueTextField: UITextField!
@@ -84,27 +89,60 @@ class AddEditAlertTableViewController: UITableViewController {
     // refresh the delegate's tableview data before 
     // we dismiss this view.
     var delegate: ManageAlertsTableViewController!
+    var selectedCurve: Curve?
+    
+    func setSelectedCurve(curve: Curve) {
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            self.selectedCurve = curve
+            if let curve = self.selectedCurve {
+                self.curveIVTLabel.text = curve.IVT.toString()
+                self.curveNameLabel.text = curve.name
+                self.curveNameLabel.hidden = false
+                self.curveIVTLabel.hidden = false
+                self.noCurveSelectedLabel.hidden = true
+
+            } else {
+                self.curveIVTLabel.text = ""
+                self.curveNameLabel.text = ""
+                self.curveNameLabel.hidden = true
+                self.curveIVTLabel.hidden = true
+                self.noCurveSelectedLabel.hidden = false
+            }
+        })
+    }
     
     override func viewDidLoad() {
         // We want to change the title 
         // of the page if the user is adding 
         // or editing an alert
-        
+        self.navigationController?.navigationBar.barStyle = UIBarStyle.Black
+
+        if let placeholder = self.alertNameTextField.placeholder {
+            self.alertNameTextField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSForegroundColorAttributeName: UIColor(white: 0.52, alpha: 1.0)])
+        }
+        if let placeholder = self.alertValueTextField.placeholder {
+            self.alertValueTextField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSForegroundColorAttributeName: UIColor(white: 0.52, alpha: 1.0)])
+        }
         if let alert = alertToEdit {
             // Set up the Edit view
             self.title = "Edit Alert"
             self.setupViewWithAlert(alert)
-            
+            self.curveNameLabel.hidden = false
+            self.curveIVTLabel.hidden = false
+            self.noCurveSelectedLabel.hidden = true
         } else {
             // Set up the Add view
             self.title = "Add Alert"
+            self.curveNameLabel.hidden = true
+            self.curveIVTLabel.hidden = true
+            self.noCurveSelectedLabel.hidden = false
         }
         
         // Dismiss keyboard on anywhere tap
         let tapRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         tapRecognizer.cancelsTouchesInView = false
         self.tableView.addGestureRecognizer(tapRecognizer)
-        
+        self.tableView.separatorColor = UIColor.blackColor()
         super.viewDidLoad()
     }
     
@@ -229,7 +267,17 @@ class AddEditAlertTableViewController: UITableViewController {
         }
         
     }
-    
+    override func tableView(tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
+        if let footer = view as? UITableViewHeaderFooterView {
+            footer.textLabel.textColor = UIColor(red: 0.624, green: 0.627, blue: 0.643, alpha: 1.0)
+            
+        }
+    }
+    override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        if let header = view as? UITableViewHeaderFooterView {
+            header.textLabel.textColor = UIColor(red: 0.624, green: 0.627, blue: 0.643, alpha: 1.0)
+        }
+    }
     func createNewAlert() {
          var alertMessage: String?
         
@@ -241,35 +289,36 @@ class AddEditAlertTableViewController: UITableViewController {
                 if let newValue = numberFormatter.numberFromString(newValueText) {
                     if let newRising = self.getAlertRisingValue() {
                         if let newPriority = self.getAlertPriorityValue() {
-                            
-                            // TODO: Set Curve ID of New Alert
-                            let newAlert = Alert(
-                                curveID: 0,
-                                userID: currentUser.id,
-                                name: newName,
-                                rising: newRising,
-                                priority: newPriority,
-                                threshold: newValue.doubleValue)
-                            
-                            newAlert.save(self.currentUser, completion: { (error) -> Void in
-                                if let error = error {
-                                    let alertController = UIAlertController(
-                                        title: "Error",
-                                        message: "Unable to save Alert (\(error.code)).",
-                                        preferredStyle: UIAlertControllerStyle.Alert)
-                                    
-                                    let okayAction = UIAlertAction(title: "Okay", style: .Cancel) { (action) in
+                            if let curve = self.selectedCurve {
+                                // TODO: Set Curve ID of New Alert
+                                let newAlert = Alert(
+                                    curveID: curve.id,
+                                    userID: currentUser.id,
+                                    name: newName,
+                                    rising: newRising,
+                                    priority: newPriority,
+                                    threshold: newValue.doubleValue)
+                                
+                                newAlert.save(self.currentUser, completion: { (error) -> Void in
+                                    if let error = error {
+                                        let alertController = UIAlertController(
+                                            title: "Error",
+                                            message: "Unable to save Alert (\(error.code)).",
+                                            preferredStyle: UIAlertControllerStyle.Alert)
                                         
+                                        let okayAction = UIAlertAction(title: "Okay", style: .Cancel) { (action) in
+                                            
+                                        }
+                                        
+                                        alertController.addAction(okayAction)
+                                        self.presentViewController(alertController, animated: true, completion: nil)
+                                    } else {
+                                        self.dismissViewControllerAnimated(true, completion: nil)
                                     }
-                                    
-                                    alertController.addAction(okayAction)
-                                    self.presentViewController(alertController, animated: true, completion: nil)
-                                } else {
-                                    self.dismissViewControllerAnimated(true, completion: nil)
-                                }
-                            })
+                                })
+                            }
                         } else {
-                            alertMessage = "Please choose an alert severity."
+                            alertMessage = "Please choose an alert priority."
                         }
                     } else {
                         alertMessage = "Please select the alert on rise value."
@@ -336,6 +385,7 @@ extension AddEditAlertTableViewController: UITableViewDelegate {
             switch indexPath.section {
             case self.alertNameSection:
                 self.alertNameTextField.becomeFirstResponder()
+            
             case self.alertValueSection:
                 self.alertValueTextField.becomeFirstResponder()
             case alertWhenSection:
@@ -358,6 +408,9 @@ extension AddEditAlertTableViewController: UITableViewDelegate {
         if segue.identifier == SelectAlertTypeTableViewController.getEntrySegueIdentifier() {
             let destinationViewController = segue.destinationViewController as! SelectAlertTypeTableViewController
             destinationViewController.delegate = self
+        } else if segue.identifier == SelectCurveIVTTableViewController.entrySegueIdentifier() {
+            let destination = segue.destinationViewController as! SelectCurveIVTTableViewController
+            destination.delegate = self
         }
     }
 }

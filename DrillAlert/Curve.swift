@@ -83,18 +83,22 @@ class CurvePoint {
     }
 }
 
+
+
 class Curve {
-    var id: Int
+    var id: String
     var name: String
-    var tooltype: String
+    var label: String
     var units: String
-    var wellbore: Wellbore
-    init(id: Int, name: String, tooltype: String, units: String, wellbore: Wellbore) {
+    var wellboreID: String?
+    var IVT: CurveIVT
+    init(id: String, name: String, label: String, units: String, wellboreID: String, IVT: CurveIVT) {
         self.id = id
         self.name = name
-        self.tooltype = tooltype
+        self.label = label
         self.units = units
-        self.wellbore = wellbore
+        self.wellboreID = wellboreID
+        self.IVT = IVT
     }
     
     class func getCurvePointCollectionForCurveID(curveID: Int, andWellboreID wellboreID: String, andStartTime startTime: NSDate, andEndTime endTime: NSDate) -> (CurvePointCollection?, String?)  {
@@ -124,9 +128,10 @@ class Curve {
     }
     
     func getCurvePointCollectionBetweenStartDate(startDate: NSDate, andEndDate endDate: NSDate) -> (CurvePointCollection?, String?) {
+        
         var result: CurvePointCollection?
         var errorMessage: String?
-        
+        /*
         // TODO: Change this to real values
         let startTime = 0
         let endTime = 0
@@ -149,24 +154,34 @@ class Curve {
                 println()
             }
         }
-        
+        */
         return (result, errorMessage)
     }
     
-    class func getCurvesForUser(user: User, andWellbore wellbore: Wellbore) -> (Array<Curve>?, String?) {
+    class func getCurvesForUser(user: User, andWellbore wellbore: Wellbore, andIVT opIVT: CurveIVT?) -> (Array<Curve>?, String?) {
         var result: Array<Curve>?
         var errorMessage: String?
         
         var endpointURL = "https://drillalert.azurewebsites.net/api/curves/\(wellbore.id)"
         
-        println("Curves: " + endpointURL)
+        println("Curves URL: " + endpointURL)
         let resultJSONArray = JSONArray(url: endpointURL)
         
         if let resultJSONs = resultJSONArray.array {
             var curveArray = Array<Curve>()
             for resultJSON in resultJSONs {
-                if let curve = Curve.curveFromJSONObject(resultJSON, user: user, wellbore: wellbore) {
-                    curveArray.append(curve)
+                if let curve = Curve.curveFromJSONObject(resultJSON, wellbore: wellbore) {
+                    if let IVT = opIVT {
+                        // Filter out unneeded IVT's
+                        if curve.IVT == IVT {
+                            curveArray.append(curve)
+                        } else {
+                            println("Curve does not match IVT (\(curve.IVT) != \(IVT)")
+                        }
+                    } else {
+                        curveArray.append(curve)
+                        println("No IVT, appending.")
+                    }
                 }
             }
             
@@ -183,24 +198,50 @@ class Curve {
         return (result, errorMessage)
     }
     
-    class func curveFromJSONObject(JSONObject: JSON, user: User, wellbore: Wellbore) -> Curve? {
+    class func curveFromJSONObject(JSONObject: JSON, wellbore: Wellbore) -> Curve? {
         var result: Curve?
+        var error: String?
+        
         // Keys for the Alert
         let APICurveIDKey = "Id"
         let APINameKey = "Name"
-        let APIToolTypeKey = "ToolType"
+        let APILabelKey = "Label"
         let APIUnitsKey = "Units"
-        
+        let APIWellboreIDKey = "WellboreId"
+        let APIIVTKey = "Ivt"
         
         // Get the values at the above keys from the JSON Object
-        if let id = JSONObject.getIntAtKey(APICurveIDKey) {
+        if let id = JSONObject.getStringAtKey(APICurveIDKey) {
             if let name = JSONObject.getStringAtKey(APINameKey) {
-                if let tooltype = JSONObject.getStringAtKey(APIToolTypeKey) {
+                if let label = JSONObject.getStringAtKey(APILabelKey) {
                     if let units = JSONObject.getStringAtKey(APIUnitsKey) {
-                        result = Curve(id: id, name: name, tooltype: tooltype, units: units, wellbore: wellbore)
+                        if let IVTInt = JSONObject.getIntAtKey(APIIVTKey) {
+                            let IVT = CurveIVT.curveIVTFromInt(IVTInt)
+                            result = Curve(
+                                id: id,
+                                name: name,
+                                label: label,
+                                units: units,
+                                wellboreID: wellbore.id,
+                                IVT: IVT)
+                        } else {
+                            error = "Error creating curve: Nothing found at \(APIIVTKey)"
+                        }
+                    } else {
+                        error = "Error creating curve: Nothing found at \(APIUnitsKey)"
                     }
+                } else {
+                    error = "Error creating curve: Nothing found at \(APILabelKey)"
                 }
+            } else {
+                error = "Error creating curve: Nothing found at \(APINameKey)"
             }
+        } else {
+            error = "Error creating curve: Nothing found at \(APICurveIDKey)"
+        }
+        
+        if (error != nil) {
+            println(error)
         }
         
         return result

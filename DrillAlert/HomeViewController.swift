@@ -38,6 +38,9 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var shouldLoadFromNetwork = true
     
     override func viewDidLoad() {
+        if let homeTabBarController = self.tabBarController as? HomeTabBarController {
+            self.currentUser = homeTabBarController.user
+        }
         setupView()
         loadData()
         super.viewDidLoad()
@@ -68,20 +71,10 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
         
     }
-    
-    func logoutButtonTapped(sender: UIBarButtonItem) {
-        if let user = self.currentUser {
-            user.logout { (loggedOut) -> Void in
-                if loggedOut {
-                    if let navigationController = self.navigationController {
-                        navigationController.popToRootViewControllerAnimated(true)
-                    }
-                }
-            }
-        }
-    }
-    
     private func setupView() {
+        if let tabBarController = self.tabBarController {
+            tabBarController.title = "Wells"
+        }
         self.title = "Wells"
         let footerView = UIView()
         self.tableView.backgroundColor = UIColor.blackColor()
@@ -100,20 +93,6 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             navigationController.navigationBar.barStyle = UIBarStyle.Black
             self.tableView.separatorStyle = .None
             self.navBarHairlineImageView = self.findHairlineImageViewUnder(navigationController.navigationBar)
-            
-            // Disable the back button
-            self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
-            self.navigationItem.hidesBackButton = true
-            
-            let logoutButton = UIBarButtonItem(title: "Logout", style: .Plain, target: self, action: "logoutButtonTapped:")
-            
-            if let image = UIImage(named: "logouticon.png") {
-                let logoutImage = imageWithImage(image, scaledToSize: CGSize(width: 40, height: 40))
-                logoutButton.image = logoutImage
-            }
-            
-            
-            self.navigationItem.leftBarButtonItem = logoutButton
             
             // Add the segmented control at the (navigation bar height + status bar height) y coordinate
             let yCoord = navigationController.navigationBar.frame.size.height + UIApplication.sharedApplication().statusBarFrame.size.height
@@ -148,9 +127,9 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             self.view.addSubview(toolbar)
             
             // Sets the tableview y coordinate to the toolbarheight
-            let headerViewRect = CGRectMake(0, 0, self.tableView.frame.width, toolbarHeight)
+            let headerViewRect = CGRectMake(0, 0, self.tableView.frame.width, toolbarHeight + 5.0 + UIApplication.sharedApplication().statusBarFrame.size.height)
             // self.tableView.tableHeaderView = UIView(frame: headerViewRect)
-            self.tableView.contentInset = UIEdgeInsets(top: toolbarHeight + 5.0, left: 0, bottom: 0, right: 0)
+            self.tableView.contentInset = UIEdgeInsets(top: toolbarHeight + 5.0 + yCoord, left: 0, bottom: 0, right: 0)
         }
        
     }
@@ -178,14 +157,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         navBarHairlineImageView.hidden = false
     }
     
-    func imageWithImage(image: UIImage, scaledToSize newSize: CGSize) -> UIImage {
-        UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0)
-        image.drawInRect(CGRectMake(0, 0, newSize.width, newSize.height))
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        
-        UIGraphicsEndImageContext()
-        return newImage
-    }
+    
     
     
     func segmentedControlAction(sender: UISegmentedControl) {

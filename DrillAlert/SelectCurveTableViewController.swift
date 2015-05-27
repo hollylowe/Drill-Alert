@@ -9,38 +9,81 @@
 import Foundation
 import UIKit
 
-class SelectCurveTableViewController: LoadingTableViewController {
+class SelectCurveTableViewController: LoadingTableViewController, UISearchBarDelegate, UISearchDisplayDelegate {
     var user: User!
     var wellbore: Wellbore!
-    var delegate: AddEditTrackTableViewController!
+    var delegate: AddEditAlertTableViewController!
+    // var delegate: AddEditTrackTableViewController?
     var currentCurves = Array<Curve>()
+    var curveIVT: CurveIVT?
     var curves = Array<Curve>()
+    var filteredCurves = Array<Curve>()
     
-    func canceBarButtonItemTapped(sender: UIBarButtonItem) {
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
-    
+    @IBOutlet weak var searchBar: UISearchBar!
     override func viewDidLoad() {
         self.dataSource = self
         
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .Cancel,
-            target: self,
-            action: "canceBarButtonItemTapped:")
+        self.tableView.tableFooterView = UIView()
+        self.tableView.separatorColor = UIColor.blackColor()
+        
         super.viewDidLoad()
     }
-    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(LabelCell.cellIdentifier()) as! LabelCell
-        let curve = self.curves[indexPath.row]
+        var cell: LabelCell!
+        var curve: Curve!
+
+        if let labelCell = tableView.dequeueReusableCellWithIdentifier(LabelCell.cellIdentifier()) as? LabelCell {
+            cell = labelCell
+        } else if tableView != self.tableView {
+            tableView.backgroundColor = UIColor.blackColor()
+            tableView.separatorColor = UIColor.blackColor()
+            if let labelCell = self.tableView.dequeueReusableCellWithIdentifier(LabelCell.cellIdentifier()) as? LabelCell {
+                cell = labelCell
+            }
+        }
+        
+        
+        if self.searchBar.text.isEmpty {
+            curve = self.curves[indexPath.row]
+        } else {
+            curve = self.filteredCurves[indexPath.row]
+        }
+
+        
         if let label = cell.textLabel {
             label.text = curve.name
         }
         
         return cell
     }
-    
+    func searchBar(searchBar: UISearchBar,
+        textDidChange searchText: String) {
+            self.filterContentForSearchText(searchText)
+    }
+    func filterContentForSearchText(searchText: String) {
+        self.filteredCurves = self.curves.filter({( curve: Curve) -> Bool in
+            let stringMatch = curve.name.lowercaseString.rangeOfString(searchText.lowercaseString)
+            return stringMatch != nil
+        })
+    }
+    func shouldReloadTableForSearchString(searchString: String) -> Bool {
+        self.filterContentForSearchText(searchString)
+        return true
+    }
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        var curve: Curve!
+        
+        if self.searchBar.text.isEmpty {
+            curve = self.curves[indexPath.row]
+        } else {
+            curve = self.filteredCurves[indexPath.row]
+        }
+
+        
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        self.delegate.setSelectedCurve(curve)
+        self.navigationController?.popToRootViewControllerAnimated(true)
+        /*
         var shouldAddCurve = true
         let curve = self.curves[indexPath.row]
         
@@ -66,12 +109,18 @@ class SelectCurveTableViewController: LoadingTableViewController {
             alertController.addAction(okayAction)
             self.presentViewController(alertController, animated: true, completion: nil)
         }
-        
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        */
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.curves.count
+        var numberOfRows = 0
+        
+        if self.searchBar.text.isEmpty {
+            numberOfRows = self.curves.count
+        } else {
+            numberOfRows = self.filteredCurves.count
+        }
+        return numberOfRows
     }
     
     class func entrySegueIdentifier() -> String! {
@@ -81,11 +130,14 @@ class SelectCurveTableViewController: LoadingTableViewController {
 
 extension SelectCurveTableViewController: LoadingTableViewControllerDataSource {
     func dataLoadOperation() {
-        let (newCurves, error) = Curve.getCurvesForUser(self.user, andWellbore: self.wellbore)
+        let (newCurves, error) = Curve.getCurvesForUser(self.user, andWellbore: self.wellbore, andIVT: self.curveIVT)
         
         if error == nil {
             if let curves = newCurves {
                 self.curves = curves
+                self.curves.sort({ (firstCurve, secondCurve) -> Bool in
+                    return firstCurve.name.localizedCaseInsensitiveCompare(secondCurve.name) == NSComparisonResult.OrderedAscending
+                })
             }
         } else {
             // TODO: Show user error

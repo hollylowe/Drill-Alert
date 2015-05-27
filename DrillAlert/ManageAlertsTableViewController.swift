@@ -11,8 +11,10 @@ import UIKit
 
 class ManageAlertsTableViewController: LoadingTableViewController, LoadingTableViewControllerDataSource {
     // Implicit, set by the previous view controller
+    var wellboreDetailViewController: WellboreDetailViewController!
     var user: User!
     var alerts = Array<Alert>()
+    var curves = Array<Curve>()
     var wellbore: Wellbore!
     
     class func storyboardIdentifier() -> String! {
@@ -24,11 +26,7 @@ class ManageAlertsTableViewController: LoadingTableViewController, LoadingTableV
         self.dataSource = self
         self.noDataLabelOffset = 39.0
         self.tableView.tableFooterView = UIView()
-        self.tableView.backgroundColor = UIColor(
-            red: 0.937,
-            green: 0.937,
-            blue: 0.937,
-            alpha: 1.0)
+        self.tableView.backgroundColor = UIColor.blackColor()
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(
             barButtonSystemItem: .Add,
@@ -58,23 +56,6 @@ class ManageAlertsTableViewController: LoadingTableViewController, LoadingTableV
     func leftBarButtonItemTapped(sender: UIBarButtonItem) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // If we are going to the Add Edit Alert page with a segue,
-        // then we are editing an alert.
-        if segue.identifier == AddEditAlertNavigationController.entrySegueIdentifier() {
-            if let alert = sender as? Alert {
-                // Set the alert to edit in the following view controller
-                let destinationNavigationController = segue.destinationViewController as! AddEditAlertNavigationController
-                let destination = destinationNavigationController.viewControllers[0] as! AddEditAlertTableViewController
-                destination.alertToEdit = alert
-                destination.delegate = self
-                destination.currentUser = self.user
-                destination.wellbore = self.wellbore
-            }
-            
-        }
-    }
 }
 
 extension ManageAlertsTableViewController: LoadingTableViewControllerDataSource {
@@ -82,8 +63,11 @@ extension ManageAlertsTableViewController: LoadingTableViewControllerDataSource 
         var (resultAlerts, resultError) = Alert.getAlertsForUser(
             self.user,
             andWellbore: self.wellbore)
+        // TODO: Move this to the Wellbore detail view controller
+        var (resultCurves, resultAlertsError) = self.wellbore.getCurves(self.user)
         
         self.alerts = resultAlerts
+        self.curves = resultCurves
     }
     
     func shouldShowNoDataMessage() -> Bool {
@@ -99,7 +83,15 @@ extension ManageAlertsTableViewController: UITableViewDataSource {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(AlertTableViewCell.cellIdentifier()) as! AlertTableViewCell
         let alert = alerts[indexPath.row]
-        cell.setupWithAlert(alert)
+        
+        // TODO: Use faster filter method
+        for curve in self.curves {
+            if curve.id == alert.curveID {
+                cell.setupWithAlert(alert, andCurve: curve)
+                break
+            }
+        }
+        
         return cell
     }
     
@@ -107,15 +99,30 @@ extension ManageAlertsTableViewController: UITableViewDataSource {
         return alerts.count
     }
     
+    func showEditAlertVCForAlert(alert: Alert) {
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        let destinationNavigationController = storyboard.instantiateViewControllerWithIdentifier(AddEditAlertNavigationController.storyboardIdentifier()) as! AddEditAlertNavigationController
+        let destination = destinationNavigationController.viewControllers[0] as! AddEditAlertTableViewController
+        destination.delegate = self
+        destination.alertToEdit = alert
+        destination.wellbore = self.wellbore
+        destination.currentUser = self.user
+        
+        self.wellboreDetailViewController.presentViewController(destinationNavigationController, animated: true, completion: nil)
+    }
+    
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let alert = alerts[indexPath.row]
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        self.performSegueWithIdentifier(AddEditAlertNavigationController.entrySegueIdentifier(), sender: alert)
+        
+        self.showEditAlertVCForAlert(alert)
     }
     
     override func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
         let alert = alerts[indexPath.row]
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        self.performSegueWithIdentifier(AddEditAlertNavigationController.entrySegueIdentifier(), sender: alert)
+        self.showEditAlertVCForAlert(alert)
     }
 }

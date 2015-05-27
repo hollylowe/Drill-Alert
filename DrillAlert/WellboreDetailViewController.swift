@@ -16,6 +16,7 @@ class WellboreDetailViewController: UIViewController {
     var currentUser: User!
     var currentWellbore: Wellbore!
     var toolbarHeight: CGFloat = 44.0
+    var toolbarYCoord: CGFloat = 0.0
     var dashboardNameViewHeight: CGFloat = 24.0
     var navBarHairlineImageView: UIImageView!
     
@@ -25,17 +26,19 @@ class WellboreDetailViewController: UIViewController {
     var dashboardNameLabel: UILabel!
     
     var segmentedControl: UISegmentedControl!
-    let segmentedControlItems = ["Dashboard", "Alerts"]
+    let segmentedControlItems = ["Dashboards", "Alerts"]
     var segmentedControlViewControllers: [UIViewController]!
     var segmentNavigationController: UINavigationController!
     var containerView: UIView!
     
     // The two main view controllers for the segmented control
     var dashboardViewController: DashboardViewController!
-    var alertInboxTableViewController: AlertInboxTableViewController!
+    var manageAlertsVC: ManageAlertsTableViewController!
+    
+    // var alertInboxTableViewController: AlertInboxTableViewController!
     
     var selectedSegmentIndex = 0
-    let visualsIndex = 0
+    let dashboardIndex = 0
     let alertsIndex = 1
     
     override func viewDidLoad() {
@@ -76,12 +79,16 @@ class WellboreDetailViewController: UIViewController {
         self.dashboardViewController.wellbore = self.currentWellbore
         self.dashboardViewController.wellboreDetailViewController = self
         
-        self.alertInboxTableViewController = storyboard.instantiateViewControllerWithIdentifier(AlertInboxTableViewController.storyboardIdentifier()) as! AlertInboxTableViewController
-        self.alertInboxTableViewController.wellboreDetailViewController = self
+        self.manageAlertsVC = storyboard.instantiateViewControllerWithIdentifier(ManageAlertsTableViewController.storyboardIdentifier()) as! ManageAlertsTableViewController
+        self.manageAlertsVC.wellboreDetailViewController = self
+        self.manageAlertsVC.user = self.currentUser
+        self.manageAlertsVC.wellbore = self.currentWellbore
+        //self.alertInboxTableViewController = storyboard.instantiateViewControllerWithIdentifier(AlertInboxTableViewController.storyboardIdentifier()) as! AlertInboxTableViewController
+        //self.alertInboxTableViewController.wellboreDetailViewController = self
         
         // Set them to the segmented control view controllers array,
         // so we can switch between them
-        self.segmentedControlViewControllers = [self.dashboardViewController, self.alertInboxTableViewController]
+        self.segmentedControlViewControllers = [self.dashboardViewController, self.manageAlertsVC]
     }
     
     func findHairlineImageViewUnder(view: UIView) -> UIImageView? {
@@ -100,7 +107,8 @@ class WellboreDetailViewController: UIViewController {
     
     private func setupView() {
         self.title = currentWellbore.name
-        self.setupRightBarButtonItem()
+        // self.setupRightBarButtonItem()
+        
         self.setViewControllers()
         
         if let mainNavigationController = self.navigationController {
@@ -109,7 +117,7 @@ class WellboreDetailViewController: UIViewController {
             // Create a segmented control inside a toolbar
             let navigationBarHeight = mainNavigationController.navigationBar.frame.size.height
             let statusBarHeight = UIApplication.sharedApplication().statusBarFrame.size.height
-            let toolbarYCoord = navigationBarHeight + statusBarHeight
+            self.toolbarYCoord = navigationBarHeight + statusBarHeight
             let toolbarFrame = CGRectMake(0, toolbarYCoord, self.view.frame.size.width, self.toolbarHeight)
             self.segmentedControlToolbar = SegmentControlToolbar(
                 frame: toolbarFrame,
@@ -163,13 +171,31 @@ class WellboreDetailViewController: UIViewController {
 
         }
 
-        // Run the segmented control action once to set it up
-        self.segmentedControlAction(self.segmentedControlToolbar.segmentedControl)
+        self.selectedSegmentIndex = 0
+        let incomingViewController = self.segmentedControlViewControllers[0] as UIViewController
+        self.segmentNavigationController.setViewControllers([incomingViewController], animated: false)
+        if let image = UIImage(named: "settings_line.png") {
+            let imageSize = CGSizeMake(30, 30)
+            let settingsImage = imageWithImage(image, scaledToSize: imageSize)
+            let button = UIBarButtonItem(image: settingsImage, style: UIBarButtonItemStyle.Plain, target: self, action: "rightBarButtonItemTapped:")
+            button.tintColor = UIColor(red: 0.490, green: 0.733, blue: 0.910, alpha: 1.0)
+            self.rightBarButtonItem = button
+            self.navigationItem.setRightBarButtonItem(self.rightBarButtonItem, animated: true)
+
+        } else {
+            let button = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Edit, target: self, action: "rightBarButtonItemTapped:")
+            button.tintColor = UIColor(red: 0.490, green: 0.733, blue: 0.910, alpha: 1.0)
+            self.rightBarButtonItem = button
+            self.navigationItem.setRightBarButtonItem(self.rightBarButtonItem, animated: true)
+
+            
+        }
     }
     
     func segmentedControlAction(sender: UISegmentedControl) {
         // Get the tapped index
         let index = sender.selectedSegmentIndex
+        println("Sender selected: \(index)")
         self.selectedSegmentIndex = index
         
         // Ge the new view controller
@@ -177,22 +203,76 @@ class WellboreDetailViewController: UIViewController {
         
         // Tell the navigation controller to set all of its view controllers
         // to only the incoming view controller
-        self.segmentNavigationController.setViewControllers([incomingViewController], animated: true)
-    }
-    
-    
-    private func setupRightBarButtonItem() {
-        let imageSize = CGSizeMake(30, 30)
-        self.rightBarButtonItem.title = ""
         
-        if let manageDefaultIcon = UIImage(named: "settings_line.png") {
-            rightBarButtonItem.image = imageWithImage(manageDefaultIcon, scaledToSize: imageSize)
+        // TODO: Hide instead of emptying string
+        if index == self.alertsIndex {
+            self.updateCurrentDashboardLabelWithString("")
+            let addButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "rightBarButtonItemTapped:")
+            addButton.tintColor = UIColor(red: 0.490, green: 0.733, blue: 0.910, alpha: 1.0)
+
+            self.rightBarButtonItem = addButton
+            self.navigationItem.setRightBarButtonItem(self.rightBarButtonItem, animated: true)
+
+        } else if index == self.dashboardIndex {
+            if let dashboard = self.dashboardViewController.currentDashboard {
+                self.updateCurrentDashboardLabelWithString(dashboard.name)
+            }
+            
+            if let image = UIImage(named: "settings_line.png") {
+                let imageSize = CGSizeMake(30, 30)
+                let settingsImage = imageWithImage(image, scaledToSize: imageSize)
+                let button = UIBarButtonItem(image: settingsImage, style: UIBarButtonItemStyle.Plain, target: self, action: "rightBarButtonItemTapped:")
+                button.tintColor = UIColor(red: 0.490, green: 0.733, blue: 0.910, alpha: 1.0)
+
+                self.rightBarButtonItem = button
+                self.navigationItem.setRightBarButtonItem(self.rightBarButtonItem, animated: true)
+
+            } else {
+                let button = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Edit, target: self, action: "rightBarButtonItemTapped:")
+                button.tintColor = UIColor(red: 0.490, green: 0.733, blue: 0.910, alpha: 1.0)
+
+                self.rightBarButtonItem = button
+                self.navigationItem.setRightBarButtonItem(self.rightBarButtonItem, animated: true)
+
+                
+            }
         }
+        /*
+        switch index {
+        case self.dashboardIndex:
+            // Add the dashboard name view
+            self.view.addSubview(self.dashboardNameView)
+            
+            // Make the container view smaller
+            let containerViewFrame = CGRectMake(
+                0, self.toolbarHeight + self.dashboardNameViewHeight,
+                self.view.frame.size.width,
+                self.view.frame.size.height - self.toolbarHeight - toolbarYCoord)
+            self.containerView = UIView(frame: containerViewFrame)
+            
+        case self.alertsIndex:
+            // Take away the dashboard name
+            self.dashboardNameView.removeFromSuperview()
+            
+            // Set the container view to be bigger,
+            // since there is no dashboard name anymore
+            let containerViewFrame = CGRectMake(
+                0, self.toolbarHeight,
+                self.view.frame.size.width,
+                self.view.frame.size.height - self.toolbarHeight - toolbarYCoord)
+            self.containerView = UIView(frame: containerViewFrame)
+            
+        default: break
+        }
+        */
+        self.segmentNavigationController.setViewControllers([incomingViewController], animated: false)
+        
+       
     }
     
-    @IBAction func rightBarButtonItemTapped(sender: AnyObject) {
+    func rightBarButtonItemTapped(sender: AnyObject) {
         switch self.selectedSegmentIndex {
-        case visualsIndex:
+        case dashboardIndex:
             manageDashboardsBarButtonTapped(sender)
         case alertsIndex:
             manageAlertsBarButtonTapped(sender)
@@ -210,13 +290,14 @@ class WellboreDetailViewController: UIViewController {
     // Shows the user the Manage Alerts view.
     func manageAlertsBarButtonTapped(sender: AnyObject) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let manageAlertsNavigationController = storyboard.instantiateViewControllerWithIdentifier(
-            ManageAlertsNavigationController.storyboardIdentifier()) as! ManageAlertsNavigationController
-        let manageAlertsTableViewController = manageAlertsNavigationController.viewControllers[0] as! ManageAlertsTableViewController
-
-        manageAlertsTableViewController.user = self.currentUser
-        manageAlertsTableViewController.wellbore = self.currentWellbore
-        self.presentViewController(manageAlertsNavigationController, animated: true, completion: nil)
+        
+        let destinationNavigationController = storyboard.instantiateViewControllerWithIdentifier(AddEditAlertNavigationController.storyboardIdentifier()) as! AddEditAlertNavigationController
+        let destination = destinationNavigationController.viewControllers[0] as! AddEditAlertTableViewController
+        destination.delegate = self.manageAlertsVC
+        destination.wellbore = self.currentWellbore
+        destination.currentUser = self.currentUser
+        
+        self.presentViewController(destinationNavigationController, animated: true, completion: nil)
     }
     
     func manageDashboardsBarButtonTapped(sender: AnyObject) {

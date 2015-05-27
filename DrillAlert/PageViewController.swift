@@ -133,12 +133,14 @@ class PageViewController: UIViewController, UIWebViewDelegate {
             }
             
             // Start the timer for the live update of a Plot
+            /*
             self.timer = NSTimer.scheduledTimerWithTimeInterval(
                 self.plotUpdateTime,
                 target: self,
                 selector: "updatePlot",
                 userInfo: nil,
                 repeats: true)
+        */
             
         }
     }

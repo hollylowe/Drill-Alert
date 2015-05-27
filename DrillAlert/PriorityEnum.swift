@@ -8,6 +8,8 @@
 
 import Foundation
 
+
+
 enum Priority: Int {
     case Information = 0
     case Warning = 1
