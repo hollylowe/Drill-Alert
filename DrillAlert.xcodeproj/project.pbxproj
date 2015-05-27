@@ -576,6 +576,7 @@
 			isa = PBXGroup;
 			children = (
 				A0E22CD21B157D900000CDD9 /* HomeTabBarController.swift */,
+				A02D86421A6D953A00D22A38 /* AlertInboxTableViewController.swift */,
 				A087EEDD1A06C09D0073FDD0 /* HomeViewController.swift */,
 				A0C3C53D1A09D1900017BC9B /* WellboreDetail */,
 			);
@@ -789,7 +790,6 @@
 				A0D92D191B02E78B008D8023 /* SelectCurveTableViewController.swift */,
 				A018E40B1A2BB4E8001EF20E /* AddEditAlertTableViewController.swift */,
 				A0DB7DBE1A2FB96E00C8C9A2 /* SelectAlertTypeTableViewController.swift */,
-				A02D86421A6D953A00D22A38 /* AlertInboxTableViewController.swift */,
 				A0E22CD61B15A9650000CDD9 /* SelectCurveIVTTableViewController.swift */,
 			);
 			name = Alerts;

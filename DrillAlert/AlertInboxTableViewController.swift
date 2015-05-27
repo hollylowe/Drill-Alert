@@ -12,16 +12,19 @@ import UIKit
 class AlertInboxTableViewController: UITableViewController {
     // Implicit, set by the previous view controller
     var wellboreDetailViewController: WellboreDetailViewController?
-    
+    /*
     let criticalSection = 0
     let warningSection = 1
     let informationSection = 2
     let readSection = 3
     
+    
     var readItems = [AlertHistoryItem]()
     var warningItems = [AlertHistoryItem]()
     var criticalItems = [AlertHistoryItem]()
     var informationItems = [AlertHistoryItem]()
+    */
+    var items = [AlertHistoryItem]()
     
     var shouldLoadFromNetwork = true
     var loadingIndicator: UIActivityIndicatorView?
@@ -30,16 +33,18 @@ class AlertInboxTableViewController: UITableViewController {
     
     
     override func viewDidLoad() {
-        if let tabBarController = self.tabBarController {
-            tabBarController.title = "Alerts"
-        }
         self.refreshControl = UIRefreshControl()
         self.refreshControl!.attributedTitle = NSAttributedString(string: "Pull To Refresh")
         self.refreshControl!.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
         //self.tableView.addSubview(self.refreshControl!)
-        
+        if let navigationController = self.navigationController {
+            let yCoord = navigationController.navigationBar.frame.size.height + UIApplication.sharedApplication().statusBarFrame.size.height
+            
+            self.tableView.tableHeaderView = UIView(frame: CGRectMake(0, 0, self.view.frame.size.width, yCoord))
+        }
+        self.tableView.backgroundColor = UIColor.blackColor()
+        self.tableView.separatorColor = UIColor.blackColor()
         self.loadData()
-        
         super.viewDidLoad()
     }
     
@@ -76,11 +81,13 @@ class AlertInboxTableViewController: UITableViewController {
             alertController.addAction(okayAction)
             self.presentViewController(alertController, animated: true, completion: nil)
         } else {
+            /*
             self.criticalItems.removeAll(keepCapacity: false)
             self.warningItems.removeAll(keepCapacity: false)
             self.informationItems.removeAll(keepCapacity: false)
             self.readItems.removeAll(keepCapacity: false)
-            
+            */
+            /*
             for alertHistoryItem in alertHistoryItems {
                 if let acknowledged = alertHistoryItem.acknowledged {
                     if acknowledged {
@@ -101,6 +108,8 @@ class AlertInboxTableViewController: UITableViewController {
                     }
                 }
             }
+            */
+            self.items = alertHistoryItems
         }
         
     }
@@ -146,7 +155,7 @@ extension AlertInboxTableViewController: UITableViewDataSource {
             let cell = tableView.dequeueReusableCellWithIdentifier(
                 AlertInboxCell.cellIdentifier()) as! AlertInboxCell
             var alertHistoryItem: AlertHistoryItem!
-            
+            /*
             switch indexPath.section {
             case criticalSection:
                 alertHistoryItem = criticalItems[indexPath.row]
@@ -158,14 +167,15 @@ extension AlertInboxTableViewController: UITableViewDataSource {
                 alertHistoryItem = readItems[indexPath.row]
             default: alertHistoryItem = nil
             }
-            
+            */
+            alertHistoryItem = self.items[indexPath.row]
             cell.setupWithAlertHistoryItem(alertHistoryItem)
             
             return cell
     }
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        var numberOfSections = 4
+        var numberOfSections = 1
        
         if loadingData {
             numberOfSections = 0
@@ -181,10 +191,7 @@ extension AlertInboxTableViewController: UITableViewDataSource {
             self.tableView.backgroundView = backgroundView
             self.tableView.separatorStyle = .None
             
-        } else if criticalItems.count == 0 &&
-            warningItems.count == 0 &&
-            informationItems.count == 0 &&
-            readItems.count == 0 {
+        } else if self.items.count == 0 {
             // Show no alert notifications message
             numberOfSections = 0
 
@@ -211,24 +218,11 @@ extension AlertInboxTableViewController: UITableViewDataSource {
     
     override func tableView(tableView: UITableView,
         numberOfRowsInSection section: Int) -> Int {
-            var numberOfRows = 0
-            
-            switch section {
-            case criticalSection:
-                numberOfRows = criticalItems.count
-            case warningSection:
-                numberOfRows = warningItems.count
-            case informationSection:
-                numberOfRows = informationItems.count
-            case readSection:
-                numberOfRows = readItems.count
-            default:
-                numberOfRows = 0
-            }
+            var numberOfRows = self.items.count
             
             return numberOfRows
     }
-    
+    /*
     override func tableView(tableView: UITableView,
         titleForHeaderInSection section: Int) -> String? {
             var title = "NA"
@@ -248,7 +242,7 @@ extension AlertInboxTableViewController: UITableViewDataSource {
             
             return title
     }
-    
+    */
 }
 
 extension AlertInboxTableViewController: UITableViewDelegate {

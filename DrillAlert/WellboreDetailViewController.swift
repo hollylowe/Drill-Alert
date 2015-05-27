@@ -124,12 +124,13 @@ class WellboreDetailViewController: UIViewController {
                 items: segmentedControlItems,
                 delegate: self,
                 action: Selector("segmentedControlAction:"))
-            
             let dashboardNameRect = CGRectMake(0, toolbarYCoord + self.toolbarHeight, self.view.frame.size.width, self.dashboardNameViewHeight)
-            let dashboardNameLabelRect = CGRectMake(0, 0, self.view.frame.size.width, self.dashboardNameViewHeight)
+            let dashboardNameLabelPadding:CGFloat = 8.0
+
+            let dashboardNameLabelRect = CGRectMake(dashboardNameLabelPadding, 0, self.view.frame.size.width - (2 * dashboardNameLabelPadding), self.dashboardNameViewHeight)
             let newDashboardNameView = UIView(frame: dashboardNameRect)
             let newDashboardNameLabel = UILabel(frame: dashboardNameLabelRect)
-            newDashboardNameLabel.font = UIFont(name: "HelveticaNeue", size: 12.0)
+            newDashboardNameLabel.font = UIFont(name: "HelveticaNeue", size: 14.0)
             
             if let dashboard = self.dashboardViewController.currentDashboard {
                 newDashboardNameLabel.text = dashboard.name
@@ -137,7 +138,7 @@ class WellboreDetailViewController: UIViewController {
                 newDashboardNameLabel.text = "No Dashboard Selected"
             }
             newDashboardNameLabel.textColor = UIColor.whiteColor()
-            newDashboardNameLabel.textAlignment = NSTextAlignment.Center
+            newDashboardNameLabel.textAlignment = NSTextAlignment.Left
             self.dashboardNameLabel = newDashboardNameLabel
             newDashboardNameView.addSubview(self.dashboardNameLabel)
             newDashboardNameView.backgroundColor = UIColor(red: 0.224, green: 0.224, blue: 0.224, alpha: 1.0)

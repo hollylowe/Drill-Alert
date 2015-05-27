@@ -130,6 +130,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             let headerViewRect = CGRectMake(0, 0, self.tableView.frame.width, toolbarHeight + 5.0 + UIApplication.sharedApplication().statusBarFrame.size.height)
             // self.tableView.tableHeaderView = UIView(frame: headerViewRect)
             self.tableView.contentInset = UIEdgeInsets(top: toolbarHeight + 5.0 + yCoord, left: 0, bottom: 0, right: 0)
+            
         }
        
     }

@@ -13,6 +13,7 @@ class AlertHistoryItem {
     var message: String?
     var priority: Priority?
     var date: NSDate?
+    var dateString: String?
     var alertID: Int?
     var acknowledged: Bool?
     
@@ -20,6 +21,14 @@ class AlertHistoryItem {
         self.message = message;
         self.priority = priority;
         self.date = date
+        self.alertID = alertID
+        self.acknowledged = acknowledged
+    }
+    
+    init(message: String, priority: Priority, alertID: Int, acknowledged: Bool, dateString: String) {
+        self.message = message;
+        self.priority = priority;
+        self.dateString = dateString
         self.alertID = alertID
         self.acknowledged = acknowledged
     }
@@ -52,7 +61,25 @@ class AlertHistoryItem {
                             error = "Error: Could not create Alert History Item - Nothing found for \(APITriggeringAlertKey) key."
                         }
                     } else {
-                        error = "Error: Could not create Alert History Item - Nothing found for \(APIDateKey) key."
+                        if let dateString = JSONObject.getStringAtKey(APIDateKey) {
+                            if let alertID = JSONObject.getIntAtKey(APITriggeringAlertKey) {
+                                if let acknowledged = JSONObject.getBoolAtKey(APIAcknowledgedKey) {
+                                    result = AlertHistoryItem(
+                                        message: message,
+                                        priority: priority,
+                                        alertID: alertID,
+                                        acknowledged: acknowledged,
+                                        dateString: dateString)
+                                } else {
+                                    error = "Error: Could not create Alert History Item - Nothing found for \(APIAcknowledgedKey) key."
+                                }
+                            } else {
+                                error = "Error: Could not create Alert History Item - Nothing found for \(APITriggeringAlertKey) key."
+                            }
+
+                        }
+                        
+                        error = "Warning: Could not create Alert History Item - Nothing found for \(APIDateKey) key."
                     }
                 } else {
                     error = "Error: Could not create Alert History Item - Invalid priority integer."

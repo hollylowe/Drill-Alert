@@ -49,7 +49,8 @@ class JSON {
                 if let dateString = object as? String {
                     let dateFormatter = NSDateFormatter()
                     
-                    dateFormatter.dateFormat = "yyyy-MM-ddThh:mm:ss.SSSSSSSxxx"
+                    dateFormatter.dateFormat = "yyyy-MM-ddThh:mm:ss.SSSSSSS+00:00"
+                                             // 2015-05-27T09:40:01.6916041+00:00
                     result = dateFormatter.dateFromString(dateString)
                 }
             }
