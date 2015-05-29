@@ -21,9 +21,15 @@ class JSONArray {
         var result: AnyObject?
         var jsonError: NSError?
         var urlError: NSError?
+        
         if let data = string.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false) {
-            result = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(0), error: &jsonError)
+            result = NSJSONSerialization.JSONObjectWithData(
+                data,
+                options: NSJSONReadingOptions(0),
+                error: &jsonError)
+            
             if jsonError != nil {
+                
                 self.error = jsonError
             } else {
                 if let json = result as? Array<AnyObject> {
@@ -81,7 +87,13 @@ class JSONArray {
                 
                 // Only move forward if the JSON was successfully serialized
                 if jsonError != nil {
-                    self.error = jsonError
+                    if let dataString = NSString(data: data, encoding: NSASCIIStringEncoding) {
+                        if dataString == "null" {
+                            self.array = Array<JSON>()
+                        }
+                    } else {
+                        self.error = jsonError
+                    }
                 } else {
                     // The JSON has been successfully serialized,
                     // which means it (should) be an Array of AnyObject,

@@ -15,4 +15,18 @@ class TextFieldDetailCell: UITableViewCell {
     class func cellIdentifier() -> String {
         return "TextFieldDetailCell"
     }
+    
+    func setupWithLabelText(labelText: String, placeholder: String, andTextFieldText opTextFieldText: String?) {
+        self.textFieldLabel.text = labelText
+        self.textField.placeholder = placeholder
+        
+        if let textFieldText = opTextFieldText {
+            self.textField.text = textFieldText
+        }
+        
+        if let placeholder = self.textField.placeholder {
+            self.textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSForegroundColorAttributeName: UIColor(white: 0.52, alpha: 1.0)])
+        }
+
+    }
 }

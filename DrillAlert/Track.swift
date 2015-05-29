@@ -9,7 +9,9 @@
 import Foundation
 class Track: Item {
     var name: String
+    var curves: [Curve]?
     var trackSettings: ItemSettings?
+    
     
     init(xPosition: Int,
         yPosition: Int,
@@ -26,7 +28,6 @@ class Track: Item {
             endRange: endRange,
             divisionSize: divisionSize,
             scaleType: scaleType)
-            
         super.init(
             xPosition: xPosition,
             yPosition: yPosition,
@@ -38,14 +39,23 @@ class Track: Item {
     init(xPosition: Int,
         yPosition: Int,
         name: String,
-        trackSettings: ItemSettings) {
+        trackSettings: ItemSettings,
+        curves: [Curve]) {
             self.name = name
             self.trackSettings = trackSettings
+            self.curves = curves
+            var newItemCurves = [ItemCurve]()
+            
+            for curve in curves {
+                newItemCurves.append(ItemCurve(curveID: curve.id))
+            }
+            
             super.init(
                 xPosition: xPosition,
                 yPosition: yPosition,
                 jsFileName: "Track.js",
-                itemSettingsCollection: ItemSettingsCollection(array: [trackSettings]))
+                itemSettingsCollection: ItemSettingsCollection(array: [trackSettings]),
+                itemCurves: newItemCurves)
     }
     
     init(id: Int, xPosition: Int,

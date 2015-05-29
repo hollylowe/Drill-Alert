@@ -14,6 +14,7 @@ class Item {
     var yPosition: Int
     var jsFileName: String
     var itemSettingsCollection: ItemSettingsCollection?
+    var itemCurves: [ItemCurve]?
     
     init(xPosition: Int, yPosition: Int, jsFileName: String) {
         self.xPosition = xPosition
@@ -26,6 +27,14 @@ class Item {
         self.yPosition = yPosition
         self.jsFileName = jsFileName
         self.itemSettingsCollection = itemSettingsCollection
+    }
+    
+    init(xPosition: Int, yPosition: Int, jsFileName: String, itemSettingsCollection: ItemSettingsCollection?, itemCurves: [ItemCurve]?) {
+        self.xPosition = xPosition
+        self.yPosition = yPosition
+        self.jsFileName = jsFileName
+        self.itemSettingsCollection = itemSettingsCollection
+        self.itemCurves = itemCurves
     }
     
     init(id: Int, xPosition: Int, yPosition: Int, jsFileName: String) {
@@ -41,6 +50,15 @@ class Item {
         self.yPosition = yPosition
         self.jsFileName = jsFileName
         self.itemSettingsCollection = itemSettingsCollection
+    }
+    
+    init(id: Int, xPosition: Int, yPosition: Int, jsFileName: String, itemSettingsCollection: ItemSettingsCollection?, itemCurves: [ItemCurve]?) {
+        self.id = id
+        self.xPosition = xPosition
+        self.yPosition = yPosition
+        self.jsFileName = jsFileName
+        self.itemSettingsCollection = itemSettingsCollection
+        self.itemCurves = itemCurves
     }
     
     class func getItemFromJSON(itemJSON: JSON) -> Item? {
@@ -129,13 +147,12 @@ class Item {
         JSONString = JSONString + "\"ItemSettings\": ["
 
         if let itemSettingsCollection = self.itemSettingsCollection {
-            
             for itemSettings in itemSettingsCollection.array {
                 JSONString = JSONString + itemSettings.toJSONString()
             }
         }
-        
         JSONString = JSONString + "]}"
+        
         
         return JSONString
     }

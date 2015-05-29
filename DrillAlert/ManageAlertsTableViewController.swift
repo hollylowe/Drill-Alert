@@ -25,7 +25,7 @@ class ManageAlertsTableViewController: LoadingTableViewController, LoadingTableV
         self.title = "Manage Alerts"
         self.dataSource = self
         self.noDataLabelOffset = 39.0
-        self.tableView.tableFooterView = UIView()
+        self.tableView.tableFooterView = UIView(frame: CGRectMake(0, 0, self.view.frame.size.width, self.noDataLabelOffset))
         self.tableView.backgroundColor = UIColor.blackColor()
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(

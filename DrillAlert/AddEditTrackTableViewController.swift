@@ -39,8 +39,7 @@ class AddEditTrackTableViewController: UITableViewController {
     // | Current Track Properties |
     //  --------------------------
     //
-    // var selectedScaleType: PlotTrackScaleType?
-    // var curves = Array<Curve>()
+    var curves = Array<Curve>()
 
     //
     //  -----------------------
@@ -61,7 +60,7 @@ class AddEditTrackTableViewController: UITableViewController {
     let divisionSizeRow = 3
     let scaleTypeRow = 4
     
-    // let trackCurvesSection = 3
+    let trackCurvesSection = 3
     
     //
     //  --------------------
@@ -81,7 +80,39 @@ class AddEditTrackTableViewController: UITableViewController {
     var divisionSizeTextField: UITextField?
     var scaleTypeTextField: UITextField?
 
+    var loadingData = true
+    var loadError = false
     
+    func loadCurvesForTrack(track: Track) {
+        if let id = track.id {
+            loadError = false
+            loadingData = true
+            
+            // TODO: This will need to change if we add a way to refresh this page, which we probably will.
+            // Instead, we could use the NSURLConnection asynchrounous call. This is because users could
+            // refresh the page faster than this call could load it, resulting in multiple threads doing
+            // the same operation and messing up the table view.
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
+                var itemCurves = ItemCurve.getItemCurvesForUser(self.user, andItemID: id)
+                let (opCurves, opError) = Curve.getCurvesForUser(self.user, wellbore: self.wellbore, fromItemCurves: itemCurves)
+                if let error = opError {
+                    println("Error loading curves: \(error)")
+                } else {
+                    if let curves = opCurves {
+                        self.curves = curves
+                    } else {
+                        self.curves = Array<Curve>()
+                    }
+                }
+                
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.loadingData = false
+                    self.tableView.reloadData()
+                })
+            })
+        }
+        
+    }
     override func viewDidLoad() {
         self.navigationController?.navigationBar.barStyle = UIBarStyle.Black
         self.tableView.separatorColor = UIColor.blackColor()
@@ -91,8 +122,7 @@ class AddEditTrackTableViewController: UITableViewController {
                 barButtonSystemItem: .Cancel,
                 target: self,
                 action: "cancelBarButtonTapped:")
-            // self.curves = track.curves
-            // self.selectedScaleType = track.scaleType
+            self.loadCurvesForTrack(track)
         } else {
             self.title = "Add Track"
             self.navigationItem.leftBarButtonItem = UIBarButtonItem(
@@ -119,14 +149,32 @@ class AddEditTrackTableViewController: UITableViewController {
             header.textLabel.textColor = UIColor(red: 0.624, green: 0.627, blue: 0.643, alpha: 1.0)
         }
     }
-    /*
+    
     func addCurve(curve: Curve) {
         self.curves.append(curve)
         self.tableView.reloadData()
     }
-    */
     
-    
+    func swapOldCurve(oldCurve: Curve, withNewCurve newCurve: Curve) {
+        var curveIndex = 0
+        var toRemoveIndex: Int?
+        for curve in self.curves {
+            if curve.id == oldCurve.id {
+                toRemoveIndex = curveIndex
+                break
+            }
+            
+            curveIndex++
+        }
+        
+        if let index = toRemoveIndex {
+            self.curves.removeAtIndex(index)
+            self.curves.insert(newCurve, atIndex: index)
+        }
+        
+        self.tableView.reloadData()
+        
+    }
     
     @IBAction func saveBarButtonTapped(sender: UIBarButtonItem) {
         var error: String?
@@ -179,13 +227,20 @@ class AddEditTrackTableViewController: UITableViewController {
                                             oldTrack.xPosition = xPosition
                                             oldTrack.yPosition = yPosition
                                             
+                                            var newItemCurves = [ItemCurve]()
+                                            for curve in self.curves {
+                                                newItemCurves.append(ItemCurve(curveID: curve.id))
+                                            }
+                                            oldTrack.curves = self.curves
+                                            oldTrack.itemCurves = newItemCurves
                                             self.delegate.tableView.reloadData()
                                         } else {
                                             let newTrack = Track(
                                                 xPosition: xPosition,
                                                 yPosition: yPosition,
                                                 name: name,
-                                                trackSettings: newTrackSettings)
+                                                trackSettings: newTrackSettings,
+                                                curves: self.curves)
                                             self.delegate.addTrack(newTrack)
                                         }
                                         
@@ -235,27 +290,21 @@ class AddEditTrackTableViewController: UITableViewController {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    /*
-    func resetScaleTypeAccessoryTypes() {
-        let rowCount = PlotTrackScaleType.allValues.count
-        for row in 0...rowCount {
-            let indexPath = NSIndexPath(forRow: row, inSection: self.trackScaleTypeSection)
-            if let cell = self.tableView.cellForRowAtIndexPath(indexPath) {
-                cell.accessoryType = .None
-            }
-        }
-    }
-    */
-    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == SelectCurveNavigationController.entrySegueIdentifier() {
-            let destination = segue.destinationViewController as! SelectCurveNavigationController
-            let viewController = destination.viewControllers[0] as! SelectCurveTableViewController
+        if segue.identifier == SelectCurveIVTTableViewController.entrySegueIdentifier() {
+            if let curve = sender as? Curve {
+                let destination = segue.destinationViewController as! SelectCurveIVTTableViewController
+                destination.addEditTrackDelegate = self
+                destination.user = self.user
+                destination.wellbore = self.wellbore
+                destination.curveToEdit = curve
+            } else {
+                let destination = segue.destinationViewController as! SelectCurveIVTTableViewController
+                destination.addEditTrackDelegate = self
+                destination.user = self.user
+                destination.wellbore = self.wellbore
+            }
             
-            viewController.wellbore = self.wellbore
-            viewController.user = self.user
-            // viewController.currentCurves = self.curves
-            //viewController.delegate = self
         }
         
         super.prepareForSegue(segue, sender: sender)
@@ -281,15 +330,16 @@ extension AddEditTrackTableViewController: UITableViewDelegate {
             case self.scaleTypeRow: self.scaleTypeTextField?.becomeFirstResponder()
             default: break
             }
-            /*
         case self.trackCurvesSection:
             if indexPath.row < self.curves.count {
                 let curve = self.curves[indexPath.row]
                 // TODO:  pull up edit curve view
+                self.performSegueWithIdentifier(SelectCurveIVTTableViewController.entrySegueIdentifier(), sender: curve)
+                
             } else if indexPath.row == self.curves.count {
-                self.performSegueWithIdentifier(SelectCurveNavigationController.entrySegueIdentifier(), sender: nil)
+                self.performSegueWithIdentifier(SelectCurveIVTTableViewController.entrySegueIdentifier(), sender: nil)
             }
-            */
+            
         default: break
         }
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
@@ -324,55 +374,79 @@ extension AddEditTrackTableViewController: UITableViewDataSource {
         case self.trackNameSection: numberOfRows = 1
         case self.trackSizeSection: numberOfRows = 2
         case self.trackPropertiesSection: numberOfRows = 5
+        case self.trackCurvesSection: numberOfRows = self.curves.count + 1
         default: numberOfRows = 0
         }
         
         return numberOfRows
     }
     
+    private func createTrackNameCell() -> TextFieldCell {
+        let textFieldCell = tableView.dequeueReusableCellWithIdentifier(TextFieldCell.cellIdentifier()) as! TextFieldCell
+        textFieldCell.textField.placeholder = "Enter a name"
+        if let track = self.trackToEdit {
+            textFieldCell.textField.text = track.name
+        }
+        if let placeholder = textFieldCell.textField.placeholder {
+            textFieldCell.textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSForegroundColorAttributeName: UIColor(white: 0.52, alpha: 1.0)])
+        }
+        
+        self.trackNameTextField = textFieldCell.textField
+        return textFieldCell
+    }
+    
+    private func createTrackCurvesCellForIndexPath(indexPath: NSIndexPath) -> UITableViewCell {
+        var cell: UITableViewCell!
+        
+        
+        if indexPath.row == self.curves.count {
+            cell = tableView.dequeueReusableCellWithIdentifier(AddCurveCell.cellIdentifier()) as! AddCurveCell
+        } else if indexPath.row < self.curves.count {
+            // Edit Curve Cell
+            let curve = self.curves[indexPath.row]
+            let curveCell = tableView.dequeueReusableCellWithIdentifier(CurveCell.cellIdentifier()) as! CurveCell
+            curveCell.setupWithCurve(curve)
+            cell = curveCell
+        }
+        
+        return cell
+    }
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        var rowHeight: CGFloat = 44.0
+        if indexPath.section == self.trackCurvesSection {
+            rowHeight = 63.0
+        }
+        
+        return rowHeight
+    }
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell: UITableViewCell!
         
         switch indexPath.section {
-        case self.trackNameSection:
-            let textFieldCell = tableView.dequeueReusableCellWithIdentifier(TextFieldCell.cellIdentifier()) as! TextFieldCell
-            textFieldCell.textField.placeholder = "Enter a name"
-            if let track = self.trackToEdit {
-                textFieldCell.textField.text = track.name
-            }
-            if let placeholder = textFieldCell.textField.placeholder {
-                textFieldCell.textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSForegroundColorAttributeName: UIColor(white: 0.52, alpha: 1.0)])
-            }
-            
-            
-            self.trackNameTextField = textFieldCell.textField
-            cell = textFieldCell
+        case self.trackNameSection: cell = self.createTrackNameCell()
         case self.trackSizeSection:
             switch indexPath.row {
             case self.xPositionRow:
                 let textFieldDetailCell = tableView.dequeueReusableCellWithIdentifier(TextFieldDetailCell.cellIdentifier()) as! TextFieldDetailCell
-                textFieldDetailCell.textFieldLabel.text = "X Position"
-                textFieldDetailCell.textField.placeholder = "0"
-                
+                var textFieldText: String?
                 if let track = self.trackToEdit {
-                    textFieldDetailCell.textField.text = "\(track.xPosition)"
-                }
-                if let placeholder = textFieldDetailCell.textField.placeholder {
-                    textFieldDetailCell.textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSForegroundColorAttributeName: UIColor(white: 0.52, alpha: 1.0)])
+                    textFieldText = String(track.xPosition)
                 }
                 
+                textFieldDetailCell.setupWithLabelText("X Position", placeholder: "0", andTextFieldText: textFieldText)
                 self.xPositionTextField = textFieldDetailCell.textField
                 cell = textFieldDetailCell
             case self.yPositionRow:
                 let textFieldDetailCell = tableView.dequeueReusableCellWithIdentifier(TextFieldDetailCell.cellIdentifier()) as! TextFieldDetailCell
-                textFieldDetailCell.textFieldLabel.text = "Y Position"
-                textFieldDetailCell.textField.placeholder = "0"
-                if let placeholder = textFieldDetailCell.textField.placeholder {
-                    textFieldDetailCell.textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSForegroundColorAttributeName: UIColor(white: 0.52, alpha: 1.0)])
-                }
+                var textFieldText: String?
+
                 if let track = self.trackToEdit {
-                    textFieldDetailCell.textField.text = "\(track.yPosition)"
+                    textFieldText = String(track.yPosition)
                 }
+                
+                textFieldDetailCell.setupWithLabelText("Y Position", placeholder: "0", andTextFieldText: textFieldText)
                 self.yPositionTextField = textFieldDetailCell.textField
                 cell = textFieldDetailCell
             default: break
@@ -381,107 +455,78 @@ extension AddEditTrackTableViewController: UITableViewDataSource {
             switch indexPath.row {
             case self.stepSizeRow:
                 let textFieldDetailCell = tableView.dequeueReusableCellWithIdentifier(TextFieldDetailCell.cellIdentifier()) as! TextFieldDetailCell
-                textFieldDetailCell.textFieldLabel.text = "Step Size"
-                textFieldDetailCell.textField.placeholder = "0"
-                if let placeholder = textFieldDetailCell.textField.placeholder {
-                    textFieldDetailCell.textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSForegroundColorAttributeName: UIColor(white: 0.52, alpha: 1.0)])
-                }
+                var textFieldText: String?
+                
                 if let track = self.trackToEdit {
                     if let trackSettings = track.trackSettings {
-                        textFieldDetailCell.textField.text = "\(trackSettings.stepSize)"
+                        textFieldText = String(trackSettings.stepSize)
                     }
                 }
+                
+                textFieldDetailCell.setupWithLabelText("Step Size", placeholder: "0", andTextFieldText: textFieldText)
+                
                 self.stepSizeTextField = textFieldDetailCell.textField
                 cell = textFieldDetailCell
             case self.startRangeRow:
                 let textFieldDetailCell = tableView.dequeueReusableCellWithIdentifier(TextFieldDetailCell.cellIdentifier()) as! TextFieldDetailCell
-                textFieldDetailCell.textFieldLabel.text = "Start Range"
-                textFieldDetailCell.textField.placeholder = "0"
-                if let placeholder = textFieldDetailCell.textField.placeholder {
-                    textFieldDetailCell.textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSForegroundColorAttributeName: UIColor(white: 0.52, alpha: 1.0)])
-                }
+                var textFieldText: String?
+                
                 if let track = self.trackToEdit {
                     if let trackSettings = track.trackSettings {
-                        textFieldDetailCell.textField.text = "\(trackSettings.startRange)"
+                        textFieldText = String(trackSettings.startRange)
                     }
                 }
+                
+                textFieldDetailCell.setupWithLabelText("Start Range", placeholder: "0", andTextFieldText: textFieldText)
+                
                 self.startRangeTextField = textFieldDetailCell.textField
                 cell = textFieldDetailCell
             case self.endRangeRow:
                 let textFieldDetailCell = tableView.dequeueReusableCellWithIdentifier(TextFieldDetailCell.cellIdentifier()) as! TextFieldDetailCell
-                textFieldDetailCell.textFieldLabel.text = "End Range"
-                textFieldDetailCell.textField.placeholder = "0"
-                if let placeholder = textFieldDetailCell.textField.placeholder {
-                    textFieldDetailCell.textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSForegroundColorAttributeName: UIColor(white: 0.52, alpha: 1.0)])
-                }
+                var textFieldText: String?
+                
                 if let track = self.trackToEdit {
                     if let trackSettings = track.trackSettings {
-                        textFieldDetailCell.textField.text = "\(trackSettings.endRange)"
+                        textFieldText = String(trackSettings.endRange)
                     }
                 }
+                
+                textFieldDetailCell.setupWithLabelText("End Range", placeholder: "0", andTextFieldText: textFieldText)
+                
                 self.endRangeTextField = textFieldDetailCell.textField
                 cell = textFieldDetailCell
             case self.divisionSizeRow:
                 let textFieldDetailCell = tableView.dequeueReusableCellWithIdentifier(TextFieldDetailCell.cellIdentifier()) as! TextFieldDetailCell
-                textFieldDetailCell.textFieldLabel.text = "Division Size"
-                textFieldDetailCell.textField.placeholder = "0"
-                if let placeholder = textFieldDetailCell.textField.placeholder {
-                    textFieldDetailCell.textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSForegroundColorAttributeName: UIColor(white: 0.52, alpha: 1.0)])
-                }
+                var textFieldText: String?
+                
                 if let track = self.trackToEdit {
                     if let trackSettings = track.trackSettings {
-                        textFieldDetailCell.textField.text = "\(trackSettings.divisionSize)"
+                        textFieldText = String(trackSettings.divisionSize)
                     }
                 }
+                
+                textFieldDetailCell.setupWithLabelText("Division Size", placeholder: "0", andTextFieldText: textFieldText)
+                
                 self.divisionSizeTextField = textFieldDetailCell.textField
                 cell = textFieldDetailCell
             case self.scaleTypeRow:
                 let textFieldDetailCell = tableView.dequeueReusableCellWithIdentifier(TextFieldDetailCell.cellIdentifier()) as! TextFieldDetailCell
-                textFieldDetailCell.textFieldLabel.text = "Scale Type"
-                textFieldDetailCell.textField.placeholder = "0"
-                if let placeholder = textFieldDetailCell.textField.placeholder {
-                    textFieldDetailCell.textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSForegroundColorAttributeName: UIColor(white: 0.52, alpha: 1.0)])
-                }
+                var textFieldText: String?
+                
                 if let track = self.trackToEdit {
                     if let trackSettings = track.trackSettings {
-                        textFieldDetailCell.textField.text = "\(trackSettings.scaleType)"
+                        textFieldText = String(trackSettings.scaleType)
                     }
                 }
+                
+                textFieldDetailCell.setupWithLabelText("Scale Type", placeholder: "0", andTextFieldText: textFieldText)
+                
                 self.scaleTypeTextField = textFieldDetailCell.textField
                 cell = textFieldDetailCell
             default: break
             }
-            
-          /*
-        case self.trackScaleTypeSection:
-            let scaleType = PlotTrackScaleType.allValues[indexPath.row]
-            cell = tableView.dequeueReusableCellWithIdentifier(LabelCell.cellIdentifier()) as! LabelCell
-            if let label = cell.textLabel {
-                label.text = scaleType.getTitle()
-            }
-            
-            if let selectedScaleType = self.selectedScaleType {
-                if scaleType == selectedScaleType {
-                    cell.accessoryType = .Checkmark
-                }
-            }
-        case self.trackCurvesSection:
-            if indexPath.row == self.curves.count {
-                // Add Track Cell
-                cell = tableView.dequeueReusableCellWithIdentifier(LabelCell.cellIdentifier()) as! LabelCell
-                if let label = cell.textLabel {
-                    label.text = "Add Curve..."
-                }
-            } else if indexPath.row < self.curves.count {
-                // Edit Curve Cell
-                let curve = self.curves[indexPath.row]
-                cell = tableView.dequeueReusableCellWithIdentifier(LabelDisclosureCell.cellIdentifier()) as! LabelDisclosureCell
-                
-                if let label = cell.textLabel {
-                    label.text = curve.name
-                }
-            }
-            */
+        case self.trackCurvesSection: cell = createTrackCurvesCellForIndexPath(indexPath)
+
         default: break
         }
         return cell

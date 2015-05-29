@@ -15,7 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     // If this is set, we know that we are currently on the Alert Inbox view
-    var alertInboxTableViewController: AlertInboxTableViewController?
+    var alertInboxViewController: AlertInboxViewController?
     
     func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
         var state = application.applicationState

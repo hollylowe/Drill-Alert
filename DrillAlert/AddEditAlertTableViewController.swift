@@ -477,7 +477,9 @@ extension AddEditAlertTableViewController: UITableViewDelegate {
             destinationViewController.delegate = self
         } else if segue.identifier == SelectCurveIVTTableViewController.entrySegueIdentifier() {
             let destination = segue.destinationViewController as! SelectCurveIVTTableViewController
-            destination.delegate = self
+            destination.addEditAlertDelegate = self
+            destination.user = self.currentUser
+            destination.wellbore = self.wellbore
         }
     }
 }

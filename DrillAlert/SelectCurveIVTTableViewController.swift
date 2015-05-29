@@ -10,7 +10,14 @@ import Foundation
 import UIKit
 
 class SelectCurveIVTTableViewController: UITableViewController {
-    var delegate: AddEditAlertTableViewController!
+    var addEditAlertDelegate: AddEditAlertTableViewController?
+    var addEditTrackDelegate: AddEditTrackTableViewController?
+    var addEditCanvasItemDelegate: AddEditCanvasItemTableViewController?
+    
+    var user: User!
+    var wellbore: Wellbore!
+    var curveToEdit: Curve?
+    
     class func entrySegueIdentifier() -> String {
         return "SelectCurveIVTSegue"
     }
@@ -37,9 +44,21 @@ class SelectCurveIVTTableViewController: UITableViewController {
                 let curveIVT = CurveIVT.allValues[indexPath.row]
                 let destination = segue.destinationViewController as! SelectCurveTableViewController
                 destination.curveIVT = curveIVT
-                destination.wellbore = self.delegate.wellbore
-                destination.user = self.delegate.currentUser
-                destination.delegate = self.delegate
+                destination.wellbore = self.wellbore
+                destination.curveToEdit = self.curveToEdit
+                destination.user = self.user
+                if let delegate = self.addEditAlertDelegate {
+                    destination.addEditAlertDelegate = delegate
+                }
+                
+                if let delegate = self.addEditCanvasItemDelegate {
+                    destination.addEditCanvasItemDelegate = delegate
+                }
+                
+                if let delegate = self.addEditTrackDelegate {
+                    destination.addEditTrackDelegate = delegate
+                }
+                
             }
         }
         super.prepareForSegue(segue, sender: sender)

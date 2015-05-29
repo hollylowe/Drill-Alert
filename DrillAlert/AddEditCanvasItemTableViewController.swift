@@ -28,11 +28,12 @@ class AddEditCanvasItemTableViewController: UITableViewController {
     let numberOfSections            = 3
     let canvasItemNameSection       = 0
     let canvasItemPositionSection   = 1
-    let xPositionRow = 0
-    let yPositionRow = 1
     let canvasItemTypeSection       = 2
+    let canvasItemCurvesSection     = 3
     
-    var selectedTypeIndex           = -1;
+    let xPositionRow                = 0
+    let yPositionRow                = 1
+    var selectedTypeIndex           = -1
     
     @IBAction func saveButtonTapped(sender: UIBarButtonItem) {
         var error: String?

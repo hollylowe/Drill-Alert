@@ -37,6 +37,13 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     // TODO: Remove, for debugging only
     var shouldLoadFromNetwork = true
     
+    override func viewDidAppear(animated: Bool) {
+        if let homeTabBarController = self.tabBarController as? HomeTabBarController {
+            homeTabBarController.changeTitle("Wells")
+        }
+        super.viewDidAppear(animated)
+    }
+    
     override func viewDidLoad() {
         if let homeTabBarController = self.tabBarController as? HomeTabBarController {
             self.currentUser = homeTabBarController.user

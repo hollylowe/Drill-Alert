@@ -16,9 +16,12 @@ class AddEditDashboardNavigationController: UINavigationController {
 }
 
 class AddEditDashboardTableViewController: UITableViewController {
+    var currentDashboard: Dashboard?
+    
     var user: User!
     var wellbore: Wellbore!
-    // This is only set if we're editing a layout
+    
+    // This is only set if we're editing a dashboard
     var dashboardToEdit: Dashboard?
     
     // Table View Properties
@@ -323,18 +326,6 @@ class AddEditDashboardTableViewController: UITableViewController {
         self.performSegueWithIdentifier(AddEditPlotNavigationController.editPlotEntrySegueIdentifier(), sender: page)
     }
     
-    func presentEditCompassViewController(page: Page) {
-        
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        
-        // Get the navigation controller
-        if let navigationController = self.navigationController {
-            let viewController = storyboard.instantiateViewControllerWithIdentifier(AddEditCompassTableViewController.storyboardIdentifier()) as! AddEditCompassTableViewController
-            viewController.compassToEdit = page
-            navigationController.pushViewController(viewController, animated: true)
-        }
-        
-    }
 }
 
 extension AddEditDashboardTableViewController: UITableViewDelegate {
@@ -489,7 +480,6 @@ extension AddEditDashboardTableViewController: UITableViewDelegate {
                 switch panel.type {
                 case .Canvas: self.presentEditCanvasViewController(panel)
                 case .Plot: self.presentEditPlotViewController(panel)
-                case .Compass: self.presentEditCompassViewController(panel)
                 default: println("Unknown page type.")
                 }
                 

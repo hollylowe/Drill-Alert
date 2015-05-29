@@ -92,13 +92,31 @@ class AlertHistoryItem {
         }
         
         if (error != nil) {
-            println(error)
+            println(error!)
         }
         
         return result
     }
     
     // Return an array on success, or an error on fail.
+    class func getAlertHistoryFixtureData() -> [AlertHistoryItem] {
+        var result = [AlertHistoryItem]()
+        
+        result.append(AlertHistoryItem(message: "Read Crit Alert 1", priority: Priority.Critical, date: NSDate(), alertID: 0, acknowledged: true))
+        result.append(AlertHistoryItem(message: "Read Info Alert 1", priority: Priority.Information, date: NSDate(), alertID: 0, acknowledged: true))
+         result.append(AlertHistoryItem(message: "Read Info Alert 2", priority: Priority.Information, date: NSDate(), alertID: 0, acknowledged: true))
+         result.append(AlertHistoryItem(message: "Read Info Alert 3", priority: Priority.Information, date: NSDate(), alertID: 0, acknowledged: true))
+        result.append(AlertHistoryItem(message: "Read Warning Alert 1", priority: Priority.Warning, date: NSDate(), alertID: 0, acknowledged: true))
+        result.append(AlertHistoryItem(message: "Crit Alert 1", priority: Priority.Critical, date: NSDate(), alertID: 0, acknowledged: false))
+        result.append(AlertHistoryItem(message: "Warning Alert 1", priority: Priority.Warning, date: NSDate(), alertID: 0, acknowledged: false))
+        result.append(AlertHistoryItem(message: "Warning Alert 2", priority: Priority.Warning, date: NSDate(), alertID: 0, acknowledged: false))
+        result.append(AlertHistoryItem(message: "Warning Alert 3", priority: Priority.Warning, date: NSDate(), alertID: 0, acknowledged: false))
+        result.append(AlertHistoryItem(message: "Warning Alert 4", priority: Priority.Warning, date: NSDate(), alertID: 0, acknowledged: false))
+        result.append(AlertHistoryItem(message: "Warning Alert 5", priority: Priority.Warning, date: NSDate(), alertID: 0, acknowledged: false))
+        
+        return result
+    }
+    
     class func getAlertsHistory() -> ([AlertHistoryItem], String?) {
         var result = Array<AlertHistoryItem>()
         var error: String?

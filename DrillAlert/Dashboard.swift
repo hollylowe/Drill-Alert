@@ -54,6 +54,53 @@ class Dashboard {
         return JSONString
     }
     
+    func itemCurvesToJSONString() -> String {
+        var JSONString = "["
+        var totalItemCurvesCount = 0
+        var totalItemCurves = [ItemCurve]()
+        
+        for page in self.pages {
+            switch page.type {
+            case .Plot:
+                if let tracks = page.tracks {
+                    for track in tracks {
+                        if let itemCurves = track.itemCurves {
+                            for itemCurve in itemCurves {
+                                totalItemCurves.append(itemCurve)
+                            }
+                        }
+                    }
+                }
+            case .Canvas:
+                if let canvasItems = page.canvasItems {
+                    for canvasItem in canvasItems {
+                        if let itemCurves = canvasItem.itemCurves {
+                            for itemCurve in itemCurves {
+                                totalItemCurves.append(itemCurve)
+                            }
+                        }
+                    }
+                }
+            default: break
+            }
+            
+        }
+        
+        var itemCurveIndex = 0
+        for itemCurve in totalItemCurves {
+            JSONString = JSONString + itemCurve.toJSONString()
+            if itemCurveIndex < totalItemCurves.count - 1 {
+                JSONString = JSONString + ","
+            }
+            itemCurveIndex++
+        }
+        
+        
+        JSONString = JSONString + "]"
+        
+        return JSONString
+    }
+    
     func getPagesJSONString() -> String {
         var JSONString = "["
         var index = 0
@@ -73,22 +120,64 @@ class Dashboard {
         return JSONString
     }
     
-    class func saveDashboard(dashboardToSave: Dashboard, forUser user: User, andWellbore wellbore: Wellbore, withCallback callback: ((error: String?) -> Void)) {
-        var URLString = "https://drillalert.azurewebsites.net/api/dashboards"
+    // This is called after a dashboard has been saved.
+    class func saveDashboardItemCurves(dashboard: Dashboard, forUser user: User, withCallback callback: ((error: String?) -> Void)) {
         
-        if let id = dashboardToSave.id {
-            // Updating a dashboard
-            URLString = URLString + "/\(id)"
-        }
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
+            var URLString = "https://drillalert.azurewebsites.net/api/itemcurves"
             
+            if let URL = NSURL(string: URLString) {
+                var jsonString = dashboard.itemCurvesToJSONString()
+                println("The ItemCurve JSON: " )
+                println(jsonString)
+                if let postData = jsonString.dataUsingEncoding(NSASCIIStringEncoding) {
+                    let postLength = String(postData.length)
+                    let request = NSMutableURLRequest(URL: URL)
+                    
+                    request.HTTPBody = postData
+                    request.setValue(postLength, forHTTPHeaderField: "Content-Length")
+                    request.setValue("application/x-www-form-urlencoded",
+                        forHTTPHeaderField: "Content-Type")
+                    request.setValue("application/json", forHTTPHeaderField: "Accept")
+                    
+                    let task = user.session.session!.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
+                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            if let HTTPResponse = response as? NSHTTPURLResponse {
+                                let statusCode = HTTPResponse.statusCode
+                                if error != nil {
+                                    println("Error when saving item curves : \(error.description)")
+                                    // callback(error: "Unable to save Dashboard (\(statusCode)).")
+                                } else {
+                                    // callback(error: nil)
+                                    println("Successful post.")
+                                }
+                            }
+                        })
+                    })
+                    task.resume()
+                }
+            }
+        })
+    }
+    
+    class func saveDashboard(dashboardToSave: Dashboard,
+        forUser user: User,
+        andWellbore wellbore: Wellbore,
+        withCallback callback: ((error: String?) -> Void)) {
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
+            var URLString = "https://drillalert.azurewebsites.net/api/dashboards"
+            
+            if let id = dashboardToSave.id {
+                // Updating a dashboard
+                URLString = URLString + "/\(id)"
+            }
             if let URL = NSURL(string: URLString) {
                 var jsonString = dashboardToSave.toJSONString()
                 println("The JSON: " )
                 println(jsonString)
                 if let postData = jsonString.dataUsingEncoding(NSASCIIStringEncoding) {
                     let postLength = String(postData.length)
-                    
                     let request = NSMutableURLRequest(URL: URL)
                     if dashboardToSave.id != nil {
                         request.HTTPMethod = "PUT"
@@ -97,7 +186,8 @@ class Dashboard {
                     }
                     request.HTTPBody = postData
                     request.setValue(postLength, forHTTPHeaderField: "Content-Length")
-                    request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+                    request.setValue("application/x-www-form-urlencoded",
+                        forHTTPHeaderField: "Content-Type")
                     request.setValue("application/json", forHTTPHeaderField: "Accept")
                     
                     let task = user.session.session!.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
@@ -108,7 +198,9 @@ class Dashboard {
                                     println("Error when saving dashboard: \(error.description)")
                                     callback(error: "Unable to save Dashboard (\(statusCode)).")
                                 } else {
+                                    // Dashboard.saveDashboardItemCurves(dashboardToSave, forUser: user, withCallback: callback)
                                     callback(error: nil)
+                                    
                                 }
                             }
                         })

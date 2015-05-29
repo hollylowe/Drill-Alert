@@ -158,6 +158,31 @@ class Curve {
         return (result, errorMessage)
     }
     
+    class func getCurvesForUser(user: User, wellbore: Wellbore, fromItemCurves itemCurves: [ItemCurve]) -> (Array<Curve>?, String?) {
+        var result: Array<Curve>?
+        var finalError: String?
+        let (opCurves, opError) = Curve.getCurvesForUser(user, andWellbore: wellbore, andIVT: nil)
+        
+        // TODO: Get an endpoint for this, 
+        // instead of grabbing them all and filtering
+        
+        if let error = opError {
+            finalError = error
+            println(error)
+        } else if let curves = opCurves {
+            result = curves.filter({( curve: Curve) -> Bool in
+                for itemCurve in itemCurves {
+                    if itemCurve.curveID == curve.id {
+                        return true
+                    }
+                }
+                return false
+            })
+        }
+        
+        return (result, finalError)
+    }
+    
     class func getCurvesForUser(user: User, andWellbore wellbore: Wellbore, andIVT opIVT: CurveIVT?) -> (Array<Curve>?, String?) {
         var result: Array<Curve>?
         var errorMessage: String?

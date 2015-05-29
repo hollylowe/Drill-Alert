@@ -57,7 +57,6 @@ class CreatePageFromExistingController: LoadingTableViewController, UISearchBarD
             switch page.type {
             case .Plot: self.presentAddPlotFromExistingWithPage(page)
             case .Canvas: self.presentAddCanvasFromExistingWithPage(page)
-            case .Compass: self.presentAddCompassFromExistingWithPage(page)
             default: break
             }
         }
@@ -76,12 +75,6 @@ class CreatePageFromExistingController: LoadingTableViewController, UISearchBarD
                 viewController.existingPlot = plot
                 viewController.delegate = self.delegate
             }
-        } else if segue.identifier == AddEditCompassTableViewController.addCompassFromExistingSegue() {
-            let viewController = segue.destinationViewController as! AddEditCompassTableViewController
-            if let compass = sender as? Page {
-                viewController.existingCompass = compass
-                // viewController.delegate = self.delegate
-            }
         }
     }
     
@@ -91,10 +84,6 @@ class CreatePageFromExistingController: LoadingTableViewController, UISearchBarD
     
     func presentAddPlotFromExistingWithPage(page: Page) {
         self.performSegueWithIdentifier(AddEditPlotTableViewController.addPlotFromExistingSegue(), sender: page)
-    }
-    
-    func presentAddCompassFromExistingWithPage(page: Page) {
-        self.performSegueWithIdentifier(AddEditCompassTableViewController.addCompassFromExistingSegue(), sender: page)
     }
     
     func searchBar(searchBar: UISearchBar,

@@ -14,7 +14,6 @@ class AlertInboxCell: UITableViewCell {
     @IBOutlet weak var alertInformationLabel: UILabel!
     @IBOutlet weak var alertTimeLabel: UILabel!
     
-    @IBOutlet weak var priorityImageView: UIImageView!
   
     class func cellIdentifier() -> String! {
         return "AlertInboxCell"
@@ -36,23 +35,6 @@ class AlertInboxCell: UITableViewCell {
             self.alertTimeLabel.text = "Unknown Time"
         }
         
-        if let priority = alertHistoryItem.priority {
-            switch priority {
-            case .Critical:
-                if let image = UIImage(named: "Critical Alert Icon") {
-                    self.priorityImageView.image = self.imageWithImage(image, scaledToSize: CGSize(width: 30.0, height: 30.0))
-                }
-            case .Warning:
-                if let image = UIImage(named: "Warning Alert Icon") {
-                    self.priorityImageView.image = self.imageWithImage(image, scaledToSize: CGSize(width: 30.0, height: 30.0))
-                }
-            case .Information:
-                if let image = UIImage(named: "Information Alert Icon") {
-                    self.priorityImageView.image = self.imageWithImage(image, scaledToSize: CGSize(width: 30.0, height: 30.0))
-                }
-            default: break
-            }
-        }
         self.selectionStyle = .None
 
     }

@@ -12,8 +12,11 @@ import UIKit
 class SelectCurveTableViewController: LoadingTableViewController, UISearchBarDelegate, UISearchDisplayDelegate {
     var user: User!
     var wellbore: Wellbore!
-    var delegate: AddEditAlertTableViewController!
-    // var delegate: AddEditTrackTableViewController?
+    var curveToEdit: Curve?
+    var addEditAlertDelegate: AddEditAlertTableViewController?
+    var addEditTrackDelegate: AddEditTrackTableViewController?
+    var addEditCanvasItemDelegate: AddEditCanvasItemTableViewController?
+    
     var currentCurves = Array<Curve>()
     var curveIVT: CurveIVT?
     var curves = Array<Curve>()
@@ -81,8 +84,21 @@ class SelectCurveTableViewController: LoadingTableViewController, UISearchBarDel
 
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        self.delegate.setSelectedCurve(curve)
+        if let delegate = self.addEditAlertDelegate {
+            delegate.setSelectedCurve(curve)
+        }
+        
+        if let delegate = self.addEditTrackDelegate {
+            if let oldCurve = self.curveToEdit {
+                delegate.swapOldCurve(oldCurve, withNewCurve: curve)
+            } else {
+                delegate.addCurve(curve)
+            }
+            
+        }
         self.navigationController?.popToRootViewControllerAnimated(true)
+
+        
         /*
         var shouldAddCurve = true
         let curve = self.curves[indexPath.row]
