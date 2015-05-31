@@ -120,7 +120,6 @@ class AddEditTrackTableViewController: UITableViewController {
         self.enableView()
     }
     
-    
     func loadItemCurvesForTrack(track: Track) {
         
         if let id = track.id {
@@ -157,7 +156,7 @@ class AddEditTrackTableViewController: UITableViewController {
     override func viewDidLoad() {
         self.navigationController?.navigationBar.barStyle = UIBarStyle.Black
         self.tableView.separatorColor = UIColor.blackColor()
-
+        
         let activityView = UIActivityIndicatorView(frame: CGRectMake(0, 0, 25, 25))
         activityView.startAnimating()
         activityView.hidden = false
@@ -335,8 +334,7 @@ class AddEditTrackTableViewController: UITableViewController {
                             track.xPosition = oldTrack.xPosition
                             track.yPosition = oldTrack.yPosition
                             
-                            self.addEditPlotDelegate.syncPlotWithDashboardWithCallback({ (error, newestID) -> Void in
-                                
+                            self.saveTrackWithCallback({ (error, newestID) -> Void in
                                 self.hideActivityBarButton()
                                 if error == nil {
                                     self.dismissViewControllerAnimated(true, completion: nil)
@@ -344,6 +342,7 @@ class AddEditTrackTableViewController: UITableViewController {
                                     println("Error reverting track: \(error!)")
                                 }
                             })
+                            
                         }
                     }))
                     
@@ -606,13 +605,16 @@ extension AddEditTrackTableViewController: UITableViewDataSource {
         let textFieldCell = tableView.dequeueReusableCellWithIdentifier(TextFieldCell.cellIdentifier()) as! TextFieldCell
         textFieldCell.textField.placeholder = "Enter a name"
         if let track = self.trackToEdit {
-            textFieldCell.textField.text = "Track \(track.id)"
+            if let id = track.id {
+                textFieldCell.textField.text = "Track \(id)"
+            }
         }
         if let placeholder = textFieldCell.textField.placeholder {
             textFieldCell.textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSForegroundColorAttributeName: UIColor(white: 0.52, alpha: 1.0)])
         }
         
         self.trackNameTextField = textFieldCell.textField
+        textFieldCell.textField.enabled = false
         return textFieldCell
     }
     
@@ -661,7 +663,10 @@ extension AddEditTrackTableViewController: UITableViewDataSource {
                 }
                 
                 textFieldDetailCell.setupWithLabelText("X Position", placeholder: "0", andTextFieldText: textFieldText)
+                textFieldDetailCell.textField.enabled = true
+
                 self.xPositionTextField = textFieldDetailCell.textField
+
                 cell = textFieldDetailCell
             case self.yPositionRow:
                 let textFieldDetailCell = tableView.dequeueReusableCellWithIdentifier(TextFieldDetailCell.cellIdentifier()) as! TextFieldDetailCell
@@ -672,6 +677,8 @@ extension AddEditTrackTableViewController: UITableViewDataSource {
                 }
                 
                 textFieldDetailCell.setupWithLabelText("Y Position", placeholder: "0", andTextFieldText: textFieldText)
+                textFieldDetailCell.textField.enabled = true
+
                 self.yPositionTextField = textFieldDetailCell.textField
                 cell = textFieldDetailCell
             default: break
@@ -689,7 +696,8 @@ extension AddEditTrackTableViewController: UITableViewDataSource {
                 }
                 
                 textFieldDetailCell.setupWithLabelText("Step Size", placeholder: "0", andTextFieldText: textFieldText)
-                
+                textFieldDetailCell.textField.enabled = true
+
                 self.stepSizeTextField = textFieldDetailCell.textField
                 cell = textFieldDetailCell
             case self.startRangeRow:
@@ -703,7 +711,8 @@ extension AddEditTrackTableViewController: UITableViewDataSource {
                 }
                 
                 textFieldDetailCell.setupWithLabelText("Start Range", placeholder: "0", andTextFieldText: textFieldText)
-                
+                textFieldDetailCell.textField.enabled = true
+
                 self.startRangeTextField = textFieldDetailCell.textField
                 cell = textFieldDetailCell
             case self.endRangeRow:
@@ -717,7 +726,8 @@ extension AddEditTrackTableViewController: UITableViewDataSource {
                 }
                 
                 textFieldDetailCell.setupWithLabelText("End Range", placeholder: "0", andTextFieldText: textFieldText)
-                
+                textFieldDetailCell.textField.enabled = true
+
                 self.endRangeTextField = textFieldDetailCell.textField
                 cell = textFieldDetailCell
             case self.divisionSizeRow:
@@ -731,7 +741,8 @@ extension AddEditTrackTableViewController: UITableViewDataSource {
                 }
                 
                 textFieldDetailCell.setupWithLabelText("Division Size", placeholder: "0", andTextFieldText: textFieldText)
-                
+                textFieldDetailCell.textField.enabled = true
+
                 self.divisionSizeTextField = textFieldDetailCell.textField
                 cell = textFieldDetailCell
             case self.scaleTypeRow:
@@ -745,7 +756,8 @@ extension AddEditTrackTableViewController: UITableViewDataSource {
                 }
                 
                 textFieldDetailCell.setupWithLabelText("Scale Type", placeholder: "0", andTextFieldText: textFieldText)
-                
+                textFieldDetailCell.textField.enabled = true
+
                 self.scaleTypeTextField = textFieldDetailCell.textField
                 cell = textFieldDetailCell
             default: break

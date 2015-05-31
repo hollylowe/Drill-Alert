@@ -101,7 +101,7 @@ class Curve {
         self.IVT = IVT
     }
     
-    class func getCurvePointCollectionForUser(user: User, curveID: Int, wellboreID: String, startTime: NSDate, andEndTime endTime: NSDate) -> (CurvePointCollection?, String?)  {
+    class func getCurvePointCollectionForUser(user: User, curveID: String, startIV: Int, andEndIV endIV: Int) -> (CurvePointCollection?, String?)  {
         var result: CurvePointCollection?
         var errorMessage: String?
         
@@ -109,7 +109,7 @@ class Curve {
            result = CurvePointCollection(curveID: 0, wellboreID: 0, curvePoints: [CurvePoint(value: 0, time: 0)])
         } else {
             // TODO: Change this to real time values
-            var endpointURL = "https://drillalert.azurewebsites.net/api/curvepoints/\(curveID)/\(wellboreID)/\(0)/\(0)"
+            var endpointURL = "https://drillalert.azurewebsites.net/api/curvepoints/\(curveID)/\(startIV)/\(endIV)"
             let resultJSONArray = JSONArray(url: endpointURL)
             
             if let resultJSONs = resultJSONArray.array {

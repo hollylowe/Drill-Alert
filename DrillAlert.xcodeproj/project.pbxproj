@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A0036A681B1BAA3D00F6FB16 /* labels.js in Resources */ = {isa = PBXBuildFile; fileRef = A0036A671B1BAA3D00F6FB16 /* labels.js */; };
 		A0087D871B05392A009762C3 /* SectionHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0087D861B05392A009762C3 /* SectionHeaderCell.swift */; };
 		A00B17301AFEEC6300A4656E /* AddEditPlotNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00B172F1AFEEC6300A4656E /* AddEditPlotNavigationController.swift */; };
 		A018E40A1A2B0733001EF20E /* ManageAlertsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A018E4091A2B0733001EF20E /* ManageAlertsTableViewController.swift */; };
@@ -167,6 +168,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A0036A671B1BAA3D00F6FB16 /* labels.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = labels.js; sourceTree = "<group>"; };
 		A0087D861B05392A009762C3 /* SectionHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionHeaderCell.swift; sourceTree = "<group>"; };
 		A00B172F1AFEEC6300A4656E /* AddEditPlotNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEditPlotNavigationController.swift; sourceTree = "<group>"; };
 		A018E4091A2B0733001EF20E /* ManageAlertsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageAlertsTableViewController.swift; sourceTree = "<group>"; };
@@ -759,6 +761,7 @@
 				A0AC42861AABF56D000F12CD /* index.html */,
 				A0CCC5E81A81C6AB00F92B36 /* Examples */,
 				A0CCC5E71A81C69D00F92B36 /* Graph */,
+				A0036A671B1BAA3D00F6FB16 /* labels.js */,
 			);
 			name = Visualizations;
 			sourceTree = "<group>";
@@ -968,6 +971,7 @@
 			files = (
 				A0AC42871AABF56D000F12CD /* index.html in Resources */,
 				A0343D311A2674C100FA0464 /* Entitlements.plist in Resources */,
+				A0036A681B1BAA3D00F6FB16 /* labels.js in Resources */,
 				A095FB931A2FF20D00B15D39 /* old-gauge.html in Resources */,
 				A042B2E11A19669E00660AB7 /* d3.min.js in Resources */,
 				A06FFD6C1A06AA08001B3FF8 /* Main.storyboard in Resources */,

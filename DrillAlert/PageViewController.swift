@@ -20,6 +20,7 @@ class PageViewController: UIViewController, UIWebViewDelegate {
     let gaugeJSFileName = "Gauge.js"
     var user: User! 
     var page: Page!
+    var itemCurves: [ItemCurve]?
     var timer: NSTimer?
     var pageIndex: Int!
     var wellbore: Wellbore! 
@@ -33,6 +34,7 @@ class PageViewController: UIViewController, UIWebViewDelegate {
     override func viewDidLoad() {
         self.pageInformationLabel.text = self.page.name
         self.pageLastUpdatedLabel.text = "Loading..."
+        
         self.addBottomBorder()
         super.viewDidLoad()
     }
@@ -63,32 +65,50 @@ class PageViewController: UIViewController, UIWebViewDelegate {
     }
     
     func updatePlot() {
-        // TODO: Get the curve points for a specific curve ID.
-        // Feed those curve points to the tracks in the plot.
-        /*
-        let (optionalCurvePointCollection, error) = Curve.getCurvePointCollectionForUser(self.user, curveID: 1, wellboreID: self.wellbore.id, startTime: NSDate(), andEndTime: NSDate())
-        if error == nil {
-            if let curvePointCollection = optionalCurvePointCollection {
-                // Add every curve point to the graph
-                let curvePoints = curvePointCollection.curvePoints
-                // TODO: Use real curve points
-                if curvePoints.count > 0 {
-                    if let plot = self.javaScriptPlot {
-                        let updateString = plot.getTickJavaScriptStringWithCurvePoint(curvePoints[0])
-                        self.webView.stringByEvaluatingJavaScriptFromString(updateString)
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
+            // TODO: Actually use all of the item curves and tracks
+            // (JavaScript doesn't support more than one curve and track)
+            if let curves = self.itemCurves {
+                if curves.count > 0 {
+                    let firstCurve = curves[0]
+                    
+                    let (optionalCurvePointCollection, error) = Curve.getCurvePointCollectionForUser(self.user, curveID: firstCurve.curveID, startIV: 300, andEndIV: 500)
+                    if error == nil {
+                        if let curvePointCollection = optionalCurvePointCollection {
+                            // Add every curve point to the graph
+                            let curvePoints = curvePointCollection.curvePoints
+                            // TODO: Use real curve points
+                            if curvePoints.count > 0 {
+                                if let plot = self.javaScriptPlot {
+                                    let updateString = plot.getTickJavaScriptStringWithCurvePoint(curvePoints[0])
+                                    self.webView.stringByEvaluatingJavaScriptFromString(updateString)
+                                }
+                            }
+                            
+                        }
+                    } else {
+                        // TODO: Show error to user
+                        println("Error Getting Curve Points: " + error!)
                     }
                 }
-                
             }
-        } else {
-            // TODO: Show error to user
-            println("Error Getting Curve Points: " + error!)
-        }
-        */
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd 'at' h:mm a"
-        let stringDate = dateFormatter.stringFromDate(NSDate())
-        self.pageLastUpdatedLabel.text = "Updated \(stringDate)"
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                self.timer = NSTimer.scheduledTimerWithTimeInterval(
+                    self.plotUpdateTime,
+                    target: self,
+                    selector: "updatePlot",
+                    userInfo: nil,
+                    repeats: false)
+                let dateFormatter = NSDateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd 'at' h:mm a"
+                let stringDate = dateFormatter.stringFromDate(NSDate())
+                self.pageLastUpdatedLabel.text = "Updated \(stringDate)"
+            })
+        })
+        
+        
+        
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -101,20 +121,37 @@ class PageViewController: UIViewController, UIWebViewDelegate {
     }
     
     func setupPageAsPlot() {
-        let defaultWidth = 400
-        let defaultHeight = 300
+        let defaultWidth = 300
+        let defaultHeight = 150
+        var allCurves = Array<ItemCurve>()
+        
         if let id = page.id {
             // TODO: Replace with real initial data
-            var initialData = [1, 2]
-            
-            // Each visualization in a Plot
-            // is a track
-            /*
-            for track in page.items {
-                // TODO: Add the track to the Plot
+            var initialData = [10, 20, 30, 40, 50, 60, 70]
+            if let tracks = self.page.tracks {
+                for track in tracks {
+                    if let id = track.id {
+                        var itemCurves = ItemCurve.getItemCurvesForUser(self.user, andItemID: id)
+                        if itemCurves.count > 0 {
+                            let (opCurves, opError) = Curve.addCurvesToItemCurves(itemCurves, user: self.user, andWellbore: self.wellbore)
+                            
+                            if let error = opError {
+                                println("Error loading curves for item curves: \(error)")
+                            } else {
+                                if let newItemCurves = opCurves {
+                                    println("Recieved new item curves successfully.")
+                                    for curve in newItemCurves {
+                                        allCurves.append(curve)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
-            */
             
+            
+            self.itemCurves = allCurves
             self.javaScriptPlot = JavaScriptPlot(
                 id: id,
                 yMax: page.yDimension,
@@ -136,8 +173,9 @@ class PageViewController: UIViewController, UIWebViewDelegate {
                 target: self,
                 selector: "updatePlot",
                 userInfo: nil,
-                repeats: true)
-        
+                repeats: false)
+
+            
             
         }
     }
