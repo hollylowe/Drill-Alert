@@ -10,12 +10,12 @@ import Foundation
 import UIKit
 
 class AlertHistoryItem {
-    var message: String?
+    var message: String
     var priority: Priority?
     var date: NSDate?
     var dateString: String?
-    var alertID: Int?
-    var acknowledged: Bool?
+    var alertID: Int
+    var acknowledged: Bool
     
     init(message: String, priority: Priority, date: NSDate, alertID: Int, acknowledged: Bool) {
         self.message = message;
@@ -117,19 +117,23 @@ class AlertHistoryItem {
         return result
     }
     
-    class func getAlertsHistory() -> ([AlertHistoryItem], String?) {
+    class func getAlertsHistoryForUser(user: User) -> ([AlertHistoryItem], String?) {
         var result = Array<AlertHistoryItem>()
         var error: String?
         
-        let url = "https://drillalert.azurewebsites.net/api/alertshistory/"
-        let alertNotificationJSONArray = JSONArray(url: url)
-        if let networkError = alertNotificationJSONArray.error {
-            error = networkError.description
+        if user.shouldUseFixtureData {
+            result = AlertHistoryItem.getAlertHistoryFixtureData()
         } else {
-            if let array = alertNotificationJSONArray.array {
-                for JSONObject in array {
-                    if let alertHistoryItem = AlertHistoryItem.alertHistoryItemFromJSONObject(JSONObject) {
-                        result.append(alertHistoryItem)
+            let url = "https://drillalert.azurewebsites.net/api/alertshistory/"
+            let alertNotificationJSONArray = JSONArray(url: url)
+            if let networkError = alertNotificationJSONArray.error {
+                error = networkError.description
+            } else {
+                if let array = alertNotificationJSONArray.array {
+                    for JSONObject in array {
+                        if let alertHistoryItem = AlertHistoryItem.alertHistoryItemFromJSONObject(JSONObject) {
+                            result.append(alertHistoryItem)
+                        }
                     }
                 }
             }

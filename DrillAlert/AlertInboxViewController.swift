@@ -11,72 +11,58 @@ import UIKit
 
 class AlertInboxViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet weak var tableView: UITableView!
+    
+    var alertInbox: AlertInbox!
     // Implicit, set by the previous view controller
     var wellboreDetailViewController: WellboreDetailViewController?
-    var navBarHairlineImageView: UIImageView?
-
     
     let criticalIndex = 0
     let warningIndex = 1
     let informationIndex = 2
     var selectedIndex = 0
     var shouldShowRead = false
-    var readCriticalItems = [AlertHistoryItem]()
-    var readInformationItems = [AlertHistoryItem]()
-    var readWarningItems = [AlertHistoryItem]()
-    var warningItems = [AlertHistoryItem]()
-    var criticalItems = [AlertHistoryItem]()
-    var informationItems = [AlertHistoryItem]()
 
-    
     var toolbarYCoord: CGFloat = 0
-    var segmentedControlBadgeToolbar: SegmentControlBadgeToolbar!
     var toolbarHeight: CGFloat = 60.0
+    var rowHeight: CGFloat = 88.0
+    var segmentedControlBadgeToolbar: SegmentControlBadgeToolbar!
     var shouldLoadFromNetwork = true
     var loadingIndicator: UIActivityIndicatorView?
     var loadingData = true
     var loadError = false
     
-    func findHairlineImageViewUnder(view: UIView) -> UIImageView? {
-        if view.isKindOfClass(UIImageView) && view.bounds.size.height <= 1.0 {
-            return view as? UIImageView
-        } else {
-            for subview in view.subviews {
-                var imageView = self.findHairlineImageViewUnder(subview as! UIView)
-                if imageView != nil {
-                    return imageView
-                }
-            }
-            return nil
-        }
-    }
     override func viewDidLoad() {
+        self.alertInbox = AlertInbox()
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.backgroundColor = UIColor.blackColor()
         self.tableView.separatorColor = UIColor.blackColor()
         
         if let navigationController = self.navigationController {
-            self.navBarHairlineImageView = self.findHairlineImageViewUnder(navigationController.navigationBar)
 
             let navigationBarHeight = navigationController.navigationBar.frame.size.height
             let statusBarHeight = UIApplication.sharedApplication().statusBarFrame.size.height
             self.toolbarYCoord = navigationBarHeight + statusBarHeight
+
             let toolbarFrame = CGRectMake(0, toolbarYCoord, self.view.frame.size.width, self.toolbarHeight)
+
+            let criticalColor = UIColor(red: 0.988, green: 0.227, blue: 0.114, alpha: 1.0)
+            let warningColor = UIColor(red: 0.992, green: 0.761, blue: 0.114, alpha: 1.0)
+            let informationColor = UIColor(red: 0.498, green: 0.737, blue: 0.902, alpha: 1.0)
             
-            let redColor = UIColor(red: 0.988, green: 0.227, blue: 0.114, alpha: 1.0)
-            let yellowColor = UIColor(red: 0.992, green: 0.761, blue: 0.114, alpha: 1.0)
-            let blueColor = UIColor(red: 0.498, green: 0.737, blue: 0.902, alpha: 1.0)
-            
-            self.segmentedControlBadgeToolbar = SegmentControlBadgeToolbar(frame: toolbarFrame,
+            self.segmentedControlBadgeToolbar = SegmentControlBadgeToolbar(
+                frame: toolbarFrame,
                 items: ["Critical", "Warning", "Information"],
-                itemColors: [redColor, yellowColor, blueColor],
-                delegate: self, action: "segmentedControlTapped:")
+                itemColors: [UIColor.whiteColor(), UIColor.whiteColor(), UIColor.whiteColor()],
+                delegate: self,
+                action: "segmentedControlTapped:")
             
             self.view.addSubview(segmentedControlBadgeToolbar)
-            self.tableView.contentInset = UIEdgeInsets(top: toolbarYCoord + self.toolbarHeight, left: 0, bottom: 0, right: 0)
-            
-            
+            self.tableView.contentInset = UIEdgeInsets(
+                top: self.toolbarYCoord + self.toolbarHeight,
+                left: 0,
+                bottom: 0,
+                right: 0)
         }
         
         self.loadData()
@@ -89,12 +75,9 @@ class AlertInboxViewController: UIViewController, UITableViewDataSource, UITable
         self.tableView.reloadData()
     }
     
-    func refresh(sender:AnyObject)
-    {
+    func refresh(sender:AnyObject) {
         self.loadData()
-        // self.refreshControl!.endRefreshing()
         self.tableView.reloadData()
-        
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -103,8 +86,14 @@ class AlertInboxViewController: UIViewController, UITableViewDataSource, UITable
         appDelegate.alertInboxViewController = self
         if let homeTabBarController = self.tabBarController as? HomeTabBarController {
             homeTabBarController.changeTitle("Alerts")
-            homeTabBarController.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Refresh, target: self, action: "refresh:")
+            let refreshButton = UIBarButtonItem(barButtonSystemItem: .Refresh,
+                target: self,
+                action: "refresh:")
+            
+            refreshButton.tintColor = UIColor.SDIBlue()
+            homeTabBarController.navigationItem.setRightBarButtonItem(refreshButton, animated: false)
         }
+        
         if let navLine = self.navBarHairlineImageView {
             navLine.hidden = true
         }
@@ -121,60 +110,30 @@ class AlertInboxViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     func reloadAlertHistory() {
-        // var (alertHistoryItems, optionalError) = AlertHistoryItem.getAlertsHistory()
-        var alertHistoryItems = AlertHistoryItem.getAlertHistoryFixtureData()
-        var optionalError: NSError?
-        
-        if let error = optionalError {
-            let alertController = UIAlertController(
-                title: "Error",
-                message: "Unable to load Alert History.",
-                preferredStyle: UIAlertControllerStyle.Alert)
-            println(error)
-            let okayAction = UIAlertAction(title: "Okay", style: .Default, handler: nil)
-            alertController.addAction(okayAction)
-            self.presentViewController(alertController, animated: true, completion: nil)
-        } else {
+        if let homeTabBarController = self.tabBarController as? HomeTabBarController {
+            var optionalError: String? = self.alertInbox.reloadItemsForUser(homeTabBarController.user)
             
-            self.criticalItems.removeAll(keepCapacity: false)
-            self.warningItems.removeAll(keepCapacity: false)
-            self.informationItems.removeAll(keepCapacity: false)
-            
-            self.readInformationItems.removeAll(keepCapacity: false)
-            self.readWarningItems.removeAll(keepCapacity: false)
-            self.readCriticalItems.removeAll(keepCapacity: false)
-            
-            
-            for alertHistoryItem in alertHistoryItems {
-                if let acknowledged = alertHistoryItem.acknowledged {
-                    if acknowledged {
-                        if let priority = alertHistoryItem.priority {
-                            switch priority {
-                            case .Critical: readCriticalItems.append(alertHistoryItem)
-                            case .Warning: readWarningItems.append(alertHistoryItem)
-                            case .Information: readInformationItems.append(alertHistoryItem)
-                            default: break
-                            }
-                        }
-                    } else {
-                        if let priority = alertHistoryItem.priority {
-                            switch priority {
-                            case .Critical: criticalItems.append(alertHistoryItem)
-                            case .Warning: warningItems.append(alertHistoryItem)
-                            case .Information: informationItems.append(alertHistoryItem)
-                            default: break
-                            }
-                        }
-                        
-                    }
-                }
+            if let error = optionalError {
+                let alertController = UIAlertController(
+                    title: "Error",
+                    message: "Unable to load Alert History.",
+                    preferredStyle: UIAlertControllerStyle.Alert)
+                let okayAction = UIAlertAction(title: "Okay", style: .Default, handler: nil)
+                alertController.addAction(okayAction)
+                self.presentViewController(alertController, animated: true, completion: nil)
+            } else {
+                self.updateBadgeToolbar()
             }
-            
-            self.segmentedControlBadgeToolbar.updateBadgeAtIndex(criticalIndex, toNumber: criticalItems.count)
-            self.segmentedControlBadgeToolbar.updateBadgeAtIndex(warningIndex, toNumber: warningItems.count)
-            self.segmentedControlBadgeToolbar.updateBadgeAtIndex(informationIndex, toNumber: informationItems.count)
         }
-        
+    }
+    
+    func updateBadgeToolbar() {
+        self.segmentedControlBadgeToolbar.updateBadgeAtIndex(
+            criticalIndex, toNumber: alertInbox.criticalItems.count)
+        self.segmentedControlBadgeToolbar.updateBadgeAtIndex(
+            warningIndex, toNumber: alertInbox.warningItems.count)
+        self.segmentedControlBadgeToolbar.updateBadgeAtIndex(
+            informationIndex, toNumber: alertInbox.informationItems.count)
     }
     
     func loadData() {
@@ -214,7 +173,9 @@ class AlertInboxViewController: UIViewController, UITableViewDataSource, UITable
 
 extension AlertInboxViewController: UITableViewDataSource {
     
-    func alertHistoryItemCellForIndexPath(indexPath: NSIndexPath, items: [AlertHistoryItem], readItems: [AlertHistoryItem]) -> UITableViewCell {
+    func alertHistoryItemCellForIndexPath(indexPath: NSIndexPath,
+        items: [AlertHistoryItem],
+        readItems: [AlertHistoryItem]) -> UITableViewCell {
         var cell: UITableViewCell!
         
         var totalItemCount = items.count
@@ -231,7 +192,7 @@ extension AlertInboxViewController: UITableViewDataSource {
             } else {
                 readToggleCell.readLabel.text = "Show Read Alerts"
             }
-            
+            readToggleCell.selectionStyle = .None
             cell = readToggleCell
         } else {
             // Otherwise, it is just a normal cell showing an item.
@@ -252,22 +213,30 @@ extension AlertInboxViewController: UITableViewDataSource {
                 alertHistoryItem = items[indexPath.row]
             }
             alertInboxCell.setupWithAlertHistoryItem(alertHistoryItem)
+            alertInboxCell.selectionStyle = .None
             cell = alertInboxCell
         }
         
-        
-        
-        
         return cell
     }
+    
     func tableView(tableView: UITableView,
         cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
             var cell: UITableViewCell!
             
             switch self.selectedIndex {
-            case criticalIndex: cell = alertHistoryItemCellForIndexPath(indexPath, items: criticalItems, readItems: readCriticalItems)
-            case warningIndex: cell = alertHistoryItemCellForIndexPath(indexPath, items: warningItems, readItems: readWarningItems)
-            case informationIndex: cell = alertHistoryItemCellForIndexPath(indexPath, items: informationItems, readItems: readInformationItems)
+            case criticalIndex:
+                cell = alertHistoryItemCellForIndexPath(indexPath,
+                    items: self.alertInbox.criticalItems,
+                    readItems: self.alertInbox.readCriticalItems)
+            case warningIndex:
+                cell = alertHistoryItemCellForIndexPath(indexPath,
+                    items: self.alertInbox.warningItems,
+                    readItems: self.alertInbox.readWarningItems)
+            case informationIndex:
+                cell = alertHistoryItemCellForIndexPath(indexPath,
+                    items: self.alertInbox.informationItems,
+                    readItems: self.alertInbox.readInformationItems)
             default: break
             }
             return cell
@@ -289,7 +258,21 @@ extension AlertInboxViewController: UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 88.0
+        return self.rowHeight
+    }
+    
+    func showLoadingDataView() {
+        let indicatorWidth: CGFloat = 20
+        let indicatorHeight: CGFloat = 20
+        // Display loading indicator
+        var backgroundView = UIView(frame: CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height))
+        var loadingIndicator = UIActivityIndicatorView(frame: CGRectMake((self.view.bounds.size.width - indicatorWidth) / 2, (self.view.bounds.size.height - indicatorHeight) / 2, indicatorWidth, indicatorHeight))
+        
+        loadingIndicator.color = UIColor.grayColor()
+        loadingIndicator.startAnimating()
+        backgroundView.addSubview(loadingIndicator)
+        self.tableView.backgroundView = backgroundView
+        self.tableView.separatorStyle = .None
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -297,46 +280,29 @@ extension AlertInboxViewController: UITableViewDataSource {
        
         if loadingData {
             numberOfSections = 0
-            let indicatorWidth: CGFloat = 20
-            let indicatorHeight: CGFloat = 20
-            // Display loading indicator
-            var backgroundView = UIView(frame: CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height))
-            var loadingIndicator = UIActivityIndicatorView(frame: CGRectMake((self.view.bounds.size.width - indicatorWidth) / 2, (self.view.bounds.size.height - indicatorHeight) / 2, indicatorWidth, indicatorHeight))
-            
-            loadingIndicator.color = UIColor.grayColor()
-            loadingIndicator.startAnimating()
-            backgroundView.addSubview(loadingIndicator)
-            self.tableView.backgroundView = backgroundView
-            self.tableView.separatorStyle = .None
-            
+            self.showLoadingDataView()
         } else {
             switch self.selectedIndex {
             case criticalIndex:
-                if self.criticalItems.count == 0 && self.readCriticalItems.count == 0 {
+                if self.alertInbox.criticalItems.count == 0 && self.alertInbox.readCriticalItems.count == 0 {
                     numberOfSections = 0
-                    self.showNoAlertHistoryItemsView()
-                } else {
-                    self.tableView.backgroundView = nil
-                    self.tableView.separatorStyle = .SingleLine
                 }
             case warningIndex:
-                if self.warningItems.count == 0 && self.readWarningItems.count == 0 {
+                if self.alertInbox.warningItems.count == 0 && self.alertInbox.readWarningItems.count == 0 {
                     numberOfSections = 0
-                    self.showNoAlertHistoryItemsView()
-                } else {
-                    self.tableView.backgroundView = nil
-                    self.tableView.separatorStyle = .SingleLine
                 }
             case informationIndex:
-                if self.readInformationItems.count == 0 && self.readInformationItems.count == 0 {
+                if self.alertInbox.readInformationItems.count == 0 && self.alertInbox.readInformationItems.count == 0 {
                     numberOfSections = 0
-                    self.showNoAlertHistoryItemsView()
-                } else {
-                    self.tableView.backgroundView = nil
-                    self.tableView.separatorStyle = .SingleLine
                 }
-                
             default: break
+            }
+            
+            if numberOfSections != 0 {
+                self.tableView.backgroundView = nil
+                self.tableView.separatorStyle = .SingleLine
+            } else {
+                self.showNoAlertHistoryItemsView()
             }
         }
         
@@ -353,8 +319,8 @@ extension AlertInboxViewController: UITableViewDataSource {
         }
         
         if readItems.count > 0 {
-            numberOfRows = numberOfRows + 1
             // To show read toggle cell
+            numberOfRows = numberOfRows + 1
         }
         
         return numberOfRows
@@ -365,9 +331,9 @@ extension AlertInboxViewController: UITableViewDataSource {
             var numberOfRows = 0
             
             switch self.selectedIndex {
-            case criticalIndex: numberOfRows = numberOfRowsForItems(criticalItems, readItems: readCriticalItems)
-            case informationIndex: numberOfRows = numberOfRowsForItems(informationItems, readItems: readInformationItems)
-            case warningIndex: numberOfRows = numberOfRowsForItems(warningItems, readItems: readWarningItems)
+            case criticalIndex: numberOfRows = numberOfRowsForItems(alertInbox.criticalItems, readItems: alertInbox.readCriticalItems)
+            case informationIndex: numberOfRows = numberOfRowsForItems(alertInbox.informationItems, readItems: alertInbox.readInformationItems)
+            case warningIndex: numberOfRows = numberOfRowsForItems(alertInbox.warningItems, readItems: alertInbox.readWarningItems)
             default: println("Unknown selected index.")
             }
             
@@ -393,9 +359,9 @@ extension AlertInboxViewController: UITableViewDelegate {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         switch self.selectedIndex {
-        case criticalIndex: didSelectRowForItems(criticalItems, readItems: readCriticalItems, indexPath: indexPath)
-        case informationIndex: didSelectRowForItems(informationItems, readItems: readInformationItems, indexPath: indexPath)
-        case warningIndex: didSelectRowForItems(warningItems, readItems: readWarningItems, indexPath: indexPath)
+        case criticalIndex: didSelectRowForItems(alertInbox.criticalItems, readItems: alertInbox.readCriticalItems, indexPath: indexPath)
+        case informationIndex: didSelectRowForItems(alertInbox.informationItems, readItems: alertInbox.readInformationItems, indexPath: indexPath)
+        case warningIndex: didSelectRowForItems(alertInbox.warningItems, readItems: alertInbox.readWarningItems, indexPath: indexPath)
         default: println("Unknown selected index.")
         }
         

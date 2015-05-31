@@ -14,4 +14,12 @@ class DeleteDashboardTableViewCell: UITableViewCell {
     class func cellIdentifier() -> String {
         return "DeleteDashboardTableViewCell"
     }
+    
+    func disable() {
+        self.deleteDashboardButton.enabled = false
+    }
+    
+    func enable() {
+        self.deleteDashboardButton.enabled = true
+    }
 }

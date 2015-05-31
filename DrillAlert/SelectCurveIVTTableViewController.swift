@@ -17,6 +17,7 @@ class SelectCurveIVTTableViewController: UITableViewController {
     var user: User!
     var wellbore: Wellbore!
     var curveToEdit: Curve?
+    var itemID: Int?
     
     class func entrySegueIdentifier() -> String {
         return "SelectCurveIVTSegue"
@@ -57,6 +58,7 @@ class SelectCurveIVTTableViewController: UITableViewController {
                 
                 if let delegate = self.addEditTrackDelegate {
                     destination.addEditTrackDelegate = delegate
+                    destination.itemID = self.itemID
                 }
                 
             }

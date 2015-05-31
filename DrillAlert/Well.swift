@@ -76,28 +76,51 @@ class Well {
         var result = Array<Well>()
         var errorMessage: String?
         
-        let url = "https://drillalert.azurewebsites.net/api/wells"
-        let session = user.session
-        let wellsJSONArray = session.getJSONArrayAtURL(url)
-        errorMessage = wellsJSONArray.getErrorMessage()
-        
-        if errorMessage == nil {
-            if let wellJSONs = wellsJSONArray.array {
-                for wellJSONObject in wellJSONs {
-                    if let well = Well.wellFromJSONObject(wellJSONObject) {
-                        result.append(well)
-                    }
-                }
-            }
+        if user.shouldUseFixtureData {
+            let testWell = Well(id: "0", name: "Test Well", location: "Test Location")
+            let testWellbore = Wellbore(id: "0", name: "Test Wellbore Name", well: testWell)
+            let testWellbore2 = Wellbore(id: "1", name: "Test Wellbore Name1", well: testWell)
+            let testWellbore3 = Wellbore(id: "2", name: "Test Wellbore Name2", well: testWell)
+            let testWellbore4 = Wellbore(id: "3", name: "Test Wellbore Name3", well: testWell)
+
+            testWell.wellbores.append(testWellbore)
+            testWell.wellbores.append(testWellbore2)
+            testWell.wellbores.append(testWellbore3)
+            testWell.wellbores.append(testWellbore4)
+            let testWell2 = Well(id: "1", name: "Test Well1", location: "Test Location2")
+            let testWellbore5 = Wellbore(id: "4", name: "Test Wellbore Name4", well: testWell2)
+
+            testWell2.wellbores.append(testWellbore5)
+
+            result.append(testWell)
+            result.append(testWell2)
         } else {
-            // TODO: delete this, only for when the connection doesn't work
-            if result.count == 0 {
-                let well = Well(id: "", name: "Test", location: "Here")
-                well.wellbores.append(Wellbore(id: "0", name: "Test Wellbore", well: well))
-                result.append(well)
+            let url = "https://drillalert.azurewebsites.net/api/wells"
+            
+            if let session = user.session {
+                let wellsJSONArray = session.getJSONArrayAtURL(url)
+                errorMessage = wellsJSONArray.getErrorMessage()
+                
+                if errorMessage == nil {
+                    if let wellJSONs = wellsJSONArray.array {
+                        for wellJSONObject in wellJSONs {
+                            if let well = Well.wellFromJSONObject(wellJSONObject) {
+                                result.append(well)
+                            } else {
+                                println("Warning: Could not create well from JSON object.")
+                            }
+                        }
+                    } else {
+                        println("Error: No well JSON array.")
+                    }
+                } else {
+                    println("Error: \(errorMessage!)")
+                }
+            } else {
+                println("Error: User had no SDI Session.")
             }
         }
-        
+       
         return (result, errorMessage)
     }
 

@@ -9,7 +9,6 @@
 import Foundation
 import UIKit
 
-
 class WellboreDetailViewController: UIViewController {
     @IBOutlet weak var rightBarButtonItem: UIBarButtonItem!
 
@@ -18,7 +17,6 @@ class WellboreDetailViewController: UIViewController {
     var toolbarHeight: CGFloat = 44.0
     var toolbarYCoord: CGFloat = 0.0
     var dashboardNameViewHeight: CGFloat = 24.0
-    var navBarHairlineImageView: UIImageView!
     
     // Segmented Control
     var segmentedControlToolbar: SegmentControlToolbar!
@@ -48,12 +46,12 @@ class WellboreDetailViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        navBarHairlineImageView.hidden = true
+        navBarHairlineImageView?.hidden = true
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        navBarHairlineImageView.hidden = false
+        navBarHairlineImageView?.hidden = false
     }
     
     func updateCurrentDashboard(newDashboard: Dashboard) {
@@ -91,19 +89,6 @@ class WellboreDetailViewController: UIViewController {
         self.segmentedControlViewControllers = [self.dashboardViewController, self.manageAlertsVC]
     }
     
-    func findHairlineImageViewUnder(view: UIView) -> UIImageView? {
-        if view.isKindOfClass(UIImageView) && view.bounds.size.height <= 1.0 {
-            return view as? UIImageView
-        } else {
-            for subview in view.subviews {
-                var imageView = self.findHairlineImageViewUnder(subview as! UIView)
-                if imageView != nil {
-                    return imageView
-                }
-            }
-            return nil
-        }
-    }
     
     private func setupView() {
         self.title = currentWellbore.name
@@ -113,7 +98,7 @@ class WellboreDetailViewController: UIViewController {
         
         if let mainNavigationController = self.navigationController {
             mainNavigationController.navigationBar.hidden = false
-            self.navBarHairlineImageView = self.findHairlineImageViewUnder(mainNavigationController.navigationBar)
+
             // Create a segmented control inside a toolbar
             let navigationBarHeight = mainNavigationController.navigationBar.frame.size.height
             let statusBarHeight = UIApplication.sharedApplication().statusBarFrame.size.height
@@ -179,7 +164,7 @@ class WellboreDetailViewController: UIViewController {
             let imageSize = CGSizeMake(30, 30)
             let settingsImage = imageWithImage(image, scaledToSize: imageSize)
             let button = UIBarButtonItem(image: settingsImage, style: UIBarButtonItemStyle.Plain, target: self, action: "rightBarButtonItemTapped:")
-            button.tintColor = UIColor(red: 0.490, green: 0.733, blue: 0.910, alpha: 1.0)
+            button.tintColor = UIColor.SDIBlue()
             self.rightBarButtonItem = button
             self.navigationItem.setRightBarButtonItem(self.rightBarButtonItem, animated: true)
 

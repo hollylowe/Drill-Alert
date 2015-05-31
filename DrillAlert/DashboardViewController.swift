@@ -26,7 +26,6 @@ class DashboardViewController: UIViewController, UIPageViewControllerDataSource 
         didSet {
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 if let dashboard = self.currentDashboard {
-                    println("Setting label to: " + dashboard.name)
                     self.wellboreDetailViewController.updateCurrentDashboardLabelWithString(dashboard.name)
                 }
             })
@@ -200,6 +199,7 @@ class DashboardViewController: UIViewController, UIPageViewControllerDataSource 
                 let pageViewController = storyboard.instantiateViewControllerWithIdentifier(PageViewController.getStoryboardIdentifier()) as! PageViewController
                 pageViewController.pageIndex = index
                 pageViewController.wellbore = self.wellbore
+                pageViewController.user = self.user
                 let page = dashboard.pages[index]
                 
                 // Create the panel with each visualization

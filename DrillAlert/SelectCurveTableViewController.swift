@@ -13,6 +13,7 @@ class SelectCurveTableViewController: LoadingTableViewController, UISearchBarDel
     var user: User!
     var wellbore: Wellbore!
     var curveToEdit: Curve?
+    var itemID: Int?
     var addEditAlertDelegate: AddEditAlertTableViewController?
     var addEditTrackDelegate: AddEditTrackTableViewController?
     var addEditCanvasItemDelegate: AddEditCanvasItemTableViewController?
@@ -21,16 +22,33 @@ class SelectCurveTableViewController: LoadingTableViewController, UISearchBarDel
     var curveIVT: CurveIVT?
     var curves = Array<Curve>()
     var filteredCurves = Array<Curve>()
-    
+    var activityBarButtonItem: UIBarButtonItem!
     @IBOutlet weak var searchBar: UISearchBar!
     override func viewDidLoad() {
         self.dataSource = self
         
         self.tableView.tableFooterView = UIView()
         self.tableView.separatorColor = UIColor.blackColor()
+        let activityView = UIActivityIndicatorView(frame: CGRectMake(0, 0, 25, 25))
+        activityView.startAnimating()
+        activityView.hidden = false
+        activityView.color = UIColor.grayColor()
+        activityView.sizeToFit()
+        activityView.autoresizingMask = (UIViewAutoresizing.FlexibleLeftMargin | UIViewAutoresizing.FlexibleRightMargin | UIViewAutoresizing.FlexibleTopMargin | UIViewAutoresizing.FlexibleBottomMargin)
+        
+        self.activityBarButtonItem = UIBarButtonItem(customView: activityView)
         
         super.viewDidLoad()
     }
+    
+    private func showActivityBarButton() {
+        self.navigationItem.setRightBarButtonItem(self.activityBarButtonItem, animated: true)
+    }
+    
+    private func hideActivityBarButton() {
+        self.navigationItem.setRightBarButtonItem(nil, animated: true)
+    }
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell: LabelCell!
         var curve: Curve!
@@ -73,6 +91,17 @@ class SelectCurveTableViewController: LoadingTableViewController, UISearchBarDel
         self.filterContentForSearchText(searchString)
         return true
     }
+    
+    func saveNewItemCurve(itemCurve: ItemCurve, withCallback callback: ((error: String?) -> Void)) {
+        itemCurve.postToBackendForUser(self.user, withCallback: { (error) -> Void in
+            if error == nil {
+                callback(error: nil)
+            } else {
+                callback(error: error!)
+            }
+        })
+    }
+    
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         var curve: Curve!
         
@@ -90,13 +119,29 @@ class SelectCurveTableViewController: LoadingTableViewController, UISearchBarDel
         
         if let delegate = self.addEditTrackDelegate {
             if let oldCurve = self.curveToEdit {
-                delegate.swapOldCurve(oldCurve, withNewCurve: curve)
+                // delegate.swapOldCurve(oldCurve, withNewCurve: curve)
             } else {
-                delegate.addCurve(curve)
+                var itemCurve = ItemCurve(curveID: curve.id)
+                itemCurve.curve = curve
+                if let itemID = self.itemID {
+                    itemCurve.itemID = itemID
+                    self.showActivityBarButton()
+                    self.saveNewItemCurve(itemCurve, withCallback: { (error) -> Void in
+                        self.hideActivityBarButton()
+                        if error == nil {
+                            delegate.addItemCurve(itemCurve)
+                            self.navigationController?.popToRootViewControllerAnimated(true)
+                        } else {
+                            println("Error saving item curve. \(error!)")
+                        }
+                    })
+                } else {
+                    println("Error: Could not add item curve: there was no Item ID given.")
+                }
+                
             }
             
         }
-        self.navigationController?.popToRootViewControllerAnimated(true)
 
         
         /*

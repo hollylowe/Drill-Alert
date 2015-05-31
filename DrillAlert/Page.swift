@@ -21,7 +21,15 @@ class Page {
     var canvasItems: [CanvasItem]?
     var compass: Compass?
     
-    // Plot Initializer
+    // Plot Initializers
+    init(id: Int, name: String, xDimension: Int, yDimension: Int, tracks: [Track]) {
+        self.id = id
+        self.name = name
+        self.xDimension = xDimension
+        self.yDimension = yDimension
+        self.tracks = tracks
+        self.type = .Plot
+    }
     init(name: String, xDimension: Int, yDimension: Int, tracks: [Track]) {
         self.name = name
         self.xDimension = xDimension
@@ -70,23 +78,8 @@ class Page {
                             id: id,
                             xPosition: item.xPosition,
                             yPosition: item.yPosition,
-                            name: "Track \(id)")
-                        
-                        // Warning: If this is null, it is an error. The user
-                        // will not be able to see these track settings for
-                        // edit and they will not be loaded into the JavaScript graphs.
-                        //
-                        // It is currently null on the backend as of 5/24/15
-                        if let itemSettingsCollection = item.itemSettingsCollection {
-                            track.itemSettingsCollection = item.itemSettingsCollection
-                            if itemSettingsCollection.array.count > 0 {
-                                // Tracks only have one ItemSettings in the ItemSettingsCollection
-                                let newTrackSettings = itemSettingsCollection.array[0]
-                                newTrackSettings.itemID = item.id
-                                track.trackSettings = newTrackSettings
-                            }
-                        }
-                        
+                            itemSettingsCollection: item.itemSettingsCollection)
+                       
                         self.tracks!.append(track)
                     } else {
                         println("Warning: Track Item did not have an ID, not creating.")

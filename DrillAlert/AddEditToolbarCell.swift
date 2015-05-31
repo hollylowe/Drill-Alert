@@ -17,4 +17,14 @@ class AddEditToolbarCell: UITableViewCell {
     class func cellIdentifier() -> String {
         return "AddEditToolbarCell"
     }
+    
+    func disable() {
+        self.editButton.enabled = false
+        self.addButton.enabled = false
+    }
+    
+    func enable() {
+        self.editButton.enabled = true
+        self.addButton.enabled = true
+    }
 }

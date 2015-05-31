@@ -58,55 +58,74 @@ class Alert {
         self.threshold = threshold
     }
     
-    func save(user: User, completion: ((error: NSError?) -> Void)) {
-        let URLString = "https://drillalert.azurewebsites.net/api/Alerts/PostAlert"
-        if let URL = NSURL(string: URLString) {
-            var newRequest = NSMutableURLRequest(URL: URL)
-            newRequest.HTTPMethod = "POST"
-
-            var jsonString = ""
-            jsonString = "{"
-            if let id = self.id {
-                jsonString = jsonString + "\"\(self.APIAlertIDKey)\":\(id),"
+    func toJSONString() -> String {
+        var jsonString = "{"
+        if let id = self.id {
+            jsonString = jsonString + "\"\(self.APIAlertIDKey)\":\(id),"
+        }
+        
+        jsonString = jsonString + "\"\(self.APINameKey)\":\"\(self.name)\"," +
+            "\"\(self.APIUserIDKey)\":\(self.userID)," +
+            "\"\(self.APIRisingKey)\":\(self.rising)," +
+            "\"\(self.APIThresholdKey)\":\(self.threshold)," +
+            "\"\(self.APICurveIDKey)\":\"\(self.curveID)\"," +
+            "\"\(self.APIPriorityKey)\":\"\(self.priority.toString())\"" + "}"
+        
+        return jsonString
+    }
+    
+    func save(user: User,
+        completion: ((error: NSError?) -> Void)) {
+        
+            if user.shouldUseFixtureData {
+                println("Using fixture data, will not send alert.")
+                println("The JSON:")
+                println(self.toJSONString())
+                completion(error: nil)
             } else {
-            }
-            jsonString = jsonString + "\"\(self.APINameKey)\":\"\(self.name)\"," +
-                "\"\(self.APIUserIDKey)\":\(self.userID)," +
-                "\"\(self.APIRisingKey)\":\(self.rising)," +
-                "\"\(self.APIThresholdKey)\":\(self.threshold)," +
-                "\"\(self.APICurveIDKey)\":\"\(self.curveID)\"," +
-                "\"\(self.APIPriorityKey)\":\"\(self.priority.toString())\"" + "}"
-            
-            
-            newRequest.HTTPBody = jsonString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)
-            newRequest.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
-            if let session = user.session.session {
-                let task = session.dataTaskWithRequest(newRequest, completionHandler: { (data, response, error) -> Void in
-                    if let HTTPResponse = response as? NSHTTPURLResponse {
-                        let statusCode = HTTPResponse.statusCode
-                        if statusCode != self.validSaveStatusCode {
-                            // Show error
-                            println("Unable to save Alert (\(statusCode)")
-                            println("JSON Sent: ")
-                            println()
-                            println(jsonString)
-                            println()
-                            println("Data: ")
-                            println()
-                            println(NSString(data: data, encoding: NSASCIIStringEncoding))
-                            
-                            let newError = NSError(domain: "com.lucashd.drillalert", code: statusCode, userInfo: nil)
-                            completion(error: newError)
-                            
-                        } else {
-                            completion(error: nil)
+                var URLString: String!
+                
+                if let id = self.id {
+                    URLString = "https://drillalert.azurewebsites.net/api/alerts/\(id)"
+                } else {
+                    URLString = "https://drillalert.azurewebsites.net/api/alerts/PostAlert"
+                }
+                
+                if let URL = NSURL(string: URLString) {
+                    var newRequest = NSMutableURLRequest(URL: URL)
+                    if let id = self.id {
+                        newRequest.HTTPMethod = "PUT"
+                    } else {
+                        newRequest.HTTPMethod = "POST"
+                    }
+                    
+                    var jsonString = self.toJSONString()
+                    
+                    newRequest.HTTPBody = jsonString.dataUsingEncoding(
+                        NSUTF8StringEncoding, allowLossyConversion: true)
+                    newRequest.setValue("application/json; charset=utf-8",
+                        forHTTPHeaderField: "Content-Type")
+                    if let userSDISession = user.session {
+                        if let session = userSDISession.session {
+                            let task = session.dataTaskWithRequest(newRequest, completionHandler: { (data, response, error) -> Void in
+                                if let HTTPResponse = response as? NSHTTPURLResponse {
+                                    let statusCode = HTTPResponse.statusCode
+                                    if statusCode != self.validSaveStatusCode {
+                                        // Show error
+                                        let newError = NSError(domain: "com.lucashd.drillalert", code: statusCode, userInfo: nil)
+                                        completion(error: newError)
+                                        
+                                    } else {
+                                        completion(error: nil)
+                                    }
+                                }
+                            })
+                            task.resume()
                         }
                     }
-                })
-                task.resume()
+                }
             }
-            
-        }
+        
         
     }
     
@@ -176,25 +195,29 @@ class Alert {
         var result = Array<Alert>()
         var errorMessage: String?
         
-        let url = "https://drillalert.azurewebsites.net/api/alerts"
-        let session = user.session
-        let alertsJSONArray = session.getJSONArrayAtURL(url)
-        errorMessage = alertsJSONArray.getErrorMessage()
-        
-        if errorMessage == nil {
-            if let alertJSONs = alertsJSONArray.array {
-                for alertJSONObject in alertJSONs {
-                    if let alert = Alert.alertFromJSONObject(alertJSONObject, user: user) {
-                        // TODO: 
-                        result.append(alert)
+        if user.shouldUseFixtureData {
+            let testAlert = Alert(id: 0, curveID: "0", userID: user.id, name: "Test Alert", rising: true, priority: Priority.Critical, threshold: 1.0)
+            result.append(testAlert)
+        } else {
+            let url = "https://drillalert.azurewebsites.net/api/alerts"
+            if let session = user.session {
+                let alertsJSONArray = session.getJSONArrayAtURL(url)
+                errorMessage = alertsJSONArray.getErrorMessage()
+                
+                if errorMessage == nil {
+                    if let alertJSONs = alertsJSONArray.array {
+                        for alertJSONObject in alertJSONs {
+                            if let alert = Alert.alertFromJSONObject(alertJSONObject, user: user) {
+                                result.append(alert)
+                            }
+                        }
                     }
+                } else {
+                    // TODO:  Show error message to user
+                    println("Error while getting alerts: \(errorMessage!)")
                 }
             }
-        } else {
-            // TODO:  Show error message to user
-            
         }
-        
         
         return (result, errorMessage)
     }
@@ -203,46 +226,53 @@ class Alert {
         var result = Array<Alert>()
         var errorMessage: String?
         
-        let (newCurves, curvesError) = wellbore.getCurves(user)
-        if curvesError == nil {
-            // There can only be alerts if there are curves
-            // on this wellbore to support them. 
-            // Only retrieve alerts if we have at least one curve.
-            if newCurves.count > 0 {
-                let url = "https://drillalert.azurewebsites.net/api/alerts"
-                let session = user.session
-                let alertsJSONArray = session.getJSONArrayAtURL(url)
-                errorMessage = alertsJSONArray.getErrorMessage()
-                
-                if errorMessage == nil {
-                    if let alertJSONs = alertsJSONArray.array {
-                        for alertJSONObject in alertJSONs {
-                            if let alert = Alert.alertFromJSONObject(alertJSONObject, user: user) {
-                                // TODO: Get an actual endpoint for this,
-                                // instead of retrieving all alerts and filtering
-                                
-                                // TODO: Use a faster method for filtering through curves 
-                                // by ID if there is no endpoint for it
-                                for curve in newCurves {
-                                    if alert.curveID == curve.id {
-                                        result.append(alert)
-                                        break
+        if user.shouldUseFixtureData {
+            let (alerts, error) = Alert.getAllAlertsForUser(user)
+            result = alerts
+        } else {
+            let (newCurves, curvesError) = wellbore.getCurves(user)
+            if curvesError == nil {
+                // There can only be alerts if there are curves
+                // on this wellbore to support them.
+                // Only retrieve alerts if we have at least one curve.
+                if newCurves.count > 0 {
+                    let url = "https://drillalert.azurewebsites.net/api/alerts"
+                    if let userSDISession = user.session {
+                        let alertsJSONArray = userSDISession.getJSONArrayAtURL(url)
+                        errorMessage = alertsJSONArray.getErrorMessage()
+                        
+                        if errorMessage == nil {
+                            if let alertJSONs = alertsJSONArray.array {
+                                for alertJSONObject in alertJSONs {
+                                    if let alert = Alert.alertFromJSONObject(alertJSONObject, user: user) {
+                                        // TODO: Get an actual endpoint for this,
+                                        // instead of retrieving all alerts and filtering
+                                        
+                                        // TODO: Use a faster method for filtering through curves
+                                        // by ID if there is no endpoint for it
+                                        for curve in newCurves {
+                                            if alert.curveID == curve.id {
+                                                result.append(alert)
+                                                break
+                                            }
+                                        }
                                     }
                                 }
                             }
+                        } else {
+                            // TODO:  Show error message to user
+                            println("Error: \(errorMessage!)")
                         }
                     }
                 } else {
-                    // TODO:  Show error message to user
-                    println("Error: \(errorMessage!)")
+                    println("Warning: Retrived curves, but there were none.")
                 }
             } else {
-                println("Warning: Retrived curves, but there were none.")
+                println("Error: \(curvesError)")
+                errorMessage = curvesError
             }
-        } else {
-            println("Error: \(curvesError)")
-            errorMessage = curvesError
         }
+        
         
         
         return (result, errorMessage)

@@ -101,27 +101,32 @@ class Curve {
         self.IVT = IVT
     }
     
-    class func getCurvePointCollectionForCurveID(curveID: Int, andWellboreID wellboreID: String, andStartTime startTime: NSDate, andEndTime endTime: NSDate) -> (CurvePointCollection?, String?)  {
+    class func getCurvePointCollectionForUser(user: User, curveID: Int, wellboreID: String, startTime: NSDate, andEndTime endTime: NSDate) -> (CurvePointCollection?, String?)  {
         var result: CurvePointCollection?
         var errorMessage: String?
         
-        // TODO: Change this to real values
-        var endpointURL = "https://drillalert.azurewebsites.net/api/curvepoints/\(curveID)/\(wellboreID)/\(0)/\(0)"
-        let resultJSONArray = JSONArray(url: endpointURL)
-        
-        if let resultJSONs = resultJSONArray.array {
-            // There should only be one
-            if resultJSONs.count > 0 {
-                let curvePointCollectionJSON = resultJSONs[0]
-                result = CurvePointCollection.curvePointCollectionFromJSONObject(curvePointCollectionJSON)
-            }
+        if user.shouldUseFixtureData {
+           result = CurvePointCollection(curveID: 0, wellboreID: 0, curvePoints: [CurvePoint(value: 0, time: 0)])
         } else {
-            if let error = resultJSONArray.error {
-                errorMessage = error.description
-                println("Error while getting CurvePointCollection: ")
-                println(errorMessage)
-                println()
+            // TODO: Change this to real time values
+            var endpointURL = "https://drillalert.azurewebsites.net/api/curvepoints/\(curveID)/\(wellboreID)/\(0)/\(0)"
+            let resultJSONArray = JSONArray(url: endpointURL)
+            
+            if let resultJSONs = resultJSONArray.array {
+                // There should only be one
+                if resultJSONs.count > 0 {
+                    let curvePointCollectionJSON = resultJSONs[0]
+                    result = CurvePointCollection.curvePointCollectionFromJSONObject(curvePointCollectionJSON)
+                }
+            } else {
+                if let error = resultJSONArray.error {
+                    errorMessage = error.description
+                    println("Error while getting CurvePointCollection: ")
+                    println(errorMessage)
+                    println()
+                }
             }
+
         }
         
         return (result, errorMessage)
@@ -158,27 +163,93 @@ class Curve {
         return (result, errorMessage)
     }
     
+    class func addCurvesToItemCurves(itemCurves: [ItemCurve], user: User, andWellbore wellbore: Wellbore) -> ([ItemCurve]?, String?) {
+        var result: Array<ItemCurve>?
+        var error: String?
+        
+        if user.shouldUseFixtureData {
+            result = Array<ItemCurve>()
+            let testCurve = Curve(
+                id: "0",
+                name: "Test Curve",
+                label: "Label",
+                units: "Units",
+                wellboreID: "0",
+                IVT: CurveIVT.Depth)
+            let testItemCurve = ItemCurve(curveID: "0", itemID: 0, id: 0)
+            testItemCurve.curve = testCurve
+            result!.append(testItemCurve)
+        } else {
+            let (opCurves, opError) = Curve.getCurvesForUser(user, andWellbore: wellbore, andIVT: nil)
+            
+            // TODO: Get an endpoint for this,
+            // instead of grabbing them all and filtering
+            
+            if opError == nil {
+                result = Array<ItemCurve>()
+                // Curves are all the curves
+                // this user has access to. We need 
+                // to filter through each curve and grab the 
+                // ones that this item curve corresponds to.
+                if let curves = opCurves {
+                    
+                    for curve in curves {
+                        for itemCurve in itemCurves {
+                            if itemCurve.curveID == curve.id {
+                                if let itemID = itemCurve.itemID {
+                                    if let id = itemCurve.id {
+                                        let newItemCurve = ItemCurve(
+                                            curveID: itemCurve.curveID,
+                                            itemID: itemID,
+                                            id: id)
+                                        newItemCurve.curve = curve
+                                        result!.append(newItemCurve)
+
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    error = "No error, but no curves were found."
+                }
+            } else {
+                error = opError!
+            }
+        }
+        
+        return (result, error)
+    }
+    
     class func getCurvesForUser(user: User, wellbore: Wellbore, fromItemCurves itemCurves: [ItemCurve]) -> (Array<Curve>?, String?) {
         var result: Array<Curve>?
         var finalError: String?
-        let (opCurves, opError) = Curve.getCurvesForUser(user, andWellbore: wellbore, andIVT: nil)
         
-        // TODO: Get an endpoint for this, 
-        // instead of grabbing them all and filtering
-        
-        if let error = opError {
-            finalError = error
-            println(error)
-        } else if let curves = opCurves {
-            result = curves.filter({( curve: Curve) -> Bool in
-                for itemCurve in itemCurves {
-                    if itemCurve.curveID == curve.id {
-                        return true
+        if user.shouldUseFixtureData {
+            result = Array<Curve>()
+            result!.append(Curve(id: "0", name: "Test Curve", label: "Label", units: "Units", wellboreID: "0", IVT: CurveIVT.Depth))
+        } else {
+            let (opCurves, opError) = Curve.getCurvesForUser(user, andWellbore: wellbore, andIVT: nil)
+            
+            // TODO: Get an endpoint for this,
+            // instead of grabbing them all and filtering
+            
+            if let error = opError {
+                finalError = error
+                println(error)
+            } else if let curves = opCurves {
+                result = curves.filter({( curve: Curve) -> Bool in
+                    for itemCurve in itemCurves {
+                        if itemCurve.curveID == curve.id {
+                            itemCurve.curve = curve
+                            return true
+                        }
                     }
-                }
-                return false
-            })
+                    return false
+                })
+            }
         }
+        
         
         return (result, finalError)
     }
@@ -187,37 +258,43 @@ class Curve {
         var result: Array<Curve>?
         var errorMessage: String?
         
-        var endpointURL = "https://drillalert.azurewebsites.net/api/curves/\(wellbore.id)"
-        
-        println("Curves URL: " + endpointURL)
-        let resultJSONArray = JSONArray(url: endpointURL)
-        
-        if let resultJSONs = resultJSONArray.array {
-            var curveArray = Array<Curve>()
-            for resultJSON in resultJSONs {
-                if let curve = Curve.curveFromJSONObject(resultJSON, wellbore: wellbore) {
-                    if let IVT = opIVT {
-                        // Filter out unneeded IVT's
-                        if curve.IVT == IVT {
-                            curveArray.append(curve)
+        if user.shouldUseFixtureData {
+            result = Array<Curve>()
+            result!.append(Curve(id: "0", name: "Test Curve", label: "Label", units: "Units", wellboreID: "0", IVT: CurveIVT.Depth))
+        } else {
+            var endpointURL = "https://drillalert.azurewebsites.net/api/curves/\(wellbore.id)"
+            
+            println("Curves URL: " + endpointURL)
+            let resultJSONArray = JSONArray(url: endpointURL)
+            
+            if let resultJSONs = resultJSONArray.array {
+                var curveArray = Array<Curve>()
+                for resultJSON in resultJSONs {
+                    if let curve = Curve.curveFromJSONObject(resultJSON, wellbore: wellbore) {
+                        if let IVT = opIVT {
+                            // Filter out unneeded IVT's
+                            if curve.IVT == IVT {
+                                curveArray.append(curve)
+                            } else {
+                                println("Curve does not match IVT (\(curve.IVT) != \(IVT)")
+                            }
                         } else {
-                            println("Curve does not match IVT (\(curve.IVT) != \(IVT)")
+                            curveArray.append(curve)
+                            println("No IVT, appending.")
                         }
-                    } else {
-                        curveArray.append(curve)
-                        println("No IVT, appending.")
                     }
+                }
+                
+                result = curveArray
+            } else {
+                if let error = resultJSONArray.error {
+                    errorMessage = error.description
+                    println("Error while getting Curves: ")
+                    println(errorMessage)
+                    println()
                 }
             }
             
-            result = curveArray
-        } else {
-            if let error = resultJSONArray.error {
-                errorMessage = error.description
-                println("Error while getting Curves: ")
-                println(errorMessage)
-                println()
-            }
         }
         
         return (result, errorMessage)

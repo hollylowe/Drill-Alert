@@ -8,32 +8,23 @@
 
 import Foundation
 import UIKit
-extension UIImage {
-    func imageWithColor(tintColor: UIColor) -> UIImage {
-        UIGraphicsBeginImageContextWithOptions(self.size, false, self.scale)
-        
-        let context = UIGraphicsGetCurrentContext() as CGContextRef
-        CGContextTranslateCTM(context, 0, self.size.height)
-        CGContextScaleCTM(context, 1.0, -1.0);
-        CGContextSetBlendMode(context, kCGBlendModeNormal)
-        
-        let rect = CGRectMake(0, 0, self.size.width, self.size.height) as CGRect
-        CGContextClipToMask(context, rect, self.CGImage)
-        tintColor.setFill()
-        CGContextFillRect(context, rect)
-        
-        let newImage = UIGraphicsGetImageFromCurrentImageContext() as UIImage
-        UIGraphicsEndImageContext()
-        
-        return newImage
-    }
-}
+
 
 class HomeTabBarController: UITabBarController {
     var user: User!
     
     class func storyboardIdentifier() -> String {
         return "HomeTabBarController"
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navBarHairlineImageView?.hidden = true
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navBarHairlineImageView?.hidden = false
     }
     
     func imageWithImage(image: UIImage, scaledToSize newSize: CGSize) -> UIImage {
@@ -83,13 +74,23 @@ class HomeTabBarController: UITabBarController {
     }
     
     func logoutButtonTapped(sender: UIBarButtonItem) {
-        self.user.logout { (loggedOut) -> Void in
-            if loggedOut {
-                if let navigationController = self.navigationController {
-                    navigationController.popToRootViewControllerAnimated(true)
+        let alertController = UIAlertController(title: "Logout", message: "Are you sure you want to logout?", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        alertController.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default, handler: { (alertAction) -> Void in
+            self.user.logout { (loggedOut) -> Void in
+                if loggedOut {
+                    if let navigationController = self.navigationController {
+                        navigationController.popToRootViewControllerAnimated(true)
+                    }
                 }
             }
-        }
+        }))
+        
+        alertController.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.Cancel, handler: { (alertAction) -> Void in
+            
+        }))
+        
+        self.presentViewController(alertController, animated: true, completion: nil)
     }
     
     

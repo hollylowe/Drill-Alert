@@ -16,7 +16,9 @@ class PlotTrackTableViewCell: UITableViewCell {
     
     func setupWithTrack(track: Track) {
         if let label = self.textLabel {
-            label.text = track.name
+            if let id = track.id {
+                label.text = "Track \(id)"
+            }
         }
     }
     

@@ -39,25 +39,30 @@ class Wellbore {
         var result = Array<Curve>()
         var errorMessage: String?
         
-        let URLString = "https://drillalert.azurewebsites.net/api/curves/\(self.id)"
-        println("Getting curves from : \(URLString)")
-        let session = user.session
-        let curvesJSONArray = session.getJSONArrayAtURL(URLString)
-        errorMessage = curvesJSONArray.getErrorMessage()
-        
-        if errorMessage == nil {
-            if let curveJSONs = curvesJSONArray.array {
-                for curveJSONObject in curveJSONs {
-                    if let curve = Curve.curveFromJSONObject(curveJSONObject, wellbore: self) {
-                        result.append(curve)
+        if user.shouldUseFixtureData {
+            let testCurve = Curve(id: "0", name: "Test Curve", label: "Label", units: "Units", wellboreID: "0", IVT: CurveIVT.Depth)
+            result.append(testCurve)
+        } else {
+            let URLString = "https://drillalert.azurewebsites.net/api/curves/\(self.id)"
+            if let userSDISession = user.session {
+                let curvesJSONArray = userSDISession.getJSONArrayAtURL(URLString)
+                errorMessage = curvesJSONArray.getErrorMessage()
+                
+                if errorMessage == nil {
+                    if let curveJSONs = curvesJSONArray.array {
+                        for curveJSONObject in curveJSONs {
+                            if let curve = Curve.curveFromJSONObject(curveJSONObject, wellbore: self) {
+                                result.append(curve)
+                            }
+                        }
                     }
+                } else {
+                    // TODO:  Show error message to user
+                    println("Error: \(errorMessage!)")
                 }
             }
-        } else {
-            // TODO:  Show error message to user
-            println(errorMessage)
         }
-
+        
         return (result, errorMessage)
     }
     

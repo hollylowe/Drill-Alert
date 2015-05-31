@@ -126,7 +126,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             NSCharacterSet(charactersInString: "<>"))
         
         if let user = self.user {
-            user.session.sendDeviceToken(token)
+            if let session = user.session {
+                session.sendDeviceToken(token)
+            }
         }
     }
     

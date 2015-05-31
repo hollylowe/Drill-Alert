@@ -39,8 +39,9 @@ class AddEditAlertTableViewController: UITableViewController {
     let alertWarningPriorityCellRow = 1
     let alertInformationPriorityCellRow = 2
     
-    let alertDebugSection = 5
-    let sendAlertNotificationCellRow = 0
+    let alertOptionsSection = 5
+    let deleteRow = 0
+    let sendAlertNotificationCellRow = 1
     
     @IBOutlet weak var noCurveSelectedLabel: UILabel!
     @IBOutlet weak var curveIVTLabel: UILabel!
@@ -376,7 +377,7 @@ class AddEditAlertTableViewController: UITableViewController {
                                         alertController.addAction(okayAction)
                                         self.presentViewController(alertController, animated: true, completion: nil)
                                     } else {
-                                        self.delegate.tableView.reloadData()
+                                        self.delegate.loadData()
                                         self.dismissViewControllerAnimated(true, completion: nil)
                                     }
                                 })
@@ -424,23 +425,58 @@ class AddEditAlertTableViewController: UITableViewController {
             var newRequest = NSMutableURLRequest(URL: URL)
             newRequest.HTTPMethod = "GET"
             
-            let userSession = currentUser.session
-            if let session = userSession.session {
-                let task = session.dataTaskWithRequest(newRequest, completionHandler: { (data, response, error) -> Void in
-                    println("test Task: ")
-                    if let content = NSString(data: data, encoding: NSASCIIStringEncoding) {
-                        println("Data get: ")
-                        println(content)
-                        println("Response get:")
-                        println(response)
-                    }
-                })
-                
-                task.resume()
+            if let userSDISession = currentUser.session {
+                if let session = userSDISession.session {
+                    let task = session.dataTaskWithRequest(newRequest, completionHandler: { (data, response, error) -> Void in
+                        println("test Task: ")
+                        if let content = NSString(data: data, encoding: NSASCIIStringEncoding) {
+                            println("Data get: ")
+                            println(content)
+                            println("Response get:")
+                            println(response)
+                        }
+                    })
+                    
+                    task.resume()
+                }
             }
+            
             
         }
 
+    }
+    func deleteAlert() {
+        self.showActivityBarButton()
+        if let alert = self.alertToEdit {
+            if let id = alert.id {
+                println("Deleting Alert #\(id)")
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
+                    if let URL = NSURL(string: "https://drillalert.azurewebsites.net/api/alerts/\(id)") {
+                        let request = NSMutableURLRequest(URL: URL)
+                        request.HTTPMethod = "DELETE"
+                        if let userSDISession = self.currentUser.session {
+                            if let session = userSDISession.session {
+                                let task = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
+                                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                        self.hideActivityBarButton()
+                                        if error == nil {
+                                            self.delegate.loadData()
+                                            self.dismissViewControllerAnimated(true, completion: nil)
+                                        } else {
+                                            println("Error deleting alert: \(error!)")
+                                        }
+                                        
+                                    })
+                                })
+                                
+                                task.resume()
+                            }
+                        }
+                        
+                    }
+                })
+            }
+        }
     }
 }
 
@@ -464,8 +500,13 @@ extension AddEditAlertTableViewController: UITableViewDelegate {
                 alertWarningPriorityCell.accessoryType = .None
                 alertInformationPriorityCell.accessoryType = .None
                 selectedCell.accessoryType = .Checkmark
-            case alertDebugSection:
-                self.sendTestNotification()
+            case alertOptionsSection:
+                switch indexPath.row {
+                case self.deleteRow: self.deleteAlert()
+                case self.sendAlertNotificationCellRow: self.sendTestNotification()
+                default: break
+                }
+                
             default: break
             }
         }

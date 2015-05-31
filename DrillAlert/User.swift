@@ -12,9 +12,9 @@ class User {
     var id: Int
     var guid: String
     var email: String?
-    var session: SDISession
+    var session: SDISession?
     var displayName: String?
-    
+    var shouldUseFixtureData: Bool = false 
     func getWells() -> (Array<Well>, String?) {
         return Well.getWellsForUser(self)
     }
@@ -60,8 +60,15 @@ class User {
         self.session = session
     }
     
+    init(id: Int, guid: String) {
+        self.id = id
+        self.guid = guid
+    }
+    
     func logout(callback: ((Bool) -> Void)) {
-        self.session.logout(callback)
+        if let userSDISession = self.session {
+            userSDISession.logout(callback)
+        }
     }
 }
 

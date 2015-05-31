@@ -26,18 +26,28 @@ class LoginViewController: UIViewController {
         activityIndicator.hidden = false
         loginButton.hidden = true
         
+        
         let session = SDISession(username: "ldavid@calpoly.edu", password: "StartUp!")
         session.login { (loggedIn) -> Void in
             if loggedIn {
                 self.currentUser = User.getCurrentUser()
-                
-                self.activityIndicator.hidden = true
-                self.activityIndicator.stopAnimating()
-                self.loginButton.hidden = false
                 self.performSegueWithIdentifier(self.loginToHomeSegueIdentifier, sender: self)
+            } else {
+                println("Error: Could not log user in.")
             }
+            self.activityIndicator.hidden = true
+            self.activityIndicator.stopAnimating()
+            self.loginButton.hidden = false
         }
-
+        /*
+        println("Using test data.")
+        self.currentUser = User(id: 0, guid: "0")
+        self.currentUser!.shouldUseFixtureData = true
+        self.activityIndicator.hidden = true
+        self.activityIndicator.stopAnimating()
+        self.loginButton.hidden = false
+        self.performSegueWithIdentifier(self.loginToHomeSegueIdentifier, sender: self)
+        */
     }
     
     override func viewDidAppear(animated: Bool) {

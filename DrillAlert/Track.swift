@@ -8,6 +8,43 @@
 
 import Foundation
 class Track: Item {
+    init() {
+        super.init(xPosition: 0, yPosition: 0, jsFileName: "Track.js")
+    }
+    
+    init(xPosition: Int, yPosition: Int, itemSettings: ItemSettings) {
+        super.init(
+            xPosition: xPosition,
+            yPosition: yPosition,
+            jsFileName: "Track.js",
+            itemSettingsCollection: ItemSettingsCollection(array: [itemSettings]))
+    }
+    
+    init(xPosition: Int, yPosition: Int, itemSettingsCollection: ItemSettingsCollection) {
+        super.init(
+            xPosition: xPosition,
+            yPosition: yPosition,
+            jsFileName: "Track.js",
+            itemSettingsCollection: itemSettingsCollection)
+    }
+    
+    init(id: Int, xPosition: Int, yPosition: Int, itemSettings: ItemSettings) {
+        super.init(
+            id: id,
+            xPosition: xPosition,
+            yPosition: yPosition,
+            jsFileName: "Track.js",
+            itemSettingsCollection: ItemSettingsCollection(array: [itemSettings]))
+    }
+    init(id: Int, xPosition: Int, yPosition: Int, itemSettingsCollection: ItemSettingsCollection) {
+        super.init(
+            id: id,
+            xPosition: xPosition,
+            yPosition: yPosition,
+            jsFileName: "Track.js",
+            itemSettingsCollection: itemSettingsCollection)
+    }
+    /*
     var name: String
     var curves: [Curve]?
     var trackSettings: ItemSettings?
@@ -69,4 +106,5 @@ class Track: Item {
                 jsFileName: "Track.js",
                 itemSettingsCollection: ItemSettingsCollection(array: [ItemSettings]()))
     }
+    */
 }

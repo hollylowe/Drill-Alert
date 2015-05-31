@@ -18,6 +18,7 @@ class PageViewController: UIViewController, UIWebViewDelegate {
     let plotJSFileName = "Plot.js"
     let plotUpdateTime = 2.0
     let gaugeJSFileName = "Gauge.js"
+    var user: User! 
     var page: Page!
     var timer: NSTimer?
     var pageIndex: Int!
@@ -62,14 +63,10 @@ class PageViewController: UIViewController, UIWebViewDelegate {
     }
     
     func updatePlot() {
-        
         // TODO: Get the curve points for a specific curve ID.
         // Feed those curve points to the tracks in the plot.
-        let (optionalCurvePointCollection, error) = Curve.getCurvePointCollectionForCurveID(
-            1,
-            andWellboreID: self.wellbore.id,
-            andStartTime: NSDate(),
-            andEndTime: NSDate())
+        /*
+        let (optionalCurvePointCollection, error) = Curve.getCurvePointCollectionForUser(self.user, curveID: 1, wellboreID: self.wellbore.id, startTime: NSDate(), andEndTime: NSDate())
         if error == nil {
             if let curvePointCollection = optionalCurvePointCollection {
                 // Add every curve point to the graph
@@ -87,7 +84,7 @@ class PageViewController: UIViewController, UIWebViewDelegate {
             // TODO: Show error to user
             println("Error Getting Curve Points: " + error!)
         }
-        
+        */
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd 'at' h:mm a"
         let stringDate = dateFormatter.stringFromDate(NSDate())
@@ -133,14 +130,14 @@ class PageViewController: UIViewController, UIWebViewDelegate {
             }
             
             // Start the timer for the live update of a Plot
-            /*
+            
             self.timer = NSTimer.scheduledTimerWithTimeInterval(
                 self.plotUpdateTime,
                 target: self,
                 selector: "updatePlot",
                 userInfo: nil,
                 repeats: true)
-        */
+        
             
         }
     }

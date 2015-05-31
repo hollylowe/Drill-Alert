@@ -13,23 +13,24 @@ class Item {
     var xPosition: Int
     var yPosition: Int
     var jsFileName: String
-    var itemSettingsCollection: ItemSettingsCollection?
-    var itemCurves: [ItemCurve]?
+    var itemSettingsCollection: ItemSettingsCollection
+    var itemCurves = [ItemCurve]()
     
     init(xPosition: Int, yPosition: Int, jsFileName: String) {
         self.xPosition = xPosition
         self.yPosition = yPosition
         self.jsFileName = jsFileName
+        self.itemSettingsCollection = ItemSettingsCollection(array: [])
     }
     
-    init(xPosition: Int, yPosition: Int, jsFileName: String, itemSettingsCollection: ItemSettingsCollection?) {
+    init(xPosition: Int, yPosition: Int, jsFileName: String, itemSettingsCollection: ItemSettingsCollection) {
         self.xPosition = xPosition
         self.yPosition = yPosition
         self.jsFileName = jsFileName
         self.itemSettingsCollection = itemSettingsCollection
     }
     
-    init(xPosition: Int, yPosition: Int, jsFileName: String, itemSettingsCollection: ItemSettingsCollection?, itemCurves: [ItemCurve]?) {
+    init(xPosition: Int, yPosition: Int, jsFileName: String, itemSettingsCollection: ItemSettingsCollection, itemCurves: [ItemCurve]) {
         self.xPosition = xPosition
         self.yPosition = yPosition
         self.jsFileName = jsFileName
@@ -42,9 +43,10 @@ class Item {
         self.xPosition = xPosition
         self.yPosition = yPosition
         self.jsFileName = jsFileName
+        self.itemSettingsCollection = ItemSettingsCollection(array: [])
     }
     
-    init(id: Int, xPosition: Int, yPosition: Int, jsFileName: String, itemSettingsCollection: ItemSettingsCollection?) {
+    init(id: Int, xPosition: Int, yPosition: Int, jsFileName: String, itemSettingsCollection: ItemSettingsCollection) {
         self.id = id
         self.xPosition = xPosition
         self.yPosition = yPosition
@@ -52,7 +54,7 @@ class Item {
         self.itemSettingsCollection = itemSettingsCollection
     }
     
-    init(id: Int, xPosition: Int, yPosition: Int, jsFileName: String, itemSettingsCollection: ItemSettingsCollection?, itemCurves: [ItemCurve]?) {
+    init(id: Int, xPosition: Int, yPosition: Int, jsFileName: String, itemSettingsCollection: ItemSettingsCollection, itemCurves: [ItemCurve]) {
         self.id = id
         self.xPosition = xPosition
         self.yPosition = yPosition
@@ -146,11 +148,10 @@ class Item {
         JSONString = JSONString + "\"JsFile\": \"\(self.jsFileName)\","
         JSONString = JSONString + "\"ItemSettings\": ["
 
-        if let itemSettingsCollection = self.itemSettingsCollection {
-            for itemSettings in itemSettingsCollection.array {
-                JSONString = JSONString + itemSettings.toJSONString()
-            }
+        for itemSettings in itemSettingsCollection.array {
+            JSONString = JSONString + itemSettings.toJSONString()
         }
+        
         JSONString = JSONString + "]}"
         
         

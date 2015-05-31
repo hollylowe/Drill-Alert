@@ -24,22 +24,19 @@ extension UITextField {
 }
 
 class AddEditTrackTableViewController: UITableViewController {
+    var shouldShowConfirmationDialog = false
     //
     //  ---------------------------------
     // | Set by Previous View Controller |
     //  ---------------------------------
     //
+    var trackToSave: Track?
     var trackToEdit: Track?
-    var delegate: AddEditPlotTableViewController!
+    var trackToEditIndex: Int?
+    var dashboardPriorToEdit: Dashboard?
+    var addEditPlotDelegate: AddEditPlotTableViewController!
     var wellbore: Wellbore!
     var user: User!
-    
-    //
-    //  --------------------------
-    // | Current Track Properties |
-    //  --------------------------
-    //
-    var curves = Array<Curve>()
 
     //
     //  -----------------------
@@ -83,78 +80,159 @@ class AddEditTrackTableViewController: UITableViewController {
     var loadingData = true
     var loadError = false
     
-    func loadCurvesForTrack(track: Track) {
+    var isDisabled = false
+    var activityBarButtonItem: UIBarButtonItem!
+    var saveBarButtonItem: UIBarButtonItem!
+
+    private func disableView() {
+        self.isDisabled = true
+        self.xPositionTextField?.enabled = false
+        self.yPositionTextField?.enabled = false
+        
+        self.stepSizeTextField?.enabled = false
+        self.startRangeTextField?.enabled = false
+        self.endRangeTextField?.enabled = false
+        self.divisionSizeTextField?.enabled = false
+        self.scaleTypeTextField?.enabled = false
+        
+    }
+    
+    private func enableView() {
+        self.isDisabled = false
+        self.xPositionTextField?.enabled = true
+        self.yPositionTextField?.enabled = true
+        
+        self.stepSizeTextField?.enabled = true
+        self.startRangeTextField?.enabled = true
+        self.endRangeTextField?.enabled = true
+        self.divisionSizeTextField?.enabled = true
+        self.scaleTypeTextField?.enabled = true
+        
+    }
+    
+    private func showActivityBarButton() {
+        self.navigationItem.setRightBarButtonItem(self.activityBarButtonItem, animated: true)
+        self.disableView()
+    }
+    
+    private func hideActivityBarButton() {
+        self.navigationItem.setRightBarButtonItem(self.saveBarButtonItem, animated: true)
+        self.enableView()
+    }
+    
+    
+    func loadItemCurvesForTrack(track: Track) {
+        
         if let id = track.id {
-            loadError = false
-            loadingData = true
-            
-            // TODO: This will need to change if we add a way to refresh this page, which we probably will.
-            // Instead, we could use the NSURLConnection asynchrounous call. This is because users could
-            // refresh the page faster than this call could load it, resulting in multiple threads doing
-            // the same operation and messing up the table view.
+            self.showActivityBarButton()
+
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
                 var itemCurves = ItemCurve.getItemCurvesForUser(self.user, andItemID: id)
-                let (opCurves, opError) = Curve.getCurvesForUser(self.user, wellbore: self.wellbore, fromItemCurves: itemCurves)
+                let (opCurves, opError) = Curve.addCurvesToItemCurves(itemCurves, user: self.user, andWellbore: self.wellbore)
+                
                 if let error = opError {
-                    println("Error loading curves: \(error)")
+                    println("Error loading curves for item curves: \(error)")
                 } else {
-                    if let curves = opCurves {
-                        self.curves = curves
+                    if let newItemCurves = opCurves {
+                        println("Recieved new item curves successfully.")
+                        self.trackToSave!.itemCurves = newItemCurves
                     } else {
-                        self.curves = Array<Curve>()
+                        self.trackToSave!.itemCurves = Array<ItemCurve>()
                     }
                 }
                 
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    self.loadingData = false
                     self.tableView.reloadData()
+                    self.hideActivityBarButton()
                 })
             })
+        } else {
+            println("Error: Attempted to get curves for a track that is being edited, however there was no ID.")
         }
         
     }
+    
+    
+    
     override func viewDidLoad() {
         self.navigationController?.navigationBar.barStyle = UIBarStyle.Black
         self.tableView.separatorColor = UIColor.blackColor()
+
+        let activityView = UIActivityIndicatorView(frame: CGRectMake(0, 0, 25, 25))
+        activityView.startAnimating()
+        activityView.hidden = false
+        activityView.color = UIColor.grayColor()
+        activityView.sizeToFit()
+        activityView.autoresizingMask = (UIViewAutoresizing.FlexibleLeftMargin | UIViewAutoresizing.FlexibleRightMargin | UIViewAutoresizing.FlexibleTopMargin | UIViewAutoresizing.FlexibleBottomMargin)
+        
+        self.activityBarButtonItem = UIBarButtonItem(customView: activityView)
+        self.saveBarButtonItem = UIBarButtonItem(
+            title: "Save",
+            style: .Done,
+            target: self,
+            action: "saveButtonTapped:")
+        if let saveButton = self.saveBarButtonItem {
+            saveButton.tintColor = UIColor.SDIBlue()
+        }
+        
+        self.navigationItem.setRightBarButtonItem(self.saveBarButtonItem, animated: true)
+        
         if let track = self.trackToEdit {
             self.title = "Edit Track"
             self.navigationItem.leftBarButtonItem = UIBarButtonItem(
                 barButtonSystemItem: .Cancel,
                 target: self,
                 action: "cancelBarButtonTapped:")
-            self.loadCurvesForTrack(track)
+            if let id = track.id {
+                self.trackToSave = Track(
+                    id: id,
+                    xPosition: track.xPosition,
+                    yPosition: track.yPosition,
+                    itemSettingsCollection: track.itemSettingsCollection)
+            } else {
+                self.trackToSave = Track(
+                    xPosition: track.xPosition,
+                    yPosition: track.yPosition,
+                    itemSettingsCollection: track.itemSettingsCollection)
+                println("Warning: Track to edit had no ID.")
+            }
+            
+            self.loadItemCurvesForTrack(track)
         } else {
             self.title = "Add Track"
+            self.trackToSave = Track()
             self.navigationItem.leftBarButtonItem = UIBarButtonItem(
                 barButtonSystemItem: .Cancel,
                 target: self,
                 action: "cancelBarButtonTapped:")
         }
         
-        if let saveButton = self.navigationItem.rightBarButtonItem {
-            saveButton.tintColor = UIColor(red: 0.490, green: 0.733, blue: 0.910, alpha: 1.0)
-            
-        }
-        
         super.viewDidLoad()
     }
+    
     override func tableView(tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
         if let footer = view as? UITableViewHeaderFooterView {
             footer.textLabel.textColor = UIColor(red: 0.624, green: 0.627, blue: 0.643, alpha: 1.0)
             
         }
     }
+    
     override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         if let header = view as? UITableViewHeaderFooterView {
             header.textLabel.textColor = UIColor(red: 0.624, green: 0.627, blue: 0.643, alpha: 1.0)
         }
     }
     
-    func addCurve(curve: Curve) {
-        self.curves.append(curve)
+    func addItemCurve(itemCurve: ItemCurve) {
+        if let track = self.trackToSave {
+            track.itemCurves.append(itemCurve) 
+        } else {
+            println("Error: No track to save when adding item curve.")
+        }
         self.tableView.reloadData()
     }
     
+    /*
     func swapOldCurve(oldCurve: Curve, withNewCurve newCurve: Curve) {
         var curveIndex = 0
         var toRemoveIndex: Int?
@@ -175,8 +253,159 @@ class AddEditTrackTableViewController: UITableViewController {
         self.tableView.reloadData()
         
     }
+    */
+    func syncTrackWithPlotAndDashboardWithCallback(callback: ((error: String?, newestID: Int?) -> Void)) {
+        self.shouldShowConfirmationDialog = true
+        
+        if let newTrack = self.trackToSave {
+            if let oldTrack = self.trackToEdit {
+                if let index = self.trackToEditIndex {
+                    self.addEditPlotDelegate.swapTrackAtIndex(index, withTrack: newTrack)
+                }
+            } else {
+                self.addEditPlotDelegate.addTrack(newTrack)
+            }
+            
+            self.addEditPlotDelegate.syncPlotWithDashboardWithCallback({ (error, newestID) -> Void in
+                if error == nil {
+                    if newTrack.id == nil {
+                        self.trackToSave?.id = newestID
+                        callback(error: nil, newestID: nil)
+                    } else {
+                        callback(error: nil, newestID: newestID)
+                    }
+                    
+                } else {
+                    callback(error: "Error syncing dashboard: \(error!).", newestID: nil)
+                }
+            })
+            
+            
+        } else {
+            callback(error: "Error: No track to save.", newestID: nil)
+        }
+        
+    }
     
-    @IBAction func saveBarButtonTapped(sender: UIBarButtonItem) {
+    func saveButtonTapped(sender: UIBarButtonItem) {
+        self.showActivityBarButton()
+        self.saveTrackWithCallback { (error, newestID) -> Void in
+            self.hideActivityBarButton()
+            if (error != nil) {
+                let alertController = UIAlertController(
+                    title: "Error",
+                    message: error!,
+                    preferredStyle: .Alert)
+                
+                let okayAction = UIAlertAction(title: "Okay", style: .Cancel) { (action) in
+                    
+                }
+                
+                alertController.addAction(okayAction)
+                self.presentViewController(alertController, animated: true, completion: nil)
+            } else {
+                self.dismissViewControllerAnimated(true, completion: nil)
+            }
+            
+        }
+        
+    }
+    
+    func cancelBarButtonTapped(sender: UIBarButtonItem) {
+        if !self.isDisabled {
+            // If a user is editing a track, but they
+            // then hit cancel, we need to discard any
+            // changes they may have made.
+            if let oldTrack = self.trackToEdit {
+                if self.shouldShowConfirmationDialog {
+                    let alert = UIAlertController(
+                        title: "Are you sure?",
+                        message: "Your changes to this track will be lost.",
+                        preferredStyle: .Alert)
+                    
+                    alert.addAction(UIAlertAction(title: "Yes", style: .Destructive, handler: { (alertAction) -> Void in
+                        // If we are canceling our changes to the plot,
+                        // We need to update what is on the backend to what
+                        // was there prior to the edit.
+                        println("Reverting edited track...")
+                        self.showActivityBarButton()
+                        if let track = self.trackToSave {
+                            track.itemCurves = oldTrack.itemCurves
+                            track.itemSettingsCollection = oldTrack.itemSettingsCollection
+                            track.xPosition = oldTrack.xPosition
+                            track.yPosition = oldTrack.yPosition
+                            
+                            self.addEditPlotDelegate.syncPlotWithDashboardWithCallback({ (error, newestID) -> Void in
+                                
+                                self.hideActivityBarButton()
+                                if error == nil {
+                                    self.dismissViewControllerAnimated(true, completion: nil)
+                                } else {
+                                    println("Error reverting track: \(error!)")
+                                }
+                            })
+                        }
+                    }))
+                    
+                    alert.addAction(UIAlertAction(title: "No", style: .Default, handler: nil))
+                    self.presentViewController(alert, animated: true, completion: nil)
+                    
+                } else {
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                }
+            } else {
+                // Otherwise, the user is canceling a Add Track operation.
+                // The track may have been saved to the backend already,
+                // however. This means we need to revert the entire dashboard.
+                
+                /*
+                if let dashboard = self.dashboardToSave {
+                self.showActivity()
+                println("Removing added dashboard...")
+                Dashboard.deleteDashboard(dashboard, forUser: self.user, withCallback: { (error) -> Void in
+                self.hideActivity()
+                if error == nil {
+                println("Dashboard \(dashboard.id) successfully deleted.")
+                self.dismissViewControllerAnimated(true, completion: nil)
+                } else {
+                println("Dashboard not deleted. Error: \(error!)")
+                self.dismissViewControllerAnimated(true, completion: nil)
+                }
+                })
+                }
+                */
+            }
+        }
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == SelectCurveIVTTableViewController.entrySegueIdentifier() {
+            let destination = segue.destinationViewController as! SelectCurveIVTTableViewController
+            
+            if let curveIndex = sender as? Int {
+                if let track = self.trackToSave {
+                    let itemCurve = track.itemCurves[curveIndex]
+                    destination.curveToEdit = itemCurve.curve
+                }
+            }
+            
+            destination.addEditTrackDelegate = self
+            destination.user = self.user
+            destination.wellbore = self.wellbore
+            if let track = self.trackToSave {
+                destination.itemID = track.id
+            }
+        }
+        
+        super.prepareForSegue(segue, sender: sender)
+    }
+    
+    
+}
+
+extension AddEditTrackTableViewController: UITableViewDelegate {
+    func saveTrackWithCallback(callback: ((error: String?, newestID: Int?) -> Void)) {
         var error: String?
         var opName: String?
         var opXPosition: Int?
@@ -201,7 +430,7 @@ class AddEditTrackTableViewController: UITableViewController {
         opEndRange = self.endRangeTextField?.integerValue()
         opDivisionSize = self.divisionSizeTextField?.integerValue()
         opScaleType = self.scaleTypeTextField?.integerValue()
-
+        
         if let name = opName {
             if let xPosition = opXPosition {
                 if let yPosition = opYPosition {
@@ -217,101 +446,76 @@ class AddEditTrackTableViewController: UITableViewController {
                                             divisionSize: divisionSize,
                                             scaleType: scaleType)
                                         
+                                        // If the user was editing a track,
+                                        // we should set the new track settings
+                                        // id and item id to those values.
+                                        
                                         if let oldTrack = self.trackToEdit {
-                                            oldTrack.name = name
-                                            newTrackSettings.id = oldTrack.trackSettings?.id
-                                            newTrackSettings.itemID = oldTrack.trackSettings?.itemID
-                                            
-                                            oldTrack.trackSettings = newTrackSettings
-                                            oldTrack.itemSettingsCollection = ItemSettingsCollection(array: [newTrackSettings])
-                                            oldTrack.xPosition = xPosition
-                                            oldTrack.yPosition = yPosition
-                                            
-                                            var newItemCurves = [ItemCurve]()
-                                            for curve in self.curves {
-                                                newItemCurves.append(ItemCurve(curveID: curve.id))
+                                            if oldTrack.itemSettingsCollection.array.count > 0 {
+                                                let oldItemSettings = oldTrack.itemSettingsCollection.array[0]
+                                                newTrackSettings.id = oldItemSettings.id
+                                                newTrackSettings.itemID = oldItemSettings.itemID
                                             }
-                                            oldTrack.curves = self.curves
-                                            oldTrack.itemCurves = newItemCurves
-                                            self.delegate.tableView.reloadData()
+                                            if let track = self.trackToSave {
+                                                // Set the track to the new values
+                                                track.xPosition = xPosition
+                                                track.yPosition = yPosition
+                                                track.itemSettingsCollection = ItemSettingsCollection(array: [newTrackSettings])
+                                                
+                                                
+                                            } else {
+                                                println("Error: No track To Save.")
+                                            }
                                         } else {
-                                            let newTrack = Track(
-                                                xPosition: xPosition,
-                                                yPosition: yPosition,
-                                                name: name,
-                                                trackSettings: newTrackSettings,
-                                                curves: self.curves)
-                                            self.delegate.addTrack(newTrack)
+                                            // Set the track to the new values
+
+                                            if let track = self.trackToSave {
+                                                track.xPosition = xPosition
+                                                track.yPosition = yPosition
+                                                track.itemSettingsCollection = ItemSettingsCollection(array: [newTrackSettings])
+                                            } else {
+                                                println("Error: No track To Save.")
+                                            }
                                         }
                                         
-                                        self.dismissViewControllerAnimated(true, completion: nil)
+                                        self.syncTrackWithPlotAndDashboardWithCallback({ (error, newestID) -> Void in
+                                            if error == nil {
+                                                callback(error: nil, newestID: nil)
+                                                
+                                            } else {
+                                                callback(error: "Error syncing track: \(error!).", newestID: nil)
+                                            }
+                                        })
+                                        
                                     } else {
-                                        error = "Please enter a valid Scale Type."
+                                        callback(error: "Please enter a valid Scale Type.", newestID: nil)
                                     }
                                 } else {
-                                    error = "Please enter a valid Division Size."
+                                    callback(error: "Please enter a valid Division Size.", newestID: nil)
                                 }
                             } else {
-                                error = "Please enter a valid End Range."
+                                callback(error: "Please enter a valid End Range.", newestID: nil)
                             }
                         } else {
-                            error = "Please enter a valid Start Range."
+                            callback(error: "Please enter a valid Start Range.", newestID: nil)
                         }
                     } else {
-                        error = "Please enter a valid Step Size."
+                        callback(error: "Please enter a valid Step Size.", newestID: nil)
                     }
                 } else {
-                    error = "Please enter a valid Y Position."
+                    callback(error: "Please enter a valid Y Position.", newestID: nil)
                 }
             } else {
-                error = "Please enter a valid X Position."
+                callback(error: "Please enter a valid X Position.", newestID: nil)
             }
         } else {
-            error = "Please enter a name."
+            callback(error: "Please enter a name.", newestID: nil)
         }
         
-        if (error != nil) {
-            let alertController = UIAlertController(
-                title: "Error",
-                message: error!,
-                preferredStyle: .Alert)
-            
-            let okayAction = UIAlertAction(title: "Okay", style: .Cancel) { (action) in
-                
-            }
-            
-            alertController.addAction(okayAction)
-            self.presentViewController(alertController, animated: true, completion: nil)
-        }
-        
-    }
-    
-    func cancelBarButtonTapped(sender: UIBarButtonItem) {
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == SelectCurveIVTTableViewController.entrySegueIdentifier() {
-            if let curve = sender as? Curve {
-                let destination = segue.destinationViewController as! SelectCurveIVTTableViewController
-                destination.addEditTrackDelegate = self
-                destination.user = self.user
-                destination.wellbore = self.wellbore
-                destination.curveToEdit = curve
-            } else {
-                let destination = segue.destinationViewController as! SelectCurveIVTTableViewController
-                destination.addEditTrackDelegate = self
-                destination.user = self.user
-                destination.wellbore = self.wellbore
-            }
-            
-        }
-        
-        super.prepareForSegue(segue, sender: sender)
-    }
-}
 
-extension AddEditTrackTableViewController: UITableViewDelegate {
+        
+    }
+    
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         switch indexPath.section {
         case self.trackNameSection: self.trackNameTextField?.becomeFirstResponder()
@@ -331,14 +535,28 @@ extension AddEditTrackTableViewController: UITableViewDelegate {
             default: break
             }
         case self.trackCurvesSection:
-            if indexPath.row < self.curves.count {
-                let curve = self.curves[indexPath.row]
-                // TODO:  pull up edit curve view
-                self.performSegueWithIdentifier(SelectCurveIVTTableViewController.entrySegueIdentifier(), sender: curve)
+            if let track = self.trackToSave {
+                if indexPath.row < track.itemCurves.count {
+                    
+                    self.performSegueWithIdentifier(SelectCurveIVTTableViewController.entrySegueIdentifier(), sender: indexPath.row)
+                    
+                } else if indexPath.row == track.itemCurves.count {
+                    // Save the track first 
+                    self.showActivityBarButton()
                 
-            } else if indexPath.row == self.curves.count {
-                self.performSegueWithIdentifier(SelectCurveIVTTableViewController.entrySegueIdentifier(), sender: nil)
+                    self.saveTrackWithCallback({ (error, newestID) -> Void in
+                        self.hideActivityBarButton()
+                        if error == nil {
+                            self.performSegueWithIdentifier(SelectCurveIVTTableViewController.entrySegueIdentifier(), sender: nil)
+                        } else {
+                            println("Error syncing track: \(error!)")
+                        }
+                        
+                    })
+                    
+                }
             }
+            
             
         default: break
         }
@@ -374,7 +592,10 @@ extension AddEditTrackTableViewController: UITableViewDataSource {
         case self.trackNameSection: numberOfRows = 1
         case self.trackSizeSection: numberOfRows = 2
         case self.trackPropertiesSection: numberOfRows = 5
-        case self.trackCurvesSection: numberOfRows = self.curves.count + 1
+        case self.trackCurvesSection:
+            if let track = self.trackToSave {
+                numberOfRows = track.itemCurves.count + 1
+            }
         default: numberOfRows = 0
         }
         
@@ -385,7 +606,7 @@ extension AddEditTrackTableViewController: UITableViewDataSource {
         let textFieldCell = tableView.dequeueReusableCellWithIdentifier(TextFieldCell.cellIdentifier()) as! TextFieldCell
         textFieldCell.textField.placeholder = "Enter a name"
         if let track = self.trackToEdit {
-            textFieldCell.textField.text = track.name
+            textFieldCell.textField.text = "Track \(track.id)"
         }
         if let placeholder = textFieldCell.textField.placeholder {
             textFieldCell.textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSForegroundColorAttributeName: UIColor(white: 0.52, alpha: 1.0)])
@@ -398,16 +619,20 @@ extension AddEditTrackTableViewController: UITableViewDataSource {
     private func createTrackCurvesCellForIndexPath(indexPath: NSIndexPath) -> UITableViewCell {
         var cell: UITableViewCell!
         
-        
-        if indexPath.row == self.curves.count {
-            cell = tableView.dequeueReusableCellWithIdentifier(AddCurveCell.cellIdentifier()) as! AddCurveCell
-        } else if indexPath.row < self.curves.count {
-            // Edit Curve Cell
-            let curve = self.curves[indexPath.row]
-            let curveCell = tableView.dequeueReusableCellWithIdentifier(CurveCell.cellIdentifier()) as! CurveCell
-            curveCell.setupWithCurve(curve)
-            cell = curveCell
+        if let track = self.trackToSave {
+            if indexPath.row == track.itemCurves.count {
+                cell = tableView.dequeueReusableCellWithIdentifier(AddCurveCell.cellIdentifier()) as! AddCurveCell
+            } else if indexPath.row < track.itemCurves.count {
+                // Edit Curve Cell
+                let itemCurve = track.itemCurves[indexPath.row]
+                if let curve = itemCurve.curve {
+                    let curveCell = tableView.dequeueReusableCellWithIdentifier(CurveCell.cellIdentifier()) as! CurveCell
+                    curveCell.setupWithCurve(curve)
+                    cell = curveCell
+                }
+            }
         }
+        
         
         return cell
     }
@@ -458,8 +683,8 @@ extension AddEditTrackTableViewController: UITableViewDataSource {
                 var textFieldText: String?
                 
                 if let track = self.trackToEdit {
-                    if let trackSettings = track.trackSettings {
-                        textFieldText = String(trackSettings.stepSize)
+                    if track.itemSettingsCollection.array.count > 0  {
+                        textFieldText = String(track.itemSettingsCollection.array[0].stepSize)
                     }
                 }
                 
@@ -472,8 +697,8 @@ extension AddEditTrackTableViewController: UITableViewDataSource {
                 var textFieldText: String?
                 
                 if let track = self.trackToEdit {
-                    if let trackSettings = track.trackSettings {
-                        textFieldText = String(trackSettings.startRange)
+                    if track.itemSettingsCollection.array.count > 0  {
+                        textFieldText = String(track.itemSettingsCollection.array[0].startRange)
                     }
                 }
                 
@@ -486,8 +711,8 @@ extension AddEditTrackTableViewController: UITableViewDataSource {
                 var textFieldText: String?
                 
                 if let track = self.trackToEdit {
-                    if let trackSettings = track.trackSettings {
-                        textFieldText = String(trackSettings.endRange)
+                    if track.itemSettingsCollection.array.count > 0  {
+                        textFieldText = String(track.itemSettingsCollection.array[0].endRange)
                     }
                 }
                 
@@ -500,8 +725,8 @@ extension AddEditTrackTableViewController: UITableViewDataSource {
                 var textFieldText: String?
                 
                 if let track = self.trackToEdit {
-                    if let trackSettings = track.trackSettings {
-                        textFieldText = String(trackSettings.divisionSize)
+                    if track.itemSettingsCollection.array.count > 0  {
+                        textFieldText = String(track.itemSettingsCollection.array[0].divisionSize)
                     }
                 }
                 
@@ -514,8 +739,8 @@ extension AddEditTrackTableViewController: UITableViewDataSource {
                 var textFieldText: String?
                 
                 if let track = self.trackToEdit {
-                    if let trackSettings = track.trackSettings {
-                        textFieldText = String(trackSettings.scaleType)
+                    if track.itemSettingsCollection.array.count > 0  {
+                        textFieldText = String(track.itemSettingsCollection.array[0].scaleType)
                     }
                 }
                 

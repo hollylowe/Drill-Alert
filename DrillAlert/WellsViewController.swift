@@ -1,5 +1,5 @@
 //
-//  HomeViewController.swift
+//  WellsViewController.swift
 //  DrillAlert
 //
 //  Created by Lucas David on 11/2/14.
@@ -9,97 +9,85 @@
 import Foundation
 import UIKit
 
-class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+
+
+class WellsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet weak var tableView: UITableView!
-    
     let homeToWellboreDetailSegueIdentifier = "HomeToWellboreDetailSegue"
     
     // Segmented Control
-    let segmentedControlItems = ["Favorites", "All"]
-    var selectedSegmentIndex = 0
-    let favoriteWellsIndex = 0
-    let allWellsIndex = 1
-
-    // Hiding the navigation bar line 
-    var navBarHairlineImageView: UIImageView!
+    let segmentedControlItems = ["All", "Favorites"]
+    var selectedSegmentIndex  = 0
+    var selectedWellIndex: Int?
+    let allWellsIndex         = 0
+    let favoriteWellsIndex    = 1
     
-    // Implicit since the user must be logged in to see the HomeViewController.
-    var currentUser: User?
-    
-    // Data for the table view
-    var wells = Array<Well>()
-    var favoriteWells = Array<Well>()
+    var defaultRowHeight:    CGFloat = 57.0
+    var sectionFooterHeight: CGFloat = 1.0
+    var sectionHeaderHeight: CGFloat = 62.0
     
     // Variables for loading
     var loadingData = true
-    var loadError = false
-    
-    // TODO: Remove, for debugging only
-    var shouldLoadFromNetwork = true
+    var loadError   = false
+    var user: User!
+    var wellContainer: WellContainer!
     
     override func viewDidAppear(animated: Bool) {
         if let homeTabBarController = self.tabBarController as? HomeTabBarController {
             homeTabBarController.changeTitle("Wells")
+            let refreshButton = UIBarButtonItem(barButtonSystemItem: .Refresh,
+                target: self,
+                action: "refresh:")
+            refreshButton.tintColor = UIColor.SDIBlue()
+            homeTabBarController.navigationItem.setRightBarButtonItem(refreshButton, animated: false)
+        }
+        if let navLine = self.navBarHairlineImageView {
+            navLine.hidden = true
         }
         super.viewDidAppear(animated)
     }
     
+    func refresh(sender: AnyObject) {
+        self.loadData()
+        self.tableView.reloadData()
+    }
+    
     override func viewDidLoad() {
         if let homeTabBarController = self.tabBarController as? HomeTabBarController {
-            self.currentUser = homeTabBarController.user
+            self.user = homeTabBarController.user
         }
-        setupView()
-        loadData()
+        self.wellContainer = WellContainer()
+        self.setupView()
+        self.loadData()
         super.viewDidLoad()
     }
     
     func loadData() {
         loadError = false
-        loadingData = false
+        loadingData = true
+        self.tableView.reloadData()
         
-        if shouldLoadFromNetwork {
-            loadError = false
-            loadingData = true
-            self.tableView.reloadData()
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
+            self.reloadWells()
             
-            // TODO: This will need to change if we add a way to refresh this page, which we probably will.
-            // Instead, we could use the NSURLConnection asynchrounous call. This is because users could
-            // refresh the page faster than this call could load it, resulting in multiple threads doing
-            // the same operation and messing up the table view.
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
-                self.reloadWells()
-                
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    self.loadingData = false
-                    self.tableView.reloadData()
-                })
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                self.loadingData = false
+                self.tableView.reloadData()
             })
-
-        }
-        
+        })
     }
+    
     private func setupView() {
-        if let tabBarController = self.tabBarController {
-            tabBarController.title = "Wells"
-        }
-        self.title = "Wells"
-        let footerView = UIView()
         self.tableView.backgroundColor = UIColor.blackColor()
         self.tableView.tableFooterView = UIView()
-        
+        self.tableView.separatorColor = UIColor.blackColor()
+
         let toolbarWidth = self.view.frame.size.width
         let toolbarHeight: CGFloat = 44.0
-
-        // Setup refresh control
-        // self.tableView.addSubview(UIRefreshControl())
-        // self.tableView.backgroundColor =  UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1.0)
-        // self.tableView.separatorColor = UIColor(red: 0.122, green: 0.122, blue: 0.122, alpha: 1.0)
         
         if let navigationController = self.navigationController {
             navigationController.navigationBar.hidden = false
             navigationController.navigationBar.barStyle = UIBarStyle.Black
-            self.tableView.separatorStyle = .None
-            self.navBarHairlineImageView = self.findHairlineImageViewUnder(navigationController.navigationBar)
             
             // Add the segmented control at the (navigation bar height + status bar height) y coordinate
             let yCoord = navigationController.navigationBar.frame.size.height + UIApplication.sharedApplication().statusBarFrame.size.height
@@ -112,7 +100,6 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             let segmentedControlWidth: CGFloat = toolbarWidth - (toolbarWidth / 4)
             let segmentedControlXCoord: CGFloat = toolbarWidth / 8
             let segmentedControlYCoord: CGFloat = (toolbarHeight - segmentedControlHeight) / 2
-            
             let segmentedControlRect = CGRectMake(
                 segmentedControlXCoord,
                 segmentedControlYCoord,
@@ -141,108 +128,47 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
        
     }
-    func findHairlineImageViewUnder(view: UIView) -> UIImageView? {
-        if view.isKindOfClass(UIImageView) && view.bounds.size.height <= 1.0 {
-            return view as? UIImageView
-        } else {
-            for subview in view.subviews {
-                var imageView = self.findHairlineImageViewUnder(subview as! UIView)
-                if imageView != nil {
-                    return imageView
-                }
-            }
-            return nil
-        }
-    }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        navBarHairlineImageView.hidden = true
+        self.navBarHairlineImageView?.hidden = true
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        navBarHairlineImageView.hidden = false
+        self.navBarHairlineImageView?.hidden = false
     }
-    
-    
-    
     
     func segmentedControlAction(sender: UISegmentedControl) {
         self.selectedSegmentIndex = sender.selectedSegmentIndex
         self.tableView.reloadData()
     }
-
+    
     func reloadWells() {
-        if let user = self.currentUser {
-            
-            self.wells.removeAll(keepCapacity: false)
-            self.favoriteWells.removeAll(keepCapacity: false)
-            
-            let (newWells, error) = Well.getWellsForUser(user)
-            
-            if error == nil {
-                
-                // Get all of the "favorite" wellbores this
-                // user has.
-                
-                let localFavoriteWellbores = FavoriteWellbore.fetchAllInstances()
-                var favoriteWellboreIDs = Array<String>()
-                
-                for favoriteWellbore in localFavoriteWellbores {
-                    favoriteWellboreIDs.append(favoriteWellbore.wellboreID as String)
-                }
-                
-                // Then go through every well, if that well's id
-                // is the same as a "favorite" wells id, throw
-                // that well into the "favorite" wells array
-                // so it shows in the favorites segment control.
-                for well in newWells {
-                    var wellFavoriteWellbores = Array<Wellbore>()
-                    
-                    for wellbore in well.wellbores {
-                        // IF this wellbore is favorited
-                        if contains(favoriteWellboreIDs, wellbore.id) {
-                            wellbore.isFavorite = true
-                            wellFavoriteWellbores.append(wellbore)
-                        }
-                    }
-                    
-                    if wellFavoriteWellbores.count > 0 {
-                        let favoriteWell = Well(id: well.id, name: well.name, location: well.location)
-                        favoriteWell.wellbores = wellFavoriteWellbores
-                        self.favoriteWells.append(favoriteWell)
-                    }
-                }
-                
-                self.wells = newWells
-            } else {
-                self.loadError = true
-                
-                var alert = UIAlertController(title: "Error", message: error, preferredStyle: UIAlertControllerStyle.Alert)
-                alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil))
-                self.presentViewController(alert, animated: true, completion: nil)
-            }
-        } else {
+        let error = self.wellContainer.reloadWellsForUser(self.user)
+        
+        if error != nil {
             self.loadError = true
             
-            var alert = UIAlertController(title: "Error", message: "No user found.", preferredStyle: UIAlertControllerStyle.Alert)
+            var alert = UIAlertController(
+                title: "Error",
+                message: error,
+                preferredStyle: .Alert)
             alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil))
             self.presentViewController(alert, animated: true, completion: nil)
         }
-        
     }
     
     func wellboreAtIndexPath(indexPath: NSIndexPath) -> Wellbore {
         var wellbore: Wellbore!
         
         if selectedSegmentIndex == favoriteWellsIndex {
-            let well = self.favoriteWells[indexPath.section]
+            let well = self.wellContainer.favoriteWells[indexPath.section]
             if well.wellbores.count > 0 {
                 wellbore = well.wellbores[indexPath.row]
             }
         } else {
-            let well = self.wells[indexPath.section]
+            let well = self.wellContainer.wells[indexPath.section]
             if well.wellbores.count > 0 {
                 wellbore = well.wellbores[indexPath.row]
             }
@@ -257,7 +183,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             let wellbore = sender as! Wellbore
             let destinationViewController = segue.destinationViewController as! WellboreDetailViewController
             destinationViewController.currentWellbore = wellbore
-            destinationViewController.currentUser = currentUser
+            destinationViewController.currentUser = user
         }
         
         super.prepareForSegue(segue, sender: self)
@@ -265,10 +191,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
 }
 
 
-extension HomeViewController: UITableViewDataSource {
-    
-    
-    
+extension WellsViewController: UITableViewDataSource {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(WellboreTableViewCell.getCellIdentifier()) as! WellboreTableViewCell
@@ -283,63 +206,67 @@ extension HomeViewController: UITableViewDataSource {
         var count = 0
         
         if selectedSegmentIndex == favoriteWellsIndex {
-            let well = self.favoriteWells[section]
+            let well = self.wellContainer.favoriteWells[section]
             count = well.wellbores.count
         } else {
-            let well = self.wells[section]
+            let well = self.wellContainer.wells[section]
             count = well.wellbores.count
         }
         
         return count
     }
     
-  
+    private func showNoWellsView() {
+        let textColor = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1.0)
+        var noWellsLabel = UILabel(frame: CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height))
+        if loadError {
+            noWellsLabel.text = "Network Error"
+        } else {
+            if selectedSegmentIndex == favoriteWellsIndex {
+                noWellsLabel.text = "No Favorite Wells"
+            } else {
+                noWellsLabel.text = "No Wells"
+            }
+        }
+        
+        noWellsLabel.textColor = textColor
+        noWellsLabel.numberOfLines = 0
+        noWellsLabel.textAlignment = .Center
+        noWellsLabel.font = UIFont(name: "HelveticaNeue", size: 26.0)
+        noWellsLabel.sizeToFit()
+        
+        self.tableView.backgroundView = noWellsLabel
+    }
+    
+    private func showLoadingView() {
+        let indicatorWidth: CGFloat = 20
+        let indicatorHeight: CGFloat = 20
+        // Display loading indicator
+        var backgroundView = UIView(frame: CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height))
+        var loadingIndicator = UIActivityIndicatorView(frame: CGRectMake((self.view.bounds.size.width - indicatorWidth) / 2, (self.view.bounds.size.height - indicatorHeight) / 2, indicatorWidth, indicatorHeight))
+        
+        loadingIndicator.color = UIColor.grayColor()
+        loadingIndicator.startAnimating()
+        backgroundView.addSubview(loadingIndicator)
+        self.tableView.backgroundView = backgroundView
+    }
+    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        var sections = 1
+        var numberOfSections = 1
         
         if loadingData {
-            sections = 0
-            let indicatorWidth: CGFloat = 20
-            let indicatorHeight: CGFloat = 20
-            // Display loading indicator
-            var backgroundView = UIView(frame: CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height))
-            var loadingIndicator = UIActivityIndicatorView(frame: CGRectMake((self.view.bounds.size.width - indicatorWidth) / 2, (self.view.bounds.size.height - indicatorHeight) / 2, indicatorWidth, indicatorHeight))
-            
-            loadingIndicator.color = UIColor.grayColor()
-            loadingIndicator.startAnimating()
-            backgroundView.addSubview(loadingIndicator)
-            self.tableView.backgroundView = backgroundView
-
+            numberOfSections = 0
+            self.showLoadingView()
         } else {
             
-            if (selectedSegmentIndex == favoriteWellsIndex && favoriteWells.count == 0) || (selectedSegmentIndex == allWellsIndex && wells.count == 0) {
-                sections = 0
-                
-                // Display "No Wells" message
-                let textColor = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1.0)
-                var noWellsLabel = UILabel(frame: CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height))
-                if loadError {
-                    noWellsLabel.text = "Network Error"
-                } else {
-                    if selectedSegmentIndex == favoriteWellsIndex {
-                        noWellsLabel.text = "No Favorite Wells"
-                    } else {
-                        noWellsLabel.text = "No Wells"
-                    }
-                }
-                
-                noWellsLabel.textColor = textColor
-                noWellsLabel.numberOfLines = 0
-                noWellsLabel.textAlignment = .Center
-                noWellsLabel.font = UIFont(name: "HelveticaNeue", size: 26.0)
-                noWellsLabel.sizeToFit()
-                
-                self.tableView.backgroundView = noWellsLabel
+            if (selectedSegmentIndex == favoriteWellsIndex && wellContainer.favoriteWells.count == 0) || (selectedSegmentIndex == allWellsIndex && wellContainer.wells.count == 0) {
+                numberOfSections = 0
+                self.showNoWellsView()
             } else {
                 if selectedSegmentIndex == favoriteWellsIndex {
-                    sections = self.favoriteWells.count
+                    numberOfSections = self.wellContainer.favoriteWells.count
                 } else {
-                    sections = self.wells.count
+                    numberOfSections = self.wellContainer.wells.count
                 }
                 
                 self.tableView.backgroundView = nil
@@ -347,32 +274,67 @@ extension HomeViewController: UITableViewDataSource {
 
         }
         
-        return sections
+        return numberOfSections
     }
 }
 
-extension HomeViewController: UITableViewDelegate {
+extension WellsViewController: UITableViewDelegate {
+    /*
     func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         var view = UIView(frame: CGRectMake(0, 61.0, self.tableView.frame.size.width, 1.0))
         view.backgroundColor = UIColor(red: 0.221, green: 0.221, blue: 0.221, alpha: 1.0)
         return view
     }
+    */
     
+    func sectionTapped(sender: UITapGestureRecognizer) {
+        // The sender view is the cell that was tapped, 
+        // aka the section header.
+        if let sectionView = sender.view {
+            let newSelectedWellIndex = sectionView.tag
+            if let tappedCell = sectionView.subviews[0] as? WellTableViewCell {
+                // This tag is the section index that was tapped.
+                // If we have a previously selected well...
+                if let currentIndex = self.selectedWellIndex {
+                    // and if that well is equal to the well
+                    // that was just selected...
+                    if currentIndex == newSelectedWellIndex {
+                        // Then deselect the well by making
+                        // the selected well index and last selected cell nil.
+                        self.selectedWellIndex = nil
+                        
+                    } else {
+                        // If the previously selected well is
+                        // different than the one selected
+                        //
+                        // Select the new cell
+                        self.selectedWellIndex = newSelectedWellIndex
+                    }
+                } else {
+                    self.selectedWellIndex = newSelectedWellIndex
+                }
+                
+                tableView.beginUpdates()
+                tableView.endUpdates()
+                
+            }
+        }
+        
+    }
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let cell = tableView.dequeueReusableCellWithIdentifier("WellTableViewCell") as! WellTableViewCell
-        var view = UIView(frame: CGRectMake(0, 0, self.tableView.frame.size.width, 62.0))
+        var view = UIView(frame: CGRectMake(0, 0, self.tableView.frame.size.width, self.sectionHeaderHeight))
+        var well: Well!
         
         if selectedSegmentIndex == favoriteWellsIndex {
-            
-            let well = self.favoriteWells[section]
-            cell.setupWithWell(well)
-            cell.frame = CGRectMake(0, 0, self.tableView.frame.size.width, 62.0)
-            
+            well = self.wellContainer.favoriteWells[section]
         } else {
-            let well = self.wells[section]
-            cell.setupWithWell(well)
-            cell.frame = CGRectMake(0, 0, self.tableView.frame.size.width, 62.0)
+            well = self.wellContainer.wells[section]
         }
+        cell.setupWithWell(well)
+        cell.frame = CGRectMake(0, 0, self.tableView.frame.size.width, self.sectionHeaderHeight - 1.0)
+        view.tag = section
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "sectionTapped:"))
         
         view.addSubview(cell)
         return view
@@ -380,17 +342,26 @@ extension HomeViewController: UITableViewDelegate {
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 57.0
+        var rowHeight: CGFloat = 0
+        if let wellIndex = self.selectedWellIndex {
+            // A well is selected, so its wellbores should
+            // be shown.
+            if wellIndex == indexPath.section {
+                rowHeight = self.defaultRowHeight
+            }
+        }
+        
+        return rowHeight
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 62.0
+        return self.sectionHeaderHeight
     }
-    
+    /*
     func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 1.0
+        return self.sectionFooterHeight
     }
-    
+    */
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let wellbore = wellboreAtIndexPath(indexPath)
         
@@ -424,8 +395,6 @@ extension HomeViewController: UITableViewDelegate {
             }
             result = [favoriteAction]
         }
-        
-        
         
         return result
     }

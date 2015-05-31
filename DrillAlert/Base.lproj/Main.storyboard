@@ -157,7 +157,7 @@
         <!--Wells-->
         <scene sceneID="GTL-rn-Ltj">
             <objects>
-                <viewController id="OKh-1Q-XSn" customClass="HomeViewController" customModule="DrillAlert" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WellsViewController" id="OKh-1Q-XSn" customClass="WellsViewController" customModule="DrillAlert" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="WKt-Zr-bbW"/>
                         <viewControllerLayoutGuide type="bottom" id="HA7-DK-77s"/>
@@ -1774,13 +1774,7 @@
                             <outlet property="delegate" destination="5Gc-Nb-ShX" id="uXG-3X-jkw"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Add or Edit Plot" id="G6I-sX-X3k">
-                        <barButtonItem key="rightBarButtonItem" title="Save" style="done" id="Sxc-Qk-BRL">
-                            <connections>
-                                <action selector="saveButtonTapped:" destination="5Gc-Nb-ShX" id="CCN-n6-auc"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Add or Edit Plot" id="G6I-sX-X3k"/>
                     <connections>
                         <segue destination="fIz-TF-wQB" kind="show" identifier="SelectIVTTableViewControllerSegue" id="oyS-vq-nUx"/>
                         <segue destination="FPD-Ce-Ect" kind="show" identifier="SelectUnitsTableViewControllerSegue" id="5jd-8E-KWC"/>
@@ -2043,13 +2037,7 @@
                             <outlet property="delegate" destination="R4S-AM-Bj3" id="KZm-Dv-LNT"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Add or Edit Track" id="HHP-Kt-d02">
-                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="save" id="ZN1-86-prE">
-                            <connections>
-                                <action selector="saveBarButtonTapped:" destination="R4S-AM-Bj3" id="zEf-1w-WbC"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Add or Edit Track" id="HHP-Kt-d02"/>
                     <connections>
                         <segue destination="qtp-la-RjP" kind="show" identifier="SelectCurveIVTSegue" id="vgZ-f8-qOB"/>
                     </connections>
@@ -2929,8 +2917,8 @@
                                                     <nil key="highlightedColor"/>
                                                     <variation key="default">
                                                         <mask key="constraints">
-                                                            <exclude reference="kn2-Bb-GQr"/>
                                                             <exclude reference="AtE-1g-wTL"/>
+                                                            <exclude reference="kn2-Bb-GQr"/>
                                                         </mask>
                                                     </variation>
                                                 </label>
@@ -2974,34 +2962,64 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Debug" id="wtb-i2-gIq">
+                            <tableViewSection headerTitle="Options" id="0P5-Vb-Fde" userLabel="Options">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="LJP-5y-MxM">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Wa9-mF-DfN">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="LJP-5y-MxM" id="MYQ-Y5-eCX">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Wa9-mF-DfN" id="MMi-aF-NxQ">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Send Alert Notification " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MYz-a6-0Iu">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Delete" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VX6-p5-o4O">
                                                     <rect key="frame" x="18" y="11" width="574" height="21"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="75" id="3Lm-1K-toc"/>
-                                                        <constraint firstAttribute="height" constant="21" id="PYh-Wf-J2I"/>
+                                                        <constraint firstAttribute="width" constant="75" id="4Hp-cc-BA0"/>
+                                                        <constraint firstAttribute="height" constant="21" id="Hsf-2D-r9n"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.49019607840000001" green="0.73333333329999995" blue="0.90980392160000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="default">
                                                         <mask key="constraints">
-                                                            <exclude reference="3Lm-1K-toc"/>
+                                                            <exclude reference="4Hp-cc-BA0"/>
                                                         </mask>
                                                     </variation>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="MYz-a6-0Iu" firstAttribute="trailing" secondItem="MYQ-Y5-eCX" secondAttribute="trailingMargin" id="ZUm-3T-wHq"/>
-                                                <constraint firstAttribute="centerY" secondItem="MYz-a6-0Iu" secondAttribute="centerY" id="hej-A7-d9Z"/>
-                                                <constraint firstItem="MYz-a6-0Iu" firstAttribute="leading" secondItem="MYQ-Y5-eCX" secondAttribute="leadingMargin" constant="10" id="iTL-Lx-UUJ"/>
+                                                <constraint firstItem="VX6-p5-o4O" firstAttribute="trailing" secondItem="MMi-aF-NxQ" secondAttribute="trailingMargin" id="5M8-vT-Q9g"/>
+                                                <constraint firstAttribute="centerY" secondItem="VX6-p5-o4O" secondAttribute="centerY" id="7Xd-zS-nzT"/>
+                                                <constraint firstItem="VX6-p5-o4O" firstAttribute="leading" secondItem="MMi-aF-NxQ" secondAttribute="leadingMargin" constant="10" id="fKE-ls-uJM"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.1215686275" green="0.1215686275" blue="0.1215686275" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="txR-cy-l9S">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="txR-cy-l9S" id="kLi-er-krl">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Send Alert Notification " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zhr-ts-d6b">
+                                                    <rect key="frame" x="18" y="11" width="574" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="Fp4-fu-FLO"/>
+                                                        <constraint firstAttribute="width" constant="75" id="f1q-4b-e1c"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.49019607840000001" green="0.73333333329999995" blue="0.90980392160000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="f1q-4b-e1c"/>
+                                                        </mask>
+                                                    </variation>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="Zhr-ts-d6b" firstAttribute="leading" secondItem="kLi-er-krl" secondAttribute="leadingMargin" constant="10" id="H2b-LD-Ivy"/>
+                                                <constraint firstAttribute="centerY" secondItem="Zhr-ts-d6b" secondAttribute="centerY" id="Pft-0M-69V"/>
+                                                <constraint firstItem="Zhr-ts-d6b" firstAttribute="trailing" secondItem="kLi-er-krl" secondAttribute="trailingMargin" id="pFL-Ai-PSG"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.1215686275" green="0.1215686275" blue="0.1215686275" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -3035,7 +3053,6 @@
                         <outlet property="curveIVTLabel" destination="HsY-ek-bA9" id="1Kh-kD-w5d"/>
                         <outlet property="curveNameLabel" destination="ZUO-CK-ed2" id="VL1-3v-vub"/>
                         <outlet property="noCurveSelectedLabel" destination="K6v-WL-6j5" id="J75-HG-FWf"/>
-                        <outlet property="sendAlertNotificationCell" destination="LJP-5y-MxM" id="54u-jr-Pyk"/>
                         <segue destination="4bf-H7-VPz" kind="show" identifier="SelectAlertTypeSegue" id="dlc-hA-GFs"/>
                     </connections>
                 </tableViewController>
