@@ -38,7 +38,7 @@ class JavaScriptGauge: JavaScriptVisualization {
         
         gaugeInitializer = gaugeInitializer + config + ")"
         
-        return gaugeInitializer
+        return "masterGauge.init({size: 250, clipWidth: 250, clipHeight: 250, ringWidth: 60, maxValue: 10, transitionMs: 4000, id: 32932 })"
     }
     
     func getTickJavaScriptStringWithDataPoint(dataPoint: NSNumber) -> String! {

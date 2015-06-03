@@ -47,7 +47,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         pageControl.pageIndicatorTintColor = UIColor.lightGrayColor()
         pageControl.currentPageIndicatorTintColor = UIColor.blackColor()
         pageControl.backgroundColor = UIColor.whiteColor()
-        
         return true
 
     }
@@ -112,10 +111,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     
                 }
                 */
-                
             }
         }
-        
     }
     
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {

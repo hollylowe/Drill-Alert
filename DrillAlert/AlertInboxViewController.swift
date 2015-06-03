@@ -23,9 +23,10 @@ class AlertInboxViewController: UIViewController, UITableViewDataSource, UITable
     var shouldShowRead = false
 
     var toolbarYCoord: CGFloat = 0
-    var toolbarHeight: CGFloat = 60.0
+    var toolbarHeight: CGFloat = 44.0
     var rowHeight: CGFloat = 88.0
-    var segmentedControlBadgeToolbar: SegmentControlBadgeToolbar!
+    // var segmentedControlBadgeToolbar: SegmentControlBadgeToolbar
+    var segmentControlToolbar: SegmentControlToolbar!
     var shouldLoadFromNetwork = true
     var loadingIndicator: UIActivityIndicatorView?
     var loadingData = true
@@ -49,15 +50,17 @@ class AlertInboxViewController: UIViewController, UITableViewDataSource, UITable
             let criticalColor = UIColor(red: 0.988, green: 0.227, blue: 0.114, alpha: 1.0)
             let warningColor = UIColor(red: 0.992, green: 0.761, blue: 0.114, alpha: 1.0)
             let informationColor = UIColor(red: 0.498, green: 0.737, blue: 0.902, alpha: 1.0)
-            
+            /*
             self.segmentedControlBadgeToolbar = SegmentControlBadgeToolbar(
                 frame: toolbarFrame,
                 items: ["Critical", "Warning", "Information"],
                 itemColors: [UIColor.whiteColor(), UIColor.whiteColor(), UIColor.whiteColor()],
                 delegate: self,
                 action: "segmentedControlTapped:")
+            */
+            self.segmentControlToolbar = SegmentControlToolbar(frame: toolbarFrame, items: ["Critical", "Warning", "Information"], delegate: self, action: "segmentedControlTapped:")
             
-            self.view.addSubview(segmentedControlBadgeToolbar)
+            self.view.addSubview(self.segmentControlToolbar)
             self.tableView.contentInset = UIEdgeInsets(
                 top: self.toolbarYCoord + self.toolbarHeight,
                 left: 0,
@@ -65,18 +68,20 @@ class AlertInboxViewController: UIViewController, UITableViewDataSource, UITable
                 right: 0)
         }
         
-        self.loadData()
+        self.updateBadgeToolbar()
+
         super.viewDidLoad()
     }
     
     func segmentedControlTapped(sender: UISegmentedControl) {
         self.selectedIndex = sender.selectedSegmentIndex
-        self.segmentedControlBadgeToolbar.updateColor()
+        //self.segmentedControlBadgeToolbar.updateColor()
         self.tableView.reloadData()
     }
     
     func refresh(sender:AnyObject) {
         self.loadData()
+        self.updateBadgeToolbar()
         self.tableView.reloadData()
     }
     
@@ -92,6 +97,10 @@ class AlertInboxViewController: UIViewController, UITableViewDataSource, UITable
             
             refreshButton.tintColor = UIColor.SDIBlue()
             homeTabBarController.navigationItem.setRightBarButtonItem(refreshButton, animated: false)
+            self.loadData()
+            
+            self.updateBadgeToolbar()
+
         }
         
         if let navLine = self.navBarHairlineImageView {
@@ -128,12 +137,14 @@ class AlertInboxViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     func updateBadgeToolbar() {
+        /*
         self.segmentedControlBadgeToolbar.updateBadgeAtIndex(
             criticalIndex, toNumber: alertInbox.criticalItems.count)
         self.segmentedControlBadgeToolbar.updateBadgeAtIndex(
             warningIndex, toNumber: alertInbox.warningItems.count)
         self.segmentedControlBadgeToolbar.updateBadgeAtIndex(
             informationIndex, toNumber: alertInbox.informationItems.count)
+        */
     }
     
     func loadData() {
@@ -195,6 +206,7 @@ extension AlertInboxViewController: UITableViewDataSource {
             readToggleCell.selectionStyle = .None
             cell = readToggleCell
         } else {
+            self.updateBadgeToolbar()
             // Otherwise, it is just a normal cell showing an item.
             let alertInboxCell = tableView.dequeueReusableCellWithIdentifier(
                 AlertInboxCell.cellIdentifier()) as! AlertInboxCell
@@ -292,7 +304,7 @@ extension AlertInboxViewController: UITableViewDataSource {
                     numberOfSections = 0
                 }
             case informationIndex:
-                if self.alertInbox.readInformationItems.count == 0 && self.alertInbox.readInformationItems.count == 0 {
+                if self.alertInbox.informationItems.count == 0 && self.alertInbox.readInformationItems.count == 0 {
                     numberOfSections = 0
                 }
             default: break

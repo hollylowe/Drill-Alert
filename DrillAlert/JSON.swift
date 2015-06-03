@@ -7,6 +7,7 @@
 //
 
 import Foundation
+
 class JSON {
     var dictionary: Dictionary<String, AnyObject>?
     var error: NSError?
@@ -141,6 +142,57 @@ class JSON {
         }
         
         return result
+    }
+    
+    class func JSONFromURL(url: String) -> JSON? {
+        var resultJSON: JSON?
+        var result: AnyObject?
+        var jsonError: NSError?
+        var urlError: NSError?
+        
+        // Create a URL object with the given URL
+        if let url = NSURL(string: url) {
+            let request: NSURLRequest = NSURLRequest(URL:url)
+            var response: NSURLResponse?
+            
+            // Attempt to retrieve the data from the URL
+            if let data = NSURLConnection.sendSynchronousRequest(request, returningResponse: &response, error: &urlError) {
+                // Attempt to convert the recieved data into a JSON
+                result = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(0), error: &jsonError)
+                
+                // Only move forward if the JSON was successfully serialized
+                if jsonError != nil {
+                    if let dataString = NSString(data: data, encoding: NSASCIIStringEncoding) {
+                        if dataString == "null" {
+                            resultJSON = JSON(dictionary: Dictionary<String, AnyObject>())
+                        }
+                    }
+                } else {
+                    if let json = result as? Dictionary<String, AnyObject> {
+                        resultJSON = JSON(dictionary: json)
+                    } else {
+                        // Server Error occured
+                        
+                        // Convert the result to a dictionary object
+                        if let errorDictionary = result as? Dictionary<String, AnyObject> {
+                            
+                            // Get the "Message" from the server response JSON
+                            if let message = errorDictionary[APIErrorKey] as? String {
+                                println("Error creating JSON: \(message)")
+                            }
+                        }
+                        
+                    }
+                    
+                }
+            }
+            
+            if urlError != nil {
+                println("URL Error: \(urlError)")
+            }
+        }
+        
+        return resultJSON
     }
     
 }

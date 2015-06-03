@@ -18,7 +18,7 @@ protocol LoadingTableViewControllerDataSource {
 
 class LoadingTableViewController: UITableViewController {
     var dataSource: LoadingTableViewControllerDataSource!
-    
+    var shouldLoadInit = true
     let indicatorWidth: CGFloat = 20
     let indicatorHeight: CGFloat = 20
     var noDataLabelOffset: CGFloat = 0
@@ -31,8 +31,9 @@ class LoadingTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         self.tableView.separatorColor = UIColor.blackColor()
-
-        self.loadData()
+        if shouldLoadInit {
+            self.loadData()
+        }
         super.viewDidLoad()
     }
     

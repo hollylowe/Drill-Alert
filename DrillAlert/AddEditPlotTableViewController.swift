@@ -167,7 +167,7 @@ class AddEditPlotTableViewController: UITableViewController {
         // Then, we call syncDashboard. This will save the dashboard
         // to the backend as it is now, with the edited plot or added plot. 
         if let newPlot = self.plotToSave {
-            if let dashboard = self.delegate.dashboardToSave {
+            if let dashboard = self.delegate.dashboardManager.dashboardToSave {
                 if let oldPlot = self.plotToEdit {
                     if let oldPlotIndex = self.plotToEditIndex {
                         if oldPlotIndex < dashboard.pages.count {
@@ -182,11 +182,11 @@ class AddEditPlotTableViewController: UITableViewController {
                     if let id = newPlot.id {
                         dashboard.updatePage(newPlot)
                     } else {
-                        dashboard.addPage(newPlot)
+                        self.delegate.addPage(newPlot)
                     }
                 }
                 
-                self.delegate.syncDashboardWithCallback({ (error, newestID) -> Void in
+                self.delegate.dashboardManager.syncDashboardWithCallback({ (error, newestID) -> Void in
                    
                     if error == nil {
                         callback(error: nil, newestID: newestID)

@@ -43,28 +43,26 @@ class AddEditTrackTableViewController: UITableViewController {
     // | Table View Properties |
     //  -----------------------
     //
-    let numberOfSections = 4
-    let trackNameSection = 0
+    let numberOfSections = 3
     
-    let trackSizeSection = 1
+    let trackSizeSection = 0
     let xPositionRow = 0
     let yPositionRow = 1
     
-    let trackPropertiesSection = 2
+    let trackPropertiesSection = 1
     let stepSizeRow = 0
     let startRangeRow = 1
     let endRangeRow = 2
     let divisionSizeRow = 3
     let scaleTypeRow = 4
     
-    let trackCurvesSection = 3
+    let trackCurvesSection = 2
     
     //
     //  --------------------
     // | Table View Statics |
     //  --------------------
     //
-    var trackNameTextField: UITextField?
     
     // Track Size Section
     var xPositionTextField: UITextField?
@@ -406,7 +404,6 @@ class AddEditTrackTableViewController: UITableViewController {
 extension AddEditTrackTableViewController: UITableViewDelegate {
     func saveTrackWithCallback(callback: ((error: String?, newestID: Int?) -> Void)) {
         var error: String?
-        var opName: String?
         var opXPosition: Int?
         var opYPosition: Int?
         
@@ -416,11 +413,6 @@ extension AddEditTrackTableViewController: UITableViewDelegate {
         var opDivisionSize: Int?
         var opScaleType: Int?
         
-        if let trackNameTextField = self.trackNameTextField {
-            if !trackNameTextField.text.isEmpty {
-                opName = trackNameTextField.text
-            }
-        }
         
         opXPosition = self.xPositionTextField?.integerValue()
         opYPosition = self.yPositionTextField?.integerValue()
@@ -430,85 +422,81 @@ extension AddEditTrackTableViewController: UITableViewDelegate {
         opDivisionSize = self.divisionSizeTextField?.integerValue()
         opScaleType = self.scaleTypeTextField?.integerValue()
         
-        if let name = opName {
-            if let xPosition = opXPosition {
-                if let yPosition = opYPosition {
-                    if let stepSize = opStepSize {
-                        if let startRange = opStartRange {
-                            if let endRange = opEndRange {
-                                if let divisionSize = opDivisionSize {
-                                    if let scaleType = opScaleType {
-                                        var newTrackSettings = ItemSettings(
-                                            stepSize: stepSize,
-                                            startRange: startRange,
-                                            endRange: endRange,
-                                            divisionSize: divisionSize,
-                                            scaleType: scaleType)
-                                        
-                                        // If the user was editing a track,
-                                        // we should set the new track settings
-                                        // id and item id to those values.
-                                        
-                                        if let oldTrack = self.trackToEdit {
-                                            if oldTrack.itemSettingsCollection.array.count > 0 {
-                                                let oldItemSettings = oldTrack.itemSettingsCollection.array[0]
-                                                newTrackSettings.id = oldItemSettings.id
-                                                newTrackSettings.itemID = oldItemSettings.itemID
-                                            }
-                                            if let track = self.trackToSave {
-                                                // Set the track to the new values
-                                                track.xPosition = xPosition
-                                                track.yPosition = yPosition
-                                                track.itemSettingsCollection = ItemSettingsCollection(array: [newTrackSettings])
-                                                
-                                                
-                                            } else {
-                                                println("Error: No track To Save.")
-                                            }
-                                        } else {
-                                            // Set the track to the new values
-
-                                            if let track = self.trackToSave {
-                                                track.xPosition = xPosition
-                                                track.yPosition = yPosition
-                                                track.itemSettingsCollection = ItemSettingsCollection(array: [newTrackSettings])
-                                            } else {
-                                                println("Error: No track To Save.")
-                                            }
+        if let xPosition = opXPosition {
+            if let yPosition = opYPosition {
+                if let stepSize = opStepSize {
+                    if let startRange = opStartRange {
+                        if let endRange = opEndRange {
+                            if let divisionSize = opDivisionSize {
+                                if let scaleType = opScaleType {
+                                    var newTrackSettings = ItemSettings(
+                                        stepSize: stepSize,
+                                        startRange: startRange,
+                                        endRange: endRange,
+                                        divisionSize: divisionSize,
+                                        scaleType: scaleType)
+                                    
+                                    // If the user was editing a track,
+                                    // we should set the new track settings
+                                    // id and item id to those values.
+                                    
+                                    if let oldTrack = self.trackToEdit {
+                                        if oldTrack.itemSettingsCollection.array.count > 0 {
+                                            let oldItemSettings = oldTrack.itemSettingsCollection.array[0]
+                                            newTrackSettings.id = oldItemSettings.id
+                                            newTrackSettings.itemID = oldItemSettings.itemID
                                         }
-                                        
-                                        self.syncTrackWithPlotAndDashboardWithCallback({ (error, newestID) -> Void in
-                                            if error == nil {
-                                                callback(error: nil, newestID: nil)
-                                                
-                                            } else {
-                                                callback(error: "Error syncing track: \(error!).", newestID: nil)
-                                            }
-                                        })
-                                        
+                                        if let track = self.trackToSave {
+                                            // Set the track to the new values
+                                            track.xPosition = xPosition
+                                            track.yPosition = yPosition
+                                            track.itemSettingsCollection = ItemSettingsCollection(array: [newTrackSettings])
+                                            
+                                            
+                                        } else {
+                                            println("Error: No track To Save.")
+                                        }
                                     } else {
-                                        callback(error: "Please enter a valid Scale Type.", newestID: nil)
+                                        // Set the track to the new values
+
+                                        if let track = self.trackToSave {
+                                            track.xPosition = xPosition
+                                            track.yPosition = yPosition
+                                            track.itemSettingsCollection = ItemSettingsCollection(array: [newTrackSettings])
+                                        } else {
+                                            println("Error: No track To Save.")
+                                        }
                                     }
+                                    
+                                    self.syncTrackWithPlotAndDashboardWithCallback({ (error, newestID) -> Void in
+                                        if error == nil {
+                                            callback(error: nil, newestID: nil)
+                                            
+                                        } else {
+                                            callback(error: "Error syncing track: \(error!).", newestID: nil)
+                                        }
+                                    })
+                                    
                                 } else {
-                                    callback(error: "Please enter a valid Division Size.", newestID: nil)
+                                    callback(error: "Please enter a valid Scale Type.", newestID: nil)
                                 }
                             } else {
-                                callback(error: "Please enter a valid End Range.", newestID: nil)
+                                callback(error: "Please enter a valid Division Size.", newestID: nil)
                             }
                         } else {
-                            callback(error: "Please enter a valid Start Range.", newestID: nil)
+                            callback(error: "Please enter a valid End Range.", newestID: nil)
                         }
                     } else {
-                        callback(error: "Please enter a valid Step Size.", newestID: nil)
+                        callback(error: "Please enter a valid Start Range.", newestID: nil)
                     }
                 } else {
-                    callback(error: "Please enter a valid Y Position.", newestID: nil)
+                    callback(error: "Please enter a valid Step Size.", newestID: nil)
                 }
             } else {
-                callback(error: "Please enter a valid X Position.", newestID: nil)
+                callback(error: "Please enter a valid Y Position.", newestID: nil)
             }
         } else {
-            callback(error: "Please enter a name.", newestID: nil)
+            callback(error: "Please enter a valid X Position.", newestID: nil)
         }
         
 
@@ -517,7 +505,6 @@ extension AddEditTrackTableViewController: UITableViewDelegate {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         switch indexPath.section {
-        case self.trackNameSection: self.trackNameTextField?.becomeFirstResponder()
         case self.trackSizeSection:
             switch indexPath.row {
                 case self.xPositionRow: self.xPositionTextField?.becomeFirstResponder()
@@ -568,7 +555,6 @@ extension AddEditTrackTableViewController: UITableViewDataSource {
         var result = ""
         
         switch section {
-        case self.trackNameSection: result = "Name"
         case self.trackSizeSection: result = "Size"
         case self.trackPropertiesSection: result = "Properties"
         default: result = ""
@@ -588,7 +574,6 @@ extension AddEditTrackTableViewController: UITableViewDataSource {
         var numberOfRows = 0
         
         switch section {
-        case self.trackNameSection: numberOfRows = 1
         case self.trackSizeSection: numberOfRows = 2
         case self.trackPropertiesSection: numberOfRows = 5
         case self.trackCurvesSection:
@@ -600,23 +585,7 @@ extension AddEditTrackTableViewController: UITableViewDataSource {
         
         return numberOfRows
     }
-    
-    private func createTrackNameCell() -> TextFieldCell {
-        let textFieldCell = tableView.dequeueReusableCellWithIdentifier(TextFieldCell.cellIdentifier()) as! TextFieldCell
-        textFieldCell.textField.placeholder = "Enter a name"
-        if let track = self.trackToEdit {
-            if let id = track.id {
-                textFieldCell.textField.text = "Track \(id)"
-            }
-        }
-        if let placeholder = textFieldCell.textField.placeholder {
-            textFieldCell.textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSForegroundColorAttributeName: UIColor(white: 0.52, alpha: 1.0)])
-        }
-        
-        self.trackNameTextField = textFieldCell.textField
-        textFieldCell.textField.enabled = false
-        return textFieldCell
-    }
+
     
     private func createTrackCurvesCellForIndexPath(indexPath: NSIndexPath) -> UITableViewCell {
         var cell: UITableViewCell!
@@ -652,7 +621,6 @@ extension AddEditTrackTableViewController: UITableViewDataSource {
         var cell: UITableViewCell!
         
         switch indexPath.section {
-        case self.trackNameSection: cell = self.createTrackNameCell()
         case self.trackSizeSection:
             switch indexPath.row {
             case self.xPositionRow:
@@ -660,6 +628,8 @@ extension AddEditTrackTableViewController: UITableViewDataSource {
                 var textFieldText: String?
                 if let track = self.trackToEdit {
                     textFieldText = String(track.xPosition)
+                } else {
+                    textFieldText = "0"
                 }
                 
                 textFieldDetailCell.setupWithLabelText("X Position", placeholder: "0", andTextFieldText: textFieldText)
@@ -674,6 +644,8 @@ extension AddEditTrackTableViewController: UITableViewDataSource {
 
                 if let track = self.trackToEdit {
                     textFieldText = String(track.yPosition)
+                } else {
+                    textFieldText = "0"
                 }
                 
                 textFieldDetailCell.setupWithLabelText("Y Position", placeholder: "0", andTextFieldText: textFieldText)
@@ -687,13 +659,13 @@ extension AddEditTrackTableViewController: UITableViewDataSource {
             switch indexPath.row {
             case self.stepSizeRow:
                 let textFieldDetailCell = tableView.dequeueReusableCellWithIdentifier(TextFieldDetailCell.cellIdentifier()) as! TextFieldDetailCell
-                var textFieldText: String?
+                var textFieldText = "0"
                 
                 if let track = self.trackToEdit {
                     if track.itemSettingsCollection.array.count > 0  {
                         textFieldText = String(track.itemSettingsCollection.array[0].stepSize)
                     }
-                }
+                } 
                 
                 textFieldDetailCell.setupWithLabelText("Step Size", placeholder: "0", andTextFieldText: textFieldText)
                 textFieldDetailCell.textField.enabled = true
@@ -702,7 +674,7 @@ extension AddEditTrackTableViewController: UITableViewDataSource {
                 cell = textFieldDetailCell
             case self.startRangeRow:
                 let textFieldDetailCell = tableView.dequeueReusableCellWithIdentifier(TextFieldDetailCell.cellIdentifier()) as! TextFieldDetailCell
-                var textFieldText: String?
+                var textFieldText = "0"
                 
                 if let track = self.trackToEdit {
                     if track.itemSettingsCollection.array.count > 0  {
@@ -717,7 +689,7 @@ extension AddEditTrackTableViewController: UITableViewDataSource {
                 cell = textFieldDetailCell
             case self.endRangeRow:
                 let textFieldDetailCell = tableView.dequeueReusableCellWithIdentifier(TextFieldDetailCell.cellIdentifier()) as! TextFieldDetailCell
-                var textFieldText: String?
+                var textFieldText = "0"
                 
                 if let track = self.trackToEdit {
                     if track.itemSettingsCollection.array.count > 0  {
@@ -732,7 +704,7 @@ extension AddEditTrackTableViewController: UITableViewDataSource {
                 cell = textFieldDetailCell
             case self.divisionSizeRow:
                 let textFieldDetailCell = tableView.dequeueReusableCellWithIdentifier(TextFieldDetailCell.cellIdentifier()) as! TextFieldDetailCell
-                var textFieldText: String?
+                var textFieldText = "0"
                 
                 if let track = self.trackToEdit {
                     if track.itemSettingsCollection.array.count > 0  {
@@ -747,7 +719,7 @@ extension AddEditTrackTableViewController: UITableViewDataSource {
                 cell = textFieldDetailCell
             case self.scaleTypeRow:
                 let textFieldDetailCell = tableView.dequeueReusableCellWithIdentifier(TextFieldDetailCell.cellIdentifier()) as! TextFieldDetailCell
-                var textFieldText: String?
+                var textFieldText = "0"
                 
                 if let track = self.trackToEdit {
                     if track.itemSettingsCollection.array.count > 0  {

@@ -28,8 +28,8 @@ master.init = function (config) {
     
     master[id] = {};
     
-    var resolutionRatio = window.devicePixelRatio || 1;
-    var fontSize = 12;
+    var resolutionRatio = 1.6;
+    var fontSize = 10;
     var labelSize = config.titleSize === undefined ? fontSize : config.titleSize;
     var title = config.title === undefined ? "" : config.title; // Max char: ~40 or risk getting cut off
     var titleLabel = config.units === undefined ? title : title + " (" + config.units + ")";
@@ -38,7 +38,7 @@ master.init = function (config) {
     var yMax = config.yMax;
     var xMax = config.xMax;
     // Length of the title box height in px. Default = 50px
-    var textBox = config.textBox === undefined ? 50 * resolutionRatio : config.textBox * resolutionRatio;
+    var textBox = config.textBox === undefined ? 0 * resolutionRatio : config.textBox * resolutionRatio;
     
     var data = config.data;
     // n = max amount of data to be displayed on the y axis (domain max for y axis)
@@ -93,17 +93,6 @@ master.init = function (config) {
     .attr("width", master[id].height + master[id].margin.left + master[id].margin.right)
     .attr("height", master[id].width + master[id].margin.top + master[id].margin.bottom + textBox);
     
-    master[id].label = master[id].base.append("svg").attr("id", id)
-    .append("g")
-    .attr("id", "textBox")
-    .append("text")
-    .attr("id", "topLabel")
-    .style("font-size", (labelSize * resolutionRatio) + "px")
-    .style("text-anchor", "middle")
-    .html(titleLabel);
-    
-    master[id].base.select("#textBox")
-    .attr("transform", "translate("+ ((master[id].height + master[id].margin.left + master[id].margin.right)/2) + "," + (textBox/2) + ")")
     
     // Creating the svg for the plots
     master[id].svg = master[id].base.append("svg").attr("id", id)
@@ -128,7 +117,7 @@ master.init = function (config) {
     master[id].svg.append("g")
     .attr("class", "y axis")
     .call(master[id].yAxis)
-    .attr("transform", "translate("+ (master[id].width-25) +")")
+    .attr("transform", "translate("+ (master[id].width-40) +")")
     .selectAll("text")
     .style("text-anchor", "end")
     .style("font-size", (fontSize * resolutionRatio) +"px")

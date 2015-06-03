@@ -9,20 +9,15 @@
 import Foundation
 import UIKit
 
-class AddEditDashboardNavigationController: UINavigationController {
-    class func storyboardIdentifier() -> String {
-        return "AddEditDashboardNavigationController"
-    }
-}
-
-class AddEditDashboardTableViewController: UITableViewController, UITextFieldDelegate {
-    // If this view's isDisabled is set to true, 
-    // then nothing can be interacted with on the
-    // view.
-    var isDisabled: Bool = false
+class DashboardManager {
     var user: User!
     var wellbore: Wellbore!
-    var shouldShowConfirmationDialog = false
+    
+    // Set if a user edits a dashboard in a way 
+    // that changes it on the backend. This is not
+    // set when a user is adding a dashboard.
+    var userDidMakeChangesToDashboard: Bool = false
+    
     // The dashboardToSave is the dashboard that
     // needs to be saved. It contains all of the user
     // changes to the either new dashboard or edited dashboard.
@@ -32,162 +27,205 @@ class AddEditDashboardTableViewController: UITableViewController, UITextFieldDel
     // a dashboard from the Edit Dashboards view.
     var dashboardToEdit: Dashboard?
     
-    // Table View Properties
-    let dashboardNameSection = 0
-    let pagesSection = 1
-    let pagesToolbarRow = 0
-    let deleteDashboardSection = 2
-    
-    var pagesToolbarCell: AddEditToolbarCell!
-    var deleteDashboardCell: DeleteDashboardTableViewCell?
-    var saveBarButtonItem: UIBarButtonItem!
-    var cancelBarButtonItem: UIBarButtonItem!
-    var activityBarButtonItem: UIBarButtonItem!
-    var dashboardNameTextField: UITextField!
-    
-    private func disableView() {
-        self.isDisabled = true
-        self.pagesToolbarCell.disable()
-        self.deleteDashboardCell?.disable()
-        self.saveBarButtonItem.enabled = false
-        self.cancelBarButtonItem.enabled = false
-        self.dashboardNameTextField.enabled = false
+    // This initializer should be used when the 
+    // user is editing a dashboard.
+    init(user: User, wellbore: Wellbore, newDashboardToEdit: Dashboard) {
+        self.dashboardToEdit = newDashboardToEdit
+        self.wellbore        = wellbore
+        self.user            = user
+        
+        // Set the dashboard to save to the current
+        // edit dashboard values.
+        var sortedPages = newDashboardToEdit.pages.sorted({ (page1, page2) -> Bool in
+            return page1.position < page2.position
+        })
+        
+        self.dashboardToSave = Dashboard(
+            pages: sortedPages,
+            userID: newDashboardToEdit.userID,
+            wellboreID: newDashboardToEdit.wellboreID)
+        self.dashboardToSave!.id = newDashboardToEdit.id
+        self.dashboardToSave!.name = newDashboardToEdit.name
     }
     
-    private func enableView() {
-        self.isDisabled = false
-        self.pagesToolbarCell.enable()
-        self.deleteDashboardCell?.enable()
-        self.saveBarButtonItem.enabled = true
-        self.cancelBarButtonItem.enabled = true
-        self.dashboardNameTextField.enabled = true
+    // This initializer should be used when the user
+    // is adding a dashboard
+    init(user: User, wellbore: Wellbore) {
+        self.wellbore        = wellbore
+        self.user            = user
+        self.dashboardToSave = Dashboard(
+            userID: self.user.id,
+            wellboreID: self.wellbore.id)
     }
     
-    private func setupView() {
-        self.navigationController?.navigationBar.barStyle = UIBarStyle.Black
-        self.tableView.separatorColor = UIColor(red: 0.112, green: 0.112, blue: 0.112, alpha: 1.0)
-        self.tableView.tableHeaderView = UIView(frame: CGRectMake(0, 0, tableView.frame.size.width, 50.0))
-        
-        self.cancelBarButtonItem = UIBarButtonItem(
-            title: "Cancel",
-            style: .Plain,
-            target: self, action: "cancelButtonTapped:")
-        self.saveBarButtonItem = UIBarButtonItem(
-            title: "Save",
-            style: .Done,
-            target: self,
-            action: "saveButtonTapped:")
-        if let saveButton = self.saveBarButtonItem {
-            saveButton.tintColor = UIColor.SDIBlue()
-        }
-        
-        let activityView = UIActivityIndicatorView(frame: CGRectMake(0, 0, 25, 25))
-        activityView.startAnimating()
-        activityView.hidden = false
-        activityView.color = UIColor.grayColor()
-        activityView.sizeToFit()
-        activityView.autoresizingMask = (UIViewAutoresizing.FlexibleLeftMargin | UIViewAutoresizing.FlexibleRightMargin | UIViewAutoresizing.FlexibleTopMargin | UIViewAutoresizing.FlexibleBottomMargin)
-        
-        self.activityBarButtonItem = UIBarButtonItem(customView: activityView)
-        self.navigationItem.setRightBarButtonItem(self.saveBarButtonItem, animated: true)
-        self.navigationItem.setLeftBarButtonItem(self.cancelBarButtonItem, animated: true)
-    }
-
-    func cancelButtonTapped(sender: AnyObject) {
-        // If a user is editing a dashboard, but they 
-        // then hit cancel, we need to discard any 
-        // changes they may have made. 
-        if let dashboard = self.dashboardToEdit {
-            if self.shouldShowConfirmationDialog {
-                let alert = UIAlertController(
-                    title: "Are you sure?",
-                    message: "Your changes to this dashboard will be lost.",
-                    preferredStyle: .Alert)
-                
-                alert.addAction(UIAlertAction(title: "Yes", style: .Destructive, handler: { (alertAction) -> Void in
-                    
-                    // If we are canceling our changes to the dashboard,
-                    // We need to update what is on the backend to what
-                    // was there prior to the edit.
-                    println("Reverting edited dashboard...")
-                    self.showActivity()
-                    Dashboard.saveDashboard(dashboard, forUser: self.user, andWellbore: self.wellbore, withCallback: { (error, dashboardID) -> Void in
-                        self.hideActivity()
-                        if error == nil {
-                            println("Dashboard  successfully reverted.")
-                            self.dismissViewControllerAnimated(true, completion: nil)
-                        } else {
-                            println("Dashboard not reverted. Error: \(error!)")
-                        }
-                    })
-                }))
-                
-                alert.addAction(UIAlertAction(title: "No", style: .Default, handler: nil))
-                self.presentViewController(alert, animated: true, completion: nil)
-            } else {
-                self.dismissViewControllerAnimated(true, completion: nil)
-            }
-            
-        } else {
-            // Otherwise, the user is canceling a Add Dashboard operation.
-            // Since the dashboard has been saving on the backend as they
-            // were making changes, we need to delete the dashboard (it was not
-            // there before the Add Dashboard operation)
-            if let dashboard = self.dashboardToSave {
-                self.showActivity()
-                println("Removing added dashboard...")
-                Dashboard.deleteDashboard(dashboard, forUser: self.user, withCallback: { (error) -> Void in
-                    self.hideActivity()
-                    if error == nil {
-                        println("Dashboard \(dashboard.id) successfully deleted.")
-                        self.dismissViewControllerAnimated(true, completion: nil)
-                    } else {
-                        println("Dashboard not deleted. Error: \(error!)")
-                        self.dismissViewControllerAnimated(true, completion: nil)
-                    }
-                })
-            }
-            
-        }
-        
-        
-    }
-    
-    func saveButtonTapped(sender: AnyObject) {
-        // The user wants to save this dashboard.
-        // At this point, the dashboard should be completely
-        // updated on the backend with everything, besides 
-        // the name.
-        //
+    // This adds a page to the current dashboard to save. 
+    // It also sets its position.
+    func addPage(newPage: Page) -> String? {
+        var error: String?
         
         if let dashboard = self.dashboardToSave {
-            self.showActivityBarButton()
-            if let name = self.dashboardNameTextField.text {
-                dashboard.name = name
-            }
-            
-            Dashboard.saveDashboard(dashboard,
-                forUser: self.user,
-                andWellbore: self.wellbore) { (error, dashboardID) -> Void in
-                    // If there is an error, show an alert.
-                    // Otherwise, dismiss this view.
-                    if let errorString = error {
-                        let alertController = UIAlertController(
-                            title: "Error",
-                            message: errorString,
-                            preferredStyle: .Alert)
-                        
-                        let okayAction = UIAlertAction(title: "Okay", style: .Cancel) { (action) in }
-                        alertController.addAction(okayAction)
-                        self.hideActivityBarButton()
-                        self.presentViewController(alertController, animated: true, completion: nil)
-                    } else {
-                        self.hideActivityBarButton()
-                        self.dismissViewControllerAnimated(true, completion: nil)
-                    }
+            newPage.position = dashboard.pages.count
+            dashboard.pages.append(newPage)
+        } else {
+            error = "Error: No dashboard to save when adding page."
+        }
+        
+        return error
+    }
+    
+    func getDashboardPageCount() -> Int {
+        var count = 0
+        
+        if let dashboard = self.dashboardToSave {
+            count = dashboard.pages.count
+        }
+        
+        return count
+    }
+    
+    func getPageAtIndex(index: Int) -> Page? {
+        var page: Page?
+        
+        if let dashboard = self.dashboardToSave {
+            if index < dashboard.pages.count {
+                page = dashboard.pages[index]
             }
         }
         
+        return page
+    }
+    
+    // The user can only delete a dashboard if they 
+    // are editing one.
+    func deleteDashboardWithCallback(callback: ((error: String?) -> Void)) {
+        if let dashboard = self.dashboardToEdit {
+            
+            Dashboard.deleteDashboard(dashboard, forUser: self.user, withCallback: { (error) -> Void in
+                if error == nil {
+                    callback(error: nil)
+                } else {
+                    callback(error: error)
+                }
+            })
+        } else {
+            callback(error: "No dashboard to edit.")
+        }
+    }
+    
+    func moveDashboardPageAtIndex(sourceIndex: Int, toIndex: Int) {
+        // Subtract one for the Add / Edit row
+        if let dashboard = self.dashboardToSave {
+            var sourcePage = dashboard.pages[sourceIndex]
+            var toPage = dashboard.pages[toIndex]
+            
+            println("Source: " + sourcePage.name)
+            println("Destination: " + toPage.name)
+            
+            var tempPosition = sourcePage.position
+            sourcePage.position = toPage.position
+            toPage.position = tempPosition
+            
+            dashboard.pages.removeAtIndex(sourceIndex) // remove the source page
+            dashboard.pages.insert(sourcePage, atIndex: toIndex) // add it again
+        }
+    }
+    
+    // This is called when a user wants to cancel
+    // their changes to an edited dashboard.
+    func revertEditedDashboardWithCallback(callback: ((error: String?) -> Void)) {
+        // If we are canceling our changes to the dashboard,
+        // We need to update what is on the backend to what
+        // was there prior to the edit.
+        if let dashboard = self.dashboardToEdit {
+            Dashboard.saveDashboard(dashboard, forUser: self.user, andWellbore: self.wellbore, withCallback: { (error, dashboardID) -> Void in
+                callback(error: error)
+            })
+        } else {
+            callback(error: "No dashboard to edit found.")
+        }
+    }
+    
+    // Otherwise, the user is canceling a Add Dashboard operation.
+    // Since the dashboard has been saving on the backend as they
+    // were making changes, we need to delete the dashboard (it was not
+    // there before the Add Dashboard operation)
+    func removeAddedDashboardWithCallback(callback: ((error: String?) -> Void)) {
+        if let dashboard = self.dashboardToSave {
+            if let id = dashboard.id {
+                Dashboard.deleteDashboard(dashboard, forUser: self.user, withCallback: { (error) -> Void in
+                    if error == nil {
+                        callback(error: nil)
+                    } else {
+                        callback(error: "Dashboard not deleted. Error: \(error!)")
+                    }
+                })
+            } else {
+                callback(error: "Dashboard not deleted, no ID found.")
+            }
+        } else {
+            callback(error: "Dashboard not deleted, no dashboard to save found.")
+        }
+    }
+    
+    // This should be called whenever a major change to the
+    // dashboard occurs, like adding an item. By saving the
+    // dashboard continuously, we obtain access to item IDs,
+    // which allow us to save ItemCurves.
+    func syncDashboardWithCallback(callback: ((error: String?, newestID: Int?) -> Void)) {
+        if let dashboard = self.dashboardToSave {
+            Dashboard.saveDashboard(dashboard,
+                forUser: self.user,
+                andWellbore: self.wellbore) { (error, savedDashboardID) -> Void in
+                    // The user made changes, and they were saved on the backend. 
+                    // We need to set this to true.
+                    self.userDidMakeChangesToDashboard = true
+
+                    if error != nil {
+                        callback(error: error, newestID: nil)
+                    } else {
+                        // If we had a successful save, and our current
+                        // dashboard to save does not have an ID, we 
+                        // need to set it here.
+                        if let id = savedDashboardID {
+                            if dashboard.id == nil {
+                                dashboard.id = id
+                            }
+                            self.updateSavedDashboardToBackendWithCallback(callback)
+                        } else {
+                            callback(error: "Dashboard had no ID.", newestID: nil)
+                        }
+                    }
+            }
+        }
+    }
+    
+    // Everytime this is called is only after
+    // one thing has been added to a dashboard,
+    // wheter it is a page, a plot track, or a canvas item.
+    // As such, we know that there is only one thing in the entirety
+    // of the local dashboard that does not have an ID - but the
+    // backend dashboard does have an ID for this thing.
+    func updateSavedDashboardToBackendWithCallback(callback: ((error: String?, newestID: Int?) -> Void)) {
+        if let localDashboard = self.dashboardToSave {
+            if let id = localDashboard.id {
+                // Get the dashboard from the backend
+                if let backendDashboard = Dashboard.getDashboardWithID(id, forUser: self.user, andWellbore: self.wellbore) {
+                    
+                    var newestID = self.getNewestIDForLocalDashboard(localDashboard, andBackendDashboard: backendDashboard)
+                    
+                    self.dashboardToSave = backendDashboard
+                    callback(error: nil, newestID: newestID)
+                    // self.tableView.reloadData()
+                } else {
+                    callback(error: "Error updating dashboard IDs: Could not retrieve backend dashboard.", newestID: nil)
+                    
+                }
+            } else {
+                callback(error: "Error updating dashboard IDs: No ID on local dashboard.", newestID: nil)
+            }
+        } else {
+            callback(error: "Error updating dashboard IDs: Local dashboard does not exist.", newestID: nil)
+        }
     }
     
     func getNewestIDForLocalDashboard(localDashboard: Dashboard, andBackendDashboard backendDashboard: Dashboard) -> Int? {
@@ -273,103 +311,186 @@ class AddEditDashboardTableViewController: UITableViewController, UITextFieldDel
         return newestID
     }
     
-    // Everytime this is called is only after
-    // one thing has been added to a dashboard,
-    // wheter it is a page, a plot track, or a canvas item.
-    // As such, we know that there is only one thing in the entirety
-    // of the local dashboard that does not have an ID - but the 
-    // backend dashboard does have an ID for this thing.
-    func updateSavedDashboardToBackendWithCallback(callback: ((error: String?, newestID: Int?) -> Void)) {
-        if let localDashboard = self.dashboardToSave {
-            if let id = localDashboard.id {
-                // Get the dashboard from the backend 
-                if let backendDashboard = Dashboard.getDashboardWithID(id, forUser: self.user, andWellbore: self.wellbore) {
-                    
-                    var newestID = self.getNewestIDForLocalDashboard(localDashboard, andBackendDashboard: backendDashboard)
-                    
-                        self.dashboardToSave = backendDashboard
-                        self.refreshPages()
-                        callback(error: nil, newestID: newestID)
-                        // self.tableView.reloadData()
-                } else {
-                    callback(error: "Error updating dashboard IDs: Could not retrieve backend dashboard.", newestID: nil)
-
-                }
-            } else {
-                callback(error: "Error updating dashboard IDs: No ID on local dashboard.", newestID: nil)
+    func setDashboardName(opName: String?) {
+        if let dashboard = self.dashboardToSave {
+            if let name = opName {
+                dashboard.name = name
             }
-        } else {
-            callback(error: "Error updating dashboard IDs: Local dashboard does not exist.", newestID: nil)
         }
     }
     
-    // This should be called whenever a major change to the
-    // dashboard occurs, like adding an item. By saving the 
-    // dashboard continuously, we obtain access to item IDs, 
-    // which allow us to save ItemCurves.
-    func syncDashboardWithCallback(callback: ((error: String?, newestID: Int?) -> Void)) {
-        self.shouldShowConfirmationDialog = true
-        if let dashboard = self.dashboardToSave {
-            // Show activity
-            println("Syncing dashboard...")
-            Dashboard.saveDashboard(dashboard,
-                forUser: self.user,
-                andWellbore: self.wellbore) { (error, savedDashboardID) -> Void in
-                    // Hide Activity
-                    if error != nil {
-                        println("Error while saving dashboard:")
-                        println(error!)
-                        callback(error: error!, newestID: nil)
-                    } else {
-                        println("Saved dashboard.")
-                        
-                        if let id = savedDashboardID {
-                            if dashboard.id == nil {
-                                 dashboard.id = id
-                            }
-                            self.updateSavedDashboardToBackendWithCallback(callback)
+    
+}
+
+class AddEditDashboardNavigationController: UINavigationController {
+    class func storyboardIdentifier() -> String {
+        return "AddEditDashboardNavigationController"
+    }
+}
+
+class AddEditDashboardTableViewController: UITableViewController, UITextFieldDelegate {
+    // If this view's isDisabled is set to true, 
+    // then nothing can be interacted with on the
+    // view.
+    var isDisabled: Bool = false
+    var user: User!
+    var wellbore: Wellbore!
+    var shouldShowConfirmationDialog = false
+    var dashboardManager: DashboardManager!
+    var dashboardToEdit: Dashboard?
+    
+    
+    // Table View Properties
+    let dashboardNameSection = 0
+    let pagesSection = 1
+    let pagesToolbarRow = 0
+    let deleteDashboardSection = 2
+    
+    var pagesToolbarCell: AddEditToolbarCell!
+    var deleteDashboardCell: DeleteDashboardTableViewCell?
+    var saveBarButtonItem: UIBarButtonItem!
+    var cancelBarButtonItem: UIBarButtonItem!
+    var activityBarButtonItem: UIBarButtonItem!
+    var dashboardNameTextField: UITextField!
+    
+    private func disableView() {
+        self.isDisabled = true
+        self.pagesToolbarCell.disable()
+        self.deleteDashboardCell?.disable()
+        self.saveBarButtonItem.enabled = false
+        self.cancelBarButtonItem.enabled = false
+        self.dashboardNameTextField.enabled = false
+    }
+    
+    private func enableView() {
+        self.isDisabled = false
+        self.pagesToolbarCell.enable()
+        self.deleteDashboardCell?.enable()
+        self.saveBarButtonItem.enabled = true
+        self.cancelBarButtonItem.enabled = true
+        self.dashboardNameTextField.enabled = true
+    }
+    
+    private func setupView() {
+        self.navigationController?.navigationBar.barStyle = UIBarStyle.Black
+        self.tableView.separatorColor = UIColor(red: 0.112, green: 0.112, blue: 0.112, alpha: 1.0)
+        self.tableView.tableHeaderView = UIView(frame: CGRectMake(0, 0, tableView.frame.size.width, 50.0))
+        
+        self.cancelBarButtonItem = UIBarButtonItem(
+            title: "Cancel",
+            style: .Plain,
+            target: self, action: "cancelButtonTapped:")
+        self.saveBarButtonItem = UIBarButtonItem(
+            title: "Save",
+            style: .Done,
+            target: self,
+            action: "saveButtonTapped:")
+        if let saveButton = self.saveBarButtonItem {
+            saveButton.tintColor = UIColor.SDIBlue()
+        }
+        
+        let activityView = UIActivityIndicatorView(frame: CGRectMake(0, 0, 25, 25))
+        activityView.startAnimating()
+        activityView.hidden = false
+        activityView.color = UIColor.grayColor()
+        activityView.sizeToFit()
+        activityView.autoresizingMask = (UIViewAutoresizing.FlexibleLeftMargin | UIViewAutoresizing.FlexibleRightMargin | UIViewAutoresizing.FlexibleTopMargin | UIViewAutoresizing.FlexibleBottomMargin)
+        
+        self.activityBarButtonItem = UIBarButtonItem(customView: activityView)
+        self.navigationItem.setRightBarButtonItem(self.saveBarButtonItem, animated: true)
+        self.navigationItem.setLeftBarButtonItem(self.cancelBarButtonItem, animated: true)
+    }
+
+    func cancelButtonTapped(sender: AnyObject) {
+        // If a user is editing a dashboard, but they
+        // then hit cancel, we need to discard any 
+        // changes they may have made. 
+        if let dashboard = self.dashboardManager.dashboardToEdit {
+            if self.shouldShowConfirmationDialog {
+                let alert = UIAlertController(
+                    title: "Are you sure?",
+                    message: "Your changes to this dashboard will be lost.",
+                    preferredStyle: .Alert)
+                
+                alert.addAction(UIAlertAction(title: "Yes", style: .Destructive, handler: { (alertAction) -> Void in
+                    self.showActivity()
+                    self.dashboardManager.revertEditedDashboardWithCallback({ (error) -> Void in
+                        self.hideActivity()
+                        if error == nil {
+                            self.dismissViewControllerAnimated(true, completion: nil)
                         } else {
-                            callback(error: "Dashboard had no id.", newestID: nil)
+                            println("Dashboard not reverted. Error: \(error!)")
                         }
-                    }
+                    })
+                }))
+                
+                alert.addAction(UIAlertAction(title: "No", style: .Default, handler: nil))
+                self.presentViewController(alert, animated: true, completion: nil)
+            } else {
+                self.dismissViewControllerAnimated(true, completion: nil)
+            }
+        } else {
+            self.showActivity()
+            self.dashboardManager.removeAddedDashboardWithCallback({ (error) -> Void in
+                self.hideActivity()
+                self.dismissViewControllerAnimated(true, completion: nil)
+            })
+        }
+    }
+    
+    func saveButtonTapped(sender: AnyObject) {
+        // The user wants to save this dashboard.
+        // At this point, the dashboard should be completely
+        // updated on the backend with everything, besides 
+        // the name.
+        self.showActivityBarButton()
+        self.dashboardManager.setDashboardName(self.dashboardNameTextField.text)
+        self.dashboardManager.syncDashboardWithCallback { (error, newestID) -> Void in
+            self.hideActivityBarButton()
+
+            if let errorString = error {
+                let alertController = UIAlertController(
+                    title: "Error",
+                    message: errorString,
+                    preferredStyle: .Alert)
+                
+                let okayAction = UIAlertAction(title: "Okay", style: .Cancel) { (action) in }
+                alertController.addAction(okayAction)
+                self.presentViewController(alertController, animated: true, completion: nil)
+            } else {
+                self.dismissViewControllerAnimated(true, completion: nil)
             }
         }
     }
+    
 
     override func viewDidLoad() {
-        self.setupView()
         if let dashboard = dashboardToEdit {
-            var sortedPages = dashboard.pages.sorted({ (page1, page2) -> Bool in
-                return page1.position < page2.position
-            })
-            
-            self.dashboardToSave = Dashboard(
-                pages: sortedPages,
-                userID: dashboard.userID,
-                wellboreID: dashboard.wellboreID)
-            self.dashboardToSave!.id = dashboard.id
-            self.dashboardToSave!.name = dashboard.name
-            
+            self.dashboardManager = DashboardManager(
+                user: self.user,
+                wellbore: self.wellbore,
+                newDashboardToEdit: dashboard)
             self.title = "Edit Dashboard"
             
         } else {
-            self.dashboardToSave = Dashboard(
-                userID: self.user.id,
-                wellboreID: self.wellbore.id)
+            self.dashboardManager = DashboardManager(
+                user: self.user,
+                wellbore: self.wellbore)
             self.title = "Add Dashboard"
         }
+        self.setupView()
+        
         self.tableView.reloadData()
         super.viewDidLoad()
     }
     
     func addPage(page: Page) {
         // Set the position to the latest one
-        if let dashboard = self.dashboardToSave {
-            page.position = dashboard.pages.count
-            dashboard.pages.append(page)
-            self.tableView.reloadData()
+        let error = self.dashboardManager.addPage(page)
+        if error != nil {
+            println(error)
         } else {
-            println("Error: No dashboard to save when adding page.")
+            self.tableView.reloadData()
         }
     }
     
@@ -420,25 +541,16 @@ class AddEditDashboardTableViewController: UITableViewController, UITextFieldDel
     }
     
     func deleteDashboardButtonTapped(sender: UIButton) {
-
         let alertController = UIAlertController(title: "Delete dashboard?", message: "", preferredStyle: .Alert)
         alertController.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.Destructive, handler: { (action) -> Void in
-            if let dashboard = self.dashboardToEdit {
-                Dashboard.deleteDashboard(dashboard, forUser: self.user, withCallback: { (error) -> Void in
-                    if error == nil {
-                        
-                        self.dismissViewControllerAnimated(true, completion: nil)
-                    } else {
-                        let alert = UIAlertController(
-                            title: "Error",
-                            message: error,
-                            preferredStyle: .Alert)
-                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-                        self.presentViewController(alert, animated: true, completion: nil)
-                    }
-                })
-                
-            }
+            self.dashboardManager.deleteDashboardWithCallback({ (error) -> Void in
+                let alert = UIAlertController(
+                    title: "Error",
+                    message: error,
+                    preferredStyle: .Alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                self.presentViewController(alert, animated: true, completion: nil)
+            })
         }))
         
         alertController.addAction(UIAlertAction(title: "No", style: .Default, handler: nil))
@@ -460,7 +572,8 @@ class AddEditDashboardTableViewController: UITableViewController, UITextFieldDel
         
         // Sync the dashboard as it is now
         self.showActivityBarButton()
-        self.syncDashboardWithCallback { (error, newestID) -> Void in
+        self.dashboardManager.setDashboardName(self.dashboardNameTextField.text)
+        self.dashboardManager.syncDashboardWithCallback { (error, newestID) -> Void in
             if error == nil {
                 // Show the navigation controller
                 self.hideActivityBarButton()
@@ -470,7 +583,6 @@ class AddEditDashboardTableViewController: UITableViewController, UITextFieldDel
                 println("Error saving dashboard: \(error!)")
             }
         }
-        
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -489,7 +601,7 @@ class AddEditDashboardTableViewController: UITableViewController, UITextFieldDel
                 if let viewController = navigationController.viewControllers[0] as? AddEditPlotTableViewController {
                     if let plotIndex = sender as? Int {
                         viewController.plotToEditIndex = plotIndex
-                        if let dashboard = self.dashboardToSave {
+                        if let dashboard = self.dashboardManager.dashboardToSave {
                             viewController.plotToEdit = dashboard.pages[plotIndex]
                         }
                     }
@@ -536,29 +648,15 @@ extension AddEditDashboardTableViewController: UITableViewDataSource {
     }
     
     override func tableView(tableView: UITableView, moveRowAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
-        if let dashboard = self.dashboardToSave {
-            if sourceIndexPath.section == self.pagesSection && destinationIndexPath.section == self.pagesSection {
-                if sourceIndexPath.row > 0 && destinationIndexPath.row > 0 {
-                    // Subtract one for the Add / Edit row
-                    
-                    var sourceIndex = sourceIndexPath.row - 1
-                    var toIndex = destinationIndexPath.row - 1
-                    var sourcePage = dashboard.pages[sourceIndex]
-                    var toPage = dashboard.pages[toIndex]
-                    
-                    println("Source: " + sourcePage.name)
-                    println("Destination: " + toPage.name)
-                    
-                    var tempPosition = sourcePage.position
-                    sourcePage.position = toPage.position
-                    toPage.position = tempPosition
-                    
-                    dashboard.pages.removeAtIndex(sourceIndex) // remove the source page
-                    dashboard.pages.insert(sourcePage, atIndex: toIndex) // add it again
-                }
+        if sourceIndexPath.section == self.pagesSection && destinationIndexPath.section == self.pagesSection {
+            if sourceIndexPath.row > 0 && destinationIndexPath.row > 0 {
+
+                var sourceIndex = sourceIndexPath.row - 1
+                var toIndex = destinationIndexPath.row - 1
+                self.dashboardManager.moveDashboardPageAtIndex(sourceIndex, toIndex: toIndex)
+                
             }
         }
-        
     }
 }
 
@@ -596,7 +694,7 @@ extension AddEditDashboardTableViewController: UITableViewDelegate {
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         var numberOfSections = 2
         
-        if self.dashboardToEdit != nil {
+        if self.dashboardManager.dashboardToEdit != nil {
             // Adding one for the delete dashboard section
             numberOfSections = numberOfSections + 1
         }
@@ -608,14 +706,9 @@ extension AddEditDashboardTableViewController: UITableViewDelegate {
         var numberOfRows = 0
         
         switch section {
-        case self.dashboardNameSection:
-            numberOfRows = 1
-        case self.pagesSection:
-            if let dashboard = self.dashboardToSave {
-                numberOfRows = dashboard.pages.count + 1
-            }
-        case self.deleteDashboardSection:
-            numberOfRows = 1
+        case self.dashboardNameSection: numberOfRows = 1
+        case self.pagesSection: numberOfRows = self.dashboardManager.getDashboardPageCount() + 1
+        case self.deleteDashboardSection: numberOfRows = 1
         default: break
         }
         
@@ -699,26 +792,24 @@ extension AddEditDashboardTableViewController: UITableViewDelegate {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if !self.isDisabled {
-            if let dashboard = self.dashboardToSave {
-                if indexPath.section == self.pagesSection {
-                    if indexPath.row == self.pagesToolbarRow {
-                        
-                    } else if indexPath.row <= dashboard.pages.count {
-                        let pageIndex = indexPath.row - 1
-                        let panel = dashboard.pages[pageIndex]
-                        
-                        switch panel.type {
-                        case .Canvas: self.presentEditCanvasViewController(panel)
+            if indexPath.section == self.pagesSection {
+                if indexPath.row == self.pagesToolbarRow {
+                    
+                } else if indexPath.row <= dashboardManager.getDashboardPageCount() {
+                    let pageIndex = indexPath.row - 1
+                    if let page = dashboardManager.getPageAtIndex(pageIndex) {
+                        switch page.type {
+                        case .Canvas: self.presentEditCanvasViewController(page)
                         case .Plot: self.presentEditPlotViewControllerForIndex(pageIndex)
                         default: println("Unknown page type.")
                         }
-                        
                     }
-                    
-                } else if indexPath.section == self.dashboardNameSection {
-                    self.dashboardNameTextField.becomeFirstResponder()
                 }
+                
+            } else if indexPath.section == self.dashboardNameSection {
+                self.dashboardNameTextField.becomeFirstResponder()
             }
+            
         }
     }
     
@@ -762,11 +853,11 @@ extension AddEditDashboardTableViewController: UITableViewDelegate {
         return pageCell
         
     }
+    
     func textFieldDidEndEditing(textField: UITextField) {
-        if let dashboard = self.dashboardToSave {
-            dashboard.name = textField.text
-        }
+        self.dashboardManager.setDashboardName(textField.text)
     }
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell: UITableViewCell!
         
@@ -779,13 +870,13 @@ extension AddEditDashboardTableViewController: UITableViewDelegate {
                 }
                 self.dashboardNameTextField.delegate = self
                 
-                if let name = self.dashboardToSave?.name {
+                if let name = self.dashboardManager.dashboardToSave?.name {
                     dashboardNameCell.dashboardNameTextField.text = name
                 }
                 
                 cell = dashboardNameCell
             case pagesSection:
-                if let dashboard = self.dashboardToSave {
+                if let dashboard = self.dashboardManager.dashboardToSave {
                     if indexPath.row == self.pagesToolbarRow {
                         cell = self.createPageToolbarRow()
                     } else if indexPath.row <= dashboard.pages.count {

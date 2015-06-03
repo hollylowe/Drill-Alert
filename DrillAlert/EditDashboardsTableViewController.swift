@@ -16,6 +16,7 @@ class EditDashboardsTableViewController: LoadingTableViewController {
     
     override func viewDidLoad() {
         self.dataSource = self
+        self.shouldLoadInit = false
         //self.tableView.separatorStyle = .None
         super.viewDidLoad()
     }

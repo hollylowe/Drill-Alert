@@ -22,23 +22,32 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func testSignInButtonTapped(sender: AnyObject) {
+        /*
         activityIndicator.startAnimating()
         activityIndicator.hidden = false
         loginButton.hidden = true
-        
-        
-        let session = SDISession(username: "ldavid@calpoly.edu", password: "StartUp!")
+        */
+        /*
         session.login { (loggedIn) -> Void in
-            if loggedIn {
-                self.currentUser = User.getCurrentUser()
-                self.performSegueWithIdentifier(self.loginToHomeSegueIdentifier, sender: self)
-            } else {
-                println("Error: Could not log user in.")
-            }
             self.activityIndicator.hidden = true
             self.activityIndicator.stopAnimating()
             self.loginButton.hidden = false
+            if loggedIn {
+                self.currentUser = User.getCurrentUser()
+                let application = UIApplication.sharedApplication()
+                if let appDelegate = application.delegate as? AppDelegate {
+                    appDelegate.user = self.currentUser
+                    application.registerForRemoteNotifications()
+                    
+                }
+                self.performSegueWithIdentifier(self.loginToHomeSegueIdentifier, sender: self)
+            } else {
+                
+                println("Error: Could not log user in.")
+            }
+            
         }
+        */
         /*
         println("Using test data.")
         self.currentUser = User(id: 0, guid: "0")
@@ -80,6 +89,8 @@ class LoginViewController: UIViewController {
         let blurView = UIVisualEffectView(effect: blurEffect)
         blurView.frame = self.view.frame
         backgroundImageView.addSubview(blurView)
+        
+        self.sdiSignInButton.layer.cornerRadius = self.sdiSignInButton.frame.size.height / 2
     }
     
     @IBAction func loginButtonTapped(sender: AnyObject) {

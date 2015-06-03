@@ -32,7 +32,7 @@ class JavaScriptPlot: JavaScriptVisualization {
     }
     
     private func getInitialDataString() -> String {
-        var dataString = "["
+        /* var dataString = "["
         var dataCount = 0
         if self.initialData.count > 0 {
             for dataPoint in self.initialData {
@@ -46,7 +46,9 @@ class JavaScriptPlot: JavaScriptVisualization {
         
         
         dataString = dataString + "]"
-        return dataString
+        */
+        return "[0, 1, 2, 3, 4,5,6,7,8,9,10,11,12,13]"
+        // return dataString
     }
     
     private func getInitialIDataString() -> String {
@@ -96,6 +98,6 @@ class JavaScriptPlot: JavaScriptVisualization {
     }
     
     func getTickJavaScriptStringWithCurvePoint(curvePoint: CurvePoint) -> String! {
-        return "master.tick(\(curvePoint.value), \(curvePoint.time), \(self.id))"
+        return "master.tick(\(curvePoint.value), \(curvePoint.IV), \(self.id))"
     }
 }

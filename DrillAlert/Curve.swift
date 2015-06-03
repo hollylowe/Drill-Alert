@@ -9,17 +9,17 @@
 import Foundation
 
 class CurvePointCollection {
-    var curveID: Int
-    var wellboreID: Int
+    var curveID: String
+    var wellboreID: String
     var curvePoints: Array<CurvePoint>
     
-    init(curveID: Int, wellboreID: Int) {
+    init(curveID: String, wellboreID: String) {
         self.curveID = curveID
         self.wellboreID = wellboreID
         self.curvePoints = Array<CurvePoint>()
     }
     
-    init(curveID: Int, wellboreID: Int, curvePoints: Array<CurvePoint>) {
+    init(curveID: String, wellboreID: String, curvePoints: Array<CurvePoint>) {
         self.curveID = curveID
         self.wellboreID = wellboreID
         self.curvePoints = curvePoints
@@ -28,8 +28,8 @@ class CurvePointCollection {
     class func curvePointCollectionFromJSONObject(JSONObject: JSON) -> CurvePointCollection? {
         var result: CurvePointCollection?
         
-        if let wellboreID = JSONObject.getIntAtKey("wellboreId") {
-            if let curveID = JSONObject.getIntAtKey("curveId") {
+        if let wellboreID = JSONObject.getStringAtKey("wellboreId") {
+            if let curveID = JSONObject.getStringAtKey("curveId") {
                 
                 // Now get each curve point.
                 if let data = JSONObject.getJSONArrayAtKey("data") {
@@ -39,13 +39,25 @@ class CurvePointCollection {
                         for curvePointJSON in curvePointJSONs {
                             if let curvePoint = CurvePoint.curvePointFromJSON(curvePointJSON) {
                                 curvePoints.append(curvePoint)
+                            } else {
+                                println("Error: Could not get curve point from JSON.")
                             }
                         }
+                    } else {
+                        println("Error: No curve point JSON data array.")
                     }
-                    
-                    result = CurvePointCollection(curveID: curveID, wellboreID: wellboreID, curvePoints: curvePoints)
+                    result = CurvePointCollection(
+                        curveID: curveID,
+                        wellboreID: wellboreID,
+                        curvePoints: curvePoints)
+                } else {
+                    println("Error: No data found for cpc.")
                 }
+            } else {
+                println("Error: No curve id found for curve point collection.")
             }
+        } else {
+            println("Error: No wellbore id found for curve point collection.")
         }
         
         return result
@@ -53,34 +65,30 @@ class CurvePointCollection {
 }
 
 class CurvePoint {
-    var value: Float
-    var time: Int // TODO: Change to Date eventually
+    var value: Int
+    var IV: Int
     
-    init(value: Float, time: Int) {
+    init(value: Int, IV: Int) {
         self.value = value
-        self.time = time
+        self.IV = IV
     }
     
     class func curvePointFromJSON(curvePointJSON: JSON) -> CurvePoint? {
         var result: CurvePoint?
         
-        if let curvePointValue = curvePointJSON.getFloatAtKey("value") {
-            if let curvePointTime = curvePointJSON.getStringAtKey("time") {
-                result = CurvePoint(value: curvePointValue, stringTime: curvePointTime)
+        if let curvePointValue = curvePointJSON.getIntAtKey("value") {
+            if let curvePointIV = curvePointJSON.getIntAtKey("iv") {
+                result = CurvePoint(value: curvePointValue, IV: curvePointIV)
+            } else {
+                println("Error: Could not get curve point iv.")
             }
+        } else {
+            println("Error: Could not get curve point value.")
         }
         
         return result
     }
     
-    init(value: Float, stringTime: String) {
-        self.value = value
-        if let newTime = stringTime.toInt() {
-            self.time = newTime
-        } else {
-            self.time = 0
-        }
-    }
 }
 
 
@@ -104,27 +112,20 @@ class Curve {
     class func getCurvePointCollectionForUser(user: User, curveID: String, startIV: Int, andEndIV endIV: Int) -> (CurvePointCollection?, String?)  {
         var result: CurvePointCollection?
         var errorMessage: String?
-        
         if user.shouldUseFixtureData {
-           result = CurvePointCollection(curveID: 0, wellboreID: 0, curvePoints: [CurvePoint(value: 0, time: 0)])
+           result = CurvePointCollection(
+            curveID: "",
+            wellboreID: "",
+            curvePoints: [CurvePoint(value: 0, IV: 0)])
         } else {
             // TODO: Change this to real time values
-            var endpointURL = "https://drillalert.azurewebsites.net/api/curvepoints/\(curveID)/\(startIV)/\(endIV)"
-            let resultJSONArray = JSONArray(url: endpointURL)
             
-            if let resultJSONs = resultJSONArray.array {
-                // There should only be one
-                if resultJSONs.count > 0 {
-                    let curvePointCollectionJSON = resultJSONs[0]
-                    result = CurvePointCollection.curvePointCollectionFromJSONObject(curvePointCollectionJSON)
-                }
+            var endpointURL = "https://drillalert.azurewebsites.net/api/curvepoints/\(curveID)/\(startIV)/\(endIV)"
+            if let curvePointCollectionJSON = JSON.JSONFromURL(endpointURL) {
+                result = CurvePointCollection.curvePointCollectionFromJSONObject(curvePointCollectionJSON)
             } else {
-                if let error = resultJSONArray.error {
-                    errorMessage = error.description
-                    println("Error while getting CurvePointCollection: ")
-                    println(errorMessage)
-                    println()
-                }
+                errorMessage = "Error: No result JSON array."
+                
             }
 
         }
@@ -264,7 +265,6 @@ class Curve {
         } else {
             var endpointURL = "https://drillalert.azurewebsites.net/api/curves/\(wellbore.id)"
             
-            println("Curves URL: " + endpointURL)
             let resultJSONArray = JSONArray(url: endpointURL)
             
             if let resultJSONs = resultJSONArray.array {
@@ -280,7 +280,6 @@ class Curve {
                             }
                         } else {
                             curveArray.append(curve)
-                            println("No IVT, appending.")
                         }
                     }
                 }

@@ -115,6 +115,7 @@ class SelectCurveTableViewController: LoadingTableViewController, UISearchBarDel
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         if let delegate = self.addEditAlertDelegate {
             delegate.setSelectedCurve(curve)
+            self.navigationController?.popToRootViewControllerAnimated(true)
         }
         
         if let delegate = self.addEditTrackDelegate {

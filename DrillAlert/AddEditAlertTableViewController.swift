@@ -419,7 +419,7 @@ class AddEditAlertTableViewController: UITableViewController {
     }
     
     func sendTestNotification() {
-        let URLString = "https://drillalert.azurewebsites.net/api/push/ios"
+        let URLString = "https://drillalert.azurewebsites.net/api/push/0"
         
         if let URL = NSURL(string: URLString) {
             var newRequest = NSMutableURLRequest(URL: URL)
@@ -428,7 +428,30 @@ class AddEditAlertTableViewController: UITableViewController {
             if let userSDISession = currentUser.session {
                 if let session = userSDISession.session {
                     let task = session.dataTaskWithRequest(newRequest, completionHandler: { (data, response, error) -> Void in
-                        println("test Task: ")
+                        if let content = NSString(data: data, encoding: NSASCIIStringEncoding) {
+                            println("Data get: ")
+                            println(content)
+                            println("Response get:")
+                            println(response)
+                        }
+                    })
+                    
+                    task.resume()
+                }
+            }
+            
+            
+        }
+        
+        let androidURLString = "https://drillalert.azurewebsites.net/api/push/1"
+        
+        if let URL = NSURL(string: androidURLString) {
+            var newRequest = NSMutableURLRequest(URL: URL)
+            newRequest.HTTPMethod = "GET"
+            
+            if let userSDISession = currentUser.session {
+                if let session = userSDISession.session {
+                    let task = session.dataTaskWithRequest(newRequest, completionHandler: { (data, response, error) -> Void in
                         if let content = NSString(data: data, encoding: NSASCIIStringEncoding) {
                             println("Data get: ")
                             println(content)

@@ -32,7 +32,7 @@ class DashboardViewController: UIViewController, UIPageViewControllerDataSource 
         }
     }
     var wellbore: Wellbore!
-    var curves = Array<Curve>()
+    // var curves = Array<Curve>()
     
     // TODO: Remove this, for debuggin only
     var shouldLoadFromNetwork = true
@@ -149,12 +149,10 @@ class DashboardViewController: UIViewController, UIPageViewControllerDataSource 
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
                 self.reloadDashboards()
                 
-                var (newCurves, errorMessage) = self.wellbore.getCurves(self.user)
+                // var (newCurves, errorMessage) = self.wellbore.getCurves(self.user)
                 
-                self.curves = newCurves 
-                for curve in self.curves {
-                    println(curve.name)
-                }
+                // self.curves = newCurves
+                
                 
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     self.loadingData = false

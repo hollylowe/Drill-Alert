@@ -57,7 +57,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="ARm-4F-VO1">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background2" translatesAutoresizingMaskIntoConstraints="NO" id="ARm-4F-VO1">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uf8-hT-C26">
@@ -82,19 +82,6 @@
                                     <action selector="loginButtonTapped:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="0M5-yr-brb"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DrillAlertLogo" translatesAutoresizingMaskIntoConstraints="NO" id="PQL-ac-Uv7">
-                                <rect key="frame" x="170" y="71" width="240" height="128"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="240" id="9Uz-HB-1R8"/>
-                                    <constraint firstAttribute="height" constant="128" id="rRe-J4-7vp"/>
-                                    <constraint firstAttribute="width" constant="240" id="w8V-fa-gaX"/>
-                                </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="w8V-fa-gaX"/>
-                                    </mask>
-                                </variation>
-                            </imageView>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="1PG-fI-ei2">
                                 <rect key="frame" x="290" y="325" width="20" height="20"/>
                             </activityIndicatorView>
@@ -111,12 +98,35 @@
                                     <action selector="testSignInButtonTapped:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="JbK-Or-QKZ"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Drill Alert" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3BL-XP-RaG">
+                                <rect key="frame" x="37" y="200" width="526" height="62"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="62" id="MOg-Fh-5WE"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="39"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="drillalert" translatesAutoresizingMaskIntoConstraints="NO" id="PQL-ac-Uv7">
+                                <rect key="frame" x="180" y="71" width="240" height="128"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="240" id="9Uz-HB-1R8"/>
+                                    <constraint firstAttribute="height" constant="128" id="rRe-J4-7vp"/>
+                                    <constraint firstAttribute="width" constant="240" id="w8V-fa-gaX"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="w8V-fa-gaX"/>
+                                    </mask>
+                                </variation>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="ARm-4F-VO1" secondAttribute="trailing" constant="-16" id="5E0-6d-6Yz"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Uf8-hT-C26" secondAttribute="trailing" constant="21" id="6IM-ff-0LA"/>
                             <constraint firstItem="PQL-ac-Uv7" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="100" id="BGN-D7-1tb"/>
+                            <constraint firstItem="3BL-XP-RaG" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="21" id="ByJ-sd-qt8"/>
                             <constraint firstItem="ARm-4F-VO1" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="topMargin" id="Dfy-l2-T58"/>
                             <constraint firstAttribute="trailingMargin" secondItem="wv6-Bd-paf" secondAttribute="trailing" constant="21" id="Ds4-oY-OCr"/>
                             <constraint firstAttribute="centerY" secondItem="Uf8-hT-C26" secondAttribute="centerY" constant="-35" id="F5T-h4-Yrd"/>
@@ -125,16 +135,20 @@
                             <constraint firstItem="wv6-Bd-paf" firstAttribute="top" secondItem="Uf8-hT-C26" secondAttribute="bottom" constant="20" id="KVD-be-99B"/>
                             <constraint firstItem="ARm-4F-VO1" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="-16" id="KwT-lo-d42"/>
                             <constraint firstItem="Uf8-hT-C26" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="21" id="LIq-0n-YXy"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="3BL-XP-RaG" secondAttribute="trailing" constant="21" id="OKu-WV-USJ"/>
                             <constraint firstItem="wv6-Bd-paf" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="21" id="QJ0-yY-2AR"/>
                             <constraint firstAttribute="centerY" secondItem="Uf8-hT-C26" secondAttribute="centerY" constant="28" id="R0T-IV-e8A"/>
                             <constraint firstAttribute="centerX" secondItem="PQL-ac-Uv7" secondAttribute="centerX" constant="10" id="Wp5-Gu-0oB"/>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="ARm-4F-VO1" secondAttribute="bottom" id="XXL-oR-1dG"/>
+                            <constraint firstItem="Uf8-hT-C26" firstAttribute="top" secondItem="3BL-XP-RaG" secondAttribute="bottom" constant="50" id="a6d-H2-1h5"/>
+                            <constraint firstAttribute="centerX" secondItem="PQL-ac-Uv7" secondAttribute="centerX" id="dly-jd-Lhp"/>
                             <constraint firstItem="1PG-fI-ei2" firstAttribute="top" secondItem="Uf8-hT-C26" secondAttribute="bottom" constant="-33" id="h0Y-pL-qYl"/>
                             <constraint firstAttribute="centerX" secondItem="Uf8-hT-C26" secondAttribute="centerX" id="kxI-zn-Ljp"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="BGN-D7-1tb"/>
+                                <exclude reference="Wp5-Gu-0oB"/>
                                 <exclude reference="R0T-IV-e8A"/>
                                 <exclude reference="kxI-zn-Ljp"/>
                             </mask>
@@ -3413,13 +3427,13 @@
     <resources>
         <image name="Alert Icon" width="30" height="30"/>
         <image name="Critical Alert Icon" width="120" height="120"/>
-        <image name="DrillAlertLogo" width="748" height="222"/>
         <image name="Information Alert Icon" width="120" height="120"/>
         <image name="Warning Alert Icon" width="120" height="120"/>
         <image name="Well Icon" width="30" height="30"/>
-        <image name="background" width="1400" height="510"/>
+        <image name="background2" width="960" height="643"/>
         <image name="canvas-icon-color" width="100" height="100"/>
         <image name="compass-icon-color" width="100" height="100"/>
+        <image name="drillalert" width="891" height="779"/>
         <image name="plot-icon-color" width="100" height="100"/>
     </resources>
     <inferredMetricsTieBreakers>

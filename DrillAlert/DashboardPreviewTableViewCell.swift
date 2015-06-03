@@ -35,31 +35,32 @@ class DashboardPreviewTableViewCell: UITableViewCell {
         var width: CGFloat = 22.0
         var height: CGFloat = 22.0
         var padding: CGFloat = 10.0
-        var imageSize = CGSize(width: 22.0, height: 22.0)
+        var imageSize = CGSize(width: width, height: height)
         for page in pages {
             if pageIndex <= self.maxPages {
                 if pageIndex == 0 {
                     nextImageX = 0
                 } else {
-                    nextImageX = CGFloat(pageIndex) * width + padding
+                    nextImageX = (CGFloat(pageIndex) * width) + (CGFloat(pageIndex) * padding)
+                    println("Next x is \(nextImageX)")
                 }
-                var rect = CGRectMake(nextImageX,
+                var imageViewRect = CGRectMake(nextImageX,
                     0,
                     width,
-                    22.0)
-                var newImageView = UIImageView(frame: rect)
+                    height)
+                var newImageView = UIImageView(frame: imageViewRect)
                 switch page.type {
                 case .Canvas:
                     if let image = UIImage(named: "canvas-icon-color") {
-                        newImageView.image = self.imageWithImage(image, scaledToSize: imageSize)
+                        newImageView.image = image.imageWithImageSize(imageSize)
                     }
                 case .Plot:
                     if let image = UIImage(named: "plot-icon-color") {
-                        newImageView.image = self.imageWithImage(image, scaledToSize: imageSize)
+                        newImageView.image = image.imageWithImageSize(imageSize)
                     }
                 case .Compass:
                     if let image = UIImage(named: "compass-icon-color") {
-                        newImageView.image = self.imageWithImage(image, scaledToSize: imageSize)
+                        newImageView.image = image.imageWithImageSize(imageSize)
                     }
                 default: break
                 }
